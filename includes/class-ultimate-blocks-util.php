@@ -86,6 +86,11 @@ class Ultimate_Blocks_Util {
 				'name'   => 'ub/tabbed-content',
 				'active' => true,
 			),
+			array(
+				'label'  => 'Table of Contents',
+				'name'   => 'ub/table-of-contents',
+				'active' => true,
+			),
 		];
 	}
 

@@ -448,3 +448,11 @@
 .wp-block-ub-tabbed-content-tabs-content {
   border: 1px solid lightgrey;
   padding: 20px; }
+/**
+ * #.# Common SCSS
+ *
+ * Can include things like variables and mixins
+ * that are used across the project.
+*/
+.ub-hide {
+  display: none !important; }

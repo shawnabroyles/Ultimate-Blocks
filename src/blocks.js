@@ -20,3 +20,4 @@ import './blocks/social-share/block';
 import './blocks/content-toggle/block';
 import './blocks/button/block';
 import './blocks/tabbed-content/block';
+import './blocks/table-of-contents/block';

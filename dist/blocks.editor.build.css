@@ -440,7 +440,8 @@
     -webkit-transition: all -.5s ease-in-out;
     -o-transition: all -.5s ease-in-out;
     transition: all -.5s ease-in-out;
-    display: none; }
+    display: none;
+    z-index: 100; }
   .wp-block-ub-tabbed-content-tab-title-wrap:hover .tab-actions {
     display: -ms-flexbox;
     display: flex; }
@@ -456,3 +457,50 @@
 */
 .ub-hide {
   display: none !important; }
+
+.wp-block-ub-table-of-contents {
+  padding: 15px 30px;
+  background: lightgrey; }
+  .wp-block-ub-table-of-contents-table-items .wp-block-ub-table-of-contents-table-item .wp-block-ub-table-of-contents-table-items {
+    padding-left: 25px; }
+  .wp-block-ub-table-of-contents-table-items .wp-block-ub-table-of-contents-table-item .wp-block-ub-table-of-contents-table-item-heading-wrap {
+    position: relative; }
+    .wp-block-ub-table-of-contents-table-items .wp-block-ub-table-of-contents-table-item .wp-block-ub-table-of-contents-table-item-heading-wrap .wp-block-ub-table-of-contents-table-item-heading-actions {
+      -ms-flex-pack: center;
+          justify-content: center;
+      position: absolute;
+      margin: auto;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      line-height: 25px;
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-align: center;
+          align-items: center; }
+      .wp-block-ub-table-of-contents-table-items .wp-block-ub-table-of-contents-table-item .wp-block-ub-table-of-contents-table-item-heading-wrap .wp-block-ub-table-of-contents-table-item-heading-actions .dashicons {
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-align: center;
+            align-items: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+        background: #444444;
+        border-radius: 50%;
+        -webkit-box-shadow: 0 0 5px;
+                box-shadow: 0 0 5px;
+        color: white;
+        width: 20px;
+        height: 20px;
+        font-size: 13px;
+        cursor: pointer;
+        display: none; }
+    .wp-block-ub-table-of-contents-table-items .wp-block-ub-table-of-contents-table-item .wp-block-ub-table-of-contents-table-item-heading-wrap:hover .wp-block-ub-table-of-contents-table-item-heading-actions .dashicons {
+      display: -ms-flexbox;
+      display: flex; }
+  .wp-block-ub-table-of-contents-add-btn-wrap {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: center;
+        justify-content: center;
+    padding: 15px; }

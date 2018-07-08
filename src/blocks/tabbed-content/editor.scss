@@ -54,7 +54,8 @@
         right: 0;
         margin: auto;
         transition: all -.5s ease-in-out;
-        display: none;
+		display: none;
+		z-index: 100;
     }
     &:hover {
         .tab-actions {

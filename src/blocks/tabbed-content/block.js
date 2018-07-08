@@ -21,7 +21,7 @@ const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 
 const {
-	RichText
+	RichText,
 } = wp.editor;
 
 /**
@@ -216,7 +216,7 @@ registerBlockType( 'ub/tabbed-content', {
 							onChange={ ( content ) => onChangeTitle( content, i ) }
 							placeholder="Tab Title"
 						/>
-						<div class="tab-actions">
+						<div className="tab-actions">
 							<DragHandle />
 							<span className={ 'dashicons dashicons-minus remove-tab-icon' + ( propz.attributes.tabsTitle.length === 1 ? ' ub-hide' : '' ) } onClick={ () => onRemoveTitle(i) }></span>
 						</div>

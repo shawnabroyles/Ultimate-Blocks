@@ -158,7 +158,6 @@ registerBlockType( 'ub/table-of-contents', {
 							tagName="h3"
 							className={ className + '-table-item-heading' }
 							value={ item.heading }
-							formattingControls={ [ 'bold', 'italic' ] }
 							onChange={ ( content ) => onChangeItemTitle( content, item ) }
 							placeholder="Tab Title"
 						/>
@@ -187,6 +186,36 @@ registerBlockType( 'ub/table-of-contents', {
 		];
 	},
 
-	save: function() {
+	save: function( props ) {
+		console.log( props )
+		const className = '.wp-block-ub-table-of-contents';
+		const tableItems = JSON.parse( props.attributes.tableItems );
+
+		const generateItems = ( items ) => {
+			return items.map( ( item, itemIndex ) => {
+				return <li className={ className + '-table-item' } key={ itemIndex }>
+					<div className={ className + '-table-item-heading-wrap' } onClick={ () => selectItem( item ) }>
+						<RichText
+							tagName="h3"
+							className={ className + '-table-item-heading' }
+							value={ item.heading }
+							onChange={ ( content ) => onChangeItemTitle( content, item ) }
+							placeholder="Tab Title"
+						/>
+					</div>
+					{ item.childrens && item.childrens.length > 0 && <ul className={ className + '-table-items' }>
+						{ generateItems( item.childrens ) }
+					</ul> }
+				</li>;
+			} );
+		};
+
+		return <div>
+			<ul className={ className + '-table-items' }>
+				{
+					generateItems( tableItems )
+				}
+			</ul>
+		</div>;
 	},
 } );

@@ -667,3 +667,15 @@
 */
 .ub-hide {
   display: none !important; }
+
+.wp-block-ub-table-of-contents {
+  padding: 15px 30px;
+  background: lightgrey; }
+  .wp-block-ub-table-of-contents-table-items .wp-block-ub-table-of-contents-table-item .wp-block-ub-table-of-contents-table-items {
+    padding-left: 25px; }
+  .wp-block-ub-table-of-contents-add-btn-wrap {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: center;
+        justify-content: center;
+    padding: 15px; }

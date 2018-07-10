@@ -1,0 +1,16 @@
+.wp-block-ub-table-of-contents {
+	padding: 15px 30px;
+	background: lightgrey;
+	&-table-items {
+		.wp-block-ub-table-of-contents-table-item {
+			.wp-block-ub-table-of-contents-table-items {
+				padding-left: 25px;
+			}
+		}
+	}
+	&-add-btn-wrap {
+		display: flex;
+		justify-content: center;
+		padding: 15px;
+	}
+}

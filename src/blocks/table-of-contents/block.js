@@ -8,6 +8,7 @@
 //  Import CSS.
 import './style.scss';
 import './editor.scss';
+import Inspector from './components/Inspector';
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
@@ -46,25 +47,31 @@ registerBlockType( 'ub/table-of-contents', {
 			type: 'string',
 			default: '[]',
 		},
+		selectedItem: {
+			type: Object,
+			default: null,
+		},
 	},
 
-	edit: function( { attributes, setAttributes, className } ) {
-		let tableItems = JSON.parse( attributes.tableItems ) || [];
+	edit: function( props ) {
+		const { className, setAttributes, attributes, isSelected } = props;
 
-		if ( tableItems.length === 0 ) {
+		let tableItems = JSON.parse( attributes.tableItems ) || [];
+		if ( ! tableItems || tableItems.length === 0 ) {
 			tableItems = [];
 			tableItems.push( {
 				heading: 'Table of content Heading',
 				target: '#',
+				path: [ 0 ],
 			} );
 			tableItems.push( {
 				heading: 'Table of content Heading',
 				target: '#',
+				path: [ 1 ],
 			} );
+			setAttributes( { selectedItem: tableItems[ 0 ] } );
 			setAttributes( { tableItems: JSON.stringify( tableItems ) } );
 		}
-
-		console.log( tableItems );
 
 		const onChangeItemTitle = ( content, item ) => {
 			item.heading = content;
@@ -76,6 +83,7 @@ registerBlockType( 'ub/table-of-contents', {
 				parent.push( {
 					heading: 'Table of content Heading ',
 					target: '#',
+					path: [ tableItems.length ],
 				} );
 				setAttributes( { tableItems: JSON.stringify( tableItems ) } );
 				return;
@@ -83,11 +91,24 @@ registerBlockType( 'ub/table-of-contents', {
 			if ( ! parent.childrens ) {
 				parent.childrens = [];
 			}
+			const childPath = parent.path.slice( 0 );
+			childPath.push( parent.childrens.length );
 			parent.childrens.push( {
 				heading: 'Table of content Heading ',
 				target: '#',
+				path: childPath,
 			} );
 			setAttributes( { tableItems: JSON.stringify( tableItems ) } );
+		};
+
+		const findSelectedItemObj = ( item, path ) => {
+			if ( ! path || path.length === 0 ) {
+				return item;
+			}
+			if ( ! item.childrens ) {
+				return findSelectedItemObj( item[ path.shift() ], path );
+			}
+			return findSelectedItemObj( item.childrens[ path.shift() ], path );
 		};
 
 		const removeFromTree = ( parent, childNameToRemove ) => {
@@ -116,10 +137,23 @@ registerBlockType( 'ub/table-of-contents', {
 			setAttributes( { tableItems: JSON.stringify( tableItemsFiltered ) } );
 		};
 
+		const selectItem = ( item ) => {
+			setAttributes( { selectedItem: item } );
+		};
+
+		const onTargetChange = ( targetId ) => {
+			const selectedItemObj = findSelectedItemObj( tableItems, attributes.selectedItem.path.slice( 0 ) );
+			selectedItemObj.target = targetId;
+			setAttributes( {
+				selectedItem: selectedItemObj,
+				tableItems: JSON.stringify( tableItems )
+			} );
+		};
+
 		const generateItems = ( items ) => {
 			return items.map( ( item, itemIndex ) => {
 				return <li className={ className + '-table-item' } key={ itemIndex }>
-					<div className={ className + '-table-item-heading-wrap' }>
+					<div className={ className + '-table-item-heading-wrap' } onClick={ () => selectItem( item ) }>
 						<RichText
 							tagName="h3"
 							className={ className + '-table-item-heading' }
@@ -140,14 +174,17 @@ registerBlockType( 'ub/table-of-contents', {
 			} );
 		};
 
-		return <div className={ className }>
-			<ul className={ className + '-table-items' }>
-				{
-					generateItems( tableItems )
-				}
-			</ul>
-			<div className={ className + '-add-btn-wrap' }><button className="components-button is-button is-default" onClick={ () => addTableItem( tableItems ) }>ADD HEADING</button></div>
-		</div>;
+		return [
+			isSelected && <Inspector { ...{ attributes, onTargetChange, tableItems } } key="inspector" />,
+			<div className={ className } key="table-of-content">
+				<ul className={ className + '-table-items' }>
+					{
+						generateItems( tableItems )
+					}
+				</ul>
+				<div className={ className + '-add-btn-wrap' }><button className="components-button is-button is-default" onClick={ () => addTableItem( tableItems ) }>ADD HEADING</button></div>
+			</div>,
+		];
 	},
 
 	save: function() {

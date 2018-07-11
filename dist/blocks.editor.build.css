@@ -459,8 +459,7 @@
   display: none !important; }
 
 .wp-block-ub-table-of-contents {
-  padding: 15px 30px;
-  background: lightgrey; }
+  padding: 15px 30px; }
   .wp-block-ub-table-of-contents-table-items .wp-block-ub-table-of-contents-table-item .wp-block-ub-table-of-contents-table-items {
     padding-left: 25px; }
   .wp-block-ub-table-of-contents-table-items .wp-block-ub-table-of-contents-table-item .wp-block-ub-table-of-contents-table-item-heading-wrap {
@@ -472,7 +471,7 @@
       margin: auto;
       left: 0;
       right: 0;
-      bottom: 0;
+      bottom: -12px;
       line-height: 25px;
       display: -ms-flexbox;
       display: flex;
@@ -494,7 +493,11 @@
         height: 20px;
         font-size: 13px;
         cursor: pointer;
-        display: none; }
+        display: none;
+        margin: 0 5px; }
+    .wp-block-ub-table-of-contents-table-items .wp-block-ub-table-of-contents-table-item .wp-block-ub-table-of-contents-table-item-heading-wrap .wp-block-ub-table-of-contents-table-item-heading {
+      font-weight: 400;
+      color: inherit; }
     .wp-block-ub-table-of-contents-table-items .wp-block-ub-table-of-contents-table-item .wp-block-ub-table-of-contents-table-item-heading-wrap:hover .wp-block-ub-table-of-contents-table-item-heading-actions .dashicons {
       display: -ms-flexbox;
       display: flex; }
@@ -504,3 +507,6 @@
     -ms-flex-pack: center;
         justify-content: center;
     padding: 15px; }
+    .wp-block-ub-table-of-contents-add-btn-wrap button, .wp-block-ub-table-of-contents-add-btn-wrap button:focus, .wp-block-ub-table-of-contents-add-btn-wrap button:active, .wp-block-ub-table-of-contents-add-btn-wrap button:hover {
+      background: #333 !important;
+      color: white !important; }

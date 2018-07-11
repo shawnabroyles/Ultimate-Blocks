@@ -43,6 +43,14 @@ registerBlockType( 'ub/table-of-contents', {
 		__( 'Ultimate Blocks' ),
 	],
 	attributes: {
+		backgroundColor: {
+			type: 'string',
+			default: '#d3d3d3',
+		},
+		textColor: {
+			type: 'string',
+			default: '#333',
+		},
 		tableItems: {
 			type: 'string',
 			default: '[]',
@@ -153,7 +161,7 @@ registerBlockType( 'ub/table-of-contents', {
 		const generateItems = ( items ) => {
 			return items.map( ( item, itemIndex ) => {
 				return <li className={ className + '-table-item' } key={ itemIndex }>
-					<div className={ className + '-table-item-heading-wrap' } onClick={ () => selectItem( item ) }>
+					<div className={ className + '-table-item-heading-wrap' } onClick={ () => selectItem( item ) } style={ { color: attributes.textColor } }>
 						<RichText
 							tagName="h3"
 							className={ className + '-table-item-heading' }
@@ -173,9 +181,17 @@ registerBlockType( 'ub/table-of-contents', {
 			} );
 		};
 
+		const onBackgroundColorChange = ( color ) => {
+			setAttributes( { backgroundColor: color } );
+		};
+
+		const onTextColorChange = ( color ) => {
+			setAttributes( { textColor: color } );
+		};
+
 		return [
-			isSelected && <Inspector { ...{ attributes, onTargetChange, tableItems } } key="inspector" />,
-			<div className={ className } key="table-of-content">
+			isSelected && <Inspector { ...{ attributes, onTargetChange, tableItems, onBackgroundColorChange, onTextColorChange } } key="inspector" />,
+			<div className={ className } key="table-of-content" style={ { backgroundColor: attributes.backgroundColor } }>
 				<ul className={ className + '-table-items' }>
 					{
 						generateItems( tableItems )
@@ -187,21 +203,23 @@ registerBlockType( 'ub/table-of-contents', {
 	},
 
 	save: function( props ) {
-		console.log( props )
-		const className = '.wp-block-ub-table-of-contents';
+		const className = 'wp-block-ub-table-of-contents';
 		const tableItems = JSON.parse( props.attributes.tableItems );
+
+		const getTarget = ( target ) => {
+			if ( target.indexOf( '#' ) === 0 ) {
+				return target;
+			}
+			return '#' + target;
+		};
 
 		const generateItems = ( items ) => {
 			return items.map( ( item, itemIndex ) => {
 				return <li className={ className + '-table-item' } key={ itemIndex }>
 					<div className={ className + '-table-item-heading-wrap' } onClick={ () => selectItem( item ) }>
-						<RichText
-							tagName="h3"
-							className={ className + '-table-item-heading' }
-							value={ item.heading }
-							onChange={ ( content ) => onChangeItemTitle( content, item ) }
-							placeholder="Tab Title"
-						/>
+						<a href={ getTarget( item.target ) } style={ { color: props.attributes.textColor } }>
+							<h3 className={ className + '-table-item-heading' } style={ { color: props.attributes.textColor } }> { item.heading }</h3>
+						</a>
 					</div>
 					{ item.childrens && item.childrens.length > 0 && <ul className={ className + '-table-items' }>
 						{ generateItems( item.childrens ) }
@@ -210,7 +228,7 @@ registerBlockType( 'ub/table-of-contents', {
 			} );
 		};
 
-		return <div>
+		return <div style={ { backgroundColor: props.attributes.backgroundColor } }>
 			<ul className={ className + '-table-items' }>
 				{
 					generateItems( tableItems )

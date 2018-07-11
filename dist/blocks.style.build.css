@@ -669,10 +669,13 @@
   display: none !important; }
 
 .wp-block-ub-table-of-contents {
-  padding: 15px 30px;
-  background: lightgrey; }
+  padding: 15px 30px; }
   .wp-block-ub-table-of-contents-table-items .wp-block-ub-table-of-contents-table-item .wp-block-ub-table-of-contents-table-items {
     padding-left: 25px; }
+    .wp-block-ub-table-of-contents-table-items .wp-block-ub-table-of-contents-table-item .wp-block-ub-table-of-contents-table-items .wp-block-ub-table-of-contents-table-item-heading-wrap a {
+      text-decoration: none; }
+    .wp-block-ub-table-of-contents-table-items .wp-block-ub-table-of-contents-table-item .wp-block-ub-table-of-contents-table-items .wp-block-ub-table-of-contents-table-item-heading-wrap .wp-block-ub-table-of-contents-table-item-heading {
+      font-weight: 400 !important; }
   .wp-block-ub-table-of-contents-add-btn-wrap {
     display: -ms-flexbox;
     display: flex;

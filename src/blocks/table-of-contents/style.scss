@@ -1,10 +1,17 @@
 .wp-block-ub-table-of-contents {
 	padding: 15px 30px;
-	background: lightgrey;
 	&-table-items {
 		.wp-block-ub-table-of-contents-table-item {
 			.wp-block-ub-table-of-contents-table-items {
 				padding-left: 25px;
+				.wp-block-ub-table-of-contents-table-item-heading-wrap {
+					a {
+						text-decoration: none;
+					}
+					.wp-block-ub-table-of-contents-table-item-heading {
+						font-weight: 400 !important;
+					}
+				}
 			}
 		}
 	}

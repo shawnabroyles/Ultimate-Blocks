@@ -59,6 +59,10 @@ registerBlockType( 'ub/table-of-contents', {
 			type: Object,
 			default: null,
 		},
+		bulletStyle: {
+			type: 'string',
+			default: 'disc',
+		},
 	},
 
 	edit: function( props ) {
@@ -162,6 +166,8 @@ registerBlockType( 'ub/table-of-contents', {
 			return items.map( ( item, itemIndex ) => {
 				return <li className={ className + '-table-item' } key={ itemIndex }>
 					<div className={ className + '-table-item-heading-wrap' } onClick={ () => selectItem( item ) } style={ { color: attributes.textColor } }>
+						{ attributes.bulletStyle === 'disc' && <span className="list-bullet-dot">&middot;</span> }
+						{ attributes.bulletStyle === 'numeric' && <span className="list-bullet-numeric"> { itemIndex + 1 }. </span> }
 						<RichText
 							tagName="h3"
 							className={ className + '-table-item-heading' }
@@ -189,8 +195,12 @@ registerBlockType( 'ub/table-of-contents', {
 			setAttributes( { textColor: color } );
 		};
 
+		const onBulletStyleChange = ( style ) => {
+			setAttributes( { bulletStyle: style } );
+		};
+
 		return [
-			isSelected && <Inspector { ...{ attributes, onTargetChange, tableItems, onBackgroundColorChange, onTextColorChange } } key="inspector" />,
+			isSelected && <Inspector { ...{ attributes, onTargetChange, tableItems, onBackgroundColorChange, onTextColorChange, onBulletStyleChange } } key="inspector" />,
 			<div className={ className } key="table-of-content" style={ { backgroundColor: attributes.backgroundColor } }>
 				<ul className={ className + '-table-items' }>
 					{
@@ -217,6 +227,8 @@ registerBlockType( 'ub/table-of-contents', {
 			return items.map( ( item, itemIndex ) => {
 				return <li className={ className + '-table-item' } key={ itemIndex }>
 					<div className={ className + '-table-item-heading-wrap' } onClick={ () => selectItem( item ) }>
+						{ props.attributes.bulletStyle === 'disc' && <span className="list-bullet-dot" style={ { color: props.attributes.textColor } }>&middot; </span> }
+						{ props.attributes.bulletStyle === 'numeric' && <span className="list-bullet-numeric" style={ { color: props.attributes.textColor } }> { itemIndex + 1 }. </span> }
 						<a href={ getTarget( item.target ) } style={ { color: props.attributes.textColor } }>
 							<h3 className={ className + '-table-item-heading' } style={ { color: props.attributes.textColor } }> { item.heading }</h3>
 						</a>

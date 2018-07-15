@@ -16,7 +16,7 @@ const {
  */
 export default class Inspector extends Component {
 	render() {
-		const { attributes, onTargetChange, onTextColorChange, onBackgroundColorChange, onBulletStyleChange } = this.props;
+		const { attributes, onTargetChange, onTextColorChange, onBackgroundColorChange, onBulletStyleChange, onHeaderTitleColorChange, onHeaderTitleBackgroundChange } = this.props;
 		return (
 			<InspectorControls>
 				<PanelBody title={ __( 'Target ID' ) } initialOpen={ true }>
@@ -27,7 +27,7 @@ export default class Inspector extends Component {
 						onChange={ onTargetChange }
 					/> }
 				</PanelBody>
-				<PanelBody title={ __( 'Bullet Style' ) } initialOpen={ true }>
+				<PanelBody title={ __( 'Bullet Style' ) } initialOpen={ false }>
 					<DropdownMenu
 						label="Bullet Style"
 						controls={ [
@@ -44,28 +44,52 @@ export default class Inspector extends Component {
 						] }
 					/>
 				</PanelBody>
-				<PanelColor
-					title={ __( 'Background Color' ) }
-					colorValue={ this.props.attributes.backgroundColor }
-					initialOpen={ true }
-				>
-					<ColorPalette
-						value={ this.props.attributes.backgroundColor }
-						onChange={ onBackgroundColorChange }
-						allowReset
-					/>
-				</PanelColor>
-				<PanelColor
-					title={ __( 'Text Color' ) }
-					colorValue={ this.props.attributes.textColor }
-					initialOpen={ true }
-				>
-					<ColorPalette
-						value={ this.props.attributes.textColor }
-						onChange={ onTextColorChange }
-						allowReset
-					/>
-				</PanelColor>
+				<PanelBody title={ __( 'Theme' ) } initialOpen={ false }>
+					<PanelColor
+						title={ __( 'Header Text' ) }
+						colorValue={ attributes.headerTitleColor }
+						initialOpen={ false }
+					>
+						<ColorPalette
+							value={ attributes.headerTitleColor }
+							onChange={ onHeaderTitleColorChange }
+							allowReset
+						/>
+					</PanelColor>
+					<PanelColor
+						title={ __( 'Header Background' ) }
+						colorValue={ attributes.headerTitleBackground }
+						initialOpen={ false }
+					>
+						<ColorPalette
+							value={ attributes.headerTitleBackground }
+							onChange={ onHeaderTitleBackgroundChange }
+							allowReset
+						/>
+					</PanelColor>
+					<PanelColor
+						title={ __( 'Body Background' ) }
+						colorValue={ this.props.attributes.backgroundColor }
+						initialOpen={ false }
+					>
+						<ColorPalette
+							value={ this.props.attributes.backgroundColor }
+							onChange={ onBackgroundColorChange }
+							allowReset
+						/>
+					</PanelColor>
+					<PanelColor
+						title={ __( 'Body Text' ) }
+						colorValue={ this.props.attributes.textColor }
+						initialOpen={ false }
+					>
+						<ColorPalette
+							value={ this.props.attributes.textColor }
+							onChange={ onTextColorChange }
+							allowReset
+						/>
+					</PanelColor>
+				</PanelBody>
 			</InspectorControls>
 		);
 	}

@@ -1,9 +1,19 @@
 .wp-block-ub-table-of-contents {
-	padding: 15px 30px;
+	&-table-header {
+		padding: 15px;
+		&-title {
+			text-align: center;
+			font-size: 30px;
+			color: inherit;
+			margin: 0 !important;
+			font-weight: bold !important;
+		}
+	}
 	&-table-items {
+		padding: 15px !important;
 		list-style-type: none !important;
 		.wp-block-ub-table-of-contents-table-item {
-			.wp-block-ub-table-of-contents-table-items {
+			> .wp-block-ub-table-of-contents-table-items {
 				padding-left: 25px;
 			}
 			.wp-block-ub-table-of-contents-table-item-heading-wrap {

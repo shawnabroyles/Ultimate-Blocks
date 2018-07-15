@@ -43,13 +43,25 @@ registerBlockType( 'ub/table-of-contents', {
 		__( 'Ultimate Blocks' ),
 	],
 	attributes: {
+		headerTitle: {
+			type: 'string',
+			default: 'Quick Navigation',
+		},
+		headerTitleBackground: {
+			type: 'string',
+			default: '#8ed1fc',
+		},
+		headerTitleColor: {
+			type: 'string',
+			default: '#ffffff',
+		},
 		backgroundColor: {
 			type: 'string',
-			default: '#d3d3d3',
+			default: '#8ed1fc',
 		},
 		textColor: {
 			type: 'string',
-			default: '#333',
+			default: '#ffffff',
 		},
 		tableItems: {
 			type: 'string',
@@ -153,6 +165,18 @@ registerBlockType( 'ub/table-of-contents', {
 			setAttributes( { selectedItem: item } );
 		};
 
+		const onHeaderTitleChange = ( title ) => {
+			setAttributes( { headerTitle: title } );
+		};
+
+		const onHeaderTitleColorChange = ( color ) => {
+			setAttributes( { headerTitleColor: color } );
+		};
+
+		const onHeaderTitleBackgroundChange = ( color ) => {
+			setAttributes( { headerTitleBackground: color } );
+		};
+
 		const onTargetChange = ( targetId ) => {
 			const selectedItemObj = findSelectedItemObj( tableItems, attributes.selectedItem.path.slice( 0 ) );
 			selectedItemObj.target = targetId;
@@ -173,7 +197,7 @@ registerBlockType( 'ub/table-of-contents', {
 							className={ className + '-table-item-heading' }
 							value={ item.heading }
 							onChange={ ( content ) => onChangeItemTitle( content, item ) }
-							placeholder="Tab Title"
+							placeholder="Enter Table Heading"
 						/>
 						<div className={ className + '-table-item-heading-actions' }>
 							<span title="Add Child Heading" className={ 'dashicons dashicons-plus' } onClick={ () => addTableItem( item ) }></span>
@@ -200,8 +224,19 @@ registerBlockType( 'ub/table-of-contents', {
 		};
 
 		return [
-			isSelected && <Inspector { ...{ attributes, onTargetChange, tableItems, onBackgroundColorChange, onTextColorChange, onBulletStyleChange } } key="inspector" />,
+			isSelected && <Inspector { ...{ attributes, onTargetChange, tableItems, onBackgroundColorChange, onTextColorChange, onBulletStyleChange, onHeaderTitleChange, onHeaderTitleColorChange, onHeaderTitleBackgroundChange } } key="inspector" />,
 			<div className={ className } key="table-of-content" style={ { backgroundColor: attributes.backgroundColor } }>
+				<div className={ className + '-table-header' } style={ { color: attributes.headerTitleColor, backgroundColor: attributes.headerTitleBackground } }>
+					<RichText
+						tagName="h2"
+						className={ className + '-table-header-title' }
+						value={ attributes.headerTitle }
+						onChange={ ( title ) => onHeaderTitleChange( title ) }
+						placeholder="Quick Navigation"
+						isSelected={ isSelected }
+						formattingControls={ [ 'bold', 'italic' ] }
+					/>
+				</div>
 				<ul className={ className + '-table-items' }>
 					{
 						generateItems( tableItems )
@@ -241,6 +276,9 @@ registerBlockType( 'ub/table-of-contents', {
 		};
 
 		return <div style={ { backgroundColor: props.attributes.backgroundColor } }>
+			<div className={ className + '-table-header' } style={ { color: props.attributes.headerTitleColor, backgroundColor: props.attributes.headerTitleBackground } }>
+				<h2 className={ className + '-table-header-title' }>{ props.attributes.headerTitle }</h2>
+			</div>
 			<ul className={ className + '-table-items' }>
 				{
 					generateItems( tableItems )

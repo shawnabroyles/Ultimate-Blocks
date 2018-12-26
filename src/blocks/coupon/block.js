@@ -20,7 +20,8 @@ const {
 	PanelBody,
 	PanelRow,
 	FormToggle,
-	SelectControl
+	SelectControl,
+	RangeControl
 } = wp.components;
 
 import './style.scss';
@@ -31,7 +32,9 @@ import autosize from 'autosize';
 import icon, {
 	placeholderImage1,
 	placeholderImage2,
-	removeImage
+	removeImage,
+	pricetag,
+	scissors
 } from './icons';
 
 class OneLineInput extends Component {
@@ -54,7 +57,7 @@ class OneLineInput extends Component {
 		return (
 			<textarea
 				style={style}
-				className={'wpcd-one-line-input ' + className}
+				className={`wpcd-one-line-input ${className ? className : ''}`}
 				onChange={this.onChange}
 				placeholder={placeholder}
 				value={value}
@@ -116,10 +119,10 @@ class Timer extends Component {
 				`${weeks} weeks ${days} days ${hours} hours ` +
 				defaultTimeDisplay;
 
-		let classes = this.props.className;
-		if (timeLeft < 1) classes += ' wpcd-countdown-expired';
+		const { className, style } = this.props;
+
 		return (
-			<span className={classes}>{` ${
+			<span className={className} style={style}>{` ${
 				timeLeft > 0 ? timeDisplay : 'This offer has expired'
 			}`}</span>
 		);
@@ -225,6 +228,14 @@ registerBlockType('ub/wpcd-coupons-and-deals', {
 		couponColor: {
 			type: 'string',
 			default: '#18e066f'
+		},
+		wordLimit: {
+			type: 'number',
+			default: 30
+		},
+		showSocialLinks: {
+			type: 'boolean',
+			default: false
 		}
 	},
 
@@ -237,6 +248,8 @@ registerBlockType('ub/wpcd-coupons-and-deals', {
 			couponCode2,
 			couponCode3,
 			targetURL,
+			targetURL2,
+			targetURL3,
 			discountText,
 			discountText2,
 			discountText3,
@@ -251,7 +264,9 @@ registerBlockType('ub/wpcd-coupons-and-deals', {
 			couponColor,
 			imgURL,
 			imgID,
-			imgAlt
+			imgAlt,
+			wordLimit,
+			showSocialLinks
 		} = props.attributes;
 
 		const getDateFrom = unixTime =>
@@ -262,19 +277,19 @@ registerBlockType('ub/wpcd-coupons-and-deals', {
 		let expiryDate3 = getDateFrom(expiryTime3);
 
 		const alternateStyle = (
-			<div className="wpcd-new-grid-container">
-				<div className="wpcd-new-grid-one">
+			<div className="wpcd-new-alt-grid-container">
+				<div className="wpcd-new-alt-grid-one">
 					<OneLineInput
-						className="wpcd-new-discount-text editor-plain-text"
+						className="wpcd-new-alt-discount-text editor-plain-text"
 						placeholder={__('Discount Text')}
 						value={discountText}
 						onChange={value =>
 							setAttributes({ discountText: value })
 						}
 					/>
-					<div class="wpcd-new-coupon-type">{couponType}</div>
+					<div class="wpcd-new-alt-coupon-type">{couponType}</div>
 					{showExpiryDate && (
-						<p className="wpcd-new-expire-text">
+						<p className="wpcd-new-alt-expire-text">
 							{couponExpires
 								? (expiryDate > Date.now()
 										? __('Expires on: ')
@@ -284,10 +299,10 @@ registerBlockType('ub/wpcd-coupons-and-deals', {
 						</p>
 					)}
 				</div>
-				<div className="wpcd-new-grid-two">
+				<div className="wpcd-new-alt-grid-two">
 					<OneLineInput
-						className="wpcd-new-title editor-plain-text"
-						placeholder={__('Sample coupon code')}
+						className="wpcd-new-alt-title editor-plain-text"
+						placeholder={__('Coupon title')}
 						value={couponTitle}
 						onChange={value =>
 							setAttributes({ couponTitle: value })
@@ -295,7 +310,6 @@ registerBlockType('ub/wpcd-coupons-and-deals', {
 					/>
 					<RichText
 						style={{ width: '100%' }}
-						className="wpcd-coupon-description"
 						placeholder={__(
 							'This is the description of the coupon code. Additional details of what the coupon or deal is.'
 						)}
@@ -308,26 +322,44 @@ registerBlockType('ub/wpcd-coupons-and-deals', {
 						keepPlaceholderOnFocus={true}
 					/>
 				</div>
-				<div className="wpcd-new-grid-three">
-					<a className="wpcd-new-goto-button" href={targetURL}>
-						{__('GO TO THE DEAL')}
+				<div className="wpcd-new-alt-grid-three">
+					{/*add  href={targetURL} on frontend for both links */}
+					<a className="wpcd-new-alt-goto-button">
+						{__(
+							couponType === 'Coupon'
+								? 'GET THIS COUPON'
+								: 'GO TO THE DEAL'
+						)}
 					</a>
-					<a className="wpcd-new-coupon-code" href={targetURL}>
-						<OneLineInput
-							className="editor-plain-text"
-							placeholder={__('COUPONCODE')}
-							value={couponCode}
-							onChange={value =>
-								setAttributes({ couponCode: value })
-							}
-						/>
-					</a>
-					{/*<a className="wpcd-new-coupon-code" href={targetURL}>
-						{couponCode ? couponCode : 'COUPONCODE'}
-                    </a>*/}
+					{showCode ? (
+						<a className="wpcd-new-alt-coupon-code">
+							<OneLineInput
+								className="editor-plain-text"
+								placeholder={__('COUPONCODE')}
+								value={couponCode}
+								onChange={value =>
+									setAttributes({ couponCode: value })
+								}
+							/>
+						</a>
+					) : (
+						<div
+							className="wpcd-new-hidden-code"
+							title="Click Here to Show Code"
+						>
+							<OneLineInput
+								placeholder={__('COUPONCODE')}
+								value={couponCode}
+								onChange={value =>
+									setAttributes({
+										couponCode: value
+									})
+								}
+							/>
+						</div>
+					)}
 				</div>
-				<br />
-				<div>
+				<div className="wpcd-url-input">
 					{isSelected && (
 						<form
 							key={'form-link'}
@@ -343,6 +375,7 @@ registerBlockType('ub/wpcd-coupons-and-deals', {
 								<Icon icon="admin-links" />
 							</div>
 							<URLInput
+								autoFocus={false}
 								className="button-url"
 								value={targetURL}
 								onChange={value =>
@@ -361,148 +394,116 @@ registerBlockType('ub/wpcd-coupons-and-deals', {
 		);
 
 		const defaultStyle = (
-			<div
-				className="wpcd-coupon-preview wpcd-coupon wpcd-coupon-default"
-				style={{ display: 'table' }}
-			>
-				<div className="wpcd-col-1-8">
-					<OneLineInput
-						className="wpcd-coupon-discount-text editor-plain-text"
-						placeholder={__('Discount Text')}
-						value={discountText}
-						onChange={value =>
-							setAttributes({ discountText: value })
-						}
-					/>
-					<div className="coupon-type">{couponType}</div>
-				</div>
-				<div className="wpcd-coupon-content wpcd-col-7-8">
-					<div className="wpcd-coupon-header">
-						<div className="wpcd-col-3-4">
-							<OneLineInput
-								className="wpcd-coupon-title editor-plain-text"
-								style={{ fontSize: '21px' }}
-								placeholder={__('Sample coupon code')}
-								value={couponTitle}
-								onChange={value =>
-									setAttributes({ couponTitle: value })
-								}
-							/>
-						</div>
-						<div className="wpcd-col-1-4">
-							{showCode ? (
-								<div
-									className={`wpcd-${couponType.toLowerCase()}-code`}
-								>
-									<button
-										className={`wpcd-btn masterTooltip wpcd-${couponType.toLowerCase()}-button`}
-										title={`Click here to ${
-											couponType === 'Coupon'
-												? 'copy '
-												: 'get this '
-										}${couponType}`}
-										data-clipboard-text={couponCode}
-									>
-										<span
-											className={`wpcd_${couponType.toLowerCase()}_icon`}
-										/>
-										<OneLineInput
-											style={{ width: '100%' }}
-											className={`${couponType.toLowerCase()}-code-button`}
-											placeholder={__('COUPONCODE')}
-											value={couponCode}
-											onChange={value =>
-												setAttributes({
-													couponCode: value
-												})
-											}
-										/>
-									</button>
-								</div>
-							) : (
-								<div className="coupon-code-wpcd coupon-detail wpcd-coupon-button-type">
-									{/*DISPLAY ON FRONT-END
-                                    <span className="get-code-wpcd">
-											{__('Show Code')}
-										</span>
-                                    */}
-									<a
-										data-type="code"
-										href="#"
-										className="coupon-button coupon-code-wpcd masterTooltip"
-										title="Click Here to Show Code"
-										data-position="top center"
-										data-inverted=""
-										data-aff-url={targetURL}
-									>
-										<OneLineInput
-											style={{ width: '100%' }}
-											className="code-text-wpcd"
-											placeholder={__('COUPONCODE')}
-											value={couponCode}
-											onChange={value =>
-												setAttributes({
-													couponCode: value
-												})
-											}
-										/>
-									</a>
-								</div>
-							)}
-						</div>
+			<div className="wpcd-new-default-style">
+				<div className="wpcd-new-default-discount-display">
+					<div className="wpcd-new-default-discount-text">
+						<OneLineInput
+							className="editor-plain-text"
+							style={{ textAlign: 'center' }}
+							placeholder={__('Discount Text')}
+							value={discountText}
+							onChange={value =>
+								setAttributes({ discountText: value })
+							}
+						/>
 					</div>
-
-					<div className="wpcd-extra-content">
-						<div className="wpcd-col-3-4">
-							<div className="wpcd-coupon-description">
-								<RichText
-									style={{ width: '100%' }}
-									className="wpcd-coupon-description"
-									placeholder={__(
-										'This is the description of the coupon code. Additional details of what the coupon or deal is.'
-									)}
-									value={couponText}
+					<div className="wpcd-new-default-coupon-type">
+						{couponType}
+					</div>
+				</div>
+				<div className="wpcd-new-default-body">
+					<div className="wpcd-new-default-header">
+						<OneLineInput
+							className="wpcd-new-default-coupon-title editor-plain-text"
+							placeholder={__('Coupon title')}
+							value={couponTitle}
+							onChange={value =>
+								setAttributes({ couponTitle: value })
+							}
+						/>
+						{showCode ? (
+							<div
+								className="wpcd-new-visible-code-variant-1"
+								title={`Click here to ${
+									couponType === 'Coupon'
+										? 'copy '
+										: 'get this '
+								}${couponType}`}
+							>
+								<div className="wpcd-new-iconholder">
+									{couponType === 'Coupon'
+										? scissors
+										: pricetag}
+								</div>
+								<OneLineInput
+									placeholder={__('COUPONCODE')}
+									value={couponCode}
+									style={{ width: '100%', color: '#347baf' }}
 									onChange={value =>
 										setAttributes({
-											couponText: value
+											couponCode: value
 										})
 									}
-									keepPlaceholderOnFocus={true}
 								/>
 							</div>
-						</div>
-
-						<div className="wpcd-col-1-4">
-							{showExpiryDate && couponExpires ? (
-								<div className="with-expiration1">
-									<div
-										className={
-											expiryDate > Date.now()
-												? 'wpcd-coupon-expire expire-text-block1'
-												: 'wpcd-coupon-expired expired-text-block1'
+						) : (
+							<div className="wpcd-new-hidden-code">
+								<a href="#" title="Click Here to Show Code">
+									<OneLineInput
+										placeholder={__('COUPONCODE')}
+										value={couponCode}
+										onChange={value =>
+											setAttributes({
+												couponCode: value
+											})
 										}
-									>
-										{expiryDate > Date.now()
-											? __('Expires on: ')
-											: __('Expired on: ')}
-										<span className="expiration-date">
-											{new Date(
-												expiryDate
-											).toLocaleDateString()}
-										</span>
-									</div>
-								</div>
-							) : (
-								<div className="wpcd-coupon-expire without-expiration1">
-									{__("Doesn't expire")}
-								</div>
+									/>
+								</a>
+							</div>
+						)}
+					</div>
+					<div className="wpcd-new-default-footer">
+						<RichText
+							className="wpcd-new-default-description"
+							placeholder={__(
+								'This is the description of the coupon code. Additional details of what the coupon or deal is.'
 							)}
-						</div>
+							value={couponText}
+							onChange={value =>
+								setAttributes({
+									couponText: value
+								})
+							}
+							keepPlaceholderOnFocus={true}
+						/>
+
+						{showExpiryDate && couponExpires ? (
+							<div
+								className="wpcd-new-default-coupon-expiry"
+								style={{
+									color:
+										expiryDate > Date.now()
+											? 'green'
+											: 'red'
+								}}
+							>
+								{(expiryDate > Date.now()
+									? __('Expires on: ')
+									: __('Expired on: ')) +
+									new Date(expiryDate).toLocaleDateString()}
+							</div>
+						) : (
+							<div
+								className="wpcd-new-default-coupon-expiry"
+								style={{ color: 'green' }}
+							>
+								{__("Doesn't expire")}
+							</div>
+						)}
 					</div>
 				</div>
 
-				<br />
-				<div>
+				<div className="wpcd-url-input">
 					{isSelected && (
 						<form
 							key={'form-link'}
@@ -518,6 +519,7 @@ registerBlockType('ub/wpcd-coupons-and-deals', {
 								<Icon icon="admin-links" />
 							</div>
 							<URLInput
+								autoFocus={false}
 								className="button-url"
 								value={targetURL}
 								onChange={value =>
@@ -536,70 +538,66 @@ registerBlockType('ub/wpcd-coupons-and-deals', {
 		);
 
 		const template1 = (
-			<div
-				className="wpcd-coupon-preview wpcd-coupon-one"
-				style={{ display: 'block' }}
-			>
-				<div className="wpcd-col-one-1-8">
-					<figure
-						className="wpcd-coupon-one-img wpcd-get-featured-img"
-						style={{ position: 'relative' }}
-					>
-						{imgID ? (
-							<React.Fragment>
+			<div className="wpcd-new-pro-style-1">
+				<figure style={{ position: 'relative' }}>
+					{imgID ? (
+						<React.Fragment>
+							<div style={{ margin: '0 auto' }}>
 								<img src={imgURL} alt={imgAlt} />
-								{isSelected && (
+							</div>
+							{isSelected && (
+								<Button
+									style={{
+										position: 'absolute',
+										top: 0,
+										right: 0
+									}}
+									onClick={() =>
+										setAttributes({
+											imgID: null,
+											imgURL: null,
+											imgAlt: null
+										})
+									}
+								>
+									{removeImage}
+								</Button>
+							)}
+						</React.Fragment>
+					) : (
+						<React.Fragment>
+							<div style={{ margin: '0 auto' }}>
+								{placeholderImage1}
+							</div>
+							<MediaUpload
+								onSelect={img => {
+									setAttributes({
+										imgID: img.id,
+										imgURL: img.url,
+										imgAlt: img.alt
+									});
+								}}
+								type="image"
+								value={imgID}
+								render={({ open }) => (
 									<Button
+										className="components-button button button-medium"
+										onClick={open}
 										style={{
-											position: 'absolute',
-											top: 0,
-											right: 0
+											fontSize: '11px',
+											width: '100%'
 										}}
-										onClick={() =>
-											setAttributes({
-												imgID: null,
-												imgURL: null,
-												imgAlt: null
-											})
-										}
 									>
-										{removeImage}
+										Upload Image
 									</Button>
 								)}
-							</React.Fragment>
-						) : (
-							<React.Fragment>
-								{placeholderImage1}
-								<MediaUpload
-									onSelect={img => {
-										setAttributes({
-											imgID: img.id,
-											imgURL: img.url,
-											imgAlt: img.alt
-										});
-									}}
-									type="image"
-									value={imgID}
-									render={({ open }) => (
-										<Button
-											className="components-button button button-medium"
-											onClick={open}
-											style={{
-												fontSize: '11px',
-												width: '100%'
-											}}
-										>
-											Upload Image
-										</Button>
-									)}
-								/>
-							</React.Fragment>
-						)}
-					</figure>
-				</div>
-				<div className="wpcd-col-one-7-8">
+							/>
+						</React.Fragment>
+					)}
+				</figure>
+				<div className="wpcd-new-pro-style-1-title-desc">
 					<OneLineInput
-						className="wpcd-coupon-one-title editor-plain-text"
+						className="editor-plain-text"
 						style={{ fontSize: '22px', fontWeight: 600 }}
 						placeholder={__('Sample coupon code')}
 						value={couponTitle}
@@ -609,7 +607,6 @@ registerBlockType('ub/wpcd-coupons-and-deals', {
 					/>
 					<RichText
 						style={{ width: '100%' }}
-						className="wpcd-coupon-description"
 						placeholder={__(
 							'This is the description of the coupon code. Additional details of what the coupon or deal is.'
 						)}
@@ -622,9 +619,9 @@ registerBlockType('ub/wpcd-coupons-and-deals', {
 						keepPlaceholderOnFocus={true}
 					/>
 				</div>
-				<div className="wpcd-col-one-1-4">
+				<div className="wpcd-new-pro-style-1-coupon-data">
 					<OneLineInput
-						className="wpcd-coupon-one-discount-text editor-plain-text"
+						className="editor-plain-text"
 						placeholder={__('Discount Text')}
 						value={discountText}
 						onChange={value =>
@@ -632,49 +629,31 @@ registerBlockType('ub/wpcd-coupons-and-deals', {
 						}
 					/>
 					{showCode ? (
-						<div>
-							<div
-								className={`wpcd-${couponType.toLowerCase()}-code`}
-							>
-								<button
-									className={`wpcd-btn masterTooltip wpcd-${couponType.toLowerCase()}-button`}
-									title={`Click here to ${
-										couponType === 'Coupon'
-											? 'copy '
-											: 'get this '
-									}${couponType}`}
-									data-clipboard-text={couponCode}
-								>
-									<span
-										className={`wpcd_${couponType.toLowerCase()}_icon`}
-									/>
-									<OneLineInput
-										style={{ width: '100%' }}
-										className={`${couponType.toLowerCase()}-code-button`}
-										placeholder={__('COUPONCODE')}
-										value={couponCode}
-										onChange={value =>
-											setAttributes({
-												couponCode: value
-											})
-										}
-									/>
-								</button>
+						<div
+							className="wpcd-new-visible-code-variant-1"
+							title={`Click here to ${
+								couponType === 'Coupon' ? 'copy ' : 'get this '
+							}${couponType}`}
+						>
+							<div className="wpcd-new-iconholder">
+								{couponType === 'Coupon' ? scissors : pricetag}
 							</div>
+							<OneLineInput
+								style={{ width: '100%', color: '#347baf' }}
+								placeholder={__('COUPONCODE')}
+								value={couponCode}
+								onChange={value =>
+									setAttributes({
+										couponCode: value
+									})
+								}
+							/>
 						</div>
 					) : (
-						<div className="coupon-code-wpcd coupon-detail wpcd-coupon-button-type">
-							<a
-								data-type="code"
-								href="#"
-								class="coupon-button coupon-code-wpcd masterTooltip"
-								title="Click Here to Show Code"
-								data-position="top center"
-								data-inverted=""
-								data-aff-url={targetURL}
-							>
+						<div className="wpcd-new-hidden-code">
+							<a title="Click Here to Show Code">
 								<OneLineInput
-									style={{ width: '100%' }}
+									style={{ width: '100%', color: '#347baf' }}
 									className="code-text-wpcd"
 									placeholder={__('COUPONCODE')}
 									value={couponCode}
@@ -685,36 +664,32 @@ registerBlockType('ub/wpcd-coupons-and-deals', {
 									}
 								/>
 							</a>
-							{/*<span className="get-code-wpcd">Show Code</span>*/}
 						</div>
 					)}
 					{showExpiryDate && couponExpires ? (
-						<div className="with-expiration1">
-							<div
-								className={
-									expiryDate > Date.now()
-										? 'wpcd-coupon-one-expire expire-text-block1'
-										: 'wpcd-coupon-one-expired expired-text-block1'
-								}
-							>
-								{expiryDate > Date.now()
-									? __('Expires on: ')
-									: __('Expired on: ')}
-								<span className="expiration-date">
-									{new Date(expiryDate).toLocaleDateString()}
-								</span>
-							</div>
+						<div
+							className="wpcd-new-pro-style-1-expiry"
+							style={{
+								color: expiryDate > Date.now() ? 'green' : 'red'
+							}}
+						>
+							{(expiryDate > Date.now()
+								? __('Expires on: ')
+								: __('Expired on: ')) +
+								new Date(expiryDate).toLocaleDateString()}
 						</div>
 					) : (
-						<div className="wpcd-coupon-one-expire without-expiration1">
+						<div
+							className="wpcd-new-pro-style-1-expiry"
+							style={{ color: 'green' }}
+						>
 							Doesn't expire
 						</div>
 					)}
 				</div>
 
-				<br />
-				<div>
-					{isSelected && (
+				{isSelected && (
+					<div className="wpcd-url-input">
 						<form
 							key={'form-link'}
 							onSubmit={event => event.preventDefault()}
@@ -729,6 +704,7 @@ registerBlockType('ub/wpcd-coupons-and-deals', {
 								<Icon icon="admin-links" />
 							</div>
 							<URLInput
+								autoFocus={false}
 								className="button-url"
 								value={targetURL}
 								onChange={value =>
@@ -741,18 +717,15 @@ registerBlockType('ub/wpcd-coupons-and-deals', {
 								type={'submit'}
 							/>
 						</form>
-					)}
-				</div>
+					</div>
+				)}
 			</div>
 		);
 
 		const template2 = (
-			<div className="wpcd-coupon-preview wpcd-coupon-two">
-				<div className="wpcd-col-two-1-4">
-					<figure
-						className="wpcd-coupon-two-img wpcd-get-fetured-img"
-						style={{ position: 'relative' }}
-					>
+			<div className="wpcd-new-pro-style-2">
+				<div className="wpcd-new-pro-style-2-img-and-discount-text">
+					<figure style={{ position: 'relative' }}>
 						{imgID ? (
 							<React.Fragment>
 								<img src={imgURL} alt={imgAlt} />
@@ -804,20 +777,21 @@ registerBlockType('ub/wpcd-coupons-and-deals', {
 							</React.Fragment>
 						)}
 					</figure>
-					<OneLineInput
-						className="wpcd-coupon-two-discount-text editor-plain-text"
-						placeholder={__('Discount Text')}
-						value={discountText}
-						onChange={value =>
-							setAttributes({ discountText: value })
-						}
-					/>
-				</div>
-				<div className="wpcd-col-two-3-4">
-					<div className="wpcd-coupon-two-header">
+					<div className="wpcd-new-pro-style-2-discount-text">
 						<OneLineInput
-							className="wpcd-coupon-two-header editor-plain-text"
-							style={{ fontSize: '22px', fontWeight: 600 }}
+							className="editor-plain-text"
+							placeholder={__('Discount Text')}
+							value={discountText}
+							onChange={value =>
+								setAttributes({ discountText: value })
+							}
+						/>
+					</div>
+				</div>
+				<div className="wpcd-new-pro-style-2-content">
+					<div className="wpcd-new-pro-style-2-title">
+						<OneLineInput
+							className="editor-plain-text"
 							placeholder={__('Sample coupon code')}
 							value={couponTitle}
 							onChange={value =>
@@ -825,59 +799,59 @@ registerBlockType('ub/wpcd-coupons-and-deals', {
 							}
 						/>
 					</div>
-					<div className="wpcd-coupon-two-info">
-						<div className="wpcd-coupon-two-title">
-							{showExpiryDate && couponExpires ? (
-								<b className="expires-on">
-									<span>Expires in:</span>
-									<Timer
-										className="wpcd-coupon-two-countdown"
-										deadline={expiryTime}
-									/>
-								</b>
-							) : (
-								<b className="never-expire">Doesn't expire</b>
-							)}
-						</div>
-						<div className="wpcd-coupon-two-coupon">
-							{showExpiryDate && couponExpires ? (
+					<div className="wpcd-new-pro-style-2-expiry-and-code">
+						{showExpiryDate && couponExpires ? (
+							<div className="wpcd-new-pro-style-2-expiry">
+								Expires in:
+								<Timer
+									style={{
+										color:
+											expiryDate > Date.now()
+												? 'green'
+												: 'red'
+									}}
+									deadline={expiryTime}
+								/>
+							</div>
+						) : (
+							<div className="wpcd-new-pro-style-2-expiry">
+								Doesn't expire
+							</div>
+						)}
+						<div>
+							{showCode ? (
 								<div
-									className={`wpcd-${couponType.toLowerCase()}-code`}
+									className="wpcd-new-visible-code-variant-1"
+									title={`Click here to ${
+										couponType === 'Coupon'
+											? 'copy '
+											: 'get this '
+									}${couponType}`}
 								>
-									<button
-										className={`wpcd-btn masterTooltip wpcd-${couponType.toLowerCase()}-button`}
-										title={`Click here to ${
-											couponType === 'Coupon'
-												? 'copy '
-												: 'get this '
-										}${couponType}`}
-										data-clipboard-text={couponCode}
-									>
-										<span
-											className={`wpcd_${couponType.toLowerCase()}_icon`}
-										/>
-										<OneLineInput
-											style={{ width: '100%' }}
-											className={`${couponType.toLowerCase()}-code-button`}
-											placeholder={__('COUPONCODE')}
-											value={couponCode}
-											onChange={value =>
-												setAttributes({
-													couponCode: value
-												})
-											}
-										/>
-									</button>
+									<div className="wpcd-new-iconholder">
+										{couponType === 'Coupon'
+											? scissors
+											: pricetag}
+									</div>
+									<OneLineInput
+										style={{
+											width: '100%',
+											color: '#347baf'
+										}}
+										placeholder={__('COUPONCODE')}
+										value={couponCode}
+										onChange={value =>
+											setAttributes({
+												couponCode: value
+											})
+										}
+									/>
 								</div>
 							) : (
-								<div className="coupon-code-wpcd coupon-detail wpcd-coupon-button-type">
+								<div className="wpcd-new-hidden-code">
 									<a
 										data-type="code"
 										href=""
-										className="coupon-button coupon-code-wpcd masterTooltip"
-										data-position="top center"
-										data-inverted=""
-										data-aff-url="http://example.com"
 										title="Click Here to Show Code"
 									>
 										<OneLineInput
@@ -891,19 +865,14 @@ registerBlockType('ub/wpcd-coupons-and-deals', {
 												})
 											}
 										/>
-										{/*<span className="get-code-wpcd">
-										Show Code
-                                    </span>*/}
 									</a>
 								</div>
 							)}
 						</div>
-						<div id="clear" />
 					</div>
-					<div id="clear" />
 					<RichText
+						className="wpcd-new-pro-style-2-description"
 						style={{ width: '100%' }}
-						className="wpcd-coupon-description"
 						placeholder={__(
 							'This is the description of the coupon code. Additional details of what the coupon or deal is.'
 						)}
@@ -917,14 +886,9 @@ registerBlockType('ub/wpcd-coupons-and-deals', {
 					/>
 				</div>
 
-				<br />
-				<div>
+				<div className="wpcd-url-input">
 					{isSelected && (
-						<form
-							key={'form-link'}
-							onSubmit={event => event.preventDefault()}
-							className={`editor-format-toolbar__link-modal-line flex-container`}
-						>
+						<div>
 							<div
 								style={{
 									position: 'relative',
@@ -934,6 +898,7 @@ registerBlockType('ub/wpcd-coupons-and-deals', {
 								<Icon icon="admin-links" />
 							</div>
 							<URLInput
+								autoFocus={false}
 								className="button-url"
 								value={targetURL}
 								onChange={value =>
@@ -945,120 +910,75 @@ registerBlockType('ub/wpcd-coupons-and-deals', {
 								label={__('Apply')}
 								type={'submit'}
 							/>
-						</form>
+						</div>
 					)}
 				</div>
 			</div>
 		);
 
 		const template3 = (
-			<div
-				className="wpcd-coupon-preview wpcd-coupon-three"
-				style={{ display: 'block' }}
-			>
-				<div className="wpcd-coupon-three-content">
-					<OneLineInput
-						className="wpcd-coupon-three-title editor-plain-text"
-						style={{ fontSize: '22px' }}
-						placeholder={__('Sample coupon code')}
-						value={couponTitle}
-						onChange={value =>
-							setAttributes({ couponTitle: value })
-						}
-					/>
-					<RichText
-						style={{ width: '100%' }}
-						className="wpcd-coupon-description"
-						placeholder={__(
-							'This is the description of the coupon code. Additional details of what the coupon or deal is.'
-						)}
-						value={couponText}
-						onChange={value =>
-							setAttributes({
-								couponText: value
-							})
-						}
-						keepPlaceholderOnFocus={true}
-					/>
-				</div>
-				<div className="wpcd-coupon-three-info">
-					<div className="wpcd-coupon-three-info-left">
-						{showExpiryDate && couponExpires ? (
-							<div className="with-expiration1">
-								<div
-									className={
-										expiryDate > Date.now()
-											? 'wpcd-coupon-three-expire'
-											: 'wpcd-coupon-three-expired expired-text-block1'
-									}
-								>
-									<p
-										className={
-											expiryDate > Date.now()
-												? 'wpcd-coupon-three-expire-text'
-												: 'wpcd-coupon-three-expired'
-										}
-									>
-										{expiryDate > Date.now()
-											? __('Expires on: ')
-											: __('Expired on: ')}
-										<span className="expiration-date">
-											{new Date(
-												expiryDate
-											).toLocaleDateString()}
-										</span>
-									</p>
-								</div>
-							</div>
-						) : (
-							<div className="wpcd-coupon-three-expire without-expiration1">
-								<p>Doesn't expire</p>
-							</div>
-						)}
-					</div>
-
-					{showCode ? (
-						<div className="wpcd-coupon-three-coupon">
-							<div
-								className={`wpcd-${couponType.toLowerCase()}-code`}
-							>
-								<button
-									className={`wpcd-btn masterTooltip wpcd-${couponType.toLowerCase()}-button`}
-									title={`Click here to ${
-										couponType === 'Coupon'
-											? 'copy '
-											: 'get this '
-									}${couponType}`}
-									data-clipboard-text={couponCode}
-								>
-									<span
-										className={`wpcd_${couponType.toLowerCase()}_icon`}
-									/>
-									<OneLineInput
-										style={{ width: '100%' }}
-										className={`${couponType.toLowerCase()}-code-button`}
-										placeholder={__('COUPONCODE')}
-										value={couponCode}
-										onChange={value =>
-											setAttributes({
-												couponCode: value
-											})
-										}
-									/>
-								</button>
-							</div>
+			<div className="wpcd-new-pro-style-3">
+				<OneLineInput
+					className="editor-plain-text"
+					style={{ fontSize: '22px' }}
+					placeholder={__('Sample coupon code')}
+					value={couponTitle}
+					onChange={value => setAttributes({ couponTitle: value })}
+				/>
+				<RichText
+					style={{ width: '100%' }}
+					placeholder={__(
+						'This is the description of the coupon code. Additional details of what the coupon or deal is.'
+					)}
+					value={couponText}
+					onChange={value =>
+						setAttributes({
+							couponText: value
+						})
+					}
+					keepPlaceholderOnFocus={true}
+				/>
+				<div className="wpcd-new-pro-style-3-expiry-and-code">
+					{showExpiryDate && couponExpires ? (
+						<div
+							className="wpcd-new-pro-style-3-expiry"
+							style={{
+								color: expiryDate > Date.now() ? 'green' : 'red'
+							}}
+						>
+							{(expiryDate > Date.now()
+								? __('Expires on: ')
+								: __('Expired on: ')) +
+								new Date(expiryDate).toLocaleDateString()}
 						</div>
 					) : (
-						<div className="coupon-code-wpcd coupon-detail wpcd-coupon-button-type">
-							<a
-								data-type="code"
-								href="#"
-								class="coupon-button coupon-code-wpcd masterTooltip"
-								title="Click Here to Show Code"
-								data-position="top center"
-								data-inverted=""
-								data-aff-url={targetURL}
-							>
+						<div style={{ color: 'green' }}>Doesn't expire</div>
+					)}
+
+					{showCode ? (
+						<div
+							className="wpcd-new-visible-code-variant-1"
+							title={`Click here to ${
+								couponType === 'Coupon' ? 'copy ' : 'get this '
+							}${couponType}`}
+						>
+							<div className="wpcd-new-iconholder">
+								{couponType === 'Coupon' ? scissors : pricetag}
+							</div>
+							<OneLineInput
+								style={{ width: '100%', color: '#347baf' }}
+								placeholder={__('COUPONCODE')}
+								value={couponCode}
+								onChange={value =>
+									setAttributes({
+										couponCode: value
+									})
+								}
+							/>
+						</div>
+					) : (
+						<div className="wpcd-new-hidden-code">
+							<a href="#" title="Click Here to Show Code">
 								<OneLineInput
 									style={{ width: '100%' }}
 									className="code-text-wpcd"
@@ -1071,19 +991,13 @@ registerBlockType('ub/wpcd-coupons-and-deals', {
 									}
 								/>
 							</a>
-							{/*<span className="get-code-wpcd">Show Code</span>*/}
 						</div>
 					)}
 				</div>
 
-				<br />
-				<div>
+				<div className="wpcd-url-input">
 					{isSelected && (
-						<form
-							key={'form-link'}
-							onSubmit={event => event.preventDefault()}
-							className={`editor-format-toolbar__link-modal-line flex-container`}
-						>
+						<div>
 							<div
 								style={{
 									position: 'relative',
@@ -1093,6 +1007,7 @@ registerBlockType('ub/wpcd-coupons-and-deals', {
 								<Icon icon="admin-links" />
 							</div>
 							<URLInput
+								autoFocus={false}
 								className="button-url"
 								value={targetURL}
 								onChange={value =>
@@ -1104,16 +1019,16 @@ registerBlockType('ub/wpcd-coupons-and-deals', {
 								label={__('Apply')}
 								type={'submit'}
 							/>
-						</form>
+						</div>
 					)}
 				</div>
 			</div>
 		);
 		const template4 = (
-			<div className="wpcd-coupon-preview wpcd-coupon-four">
-				<div className="wpcd-coupon-four-content">
+			<div className="wpcd-new-pro-style-4">
+				<div className="wpcd-new-pro-style-4-content">
 					<OneLineInput
-						className=" editor-plain-text wpcd-coupon-four-title"
+						className="wpcd-new-pro-style-4-header editor-plain-text"
 						style={{ fontSize: '24px', fontWeight: 600 }}
 						placeholder={__('Sample coupon code')}
 						value={couponTitle}
@@ -1122,7 +1037,6 @@ registerBlockType('ub/wpcd-coupons-and-deals', {
 						}
 					/>
 					<RichText
-						className="wpcd-coupon-description"
 						placeholder={__(
 							'This is the description of the coupon code. Additional details of what the coupon or deal is.'
 						)}
@@ -1136,11 +1050,11 @@ registerBlockType('ub/wpcd-coupons-and-deals', {
 					/>
 				</div>
 
-				<div className="wpcd-coupon-four-info">
-					<div className="wpcd-coupon-four-coupon">
+				<div className="wpcd-new-pro-style-4-coupon-container">
+					<div className="wpcd-new-pro-style-4-coupon">
 						<OneLineInput
 							style={{ textAlign: 'center' }}
-							className="wpcd-coupon-four-discount-text editor-plain-text"
+							className="editor-plain-text"
 							placeholder={__('Discount Text')}
 							value={discountText}
 							onChange={value =>
@@ -1148,50 +1062,35 @@ registerBlockType('ub/wpcd-coupons-and-deals', {
 							}
 						/>
 						{showCode ? (
-							<div>
-								<div
-									className={`wpcd-${couponType.toLowerCase()}-code`}
-								>
-									<button
-										className={`wpcd-btn masterTooltip wpcd-${couponType.toLowerCase()}-button`}
-										title={`Click here to ${
-											couponType === 'Coupon'
-												? 'copy '
-												: 'get this '
-										}${couponType}`}
-										data-clipboard-text={couponCode}
-									>
-										<span
-											className={`wpcd_${couponType.toLowerCase()}_icon`}
-										/>
-										<OneLineInput
-											style={{ width: '100%' }}
-											className={`${couponType.toLowerCase()}-code-button`}
-											placeholder={__('COUPONCODE')}
-											value={couponCode}
-											onChange={value =>
-												setAttributes({
-													couponCode: value
-												})
-											}
-										/>
-									</button>
+							<div
+								className="wpcd-new-visible-code-variant-1"
+								title={`Click here to ${
+									couponType === 'Coupon'
+										? 'copy '
+										: 'get this '
+								}${couponType}`}
+							>
+								<div className="wpcd-new-iconholder">
+									{couponType === 'Coupon'
+										? scissors
+										: pricetag}
 								</div>
+								<OneLineInput
+									style={{ width: '100%', color: '#347baf' }}
+									placeholder={__('COUPONCODE')}
+									value={couponCode}
+									onChange={value =>
+										setAttributes({
+											couponCode: value
+										})
+									}
+								/>
 							</div>
 						) : (
-							<div className="coupon-code-wpcd coupon-detail wpcd-coupon-button-type">
-								<a
-									data-type="code"
-									href="#"
-									class="coupon-button coupon-code-wpcd masterTooltip"
-									title="Click Here to Show Code"
-									data-position="top center"
-									data-inverted=""
-									data-aff-url={targetURL}
-								>
+							<div className="wpcd-new-hidden-code">
+								<a href="#" title="Click Here to Show Code">
 									<OneLineInput
 										style={{ width: '100%' }}
-										className="code-text-wpcd"
 										placeholder={__('COUPONCODE')}
 										value={couponCode}
 										onChange={value =>
@@ -1201,51 +1100,45 @@ registerBlockType('ub/wpcd-coupons-and-deals', {
 										}
 									/>
 								</a>
-								{/*<span className="get-code-wpcd">Show Code</span>*/}
 							</div>
 						)}
-					</div>
-					<div className="wpcd-coupon-four-info-left">
 						{showExpiryDate && couponExpires ? (
-							<div className="with-expiration1">
-								<div
-									className={
+							<div
+								className="wpcd-new-pro-style-4-expiry"
+								style={{
+									color:
 										expiryDate > Date.now()
-											? 'wpcd-coupon-four-expire'
-											: 'wpcd-coupon-four-expired expired-text-block1'
-									}
-								>
-									<p
-										className={
-											expiryDate > Date.now()
-												? 'wpcd-coupon-four-expire-text'
-												: 'wpcd-coupon-four-expired'
-										}
-									>
-										{expiryDate > Date.now()
-											? __('Expires on: ')
-											: __('Expired on: ')}
-										<span className="expiration-date">
-											{new Date(
-												expiryDate
-											).toLocaleDateString()}
-										</span>
-									</p>
-								</div>
+											? 'green'
+											: 'red'
+								}}
+							>
+								{(expiryDate > Date.now()
+									? __('Expires on: ')
+									: __('Expired on: ')) +
+									new Date(expiryDate).toLocaleDateString()}
 							</div>
 						) : (
-							<div className="wpcd-coupon-four-expire without-expiration1">
-								<p>Doesn't expire</p>
+							<div
+								className="wpcd-new-pro-style-4-expiry"
+								style={{ color: 'green' }}
+							>
+								Doesn't expire
 							</div>
 						)}
+						<URLInput
+							autoFocus={false}
+							className="wpcd-new-url-input-test button-url"
+							value={targetURL}
+							onChange={value =>
+								props.setAttributes({ targetURL: value })
+							}
+						/>
 					</div>
-				</div>
 
-				<div className="wpcd-coupon-four-info">
-					<div className="wpcd-coupon-four-coupon">
+					<div className="wpcd-new-pro-style-4-coupon">
 						<OneLineInput
 							style={{ textAlign: 'center' }}
-							className="wpcd-coupon-four-discount-text editor-plain-text"
+							className="editor-plain-text"
 							placeholder={__('Discount Text')}
 							value={discountText2}
 							onChange={value =>
@@ -1253,59 +1146,45 @@ registerBlockType('ub/wpcd-coupons-and-deals', {
 							}
 						/>
 						{showCode ? (
-							<div>
-								<div
-									className={`wpcd-${couponType.toLowerCase()}-code`}
-								>
-									<button
-										className={`wpcd-btn masterTooltip wpcd-${couponType.toLowerCase()}-button`}
-										title={`Click here to ${
-											couponType === 'Coupon'
-												? 'copy '
-												: 'get this '
-										}${couponType}`}
-									>
-										<span
-											className={`wpcd_${couponType.toLowerCase()}_icon`}
-										/>
-										<OneLineInput
-											style={{ width: '100%' }}
-											className={`${couponType.toLowerCase()}-code-button`}
-											placeholder={__('COUPONCODE')}
-											value={
-												couponType === 'Coupon'
-													? couponCode2
-													: couponCode
-											}
-											onChange={value =>
-												setAttributes(
-													couponType === 'Coupon'
-														? {
-																couponCode2: value
-														  }
-														: { couponCode: value }
-												)
-											}
-										/>
-									</button>
+							<div
+								className="wpcd-new-visible-code-variant-1"
+								title={`Click here to ${
+									couponType === 'Coupon'
+										? 'copy '
+										: 'get this '
+								}${couponType}`}
+							>
+								<div className="wpcd-new-iconholder">
+									{couponType === 'Coupon'
+										? scissors
+										: pricetag}
 								</div>
+								<OneLineInput
+									style={{ width: '100%', color: '#347baf' }}
+									placeholder={__('COUPONCODE')}
+									value={
+										couponType === 'Coupon'
+											? couponCode2
+											: couponCode
+									}
+									onChange={value =>
+										setAttributes(
+											couponType === 'Coupon'
+												? {
+														couponCode2: value
+												  }
+												: { couponCode: value }
+										)
+									}
+								/>
 							</div>
 						) : (
-							<div className="coupon-code-wpcd coupon-detail wpcd-coupon-button-type">
-								<a
-									data-type="code"
-									href="#"
-									class="coupon-button coupon-code-wpcd masterTooltip"
-									title="Click Here to Show Code"
-									data-position="top center"
-									data-inverted=""
-									data-aff-url={targetURL}
-								>
+							<div className="wpcd-new-hidden-code">
+								<a href="#" title="Click Here to Show Code">
 									<OneLineInput
 										style={{ width: '100%' }}
-										className="code-text-wpcd"
 										placeholder={__('COUPONCODE')}
-										value={couponCode2}
+										value={couponCode}
 										onChange={value =>
 											setAttributes({
 												couponCode2: value
@@ -1313,51 +1192,45 @@ registerBlockType('ub/wpcd-coupons-and-deals', {
 										}
 									/>
 								</a>
-								{/*<span className="get-code-wpcd">Show Code</span>*/}
 							</div>
 						)}
-					</div>
-					<div className="wpcd-coupon-four-info-left">
 						{showExpiryDate && couponExpires ? (
-							<div className="with-expiration-4-2">
-								<div
-									className={
+							<div
+								className="wpcd-new-pro-style-4-expiry"
+								style={{
+									color:
 										expiryDate2 > Date.now()
-											? 'wpcd-coupon-four-expire'
-											: 'wpcd-coupon-four-expired expired-text-block1'
-									}
-								>
-									<p
-										className={
-											expiryDate2 > Date.now()
-												? 'wpcd-coupon-four-expire-text'
-												: 'wpcd-coupon-four-expired'
-										}
-									>
-										{expiryDate2 > Date.now()
-											? __('Expires on: ')
-											: __('Expired on: ')}
-										<span className="expiration-date">
-											{new Date(
-												expiryDate2
-											).toLocaleDateString()}
-										</span>
-									</p>
-								</div>
+											? 'green'
+											: 'red'
+								}}
+							>
+								{(expiryDate2 > Date.now()
+									? __('Expires on: ')
+									: __('Expired on: ')) +
+									new Date(expiryDate2).toLocaleDateString()}
 							</div>
 						) : (
-							<div className="wpcd-coupon-four-expire without-expiration1">
-								<p>Doesn't expire</p>
+							<div
+								className="wpcd-new-pro-style-4-expiry"
+								style={{ color: 'green' }}
+							>
+								Doesn't expire
 							</div>
 						)}
+						<URLInput
+							autoFocus={false}
+							className="wpcd-new-url-input-test button-url"
+							value={targetURL2}
+							onChange={value =>
+								props.setAttributes({ targetURL2: value })
+							}
+						/>
 					</div>
-				</div>
 
-				<div className="wpcd-coupon-four-info">
-					<div className="wpcd-coupon-four-coupon">
+					<div className="wpcd-new-pro-style-4-coupon">
 						<OneLineInput
 							style={{ textAlign: 'center' }}
-							className="wpcd-coupon-four-discount-text editor-plain-text"
+							className="editor-plain-text"
 							placeholder={__('Discount Text')}
 							value={discountText3}
 							onChange={value =>
@@ -1365,59 +1238,45 @@ registerBlockType('ub/wpcd-coupons-and-deals', {
 							}
 						/>
 						{showCode ? (
-							<div>
-								<div
-									className={`wpcd-${couponType.toLowerCase()}-code`}
-								>
-									<button
-										className={`wpcd-btn masterTooltip wpcd-${couponType.toLowerCase()}-button`}
-										title={`Click here to ${
-											couponType === 'Coupon'
-												? 'copy '
-												: 'get this '
-										}${couponType}`}
-									>
-										<span
-											className={`wpcd_${couponType.toLowerCase()}_icon`}
-										/>
-										<OneLineInput
-											style={{ width: '100%' }}
-											className={`${couponType.toLowerCase()}-code-button`}
-											placeholder={__('COUPONCODE')}
-											value={
-												couponType === 'Coupon'
-													? couponCode3
-													: couponCode
-											}
-											onChange={value =>
-												setAttributes(
-													couponType === 'Coupon'
-														? {
-																couponCode3: value
-														  }
-														: { couponCode: value }
-												)
-											}
-										/>
-									</button>
+							<div
+								className="wpcd-new-visible-code-variant-1"
+								title={`Click here to ${
+									couponType === 'Coupon'
+										? 'copy '
+										: 'get this '
+								}${couponType}`}
+							>
+								<div className="wpcd-new-iconholder">
+									{couponType === 'Coupon'
+										? scissors
+										: pricetag}
 								</div>
+								<OneLineInput
+									style={{ width: '100%', color: '#347baf' }}
+									placeholder={__('COUPONCODE')}
+									value={
+										couponType === 'Coupon'
+											? couponCode3
+											: couponCode
+									}
+									onChange={value =>
+										setAttributes(
+											couponType === 'Coupon'
+												? {
+														couponCode3: value
+												  }
+												: { couponCode: value }
+										)
+									}
+								/>
 							</div>
 						) : (
-							<div className="coupon-code-wpcd coupon-detail wpcd-coupon-button-type">
-								<a
-									data-type="code"
-									href="#"
-									class="coupon-button coupon-code-wpcd masterTooltip"
-									title="Click Here to Show Code"
-									data-position="top center"
-									data-inverted=""
-									data-aff-url={targetURL}
-								>
+							<div className="wpcd-new-hidden-code">
+								<a href="#" title="Click Here to Show Code">
 									<OneLineInput
 										style={{ width: '100%' }}
-										className="code-text-wpcd"
 										placeholder={__('COUPONCODE')}
-										value={couponCode3}
+										value={couponCode}
 										onChange={value =>
 											setAttributes({
 												couponCode3: value
@@ -1425,56 +1284,52 @@ registerBlockType('ub/wpcd-coupons-and-deals', {
 										}
 									/>
 								</a>
-								{/*<span className="get-code-wpcd">Show Code</span>*/}
 							</div>
 						)}
-					</div>
-					<div className="wpcd-coupon-four-info-left">
 						{showExpiryDate && couponExpires ? (
-							<div className="with-expiration-4-3">
-								<div
-									className={
+							<div
+								className="wpcd-new-pro-style-4-expiry"
+								style={{
+									color:
 										expiryDate3 > Date.now()
-											? 'wpcd-coupon-four-expire'
-											: 'wpcd-coupon-four-expired expired-text-block1'
-									}
-								>
-									<p
-										className={
-											expiryDate3 > Date.now()
-												? 'wpcd-coupon-four-expire-text'
-												: 'wpcd-coupon-four-expired'
-										}
-									>
-										{expiryDate3 > Date.now()
-											? __('Expires on: ')
-											: __('Expired on: ')}
-										<span className="expiration-date">
-											{new Date(
-												expiryDate3
-											).toLocaleDateString()}
-										</span>
-									</p>
-								</div>
+											? 'green'
+											: 'red'
+								}}
+							>
+								{(expiryDate3 > Date.now()
+									? __('Expires on: ')
+									: __('Expired on: ')) +
+									new Date(expiryDate3).toLocaleDateString()}
 							</div>
 						) : (
-							<div className="wpcd-coupon-four-expire without-expiration1">
-								<p>Doesn't expire</p>
+							<div
+								className="wpcd-new-pro-style-4-expiry"
+								style={{ color: 'green' }}
+							>
+								Doesn't expire
 							</div>
 						)}
+						<URLInput
+							autoFocus={false}
+							className="wpcd-new-url-input-test button-url"
+							value={targetURL3}
+							onChange={value =>
+								props.setAttributes({ targetURL3: value })
+							}
+						/>
 					</div>
 				</div>
 			</div>
 		);
 		const template5 = (
 			<div
-				className="wpcd-template-five"
+				className="wpcd-new-pro-style-5"
 				style={{ borderColor: couponColor }}
 			>
-				<div className="wpcd-template-five-holder">
-					<div className="wpcd-template-five-percent-off">
+				<div className="wpcd-new-pro-style-5-main">
+					<div className="wpcd-new-pro-style-5-discount-text">
 						<OneLineInput
-							className="wpcd-coupon-five-discount-text editor-plain-text"
+							className="editor-plain-text"
 							placeholder={__('Discount Text')}
 							value={discountText}
 							onChange={value =>
@@ -1482,13 +1337,9 @@ registerBlockType('ub/wpcd-coupons-and-deals', {
 							}
 						/>
 					</div>
-					<div className="wpcd-template-five-pro-img">
-						{placeholderImage2}
-					</div>
-
-					<div className="wpcd-template-five-texts">
+					<div className="wpcd-new-pro-style-5-content">
 						<OneLineInput
-							className="wpcd-coupon-five-title editor-plain-text"
+							className="editor-plain-text"
 							style={{ fontSize: '21px', fontWeight: 600 }}
 							placeholder={__('Sample coupon code')}
 							value={couponTitle}
@@ -1498,7 +1349,6 @@ registerBlockType('ub/wpcd-coupons-and-deals', {
 						/>
 						<RichText
 							style={{ width: '100%' }}
-							className="wpcd-coupon-description"
 							placeholder={__(
 								'This is the description of the coupon code. Additional details of what the coupon or deal is.'
 							)}
@@ -1511,112 +1361,142 @@ registerBlockType('ub/wpcd-coupons-and-deals', {
 							keepPlaceholderOnFocus={true}
 						/>
 					</div>
-				</div>
-
-				<div className="extra-wpcd-template-five-holder">
-					<div
-						className="wpcd-template-five-exp"
-						style={{ backgroundColor: couponColor }}
-					>
-						<div className="with-expiration1">
-							{showExpiryDate && couponExpires ? (
-								<div className="wpcd-coupon-five-expire expire-text-block1">
-									<p
-										className={
-											expiryDate > Date.now()
-												? 'wpcd-coupon-five-expire expired-text-block1'
-												: 'wpcd-coupon-five-expired'
-										}
-									>
-										{expiryDate > Date.now()
-											? __('Expires on: ')
-											: __('Expired on: ')}
-										<span className="expiration-date">
-											{new Date(
-												expiryDate
-											).toLocaleDateString()}
-										</span>
-									</p>
-								</div>
-							) : (
-								<div className="wpcd-coupon-five-expire without-expiration1">
-									<p>Doesn't expire</p>
-								</div>
+					{imgID ? (
+						<div className="wpcd-new-pro-style-5-imageholder">
+							<img src={imgURL} alt={imgAlt} />
+							{isSelected && (
+								<Button
+									style={{
+										position: 'absolute',
+										top: 0,
+										right: 0
+									}}
+									onClick={() =>
+										setAttributes({
+											imgID: null,
+											imgURL: null,
+											imgAlt: null
+										})
+									}
+								>
+									{removeImage}
+								</Button>
 							)}
 						</div>
-					</div>
-
-					{showCode ? (
-						<div
-							className={`wpcd-${couponType.toLowerCase()}-code`}
-						>
-							<a
-								className={`wpcd-btn masterTooltip wpcd-${couponType.toLowerCase()}-button`}
-								title={`Click here to ${
-									couponType === 'Coupon'
-										? 'copy '
-										: 'get this '
-								}${couponType}`}
-								data-clipboard-text={couponCode}
-								style={{ borderColor: couponColor }}
-							>
-								<OneLineInput
-									style={{
-										width: '100%',
-										color: couponColor,
-										fontSize: '15px',
-										textAlign: 'center',
-										textTransform: 'uppercase'
-									}}
-									className={`${couponType.toLowerCase()}-code-button`}
-									placeholder={__('COUPONCODE')}
-									value={couponCode}
-									onChange={value =>
-										setAttributes({
-											couponCode: value
-										})
-									}
-								/>
-							</a>
-						</div>
 					) : (
-						<div className="coupon-code-wpcd coupon-detail wpcd-coupon-button-type">
-							<a
-								data-type="code"
-								href="#"
-								className="coupon-button coupon-code-wpcd masterTooltip"
-								data-position="top center"
-								data-inverted=""
-								data-aff-url="http://example.com"
-								title="Click Here to Show Code"
-							>
-								<OneLineInput
-									style={{
-										width: '100%',
-										color: couponColor,
-										textAlign: 'center'
-									}}
-									className="code-text-wpcd"
-									placeholder={__('COUPONCODE')}
-									value={couponCode}
-									onChange={value =>
-										setAttributes({
-											couponCode: value
-										})
-									}
-								/>
-							</a>
+						<div className="wpcd-new-pro-style-5-imageholder">
+							{placeholderImage2}
+							<MediaUpload
+								onSelect={img => {
+									setAttributes({
+										imgID: img.id,
+										imgURL: img.url,
+										imgAlt: img.alt
+									});
+								}}
+								type="image"
+								value={imgID}
+								render={({ open }) => (
+									<Button
+										className="components-button button button-medium"
+										onClick={open}
+										style={{
+											fontSize: '11px',
+											width: '100%'
+										}}
+									>
+										Upload Image
+									</Button>
+								)}
+							/>
 						</div>
 					)}
 				</div>
 
-				<br />
-				<div>
+				<div className="wpcd-new-pro-style-5-expiry-and-code">
+					<div
+						className="wpcd-new-pro-style-5-expiry"
+						style={{ backgroundColor: couponColor }}
+					>
+						{showExpiryDate && couponExpires ? (
+							<div
+								style={{
+									color:
+										expiryDate > Date.now()
+											? 'white'
+											: 'red'
+								}}
+							>
+								{(expiryDate > Date.now()
+									? __('Expires on: ')
+									: __('Expired on: ')) +
+									new Date(expiryDate).toLocaleDateString()}
+							</div>
+						) : (
+							<div
+								style={{
+									color: 'white'
+								}}
+							>
+								Doesn't expire
+							</div>
+						)}
+					</div>
+
+					{showCode ? (
+						<div
+							className="wpcd-new-visible-code"
+							title={`Click here to ${
+								couponType === 'Coupon' ? 'copy ' : 'get this '
+							}${couponType}`}
+							style={{ borderColor: couponColor }}
+						>
+							<OneLineInput
+								style={{
+									width: '100%',
+									color: couponColor,
+									fontSize: '18px',
+									fontWeight: '600px',
+									textAlign: 'center',
+									textTransform: 'uppercase'
+								}}
+								placeholder={__('COUPONCODE')}
+								value={couponCode}
+								onChange={value =>
+									setAttributes({
+										couponCode: value
+									})
+								}
+							/>
+						</div>
+					) : (
+						<div
+							className="wpcd-new-hidden-code"
+							title="Click Here to Show Code"
+						>
+							<OneLineInput
+								style={{
+									width: '100%',
+									color: couponColor,
+									textAlign: 'center'
+								}}
+								placeholder={__('COUPONCODE')}
+								value={couponCode}
+								onChange={value =>
+									setAttributes({
+										couponCode: value
+									})
+								}
+							/>
+						</div>
+					)}
+				</div>
+
+				<div className="wpcd-url-input">
 					{isSelected && (
 						<form
 							key={'form-link'}
 							onSubmit={event => event.preventDefault()}
-							className={`editor-format-toolbar__link-modal-line flex-container`}
 						>
 							<div
 								style={{
@@ -1627,6 +1507,7 @@ registerBlockType('ub/wpcd-coupons-and-deals', {
 								<Icon icon="admin-links" />
 							</div>
 							<URLInput
+								autoFocus={false}
 								className="button-url"
 								value={targetURL}
 								onChange={value =>
@@ -1646,218 +1527,194 @@ registerBlockType('ub/wpcd-coupons-and-deals', {
 
 		const template6 = (
 			<div
-				className="wpcd-coupon-six"
+				className="wpcd-new-pro-style-6"
 				style={{ borderColor: couponColor }}
 			>
-				<div className="wpcd-coupon-six-holder">
-					<div className="wpcd-coupon-six-percent-off">
-						<div className="wpcd-for-ribbon">
-							<div
-								className="wpcd-ribbon"
-								style={{ backgroundColor: couponColor }}
-							>
-								<div
-									className="wpcd-ribbon-before"
-									style={{ borderLeftColor: couponColor }}
-								/>
-								<OneLineInput
-									style={{
-										fontWeight: 600,
-										fontSize: '22px',
-										color: 'white'
-									}}
-									className="wpcd-coupon-six-discount-text editor-plain-text"
-									placeholder={__('Discount Text')}
-									value={discountText}
-									onChange={value =>
-										setAttributes({ discountText: value })
-									}
-								/>
-								<div
-									className="wpcd-ribbon-after"
-									style={{ borderRightColor: couponColor }}
-								/>
-							</div>
-						</div>
-					</div>
-					<div className="wpcd-coupon-six-texts">
-						<div className="texts">
-							<OneLineInput
-								className="editor-plain-text wpcd-coupon-six-title"
-								style={{
-									fontSize: '22px',
-									fontWeight: 'bolder'
-								}}
-								placeholder={__('Sample coupon code')}
-								value={couponTitle}
-								onChange={value =>
-									setAttributes({ couponTitle: value })
-								}
-							/>
-							<RichText
-								style={{ width: '100%' }}
-								className="wpcd-coupon-description"
-								placeholder={__(
-									'This is the description of the coupon code. Additional details of what the coupon or deal is.'
-								)}
-								value={couponText}
-								onChange={value =>
-									setAttributes({
-										couponText: value
-									})
-								}
-								keepPlaceholderOnFocus={true}
-							/>
-						</div>
+				<div className="wpcd-new-ribbon-container">
+					<div
+						className="wpcd-new-ribbon"
+						style={{ backgroundColor: couponColor }}
+					>
 						<div
-							className="exp"
-							style={{ borderColor: couponColor }}
-						>
-							{showExpiryDate && couponExpires ? (
-								<b className="expires-on">
-									<span>Expires in:</span>
-									<Timer
-										className="wpcd-coupon-two-countdown"
-										deadline={expiryTime}
-									/>
-								</b>
-							) : (
-								<b className="never-expire">Doesn't expire</b>
-							)}
-						</div>
+							className="wpcd-new-ribbon-before"
+							style={{ borderLeftColor: couponColor }}
+						/>
+						<OneLineInput
+							style={{
+								fontWeight: 600,
+								fontSize: '22px',
+								color: 'white'
+							}}
+							className="editor-plain-text"
+							placeholder={__('Discount Text')}
+							value={discountText}
+							onChange={value =>
+								setAttributes({ discountText: value })
+							}
+						/>
+						<div
+							className="wpcd-new-ribbon-after"
+							style={{ borderRightColor: couponColor }}
+						/>
 					</div>
-					<div className="wpcd-coupon-six-img-and-btn">
-						<div className="item-img">
-							{imgID ? (
-								<React.Fragment>
-									<img src={imgURL} alt={imgAlt} />
-									{isSelected && (
-										<Button
-											style={{
-												position: 'absolute',
-												top: 0,
-												right: 0
-											}}
-											onClick={() =>
-												setAttributes({
-													imgID: null,
-													imgURL: null,
-													imgAlt: null
-												})
-											}
-										>
-											{removeImage}
-										</Button>
-									)}
-								</React.Fragment>
-							) : (
-								<React.Fragment>
-									{placeholderImage2}
-									<MediaUpload
-										onSelect={img => {
-											setAttributes({
-												imgID: img.id,
-												imgURL: img.url,
-												imgAlt: img.alt
-											});
-										}}
-										type="image"
-										value={imgID}
-										render={({ open }) => (
-											<Button
-												className="components-button button button-medium"
-												onClick={open}
-												style={{
-													fontSize: '11px',
-													width: '100%'
-												}}
-											>
-												Upload Image
-											</Button>
-										)}
-									/>
-								</React.Fragment>
-							)}
-						</div>
-						{showCode ? (
-							<div>
-								<div
-									className={`wpcd-${couponType.toLowerCase()}-code wpcd-btn-wrap`}
-								>
-									<a
-										className="wpcd-btn masterTooltip"
-										href="#"
-										title={`Click here to ${
-											couponType === 'Coupon'
-												? 'copy '
-												: 'get this '
-										}${couponType}`}
-										data-clipboard-text="(GET THIS RIGHT NOW/couponcode)"
-										style={{
-											borderColor: couponColor,
-											borderStyle: 'solid'
-										}}
-									>
-										<OneLineInput
-											style={{
-												width: '100%',
-												color: couponColor,
-												fontSize: '15px',
-												textAlign: 'center'
-											}}
-											className={`${couponType.toLowerCase()}-code-button`}
-											placeholder={__(
-												couponType === 'Coupon'
-													? 'COUPONCODE'
-													: 'Get this right now'
-											)}
-											value={couponCode}
-											onChange={value =>
-												setAttributes({
-													couponCode: value
-												})
-											}
-										/>
-									</a>
-								</div>
-							</div>
+				</div>
+				<div className="wpcd-new-pro-style-6-coupon-details">
+					<OneLineInput
+						className="editor-plain-text"
+						style={{
+							fontSize: '22px',
+							fontWeight: 'bolder'
+						}}
+						placeholder={__('Sample coupon code')}
+						value={couponTitle}
+						onChange={value =>
+							setAttributes({ couponTitle: value })
+						}
+					/>
+					<RichText
+						style={{ width: '100%' }}
+						placeholder={__(
+							'This is the description of the coupon code. Additional details of what the coupon or deal is.'
+						)}
+						value={couponText}
+						onChange={value =>
+							setAttributes({
+								couponText: value
+							})
+						}
+						keepPlaceholderOnFocus={true}
+					/>
+					<div
+						className="wpcd-new-pro-style-6-expiry"
+						style={{ borderColor: couponColor }}
+					>
+						{showExpiryDate && couponExpires ? (
+							<React.Fragment>
+								Expires in:
+								<Timer
+									style={{
+										color:
+											expiryDate > Date.now()
+												? 'black'
+												: 'red'
+									}}
+									deadline={expiryTime}
+								/>
+							</React.Fragment>
 						) : (
-							<div className="coupon-code-wpcd coupon-detail wpcd-coupon-button-type">
-								<div className="wpcd-btn-wrap">
-									<a
-										data-type="code"
-										href="#"
-										className="coupon-button coupon-code-wpcd masterTooltip"
-										title="Click Here to Show Code"
-										data-position="top center"
-										data-inverted=""
-										data-aff-url="http://example.com"
-										style={{ borderColor: couponColor }}
-									>
-										<OneLineInput
-											style={{
-												width: '100%',
-												color: couponColor,
-												textAlign: 'center'
-											}}
-											className="code-text-wpcd"
-											placeholder={__('COUPONCODE')}
-											value={couponCode}
-											onChange={value =>
-												setAttributes({
-													couponCode: value
-												})
-											}
-										/>
-									</a>
-								</div>
-							</div>
+							<React.Fragment>Doesn't expire</React.Fragment>
 						)}
 					</div>
 				</div>
+				<div className="wpcd-new-pro-style-6-image">
+					{imgID ? (
+						<React.Fragment>
+							<img src={imgURL} alt={imgAlt} />
+							{isSelected && (
+								<Button
+									style={{
+										position: 'absolute',
+										top: 0,
+										right: 0
+									}}
+									onClick={() =>
+										setAttributes({
+											imgID: null,
+											imgURL: null,
+											imgAlt: null
+										})
+									}
+								>
+									{removeImage}
+								</Button>
+							)}
+						</React.Fragment>
+					) : (
+						<React.Fragment>
+							{placeholderImage2}
+							<MediaUpload
+								onSelect={img => {
+									setAttributes({
+										imgID: img.id,
+										imgURL: img.url,
+										imgAlt: img.alt
+									});
+								}}
+								type="image"
+								value={imgID}
+								render={({ open }) => (
+									<Button
+										className="components-button button button-medium"
+										onClick={open}
+										style={{
+											fontSize: '11px',
+											width: '100%'
+										}}
+									>
+										Upload Image
+									</Button>
+								)}
+							/>
+						</React.Fragment>
+					)}
+				</div>
 
-				<br />
-				<div>
+				{showCode ? (
+					<div
+						className="wpcd-new-visible-code"
+						title={`Click here to ${
+							couponType === 'Coupon' ? 'copy ' : 'get this '
+						}${couponType}`}
+						style={{
+							borderColor: couponColor,
+							borderStyle: 'solid'
+						}}
+					>
+						<OneLineInput
+							style={{
+								width: '100%',
+								color: couponColor,
+								fontSize: '15px',
+								textAlign: 'center'
+							}}
+							placeholder={__(
+								couponType === 'Coupon'
+									? 'COUPONCODE'
+									: 'Get this right now'
+							)}
+							value={couponCode}
+							onChange={value =>
+								setAttributes({
+									couponCode: value
+								})
+							}
+						/>
+					</div>
+				) : (
+					<div className="wpcd-new-hidden-code">
+						<a
+							title="Click Here to Show Code"
+							style={{ borderColor: couponColor }}
+						>
+							<OneLineInput
+								style={{
+									width: '100%',
+									color: couponColor,
+									textAlign: 'center'
+								}}
+								placeholder={__('COUPONCODE')}
+								value={couponCode}
+								onChange={value =>
+									setAttributes({
+										couponCode: value
+									})
+								}
+							/>
+						</a>
+					</div>
+				)}
+
+				<div className="wpcd-url-input">
 					{isSelected && (
 						<form
 							key={'form-link'}
@@ -1873,6 +1730,7 @@ registerBlockType('ub/wpcd-coupons-and-deals', {
 								<Icon icon="admin-links" />
 							</div>
 							<URLInput
+								autoFocus={false}
 								className="button-url"
 								value={targetURL}
 								onChange={value =>
@@ -2053,6 +1911,28 @@ registerBlockType('ub/wpcd-coupons-and-deals', {
 								/>
 							</React.Fragment>
 						)}
+						<PanelRow>
+							<label>{__('Show social buttons')}</label>
+							<FormToggle
+								checked={showSocialLinks}
+								onChange={() =>
+									setAttributes({
+										showSocialLinks: !showSocialLinks
+									})
+								}
+							/>
+						</PanelRow>
+						<RangeControl
+							label={__('Word Count Overflow Threshold')}
+							value={wordLimit}
+							onChange={value =>
+								props.setAttributes({ wordLimit: value })
+							}
+							min={5}
+							max={50}
+							beforeIcon="text"
+							allowReset
+						/>
 					</PanelBody>
 				</InspectorControls>
 			),

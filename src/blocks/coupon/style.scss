@@ -1,11 +1,31 @@
 // New template
 
+.wpcd-new-social-panel {
+	grid-area: social-panel;
+	display: flex;
+	flex-direction: row;
+	div {
+		margin: 6px 4px;
+		height: 32px;
+		width: 32px;
+		border-radius: 50%;
+	}
+	svg {
+		height: 13px;
+		position: relative;
+		top: 50%;
+		left: 50%;
+		transform: translate(-60%, -90%);
+	}
+}
+
 .wpcd-new-alt-grid-container {
 	display: grid;
 	background: transparent;
 	grid-template-columns: 2fr 6fr 3fr;
 	grid-template-areas:
 		'discount-and-expiry description coupon-code'
+		'social-panel social-panel social-panel'
 		'link-input link-input link-input';
 	margin: 20px;
 	border: 1px solid #ccc;
@@ -90,6 +110,7 @@
 	grid-template-columns: 1fr 7fr;
 	grid-template-areas:
 		'discount-text-display body'
+		'social-panel social-panel'
 		'link-input link-input';
 	border: 2px dashed #000000;
 	background-color: #fafafa;
@@ -191,6 +212,7 @@
 	grid-template-columns: 18% 56% 24%;
 	grid-template-areas:
 		'image body discount-text-display'
+		'social-panel social-panel .'
 		'link-input link-input link-input';
 	border: 1px solid #d1d1d1;
 	background-color: #fafafa;
@@ -204,6 +226,9 @@
 			max-width: 128px;
 			margin: 0 auto;
 		}
+	}
+	.wpcd-new-social-panel {
+		border-right: 1px dashed #d1d1d1;
 	}
 }
 
@@ -230,6 +255,10 @@
 	.wpcd-new-pro-style-1 {
 		display: flex;
 		flex-direction: column;
+		.wpcd-new-pro-style-1-title-desc,
+		.wpcd-new-social-panel {
+			border-right: none;
+		}
 	}
 }
 
@@ -238,6 +267,7 @@
 	grid-template-columns: 1fr 3fr;
 	grid-template-areas:
 		'image body'
+		'social-panel social-panel'
 		'link-input link-input';
 	border: 1px solid #d1d1d1;
 	background-color: #fafafa;
@@ -309,6 +339,13 @@
 	grid-template-columns: 3fr 2fr;
 	.wpcd-new-pro-style-3-expiry {
 		text-align: center;
+	}
+}
+
+@media screen and (max-width: 767px) {
+	.wpcd-new-pro-style-3-expiry-and-code {
+		display: flex;
+		flex-direction: column;
 	}
 }
 
@@ -425,6 +462,7 @@
 	grid-template-areas:
 		'ribbon content image'
 		'ribbon content coupon-code'
+		'social-panel social-panel social-panel'
 		'link-input link-input link-input';
 	.wpcd-new-pro-style-6-coupon-details {
 		grid-area: content;
@@ -499,6 +537,7 @@
 		grid-template-areas:
 			'content'
 			'coupon-code'
+			'social-panel'
 			'link-input';
 	}
 }

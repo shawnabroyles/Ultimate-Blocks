@@ -756,11 +756,31 @@
 .ub-hide {
   display: none !important; }
 
+.wpcd-new-social-panel {
+  grid-area: social-panel;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+      flex-direction: row; }
+  .wpcd-new-social-panel div {
+    margin: 6px 4px;
+    height: 32px;
+    width: 32px;
+    border-radius: 50%; }
+  .wpcd-new-social-panel svg {
+    height: 13px;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-60%, -90%);
+        -ms-transform: translate(-60%, -90%);
+            transform: translate(-60%, -90%); }
+
 .wpcd-new-alt-grid-container {
   display: grid;
   background: transparent;
   grid-template-columns: 2fr 6fr 3fr;
-  grid-template-areas: 'discount-and-expiry description coupon-code' 'link-input link-input link-input';
+  grid-template-areas: 'discount-and-expiry description coupon-code' 'social-panel social-panel social-panel' 'link-input link-input link-input';
   margin: 20px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -836,7 +856,7 @@
 .wpcd-new-default-style {
   display: grid;
   grid-template-columns: 1fr 7fr;
-  grid-template-areas: 'discount-text-display body' 'link-input link-input';
+  grid-template-areas: 'discount-text-display body' 'social-panel social-panel' 'link-input link-input';
   border: 2px dashed #000000;
   background-color: #fafafa; }
 
@@ -919,7 +939,7 @@
 .wpcd-new-pro-style-1 {
   display: grid;
   grid-template-columns: 18% 56% 24%;
-  grid-template-areas: 'image body discount-text-display' 'link-input link-input link-input';
+  grid-template-areas: 'image body discount-text-display' 'social-panel social-panel .' 'link-input link-input link-input';
   border: 1px solid #d1d1d1;
   background-color: #fafafa; }
   .wpcd-new-pro-style-1 figure {
@@ -931,6 +951,8 @@
       width: 100%;
       max-width: 128px;
       margin: 0 auto; }
+  .wpcd-new-pro-style-1 .wpcd-new-social-panel {
+    border-right: 1px dashed #d1d1d1; }
 
 .wpcd-new-pro-style-1-title-desc {
   grid-area: body;
@@ -954,12 +976,15 @@
     display: -ms-flexbox;
     display: flex;
     -ms-flex-direction: column;
-        flex-direction: column; } }
+        flex-direction: column; }
+    .wpcd-new-pro-style-1 .wpcd-new-pro-style-1-title-desc,
+    .wpcd-new-pro-style-1 .wpcd-new-social-panel {
+      border-right: none; } }
 
 .wpcd-new-pro-style-2 {
   display: grid;
   grid-template-columns: 1fr 3fr;
-  grid-template-areas: 'image body' 'link-input link-input';
+  grid-template-areas: 'image body' 'social-panel social-panel' 'link-input link-input';
   border: 1px solid #d1d1d1;
   background-color: #fafafa; }
   .wpcd-new-pro-style-2 figure {
@@ -1023,6 +1048,13 @@
   grid-template-columns: 3fr 2fr; }
   .wpcd-new-pro-style-3-expiry-and-code .wpcd-new-pro-style-3-expiry {
     text-align: center; }
+
+@media screen and (max-width: 767px) {
+  .wpcd-new-pro-style-3-expiry-and-code {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+        flex-direction: column; } }
 
 .wpcd-new-pro-style-4 {
   width: 100%;
@@ -1119,7 +1151,7 @@
   border: 2px solid #18e06e;
   display: grid;
   grid-template-columns: 15% 55% 27%;
-  grid-template-areas: 'ribbon content image' 'ribbon content coupon-code' 'link-input link-input link-input'; }
+  grid-template-areas: 'ribbon content image' 'ribbon content coupon-code' 'social-panel social-panel social-panel' 'link-input link-input link-input'; }
   .wpcd-new-pro-style-6 .wpcd-new-pro-style-6-coupon-details {
     grid-area: content; }
   .wpcd-new-pro-style-6 .wpcd-new-hidden-code,
@@ -1180,4 +1212,4 @@
     display: none; }
   .wpcd-new-pro-style-6 {
     grid-template-columns: 1fr;
-    grid-template-areas: 'content' 'coupon-code' 'link-input'; } }
+    grid-template-areas: 'content' 'coupon-code' 'social-panel' 'link-input'; } }

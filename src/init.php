@@ -86,3 +86,6 @@ require_once plugin_dir_path( __FILE__ ) . 'blocks/tabbed-content/block.php';
 
 // Progress Bar Block.
 require_once plugin_dir_path( __FILE__ ) . 'blocks/progress-bar/block.php';
+
+//Coupon Block
+require_once plugin_dir_path( __FILE__ ) . 'blocks/coupon/block.php';

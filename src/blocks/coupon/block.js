@@ -198,6 +198,14 @@ registerBlockType('ub/wpcd-coupons-and-deals', {
 			type: 'boolean',
 			defaut: false
 		},
+		coupon2Expires: {
+			type: 'boolean',
+			defaut: false
+		},
+		coupon3Expires: {
+			type: 'boolean',
+			defaut: false
+		},
 		expiryTime: {
 			type: 'number',
 			default: 0 //date+time for 2 and 6, date only for others, store as unix time
@@ -229,10 +237,6 @@ registerBlockType('ub/wpcd-coupons-and-deals', {
 			type: 'string',
 			default: '#18e066f'
 		},
-		wordLimit: {
-			type: 'number',
-			default: 30
-		},
 		showSocialLinks: {
 			type: 'boolean',
 			default: false
@@ -255,6 +259,8 @@ registerBlockType('ub/wpcd-coupons-and-deals', {
 			discountText3,
 			couponText,
 			couponExpires,
+			coupon2Expires,
+			coupon3Expires,
 			showExpiryDate,
 			showCode,
 			expiryTime,
@@ -265,7 +271,6 @@ registerBlockType('ub/wpcd-coupons-and-deals', {
 			imgURL,
 			imgID,
 			imgAlt,
-			wordLimit,
 			showSocialLinks
 		} = props.attributes;
 
@@ -1227,7 +1232,7 @@ registerBlockType('ub/wpcd-coupons-and-deals', {
 								</a>
 							</div>
 						)}
-						{showExpiryDate && couponExpires ? (
+						{showExpiryDate && coupon2Expires ? (
 							<div
 								className="wpcd-new-pro-style-4-expiry"
 								style={{
@@ -1319,7 +1324,7 @@ registerBlockType('ub/wpcd-coupons-and-deals', {
 								</a>
 							</div>
 						)}
-						{showExpiryDate && couponExpires ? (
+						{showExpiryDate && coupon3Expires ? (
 							<div
 								className="wpcd-new-pro-style-4-expiry"
 								style={{
@@ -1854,7 +1859,14 @@ registerBlockType('ub/wpcd-coupons-and-deals', {
 							)}
 						</PanelRow>
 						<PanelRow>
-							<label>{__('Coupon expires')}</label>
+							<label>
+								{__(
+									'Coupon ' +
+										(couponStyle == 5
+											? '1 expires'
+											: 'expires')
+								)}
+							</label>
 							<FormToggle
 								checked={couponExpires}
 								onChange={() =>
@@ -1891,7 +1903,22 @@ registerBlockType('ub/wpcd-coupons-and-deals', {
 										});
 									}}
 								/>
-								{couponStyle == 5 && (
+							</React.Fragment>
+						)}
+						{couponStyle == 5 && (
+							<React.Fragment>
+								<PanelRow>
+									<label>{__('Coupon 2 expires')}</label>
+									<FormToggle
+										checked={coupon2Expires}
+										onChange={() =>
+											setAttributes({
+												coupon2Expires: !coupon2Expires
+											})
+										}
+									/>
+								</PanelRow>
+								{coupon2Expires && (
 									<React.Fragment>
 										<PanelRow>
 											<b>
@@ -1910,6 +1937,23 @@ registerBlockType('ub/wpcd-coupons-and-deals', {
 												});
 											}}
 										/>
+									</React.Fragment>
+								)}
+
+								<PanelRow>
+									<label>{__('Coupon 3 expires')}</label>
+									<FormToggle
+										checked={coupon3Expires}
+										onChange={() =>
+											setAttributes({
+												coupon3Expires: !coupon3Expires
+											})
+										}
+									/>
+								</PanelRow>
+
+								{coupon3Expires && (
+									<React.Fragment>
 										<PanelRow>
 											<b>
 												Expiration Date (Third Coupon)
@@ -1956,17 +2000,6 @@ registerBlockType('ub/wpcd-coupons-and-deals', {
 								}
 							/>
 						</PanelRow>
-						<RangeControl
-							label={__('Word Count Overflow Threshold')}
-							value={wordLimit}
-							onChange={value =>
-								props.setAttributes({ wordLimit: value })
-							}
-							min={5}
-							max={50}
-							beforeIcon="text"
-							allowReset
-						/>
 					</PanelBody>
 				</InspectorControls>
 			),

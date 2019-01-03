@@ -447,7 +447,8 @@ $alternateTemplate = '<div class="wpcd-new-grid-container">
     '.$description.'
 </div> <!-- End of grid-two -->
 <div class="wpcd-new-grid-three">
-    <a class="wpcd-new-coupon-code masterTooltip" rel="nofollow" href="'.$attributes['targetURL'].'" target="_blank" data-clipboard-text="GET THIS RIGHT " title="Click To Copy Coupon">
+    <a class="wpcd-new-coupon-code masterTooltip wpcd_coupon_'.$couponID.'" rel="nofollow" href="'.$attributes['targetURL'].'" target="_blank" data-clipboard-text="'.$attributes['couponCode'].'"
+        onclick="var clip = new Clipboard(\'.wpcd_coupon_'.$couponID.'\');" title="Click To Copy Coupon">
         '.$attributes['couponCode'].'
     </a>
     <a class="wpcd-new-goto-button" rel="nofollow" href="'.$attributes['targetURL'].'" target="_blank">

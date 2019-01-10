@@ -3,6 +3,7 @@ import icon, { RegularCountdownIcon, CircularCountdownIcon } from './icon';
 import { Component } from 'react';
 
 import Circle from './CircularCountdown';
+import Odometer from './React-Odometer';
 
 import './style.scss';
 
@@ -86,6 +87,15 @@ class Timer extends Component {
 			default:
 				selectedFormat = defaultFormat;
 		}
+
+		//test new Odometer format
+		selectedFormat = (
+			<div>
+				<Odometer value={minutes} />:
+				<Odometer value={seconds > 9 ? seconds : '0' + seconds} />
+			</div>
+		);
+
 		return selectedFormat;
 	}
 }

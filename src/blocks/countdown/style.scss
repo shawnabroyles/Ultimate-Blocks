@@ -1,0 +1,30 @@
+.ub_countdown_circular_container {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	p {
+		text-align: center;
+	}
+}
+
+.ub_countdown_circle_path {
+	stroke-dashoffset: 0px;
+	transition: stroke-dashoffset 0.3s ease 0s, stroke-dasharray 0.3s ease 0s,
+		stroke 0.3s ease 0s, stroke-width 0.06s ease 0.3s;
+	fill-opacity: 0;
+}
+
+.ub_countdown_circle_trail {
+	stroke: #d9d9d9;
+	stroke-dashoffset: 0px;
+	transition: stroke-dashoffset 0.3s ease 0s, stroke-dasharray 0.3s ease 0s,
+		stroke 0.3s ease 0s;
+	fill-opacity: 0;
+}
+
+.ub_countdown_circle_label {
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+	margin: auto;
+	text-align: center;
+}

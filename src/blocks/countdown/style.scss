@@ -4,6 +4,9 @@
 	p {
 		text-align: center;
 	}
+	> div {
+		margin: 0 auto;
+	}
 }
 
 .ub_countdown_circle_path {
@@ -99,5 +102,8 @@
 				}
 			}
 		}
+	}
+	& .ub-countdown-odometer-inside .ub-countdown-odometer-digit:first-child {
+		display: none; //workaround for displaying leading zeroes, as recommended at https://github.com/HubSpot/odometer/issues/106
 	}
 }

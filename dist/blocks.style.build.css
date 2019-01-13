@@ -761,6 +761,8 @@
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr; }
   .ub_countdown_circular_container p {
     text-align: center; }
+  .ub_countdown_circular_container > div {
+    margin: 0 auto; }
 
 .ub_countdown_circle_path {
   stroke-dashoffset: 0px;
@@ -849,3 +851,6 @@
     -webkit-transform: translateY(0);
         -ms-transform: translateY(0);
             transform: translateY(0); }
+
+.ub-countdown-odometer .ub-countdown-odometer-inside .ub-countdown-odometer-digit:first-child {
+  display: none; }

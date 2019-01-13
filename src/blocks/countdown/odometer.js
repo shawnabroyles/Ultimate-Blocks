@@ -58,7 +58,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	VALUE_HTML = '<span class="ub-countdown-odometer-value"></span>';
 
 	RIBBON_HTML =
-		'<span class="ub-coutndown-odometer-ribbon"><span class="ub-countdown-odometer-ribbon-inner">' +
+		'<span class="ub-countdown-odometer-ribbon"><span class="ub-countdown-odometer-ribbon-inner">' +
 		VALUE_HTML +
 		'</span></span>';
 

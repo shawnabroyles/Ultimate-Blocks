@@ -1,4 +1,8 @@
-import icon, { RegularCountdownIcon, CircularCountdownIcon } from './icon';
+import icon, {
+	RegularCountdownIcon,
+	CircularCountdownIcon,
+	TickingCountdownIcon
+} from './icon';
 
 import { Component } from 'react';
 
@@ -21,6 +25,7 @@ class Timer extends Component {
 		return this.props.deadline - Math.floor(Date.now() / 1000);
 	};
 	componentDidMount() {
+		console.log(this.remainingTime());
 		this.tick = setInterval(this.ticker, 1000); //debugging
 	}
 	ticker = () => {
@@ -38,7 +43,7 @@ class Timer extends Component {
 		}
 	}
 	componentDidUpdate() {
-		console.log(this.state.timeLeft);
+		//console.log(this.state.timeLeft);
 	}
 	componentWillUnmount() {
 		clearInterval(this.tick);
@@ -56,7 +61,7 @@ class Timer extends Component {
 			604800;
 
 		const defaultFormat = (
-			<p>{`${weeks}:${days}:${hours}:${minutes}:${seconds}`}</p>
+			<p>{`${weeks} weeks ${days} days ${hours} hours ${minutes} minutes ${seconds} seconds`}</p>
 		);
 
 		const circularFormat = (
@@ -71,7 +76,23 @@ class Timer extends Component {
 				<p>Hours</p>
 				<p>Minutes</p>
 				<p>Seconds</p>
-				{timeLeft <= 0 && <p>Time's up!</p>}
+			</div>
+		);
+
+		const odometerFormat = (
+			<div>
+				<Odometer
+					value={
+						weeks +
+						10 **
+							(weeks > 0 ? Math.floor(Math.log10(weeks) + 1) : 1)
+					}
+				/>
+				:
+				<Odometer value={10 + days} />:
+				<Odometer value={100 + hours} />:
+				<Odometer value={100 + minutes} />:
+				<Odometer value={100 + seconds} />
 			</div>
 		);
 
@@ -84,17 +105,12 @@ class Timer extends Component {
 			case 'Circular':
 				selectedFormat = circularFormat;
 				break;
+			case 'Odometer':
+				selectedFormat = odometerFormat;
+				break;
 			default:
 				selectedFormat = defaultFormat;
 		}
-
-		//test new Odometer format
-		selectedFormat = (
-			<div>
-				<Odometer value={minutes} />:
-				<Odometer value={seconds > 9 ? seconds : '0' + seconds} />
-			</div>
-		);
 
 		return selectedFormat;
 	}
@@ -133,6 +149,11 @@ registerBlockType('ub/countdown', {
 						>
 							{CircularCountdownIcon}
 						</Button>
+						<Button
+							onClick={() => setAttributes({ style: 'Odometer' })}
+						>
+							{TickingCountdownIcon}
+						</Button>
 					</Toolbar>
 				</BlockControls>
 			),
@@ -141,7 +162,7 @@ registerBlockType('ub/countdown', {
 					<DateTimePicker
 						currentDate={endDate * 1000}
 						onChange={value => {
-							console.log(value);
+							console.log(Math.floor(Date.parse(value) / 1000));
 							setAttributes({
 								endDate: Math.floor(Date.parse(value) / 1000)
 							});

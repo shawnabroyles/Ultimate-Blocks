@@ -13,8 +13,10 @@ import './style.scss';
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
-const { InspectorControls, BlockControls } = wp.editor;
+const { InspectorControls, BlockControls, RichText } = wp.editor;
 const { DateTimePicker, Toolbar, Button } = wp.components;
+
+const { withState } = wp.compose;
 
 class Timer extends Component {
 	constructor(props) {
@@ -25,8 +27,7 @@ class Timer extends Component {
 		return this.props.deadline - Math.floor(Date.now() / 1000);
 	};
 	componentDidMount() {
-		console.log(this.remainingTime());
-		this.tick = setInterval(this.ticker, 1000); //debugging
+		this.tick = setInterval(this.ticker, 1000);
 	}
 	ticker = () => {
 		this.setState({
@@ -79,20 +80,45 @@ class Timer extends Component {
 			</div>
 		);
 
+		const separator = <span className="ub-countdown-separator">:</span>;
+
 		const odometerFormat = (
-			<div>
+			<div
+				style={{
+					display: 'grid',
+					gridTemplateColumns:
+						'1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr'
+				}}
+			>
+				<span>Weeks</span>
+				<span />
+				<span>Days</span>
+				<span />
+				<span>Hours</span>
+				<span />
+				<span>Minutes</span>
+				<span />
+				<span>Seconds</span>
+				<span />
 				<Odometer
 					value={
-						weeks +
-						10 **
-							(weeks > 0 ? Math.floor(Math.log10(weeks) + 1) : 1)
+						weeks < 0
+							? weeks
+							: weeks +
+							  10 **
+									(weeks > 0
+										? Math.floor(Math.log10(weeks) + 1)
+										: 1)
 					}
 				/>
-				:
-				<Odometer value={10 + days} />:
-				<Odometer value={100 + hours} />:
-				<Odometer value={100 + minutes} />:
-				<Odometer value={100 + seconds} />
+				{separator}
+				<Odometer value={days < 0 ? days : 10 + days} />
+				{separator}
+				<Odometer value={hours < 0 ? hours : 100 + hours} />
+				{separator}
+				<Odometer value={minutes < 0 ? minutes : 100 + minutes} />
+				{separator}
+				<Odometer value={seconds < 0 ? seconds : 100 + seconds} />
 			</div>
 		);
 
@@ -124,17 +150,26 @@ registerBlockType('ub/countdown', {
 	attributes: {
 		endDate: {
 			type: 'number',
-			default: 60000 * (1440 + Math.ceil(Date.now() / 60000)) // 24 hours from Date.now
+			default: 60 * (1440 + Math.ceil(Date.now() / 60000)) // 24 hours from Date.now
 		},
 		style: {
 			type: 'string',
 			default: 'Regular' //available types: Regular, Circular, Odometer
+		},
+		expiryMessage: {
+			type: 'string',
+			default: 'Timer expired'
 		}
 	},
 
-	edit(props) {
-		const { isSelected, setAttributes } = props;
-		const { style, endDate } = props.attributes;
+	edit: withState({ editable: 'content' })(function(props) {
+		const { editable, isSelected, setAttributes } = props;
+		const { style, endDate, expiryMessage } = props.attributes;
+
+		const onSetActiveEditable = newEditable => () => {
+			setState({ editable: newEditable });
+		};
+
 		return [
 			isSelected && (
 				<BlockControls>
@@ -170,9 +205,26 @@ registerBlockType('ub/countdown', {
 					/>
 				</InspectorControls>
 			),
-			<Timer timerStyle={style} deadline={endDate} />
+			<React.Fragment>
+				<Timer timerStyle={style} deadline={endDate} />
+				<div key="editable">
+					<RichText
+						tagName="p"
+						placeholder={__('Text to display when time runs out')}
+						value={expiryMessage}
+						onChange={text =>
+							setAttributes({ expiryMessage: text })
+						}
+						keepPlaceholderOnFocus={true}
+						isSelected={
+							isSelected && editable === 'countdown_expiry_text'
+						}
+						onFocus={onSetActiveEditable('countdown_expiry_text')}
+					/>
+				</div>
+			</React.Fragment>
 		];
-	},
+	}),
 
 	save() {
 		return null;

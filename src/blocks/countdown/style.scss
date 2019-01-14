@@ -32,7 +32,20 @@
 	text-align: center;
 }
 
+.ub-countdown-separator {
+	margin: 0 auto;
+	font-size: 35px;
+}
+
+.ub-countdown-odometer-container {
+	display: grid;
+	grid-template-columns: 1fr 0.2fr 1fr 0.2fr 1fr 0.2fr 1fr 0.2fr 1fr;
+}
+
 .ub-countdown-odometer {
+	margin: 0 auto;
+	font-size: 35px;
+
 	&.ub-countdown-odometer-auto-theme,
 	&.ub-countdown-odometer-theme-minimal {
 		display: inline-block;

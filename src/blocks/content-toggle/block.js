@@ -11,14 +11,16 @@ import icon from './icons/icon';
 //  Import CSS.
 import './style.scss';
 import './editor.scss';
-import Accordion from './components/accordion';
 import Inspector from './components/inspector';
+import { Component } from 'react';
+
 import { version_1_1_2 } from './oldVersions';
 
 const { __ } = wp.i18n;
-const { registerBlockType } = wp.blocks;
-
-const { RichText } = wp.editor;
+const { registerBlockType, createBlock } = wp.blocks;
+const { withState, compose } = wp.compose;
+const { withSelect, withDispatch } = wp.data;
+const { InnerBlocks } = wp.editor;
 
 const attributes = {
 	accordions: {
@@ -76,6 +78,127 @@ const attributes = {
  * @return {?WPBlock}          The block, if it has been successfully
  *                             registered; otherwise `undefined`.
  */
+
+class PanelContent extends Component {
+	constructor(props) {
+		super(props);
+		this.getPanels = this.getPanels.bind(this);
+		this.getPanelTemplate = this.getPanelTemplate.bind(this);
+	}
+	getPanels() {
+		return this.props.block.innerBlocks;
+	}
+	getPanelTemplate() {
+		const panelData = this.getPanels();
+		let result = [];
+
+		panelData.forEach(() => {
+			result.push(['ub/content-toggle-panel']);
+		});
+
+		return JSON.stringify(result) === '[]'
+			? [['ub/content-toggle-panel']]
+			: result;
+	}
+	render() {
+		const {
+			attributes,
+			setAttributes,
+			className,
+			isSelected,
+			updateBlockAttributes,
+			oldArrangement,
+			setState,
+			insertBlock,
+			removeBlock
+		} = this.props;
+		if (!attributes.accordions) {
+			attributes.accordions = [];
+		}
+
+		const panels = this.getPanels();
+
+		const newArrangement = JSON.stringify(
+			panels.map(panel => panel.attributes.index)
+		);
+
+		const newBlockTarget = panels.filter(
+			panel => panel.attributes.newBlockPosition !== 'none'
+		);
+
+		if (JSON.stringify(newBlockTarget) !== '[]') {
+			const { index, newBlockPosition } = newBlockTarget[0].attributes;
+			insertBlock(
+				createBlock('ub/content-toggle-panel'),
+				newBlockPosition === 'below' ? index + 1 : index,
+				this.props.block.clientId
+			);
+			updateBlockAttributes(newBlockTarget[0].clientId, {
+				newBlockPosition: 'none'
+			});
+		}
+
+		if (newArrangement !== oldArrangement) {
+			if (oldArrangement === '[0]' && newArrangement === '[]') {
+				removeBlock(this.props.block.clientId);
+			} else {
+				panels.forEach((panel, i) =>
+					updateBlockAttributes(panel.clientId, {
+						index: i,
+						parent: this.props.block.clientId
+					})
+				);
+				setState({ oldArrangement: newArrangement });
+			}
+		}
+		const onThemeChange = value => {
+			setAttributes({ theme: value });
+
+			panels.forEach(panel =>
+				updateBlockAttributes(panel.clientId, { theme: value })
+			);
+		};
+
+		const onTitleColorChange = value => {
+			setAttributes({ titleColor: value });
+
+			panels.forEach(panel =>
+				updateBlockAttributes(panel.clientId, { titleColor: value })
+			);
+		};
+
+		const onCollapseChange = () => {
+			setAttributes({ collapsed: !attributes.collapsed });
+
+			panels.forEach(panel =>
+				updateBlockAttributes(panel.clientId, {
+					collapsed: !panel.attributes.collapsed
+				})
+			);
+		};
+
+		return [
+			isSelected && (
+				<Inspector
+					{...{
+						attributes,
+						onThemeChange,
+						onCollapseChange,
+						onTitleColorChange
+					}}
+				/>
+			),
+			<div className={className}>
+				<InnerBlocks
+					template={this.getPanelTemplate()}
+					templateLock={'insert'} //allows rearrangement of panels
+					allowedBlocks={['ub/content-toggle-panel']}
+				/>
+			</div>
+		];
+	}
+}
+
 registerBlockType('ub/content-toggle', {
 	title: __('Content Toggle'),
 	icon: icon,
@@ -88,170 +211,41 @@ registerBlockType('ub/content-toggle', {
 
 	attributes,
 
-	edit: function({ attributes, setAttributes, className, isSelected }) {
-		if (!attributes.accordions) {
-			attributes.accordions = [];
-		}
+	edit: compose([
+		withSelect((select, ownProps) => {
+			const { getBlock, isBlockSelected, hasSelectedInnerBlock } = select(
+				'core/editor'
+			);
 
-		const sample = { title: '', content: '' };
-		const accordionsState = JSON.parse(attributes.accordionsState);
+			const { clientId } = ownProps;
 
-		const showControls = (type, index) => {
-			setAttributes({ activeControl: type + '-' + index });
-		};
+			return {
+				block: getBlock(clientId),
+				isSelectedBlockInRoot:
+					isBlockSelected(clientId) ||
+					hasSelectedInnerBlock(clientId, true)
+			};
+		}),
+		withDispatch(dispatch => {
+			const {
+				updateBlockAttributes,
+				insertBlock,
+				removeBlock
+			} = dispatch('core/editor');
 
-		const addAccord = i => {
-			if (i <= 0) {
-				attributes.accordions.unshift(sample);
-				setAttributes({ accordions: attributes.accordions });
+			return {
+				updateBlockAttributes,
+				insertBlock,
+				removeBlock
+			};
+		}),
+		withState({ oldArrangement: 'Replace this with a proper JSON string' })
+	])(PanelContent),
 
-				accordionsState.unshift(true);
-				setAttributes({
-					accordionsState: JSON.stringify(accordionsState)
-				});
-			} else if (i >= attributes.accordions.length) {
-				attributes.accordions.push(sample);
-				setAttributes({ accordions: attributes.accordions });
-
-				accordionsState.push(true);
-				setAttributes({
-					accordionsState: JSON.stringify(accordionsState)
-				});
-			} else {
-				attributes.accordions.splice(i, 0, sample);
-				setAttributes({ accordions: attributes.accordions });
-
-				accordionsState.splice(i, 0, true);
-				setAttributes({
-					accordionsState: JSON.stringify(accordionsState)
-				});
-			}
-		};
-
-		const deleteAccord = i => {
-			accordionsState.splice(i, 1);
-			setAttributes({ accordionsState: JSON.stringify(accordionsState) });
-
-			const accordionsClone = attributes.accordions.slice(0);
-			accordionsClone.splice(i, 1);
-			setAttributes({ accordions: accordionsClone });
-		};
-
-		const toggleAccordionState = i => {
-			accordionsState[i] = !accordionsState[i];
-			setAttributes({ accordionsState: JSON.stringify(accordionsState) });
-		};
-
-		const updateTimeStamp = () => {
-			setAttributes({ timestamp: new Date().getTime() });
-		};
-
-		const onChangeTitle = (title, i) => {
-			attributes.accordions[i].title = title;
-			updateTimeStamp();
-		};
-
-		const onChangeContent = (content, i) => {
-			attributes.accordions[i].content = content;
-			updateTimeStamp();
-		};
-
-		const onThemeChange = value => setAttributes({ theme: value });
-
-		const onTitleColorChange = value =>
-			setAttributes({ titleColor: value });
-
-		const onCollapseChange = () =>
-			setAttributes({ collapsed: !attributes.collapsed });
-
-		if (attributes.accordions.length === 0) {
-			addAccord(0);
-		}
-
-		return [
-			isSelected && (
-				<Inspector
-					{...{
-						attributes,
-						onThemeChange,
-						onCollapseChange,
-						onTitleColorChange
-					}}
-					key="inspector"
-				/>
-			),
-			<div className={className} key="accordions">
-				{attributes.accordions.map((accordion, i) => {
-					return (
-						<Accordion
-							{...{
-								isSelected,
-								accordion,
-								i,
-								attributes,
-								accordionsState,
-								onChangeContent,
-								onChangeTitle,
-								showControls,
-								deleteAccord,
-								addAccord,
-								toggleAccordionState
-							}}
-							count={attributes.accordions.length}
-							key={i}
-						/>
-					);
-				})}
-			</div>
-		];
-	},
-
-	save: function(props) {
-		const { accordions, collapsed, theme, titleColor } = props.attributes;
-		const classNamePrefix = 'wp-block-ub-content-toggle';
+	save(props) {
 		return (
 			<div>
-				{accordions.map((accordion, i) => {
-					return (
-						<div
-							style={{ borderColor: theme }}
-							className={`${classNamePrefix}-accordion`}
-							key={i}
-						>
-							<div
-								className={`${classNamePrefix}-accordion-title-wrap`}
-								style={{ backgroundColor: theme }}
-							>
-								<RichText.Content
-									tagName="span"
-									className={`${classNamePrefix}-accordion-title`}
-									style={{
-										color: titleColor
-									}}
-									value={accordion.title}
-								/>
-								<span
-									className={
-										`${classNamePrefix}-accordion-state-indicator dashicons dashicons-arrow-right-alt2 ` +
-										(collapsed ? '' : 'open')
-									}
-								/>
-							</div>
-							<div
-								style={{
-									display: collapsed ? 'none' : 'block'
-								}}
-								className={`${classNamePrefix}-accordion-content-wrap`}
-							>
-								<RichText.Content
-									tagName="div"
-									className={`${classNamePrefix}-accordion-content`}
-									value={accordion.content}
-								/>
-							</div>
-						</div>
-					);
-				})}
+				<InnerBlocks.Content />
 			</div>
 		);
 	},

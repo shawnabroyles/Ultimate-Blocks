@@ -77,14 +77,6 @@ registerBlockType('ub/content-toggle-panel', {
 				className="wp-block-ub-content-toggle-accordion"
 				style={{ borderColor: theme }}
 			>
-				<IconButton
-					className="ub-content-toggle-accordion-button-add-above"
-					icon={addAbove}
-					onClick={() => {
-						console.log(`Insert new block at #${index}`);
-						setAttributes({ newBlockPosition: 'above' });
-					}}
-				/>
 				<div
 					className="wp-block-ub-content-toggle-accordion-title-wrap"
 					style={{ backgroundColor: theme }}
@@ -108,23 +100,36 @@ registerBlockType('ub/content-toggle-panel', {
 							(showPanel ? 'open' : '')
 						}
 					/>
-					<span
-						className="wp-block-ub-content-toggle-accordion-delete dashicons dashicons-no-alt"
-						onClick={() => removeBlock(props.block.clientId)}
-					/>
 				</div>
 				{showPanel && (
 					<div className="wp-block-ub-content-toggle-accordion-content-wrap">
 						<InnerBlocks templateLock={false} />
 					</div>
 				)}
-				<IconButton
-					className="ub-content-toggle-accordion-button-add-above"
-					icon={addBelow}
-					onClick={() => {
-						setAttributes({ newBlockPosition: 'below' });
-					}}
-				/>
+				<div className="wp-block-ub-content-toggle-accordion-controls-top">
+					<span
+						title={__('Insert New Toggle Above')}
+						onClick={() =>
+							setAttributes({ newBlockPosition: 'above' })
+						}
+						className="dashicons dashicons-plus-alt"
+					/>
+					{/**Check if this is the only one around */}
+					<span
+						title={__('Delete This Toggle')}
+						onClick={() => removeBlock(props.block.clientId)}
+						class="dashicons dashicons-dismiss"
+					/>
+				</div>
+				<div className="wp-block-ub-content-toggle-accordion-controls-bottom">
+					<span
+						title={__('Insert New Toggle Below')}
+						onClick={() =>
+							setAttributes({ newBlockPosition: 'below' })
+						}
+						className="dashicons dashicons-plus-alt"
+					/>
+				</div>
 			</div>
 		);
 	}),

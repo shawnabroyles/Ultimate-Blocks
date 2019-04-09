@@ -75,11 +75,6 @@
 				transform: rotate(90deg);
 			}
 		}
-		.wp-block-ub-content-toggle-accordion-delete {
-			display: block;
-			margin: 10px;
-			color: white;
-		}
 	}
 	&:hover {
 		.wp-block-ub-content-toggle-accordion-controls-top,
@@ -87,12 +82,4 @@
 			opacity: 1;
 		}
 	}
-}
-
-.ub-content-toggle-accordion-button-add-above {
-	margin: auto;
-}
-
-.ub-content-toggle-accordion-button-add-below {
-	margin: auto;
 }

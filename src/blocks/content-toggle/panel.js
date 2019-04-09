@@ -95,7 +95,7 @@ registerBlockType('ub/content-toggle-panel', {
 						className="wp-block-ub-content-toggle-accordion-title"
 						value={panelTitle}
 						formattingControls={['bold', 'italic']}
-						onChange={panelTitle => setAttributes({ panelTitle })}
+						onChange={value => setAttributes({ panelTitle: value })}
 						placeholder={__('Toggle Title Here')}
 						keepPlaceholderOnFocus={true}
 					/>

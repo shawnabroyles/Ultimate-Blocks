@@ -89,12 +89,18 @@ class PanelContent extends Component {
 		return this.props.block.innerBlocks;
 	}
 	getPanelTemplate() {
-		const panelData = this.getPanels();
 		let result = [];
 
-		panelData.forEach(() => {
-			result.push(['ub/content-toggle-panel']);
-		});
+		if (JSON.stringify(this.props.attributes.accordions) === '[]') {
+			//const panelData = this.getPanels();
+			this.getPanels().forEach(() => {
+				result.push(['ub/content-toggle-panel']);
+			});
+		} else {
+			this.props.attributes.accordions.forEach(() => {
+				result.push(['ub/content-toggle-panel']);
+			});
+		}
 
 		return JSON.stringify(result) === '[]'
 			? [['ub/content-toggle-panel']]
@@ -126,31 +132,6 @@ class PanelContent extends Component {
 			panel => panel.attributes.newBlockPosition !== 'none'
 		);
 
-		if (JSON.stringify(newBlockTarget) !== '[]') {
-			const { index, newBlockPosition } = newBlockTarget[0].attributes;
-			insertBlock(
-				createBlock('ub/content-toggle-panel'),
-				newBlockPosition === 'below' ? index + 1 : index,
-				this.props.block.clientId
-			);
-			updateBlockAttributes(newBlockTarget[0].clientId, {
-				newBlockPosition: 'none'
-			});
-		}
-
-		if (newArrangement !== oldArrangement) {
-			if (oldArrangement === '[0]' && newArrangement === '[]') {
-				removeBlock(this.props.block.clientId);
-			} else {
-				panels.forEach((panel, i) =>
-					updateBlockAttributes(panel.clientId, {
-						index: i,
-						parent: this.props.block.clientId
-					})
-				);
-				setState({ oldArrangement: newArrangement });
-			}
-		}
 		const onThemeChange = value => {
 			setAttributes({ theme: value });
 
@@ -169,13 +150,63 @@ class PanelContent extends Component {
 
 		const onCollapseChange = () => {
 			setAttributes({ collapsed: !attributes.collapsed });
-
 			panels.forEach(panel =>
 				updateBlockAttributes(panel.clientId, {
 					collapsed: !panel.attributes.collapsed
 				})
 			);
 		};
+
+		//Detect if one of the child blocks has received a command to add another child block
+		if (JSON.stringify(newBlockTarget) !== '[]') {
+			const { index, newBlockPosition } = newBlockTarget[0].attributes;
+			insertBlock(
+				createBlock('ub/content-toggle-panel'),
+				newBlockPosition === 'below' ? index + 1 : index,
+				this.props.block.clientId
+			);
+			updateBlockAttributes(newBlockTarget[0].clientId, {
+				newBlockPosition: 'none'
+			});
+		}
+
+		//Fix indexes in case of rearrangments
+		if (newArrangement !== oldArrangement) {
+			if (oldArrangement === '[0]' && newArrangement === '[]') {
+				removeBlock(this.props.block.clientId);
+			} else {
+				panels.forEach((panel, i) =>
+					updateBlockAttributes(panel.clientId, {
+						index: i,
+						parent: this.props.block.clientId
+					})
+				);
+				setState({ oldArrangement: newArrangement });
+			}
+		} else {
+			//Look for data intended for the old version
+			if (JSON.stringify(attributes.accordions) !== '[]') {
+				panels.forEach(panel => {
+					updateBlockAttributes(panel.clientId, {
+						panelTitle:
+							attributes.accordions[panel.attributes.index].title,
+						theme: attributes.theme,
+						collapsed: attributes.collapsed,
+						titleColor: attributes.titleColor
+					});
+					insertBlock(
+						createBlock('core/paragraph', {
+							content:
+								attributes.accordions[panel.attributes.index]
+									.content
+						}),
+						0,
+						panel.clientId
+					);
+				});
+				setAttributes({ accordions: [] }); //clear old data after successful transfer
+			}
+		}
 
 		return [
 			isSelected && (

@@ -483,7 +483,7 @@
  */
 .wp-block-ub-content-toggle {
   margin: 20px 0 20px 0;
-  max-width: 740px; }
+  max-width: 100%; }
 
 .wp-block-ub-content-toggle-accordion {
   position: relative;
@@ -558,9 +558,7 @@
     opacity: 1; }
 
 .wp-block-ub-content-toggle-accordion-content-wrap {
-  padding: 13px;
-  max-width: 100%;
-  margin: auto; }
+  padding: 13px 4%; }
 /**
  * #.# Common SCSS
  *

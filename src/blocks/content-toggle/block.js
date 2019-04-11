@@ -92,7 +92,6 @@ class PanelContent extends Component {
 		let result = [];
 
 		if (JSON.stringify(this.props.attributes.accordions) === '[]') {
-			//const panelData = this.getPanels();
 			this.getPanels().forEach(() => {
 				result.push(['ub/content-toggle-panel']);
 			});
@@ -244,17 +243,12 @@ registerBlockType('ub/content-toggle', {
 
 	edit: compose([
 		withSelect((select, ownProps) => {
-			const { getBlock, isBlockSelected, hasSelectedInnerBlock } = select(
-				'core/editor'
-			);
+			const { getBlock } = select('core/editor');
 
 			const { clientId } = ownProps;
 
 			return {
-				block: getBlock(clientId),
-				isSelectedBlockInRoot:
-					isBlockSelected(clientId) ||
-					hasSelectedInnerBlock(clientId, true)
+				block: getBlock(clientId)
 			};
 		}),
 		withDispatch(dispatch => {

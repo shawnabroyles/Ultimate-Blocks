@@ -1,6 +1,6 @@
-import './style.scss';
-import './editor.scss';
-import icon, { addAbove, addBelow } from './icons/icon';
+import '../style.scss';
+import '../editor.scss';
+import icon from '../icons/icon';
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
@@ -10,7 +10,6 @@ const { RichText, InnerBlocks } = wp.editor;
 const { withState, compose } = wp.compose;
 
 const { withDispatch, withSelect } = wp.data;
-const { IconButton, Icon } = wp.components;
 
 registerBlockType('ub/content-toggle-panel', {
 	title: __('Content Toggle Panel'),
@@ -37,10 +36,6 @@ registerBlockType('ub/content-toggle-panel', {
 		panelTitle: {
 			type: 'text',
 			default: 'Panel Title'
-		},
-		parent: {
-			type: 'text',
-			default: ''
 		},
 		newBlockPosition: {
 			type: 'text',
@@ -71,7 +66,7 @@ registerBlockType('ub/content-toggle-panel', {
 		withState({ showPanel: true })
 	])(function(props) {
 		const { setState, setAttributes, removeBlock, showPanel } = props;
-		const { theme, titleColor, panelTitle, index } = props.attributes;
+		const { theme, titleColor, panelTitle } = props.attributes;
 		return (
 			<div
 				className="wp-block-ub-content-toggle-accordion"

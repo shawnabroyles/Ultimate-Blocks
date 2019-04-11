@@ -558,7 +558,9 @@
     opacity: 1; }
 
 .wp-block-ub-content-toggle-accordion-content-wrap {
-  padding: 13px; }
+  padding: 13px;
+  max-width: 100%;
+  margin: auto; }
 /**
  * #.# Common SCSS
  *

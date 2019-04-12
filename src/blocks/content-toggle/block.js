@@ -170,7 +170,11 @@ class PanelContent extends Component {
 		if (JSON.stringify(newBlockTarget) !== '[]') {
 			const { index, newBlockPosition } = newBlockTarget[0].attributes;
 			insertBlock(
-				createBlock('ub/content-toggle-panel'),
+				createBlock('ub/content-toggle-panel', {
+					theme: theme,
+					collapsed: collapsed,
+					titleColor: titleColor
+				}),
 				newBlockPosition === 'below' ? index + 1 : index,
 				block.clientId
 			);

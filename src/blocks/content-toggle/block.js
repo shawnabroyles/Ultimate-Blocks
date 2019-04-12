@@ -91,12 +91,14 @@ class PanelContent extends Component {
 	getPanelTemplate() {
 		let result = [];
 
-		if (JSON.stringify(this.props.attributes.accordions) === '[]') {
+		const { accordions } = this.props.attributes;
+
+		if (JSON.stringify(accordions) === '[]') {
 			this.getPanels().forEach(() => {
 				result.push(['ub/content-toggle-panel']);
 			});
 		} else {
-			this.props.attributes.accordions.forEach(() => {
+			accordions.forEach(() => {
 				result.push(['ub/content-toggle-panel']);
 			});
 		}
@@ -113,11 +115,19 @@ class PanelContent extends Component {
 			isSelected,
 			updateBlockAttributes,
 			oldArrangement,
+			mainBlockSelected,
 			setState,
+			selectBlock,
 			insertBlock,
-			removeBlock
+			removeBlock,
+			selectedBlock,
+			parentOfSelectedBlock,
+			block
 		} = this.props;
-		if (!attributes.accordions) {
+
+		const { accordions, collapsed, theme, titleColor } = attributes;
+
+		if (!accordions) {
 			attributes.accordions = [];
 		}
 
@@ -148,7 +158,7 @@ class PanelContent extends Component {
 		};
 
 		const onCollapseChange = () => {
-			setAttributes({ collapsed: !attributes.collapsed });
+			setAttributes({ collapsed: !collapsed });
 			panels.forEach(panel =>
 				updateBlockAttributes(panel.clientId, {
 					collapsed: !panel.attributes.collapsed
@@ -162,7 +172,7 @@ class PanelContent extends Component {
 			insertBlock(
 				createBlock('ub/content-toggle-panel'),
 				newBlockPosition === 'below' ? index + 1 : index,
-				this.props.block.clientId
+				block.clientId
 			);
 			updateBlockAttributes(newBlockTarget[0].clientId, {
 				newBlockPosition: 'none'
@@ -170,40 +180,52 @@ class PanelContent extends Component {
 		}
 
 		//Fix indexes in case of rearrangments
+
 		if (newArrangement !== oldArrangement) {
 			if (oldArrangement === '[0]' && newArrangement === '[]') {
-				removeBlock(this.props.block.clientId);
+				removeBlock(block.clientId);
 			} else {
 				panels.forEach((panel, i) =>
 					updateBlockAttributes(panel.clientId, {
 						index: i,
-						parent: this.props.block.clientId
+						parent: block.clientId
 					})
 				);
 				setState({ oldArrangement: newArrangement });
 			}
 		} else {
 			//Look for data intended for the old version
-			if (JSON.stringify(attributes.accordions) !== '[]') {
+			if (JSON.stringify(accordions) !== '[]') {
 				panels.forEach(panel => {
 					updateBlockAttributes(panel.clientId, {
-						panelTitle:
-							attributes.accordions[panel.attributes.index].title,
-						theme: attributes.theme,
-						collapsed: attributes.collapsed,
-						titleColor: attributes.titleColor
+						panelTitle: accordions[panel.attributes.index].title,
+						theme: theme,
+						collapsed: collapsed,
+						titleColor: titleColor
 					});
 					insertBlock(
 						createBlock('core/paragraph', {
-							content:
-								attributes.accordions[panel.attributes.index]
-									.content
+							content: accordions[panel.attributes.index].content
 						}),
 						0,
 						panel.clientId
 					);
 				});
 				setAttributes({ accordions: [] }); //clear old data after successful transfer
+			}
+			if (mainBlockSelected) {
+				const childBlocks = this.getPanels()
+					.filter(block => block.name === 'ub/content-toggle-panel')
+					.map(panels => panels.clientId);
+				if (
+					selectedBlock !== block.clientId &&
+					childBlocks.includes(selectedBlock)
+				) {
+					setState({ mainBlockSelected: false });
+				}
+			} else {
+				selectBlock(parentOfSelectedBlock);
+				setState({ mainBlockSelected: true });
 			}
 		}
 
@@ -243,28 +265,38 @@ registerBlockType('ub/content-toggle', {
 
 	edit: compose([
 		withSelect((select, ownProps) => {
-			const { getBlock } = select('core/editor');
+			const {
+				getBlock,
+				getSelectedBlockClientId,
+				getBlockRootClientId
+			} = select('core/editor');
 
 			const { clientId } = ownProps;
 
 			return {
-				block: getBlock(clientId)
+				block: getBlock(clientId),
+				selectedBlock: getSelectedBlockClientId(),
+				parentOfSelectedBlock: getBlockRootClientId(
+					getSelectedBlockClientId()
+				)
 			};
 		}),
 		withDispatch(dispatch => {
 			const {
 				updateBlockAttributes,
 				insertBlock,
-				removeBlock
+				removeBlock,
+				selectBlock
 			} = dispatch('core/editor');
 
 			return {
 				updateBlockAttributes,
 				insertBlock,
-				removeBlock
+				removeBlock,
+				selectBlock
 			};
 		}),
-		withState({ oldArrangement: 'Replace this with a proper JSON string' })
+		withState({ oldArrangement: '', mainBlockSelected: true })
 	])(PanelContent),
 
 	save(props) {

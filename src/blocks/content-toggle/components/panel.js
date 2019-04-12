@@ -35,7 +35,7 @@ registerBlockType('ub/content-toggle-panel', {
 		},
 		panelTitle: {
 			type: 'text',
-			default: 'Panel Title'
+			default: ''
 		},
 		newBlockPosition: {
 			type: 'text',
@@ -49,23 +49,33 @@ registerBlockType('ub/content-toggle-panel', {
 
 	edit: compose([
 		withSelect((select, ownProps) => {
-			const { getBlock } = select('core/editor');
+			const { getBlock, getBlockRootClientId } = select('core/editor');
 			const { clientId } = ownProps;
 
 			return {
-				block: getBlock(clientId)
+				block: getBlock(clientId),
+				blockParentId: getBlockRootClientId(clientId)
 			};
 		}),
 		withDispatch(dispatch => {
-			const { updateBlockAttributes, removeBlock } = dispatch(
-				'core/editor'
-			);
+			const {
+				updateBlockAttributes,
+				removeBlock,
+				selectBlock
+			} = dispatch('core/editor');
 
-			return { updateBlockAttributes, removeBlock };
+			return { updateBlockAttributes, removeBlock, selectBlock };
 		}),
 		withState({ showPanel: true })
 	])(function(props) {
-		const { setState, setAttributes, removeBlock, showPanel } = props;
+		const {
+			setState,
+			setAttributes,
+			removeBlock,
+			showPanel,
+			blockParentId,
+			selectBlock
+		} = props;
 		const { theme, titleColor, panelTitle } = props.attributes;
 		return (
 			<div
@@ -83,8 +93,9 @@ registerBlockType('ub/content-toggle-panel', {
 						value={panelTitle}
 						formattingControls={['bold', 'italic']}
 						onChange={value => setAttributes({ panelTitle: value })}
-						placeholder={__('Toggle Title Here')}
+						placeholder={__('Panel Title')}
 						keepPlaceholderOnFocus={true}
+						unstableOnFocus={() => selectBlock(blockParentId)}
 					/>
 					<span
 						onClick={() => {
@@ -109,7 +120,6 @@ registerBlockType('ub/content-toggle-panel', {
 						}
 						className="dashicons dashicons-plus-alt"
 					/>
-					{/**Check if this is the only one around */}
 					<span
 						title={__('Delete This Toggle')}
 						onClick={() => removeBlock(props.block.clientId)}

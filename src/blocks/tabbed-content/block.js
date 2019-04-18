@@ -344,7 +344,10 @@ class TabHolder extends Component {
 			);
 			setState({ oldArrangement: newArrangement });
 		} else {
-			if (JSON.stringify(attributes.tabsContent) !== '[]') {
+			if (
+				attributes.tabsContent &&
+				JSON.stringify(attributes.tabsContent) !== '[]'
+			) {
 				tabs.forEach(tab => {
 					insertBlock(
 						createBlock('core/paragraph', {

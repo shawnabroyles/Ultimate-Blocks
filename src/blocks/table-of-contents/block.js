@@ -5,15 +5,6 @@ import icon, {
 	plainList
 } from './icon';
 import TableOfContents from './components';
-import {
-	version_1_0_8,
-	version_1_0_9,
-	version_1_1_3,
-	version_1_1_5,
-	version_1_1_6,
-	version_1_1_8,
-	version_2_0_0
-} from './oldVersions';
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks;
@@ -34,9 +25,8 @@ import './style.scss';
 
 const attributes = {
 	title: {
-		type: 'array',
-		source: 'children',
-		selector: '.ub_table-of-contents-title'
+		type: 'string',
+		default: ''
 	},
 	allowedHeaders: {
 		type: 'array',
@@ -210,13 +200,6 @@ registerBlockType('ub/table-of-contents', {
 							className="ub_table-of-contents-title"
 							onChange={text => setAttributes({ title: text })}
 							value={title}
-							isSelected={
-								isSelected &&
-								editable === 'table_of_contents_title'
-							}
-							onFocus={onSetActiveEditable(
-								'table_of_contents_title'
-							)}
 							keepPlaceholderOnFocus={true}
 						/>
 					</div>
@@ -251,84 +234,7 @@ registerBlockType('ub/table-of-contents', {
 		];
 	}),
 
-	save(props) {
-		const {
-			links,
-			title,
-			allowedHeaders,
-			showList,
-			numColumns,
-			allowToCHiding,
-			listStyle
-		} = props.attributes;
-		return (
-			<div
-				className="ub_table-of-contents"
-				data-showText={__('show')}
-				data-hideText={__('hide')}
-			>
-				{(title.length > 1 ||
-					(title.length === 1 && title[0] !== '')) && (
-					<div className="ub_table-of-contents-header">
-						<div className="ub_table-of-contents-title">
-							{title}
-						</div>
-						{allowToCHiding && (
-							<div id="ub_table-of-contents-header-toggle">
-								<div id="ub_table-of-contents-toggle">
-									[
-									<a
-										className="ub_table-of-contents-toggle-link"
-										href="#"
-									>
-										{showList ? __('hide') : __('show')}
-									</a>
-									]
-								</div>
-							</div>
-						)}
-					</div>
-				)}
-
-				<TableOfContents
-					listStyle={listStyle}
-					numColumns={numColumns}
-					style={{
-						display:
-							showList ||
-							title.length === 0 ||
-							(title.length === 1 && title[0] === '')
-								? 'block'
-								: 'none'
-					}}
-					allowedHeaders={allowedHeaders}
-					headers={links && JSON.parse(links)}
-				/>
-			</div>
-		);
-	},
-	deprecated: [
-		{ attributes, save: version_1_0_8 },
-		{ attributes, save: version_1_0_9 },
-		{
-			attributes,
-			migrate: function(attributes) {
-				function flattenArray(arr) {
-					return arr.reduce(
-						(acc, val) =>
-							acc.concat(
-								Array.isArray(val) ? flattenArray(val) : val
-							),
-						[]
-					);
-				}
-				return { links: flattenArray(attributes.links) };
-			},
-			save: version_1_1_3
-		},
-		{ attributes, save: version_1_1_5 },
-		{ attributes, save: version_1_1_6 },
-		{ attributes, save: version_1_1_8 },
-		{ attributes, save: version_2_0_0 }
-	]
+	save() {
+		return null;
+	}
 });

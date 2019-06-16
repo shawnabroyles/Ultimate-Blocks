@@ -14,7 +14,6 @@ import './style.scss';
 import './editor.scss';
 
 import { EmptyStar, HalfStar, FullStar } from './icons';
-import { version_1_1_2, version_1_1_5, version_2_0_0 } from './oldVersions';
 
 const attributes = {
 	starCount: {
@@ -34,9 +33,8 @@ const attributes = {
 		default: 0
 	},
 	reviewText: {
-		type: 'array',
-		source: 'children',
-		selector: '.ub-review-text'
+		type: 'string',
+		default: ''
 	},
 	reviewTextAlign: {
 		type: 'string',
@@ -221,66 +219,7 @@ registerBlockType('ub/star-rating', {
 		];
 	}),
 
-	save(props) {
-		const {
-			starCount,
-			starSize,
-			starColor,
-			selectedStars,
-			reviewText,
-			reviewTextAlign,
-			starAlign
-		} = props.attributes;
-		return (
-			<div className="ub-star-rating">
-				<div
-					className="ub-star-outer-container"
-					style={{
-						justifyContent:
-							starAlign === 'center'
-								? 'center'
-								: `flex-${
-										starAlign === 'left' ? 'start' : 'end'
-								  }`
-					}}
-				>
-					<div className="ub-star-inner-container">
-						{[...Array(starCount)].map((e, i) => (
-							<div key={i}>
-								{i < selectedStars ? (
-									<FullStar
-										size={starSize}
-										fillColor={starColor}
-									/>
-								) : (
-									<EmptyStar size={starSize} />
-								)}
-							</div>
-						))}
-					</div>
-				</div>
-				<div
-					className="ub-review-text"
-					style={{ textAlign: reviewTextAlign }}
-				>
-					{reviewText}
-				</div>
-			</div>
-		);
-	},
-
-	deprecated: [
-		{
-			attributes,
-			save: version_1_1_2
-		},
-		{
-			attributes,
-			save: version_1_1_5
-		},
-		{
-			attributes,
-			save: version_2_0_0
-		}
-	]
+	save() {
+		return null;
+	}
 });

@@ -165,3 +165,6 @@ require_once plugin_dir_path( __FILE__ ) . 'blocks/button/block.php';
 
 // Content Filter Block
 require_once plugin_dir_path( __FILE__ ) . 'blocks/content-filter/block.php';
+
+// Star Rating Block
+require_once plugin_dir_path( __FILE__ ) . 'blocks/star-rating/block.php';

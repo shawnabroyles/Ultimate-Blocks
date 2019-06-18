@@ -2,8 +2,6 @@ import '../style.scss';
 import '../editor.scss';
 import icon from '../icons/icon';
 
-import { panel_version_1_1_9 } from '../oldVersions';
-
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 
@@ -81,19 +79,18 @@ registerBlockType('ub/content-toggle-panel', {
 			selectBlock
 		} = props;
 		const { theme, titleColor, panelTitle } = props.attributes;
+
+		const classNamePrefix = 'wp-block-ub-content-toggle-accordion';
 		return (
-			<div
-				className="wp-block-ub-content-toggle-accordion"
-				style={{ borderColor: theme }}
-			>
+			<div className={classNamePrefix} style={{ borderColor: theme }}>
 				<div
-					className="wp-block-ub-content-toggle-accordion-title-wrap"
+					className={`${classNamePrefix}-title-wrap`}
 					style={{ backgroundColor: theme }}
 				>
 					<RichText
 						tagName="span"
 						style={{ color: titleColor }}
-						className="wp-block-ub-content-toggle-accordion-title"
+						className={`${classNamePrefix}-title`}
 						value={panelTitle}
 						formattingControls={['bold', 'italic']}
 						onChange={value => setAttributes({ panelTitle: value })}
@@ -105,18 +102,17 @@ registerBlockType('ub/content-toggle-panel', {
 						onClick={() => {
 							setState({ showPanel: !showPanel });
 						}}
-						className={
-							'wp-block-ub-content-toggle-accordion-state-indicator dashicons dashicons-arrow-right-alt2 ' +
-							(showPanel ? 'open' : '')
-						}
+						className={`${classNamePrefix}-state-indicator dashicons dashicons-arrow-right-alt2 ${
+							showPanel ? 'open' : ''
+						}`}
 					/>
 				</div>
 				{showPanel && (
-					<div className="wp-block-ub-content-toggle-accordion-content-wrap">
+					<div className={`${classNamePrefix}-content-wrap`}>
 						<InnerBlocks templateLock={false} />
 					</div>
 				)}
-				<div className="wp-block-ub-content-toggle-accordion-controls-top">
+				<div className={`${classNamePrefix}-controls-top`}>
 					<span
 						title={__('Insert New Toggle Above')}
 						onClick={() =>
@@ -130,7 +126,7 @@ registerBlockType('ub/content-toggle-panel', {
 						class="dashicons dashicons-dismiss"
 					/>
 				</div>
-				<div className="wp-block-ub-content-toggle-accordion-controls-bottom">
+				<div className={`${classNamePrefix}-controls-bottom`}>
 					<span
 						title={__('Insert New Toggle Below')}
 						onClick={() =>
@@ -142,49 +138,7 @@ registerBlockType('ub/content-toggle-panel', {
 			</div>
 		);
 	}),
-	save(props) {
-		const { theme, collapsed, titleColor, panelTitle } = props.attributes;
-		const classNamePrefix = 'wp-block-ub-content-toggle';
-		return (
-			<div
-				style={{ borderColor: theme }}
-				className={`${classNamePrefix}-accordion`}
-			>
-				<div
-					className={`${classNamePrefix}-accordion-title-wrap`}
-					style={{ backgroundColor: theme }}
-				>
-					<RichText.Content
-						tagName="span"
-						className={`${classNamePrefix}-accordion-title`}
-						style={{ color: titleColor }}
-						value={panelTitle}
-					/>
-					<span
-						className={
-							`${classNamePrefix}-accordion-state-indicator dashicons dashicons-arrow-right-alt2 ` +
-							(collapsed ? '' : 'open')
-						}
-					/>
-				</div>
-				<div
-					style={{
-						height: collapsed ? '0' : '',
-						paddingTop: collapsed ? '0' : '',
-						paddingBottom: collapsed ? '0' : ''
-					}}
-					className={`${classNamePrefix}-accordion-content-wrap`}
-				>
-					<InnerBlocks.Content />
-				</div>
-			</div>
-		);
-	},
-
-	deprecated: [
-		{
-			attributes,
-			save: panel_version_1_1_9
-		}
-	]
+	save() {
+		return <InnerBlocks.Content />;
+	}
 });

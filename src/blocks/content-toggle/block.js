@@ -14,8 +14,6 @@ import './editor.scss';
 import Inspector from './components/inspector';
 import { Component } from 'react';
 
-import { version_1_1_2 } from './oldVersions';
-
 const { __ } = wp.i18n;
 const { registerBlockType, createBlock } = wp.blocks;
 const { withState, compose } = wp.compose;
@@ -23,34 +21,6 @@ const { withSelect, withDispatch } = wp.data;
 const { InnerBlocks } = wp.editor;
 
 const attributes = {
-	accordions: {
-		source: 'query',
-		selector: '.wp-block-ub-content-toggle-accordion',
-		query: {
-			title: {
-				type: 'array',
-				source: 'children',
-				selector: '.wp-block-ub-content-toggle-accordion-title'
-			},
-			content: {
-				type: 'array',
-				source: 'children',
-				selector: '.wp-block-ub-content-toggle-accordion-content'
-			}
-		}
-	},
-	accordionsState: {
-		type: 'string',
-		default: '[]'
-	},
-	timestamp: {
-		type: 'number',
-		default: 0
-	},
-	activeControl: {
-		type: 'string',
-		default: ''
-	},
 	theme: {
 		type: 'string',
 		default: '#f63d3d'
@@ -99,18 +69,13 @@ class PanelContent extends Component {
 			setState,
 			selectBlock,
 			insertBlock,
-			insertBlocks,
 			removeBlock,
 			selectedBlock,
 			parentOfSelectedBlock,
 			block
 		} = this.props;
 
-		const { accordions, collapsed, theme, titleColor } = attributes;
-
-		if (!accordions) {
-			attributes.accordions = [];
-		}
+		const { collapsed, theme, titleColor } = attributes;
 
 		const panels = this.getPanels();
 
@@ -195,67 +160,6 @@ class PanelContent extends Component {
 				setState({ oldArrangement: newArrangement });
 			}
 		} else {
-			//Look for data intended for the old version
-			if (
-				JSON.stringify(accordions) !== '[]' &&
-				oldArrangement ===
-					JSON.stringify([...Array(accordions.length).keys()])
-			) {
-				panels.forEach((panel, i) => {
-					updateBlockAttributes(panel.clientId, {
-						panelTitle: accordions[i].title,
-						theme: theme,
-						collapsed: collapsed,
-						titleColor: titleColor
-					});
-
-					if (
-						accordions[i].content.filter(a => a.type === 'br')
-							.length > 0
-					) {
-						let paragraphs = [];
-
-						accordions[i].content.forEach((item, j) => {
-							const part =
-								typeof item === 'string'
-									? item
-									: richTextToHTML(item);
-							if (
-								paragraphs.length === 0 ||
-								accordions[i].content[j - 1].type === 'br'
-							) {
-								paragraphs.push(
-									item.type === 'br' ? item : part
-								);
-							} else if (item.type !== 'br') {
-								paragraphs[paragraphs.length - 1] += part;
-							}
-						});
-
-						const newParagraphs = paragraphs.map(part => {
-							return createBlock(
-								'core/paragraph',
-								typeof part === 'object'
-									? { type: part.type, content: part.content }
-									: {
-											content: part
-									  }
-							);
-						});
-
-						insertBlocks(newParagraphs, 0, panel.clientId);
-					} else {
-						insertBlock(
-							createBlock('core/paragraph', {
-								content: accordions[i].content
-							}),
-							0,
-							panel.clientId
-						);
-					}
-				});
-				setAttributes({ accordions: [] }); //clear old data after successful transfer
-			}
 			if (mainBlockSelected) {
 				const childBlocks = this.getPanels()
 					.filter(block => block.name === 'ub/content-toggle-panel')
@@ -285,14 +189,7 @@ class PanelContent extends Component {
 			),
 			<div className={className}>
 				<InnerBlocks
-					template={
-						Array.isArray(accordions) &&
-						Array(
-							JSON.stringify(accordions) !== '[]'
-								? accordions.length
-								: 1
-						).fill(['ub/content-toggle-panel'])
-					} //initial content
+					template={[['ub/content-toggle-panel']]} //initial content
 					templateLock={false}
 					allowedBlocks={['ub/content-toggle-panel']}
 				/>
@@ -335,7 +232,6 @@ registerBlockType('ub/content-toggle', {
 			const {
 				updateBlockAttributes,
 				insertBlock,
-				insertBlocks,
 				removeBlock,
 				selectBlock
 			} = dispatch('core/editor');
@@ -343,7 +239,6 @@ registerBlockType('ub/content-toggle', {
 			return {
 				updateBlockAttributes,
 				insertBlock,
-				insertBlocks,
 				removeBlock,
 				selectBlock
 			};
@@ -351,17 +246,7 @@ registerBlockType('ub/content-toggle', {
 		withState({ oldArrangement: '', mainBlockSelected: true })
 	])(PanelContent),
 
-	save(props) {
-		return (
-			<div>
-				<InnerBlocks.Content />
-			</div>
-		);
-	},
-	deprecated: [
-		{
-			attributes,
-			save: version_1_1_2
-		}
-	]
+	save() {
+		return <InnerBlocks.Content />; //still needed for rendering the block properly
+	}
 });

@@ -221,5 +221,95 @@ registerBlockType('ub/star-rating', {
 
 	save() {
 		return null;
-	}
+	},
+
+	deprecated: [
+		{
+			attributes: {
+				starCount: {
+					type: 'number',
+					default: 5
+				},
+				starSize: {
+					type: 'number',
+					default: 20
+				},
+				starColor: {
+					type: 'string',
+					default: '#ffff00'
+				},
+				selectedStars: {
+					type: 'number',
+					default: 0
+				},
+				transitionReviewText: {
+					type: 'string',
+					default: ''
+				},
+				reviewTextAlign: {
+					type: 'string',
+					default: 'text'
+				},
+				starAlign: {
+					type: 'string',
+					default: 'left'
+				}
+			},
+			migrate: attributes => {
+				const { transitionReviewText, ...otherProps } = attributes;
+				return Object.assign(otherProps, {
+					reviewText: transitionReviewText
+				});
+			},
+			save: props => {
+				const {
+					starCount,
+					starSize,
+					starColor,
+					selectedStars,
+					transitionReviewText,
+					reviewTextAlign,
+					starAlign
+				} = props.attributes;
+				return (
+					<div className="ub-star-rating">
+						<div
+							className="ub-star-outer-container"
+							style={{
+								justifyContent:
+									starAlign === 'center'
+										? 'center'
+										: `flex-${
+												starAlign === 'left'
+													? 'start'
+													: 'end'
+										  }`
+							}}
+						>
+							<div className="ub-star-inner-container">
+								{[...Array(starCount)].map((e, i) => (
+									<div key={i}>
+										{i < selectedStars ? (
+											<FullStar
+												size={starSize}
+												fillColor={starColor}
+											/>
+										) : (
+											<EmptyStar size={starSize} />
+										)}
+									</div>
+								))}
+							</div>
+						</div>
+						<div
+							className="ub-review-text"
+							style={{ textAlign: reviewTextAlign }}
+						>
+							{transitionReviewText}
+						</div>
+					</div>
+				);
+			}
+		}
+	]
 });

@@ -18,8 +18,6 @@ const {
 } = wp.components;
 const { RichText, InspectorControls, BlockControls } = wp.editor;
 
-const { withState } = wp.compose;
-
 import './editor.scss';
 import './style.scss';
 
@@ -62,8 +60,8 @@ registerBlockType('ub/table-of-contents', {
 
 	attributes,
 
-	edit: withState({ editable: 'content' })(function(props) {
-		const { editable, setAttributes, isSelected } = props;
+	edit(props) {
+		const { setAttributes, isSelected } = props;
 		const {
 			links,
 			title,
@@ -73,9 +71,7 @@ registerBlockType('ub/table-of-contents', {
 			numColumns,
 			listStyle
 		} = props.attributes;
-		const onSetActiveEditable = newEditable => () => {
-			setState({ editable: newEditable });
-		};
+
 		return [
 			isSelected && (
 				<InspectorControls>
@@ -232,9 +228,108 @@ registerBlockType('ub/table-of-contents', {
 				)}
 			</div>
 		];
-	}),
+	},
 
 	save() {
 		return null;
-	}
+	},
+
+	deprecated: [
+		{
+			attributes: {
+				transitionTitle: {
+					type: 'string',
+					default: ''
+				},
+				allowedHeaders: {
+					type: 'array',
+					default: Array(6).fill(true)
+				},
+				links: {
+					type: 'string',
+					default: ''
+				},
+				allowToCHiding: {
+					type: 'boolean',
+					default: false
+				},
+				showList: {
+					type: 'boolean',
+					default: true
+				},
+				numColumns: {
+					type: 'number',
+					default: 1
+				},
+				listStyle: {
+					type: 'string',
+					default: 'bulleted' //other options: numbered, plain
+				}
+			},
+			migrate: attributes => {
+				const { transitionTitle, ...otherProps } = attributes;
+				return Object.assign(otherProps, { title: transitionTitle });
+			},
+			save: props => {
+				const {
+					links,
+					transitionTitle,
+					allowedHeaders,
+					showList,
+					numColumns,
+					allowToCHiding,
+					listStyle
+				} = props.attributes;
+				return (
+					<div
+						className="ub_table-of-contents"
+						data-showText={__('show')}
+						data-hideText={__('hide')}
+					>
+						{(transitionTitle.length > 1 ||
+							(transitionTitle.length === 1 &&
+								transitionTitle[0] !== '')) && (
+							<div className="ub_table-of-contents-header">
+								<div className="ub_table-of-contents-title">
+									{transitionTitle}
+								</div>
+								{allowToCHiding && (
+									<div id="ub_table-of-contents-header-toggle">
+										<div id="ub_table-of-contents-toggle">
+											[
+											<a
+												className="ub_table-of-contents-toggle-link"
+												href="#"
+											>
+												{showList
+													? __('hide')
+													: __('show')}
+											</a>
+											]
+										</div>
+									</div>
+								)}
+							</div>
+						)}
+
+						<TableOfContents
+							listStyle={listStyle}
+							numColumns={numColumns}
+							style={{
+								display:
+									showList ||
+									transitionTitle.length === 0 ||
+									(transitionTitle.length === 1 &&
+										transitionTitle[0] === '')
+										? 'block'
+										: 'none'
+							}}
+							allowedHeaders={allowedHeaders}
+							headers={links && JSON.parse(links)}
+						/>
+					</div>
+				);
+			}
+		}
+	]
 });

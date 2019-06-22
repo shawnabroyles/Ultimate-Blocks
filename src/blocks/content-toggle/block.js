@@ -61,7 +61,6 @@ class PanelContent extends Component {
 		const {
 			attributes,
 			setAttributes,
-			className,
 			isSelected,
 			updateBlockAttributes,
 			oldArrangement,
@@ -112,22 +111,6 @@ class PanelContent extends Component {
 			);
 		};
 
-		const richTextToHTML = elem => {
-			let outputString = '';
-			outputString += `<${
-				elem.type === 'a'
-					? `${elem.type} href='${elem.href}'`
-					: elem.type
-			}>`;
-			elem.props.children.forEach(child => {
-				outputString +=
-					typeof child === 'string' ? child : richTextToHTML(child);
-			});
-			outputString += `</${elem.type}>`;
-
-			return outputString;
-		};
-
 		//Detect if one of the child blocks has received a command to add another child block
 		if (JSON.stringify(newBlockTarget) !== '[]') {
 			const { index, newBlockPosition } = newBlockTarget[0].attributes;
@@ -159,21 +142,19 @@ class PanelContent extends Component {
 				);
 				setState({ oldArrangement: newArrangement });
 			}
-		} else {
-			if (mainBlockSelected) {
-				const childBlocks = this.getPanels()
-					.filter(block => block.name === 'ub/content-toggle-panel')
-					.map(panels => panels.clientId);
-				if (
-					selectedBlock !== block.clientId &&
-					childBlocks.includes(selectedBlock)
-				) {
-					setState({ mainBlockSelected: false });
-				}
-			} else {
-				selectBlock(parentOfSelectedBlock);
-				setState({ mainBlockSelected: true });
+		} else if (mainBlockSelected) {
+			const childBlocks = this.getPanels()
+				.filter(block => block.name === 'ub/content-toggle-panel')
+				.map(panels => panels.clientId);
+			if (
+				selectedBlock !== block.clientId &&
+				childBlocks.includes(selectedBlock)
+			) {
+				setState({ mainBlockSelected: false });
 			}
+		} else {
+			selectBlock(parentOfSelectedBlock);
+			setState({ mainBlockSelected: true });
 		}
 
 		return [
@@ -187,7 +168,7 @@ class PanelContent extends Component {
 					}}
 				/>
 			),
-			<div className={className}>
+			<div>
 				<InnerBlocks
 					template={[['ub/content-toggle-panel']]} //initial content
 					templateLock={false}

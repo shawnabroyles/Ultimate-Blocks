@@ -29,11 +29,11 @@ const attributes = {
 		default: '#ffffff'
 	},
 	panelTitle: {
-		type: 'text',
+		type: 'string',
 		default: ''
 	},
 	newBlockPosition: {
-		type: 'text',
+		type: 'string',
 		default: 'none' //changes into above/below depending on which button is clicked
 	}
 };

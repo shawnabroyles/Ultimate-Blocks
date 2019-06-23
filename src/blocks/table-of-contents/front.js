@@ -24,6 +24,11 @@ Array.from(
 			tocContainer.style.height === '0px' ? tocHeight : '0'
 		}px`;
 		event.preventDefault();
+		instance.innerHTML = block.getAttribute(
+			tocContainer.style.height === '0px'
+				? 'data-showtext'
+				: 'data-hidetext'
+		);
 	});
 });
 

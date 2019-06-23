@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import TableOfContents from './components';
+import richTextToHTML from '../../common';
 
 const { select, subscribe } = wp.data;
 const { __ } = wp.i18n;
@@ -891,4 +892,15 @@ export const version_2_0_0 = props => {
 			/>
 		</div>
 	);
+};
+
+export const convertToNew = attributes => {
+	const { title, ...otherProps } = attributes;
+	return Object.assign(otherProps, {
+		transitionTitle: title
+			.map(text =>
+				typeof text === 'string' ? text : richTextToHTML(text)
+			)
+			.join('')
+	});
 };

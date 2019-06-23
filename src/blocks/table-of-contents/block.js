@@ -12,7 +12,8 @@ import {
 	version_1_1_5,
 	version_1_1_6,
 	version_1_1_8,
-	version_2_0_0
+	version_2_0_0,
+	convertToNew
 } from './oldVersions';
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
@@ -27,16 +28,13 @@ const {
 } = wp.components;
 const { RichText, InspectorControls, BlockControls } = wp.editor;
 
-const { withState } = wp.compose;
-
 import './editor.scss';
 import './style.scss';
 
 const attributes = {
-	title: {
-		type: 'array',
-		source: 'children',
-		selector: '.ub_table-of-contents-title'
+	transitionTitle: {
+		type: 'string',
+		default: ''
 	},
 	allowedHeaders: {
 		type: 'array',
@@ -64,6 +62,22 @@ const attributes = {
 	}
 };
 
+const oldAttributes = Object.assign(attributes, {
+	title: {
+		type: 'array',
+		source: 'children',
+		selector: '.ub_table-of-contents-title'
+	}
+});
+
+const convertFrom = oldVersion => {
+	return {
+		attributes: oldAttributes,
+		migrate: convertToNew,
+		save: oldVersion
+	};
+};
+
 registerBlockType('ub/table-of-contents', {
 	title: __('Table of Contents'),
 	icon: icon,
@@ -72,20 +86,18 @@ registerBlockType('ub/table-of-contents', {
 
 	attributes,
 
-	edit: withState({ editable: 'content' })(function(props) {
-		const { editable, setAttributes, isSelected } = props;
+	edit(props) {
+		const { setAttributes, isSelected } = props;
 		const {
 			links,
-			title,
+			transitionTitle,
 			allowedHeaders,
 			showList,
 			allowToCHiding,
 			numColumns,
 			listStyle
 		} = props.attributes;
-		const onSetActiveEditable = newEditable => () => {
-			setState({ editable: newEditable });
-		};
+
 		return [
 			isSelected && (
 				<InspectorControls>
@@ -208,15 +220,10 @@ registerBlockType('ub/table-of-contents', {
 						<RichText
 							placeholder={__('Optional title')}
 							className="ub_table-of-contents-title"
-							onChange={text => setAttributes({ title: text })}
-							value={title}
-							isSelected={
-								isSelected &&
-								editable === 'table_of_contents_title'
+							onChange={text =>
+								setAttributes({ transitionTitle: text })
 							}
-							onFocus={onSetActiveEditable(
-								'table_of_contents_title'
-							)}
+							value={transitionTitle}
 							keepPlaceholderOnFocus={true}
 						/>
 					</div>
@@ -249,12 +256,12 @@ registerBlockType('ub/table-of-contents', {
 				)}
 			</div>
 		];
-	}),
+	},
 
 	save(props) {
 		const {
 			links,
-			title,
+			transitionTitle,
 			allowedHeaders,
 			showList,
 			numColumns,
@@ -267,11 +274,12 @@ registerBlockType('ub/table-of-contents', {
 				data-showText={__('show')}
 				data-hideText={__('hide')}
 			>
-				{(title.length > 1 ||
-					(title.length === 1 && title[0] !== '')) && (
+				{(transitionTitle.length > 1 ||
+					(transitionTitle.length === 1 &&
+						transitionTitle[0] !== '')) && (
 					<div className="ub_table-of-contents-header">
 						<div className="ub_table-of-contents-title">
-							{title}
+							{transitionTitle}
 						</div>
 						{allowToCHiding && (
 							<div id="ub_table-of-contents-header-toggle">
@@ -296,8 +304,9 @@ registerBlockType('ub/table-of-contents', {
 					style={{
 						display:
 							showList ||
-							title.length === 0 ||
-							(title.length === 1 && title[0] === '')
+							transitionTitle.length === 0 ||
+							(transitionTitle.length === 1 &&
+								transitionTitle[0] === '')
 								? 'block'
 								: 'none'
 					}}
@@ -308,27 +317,12 @@ registerBlockType('ub/table-of-contents', {
 		);
 	},
 	deprecated: [
-		{ attributes, save: version_1_0_8 },
-		{ attributes, save: version_1_0_9 },
-		{
-			attributes,
-			migrate: function(attributes) {
-				function flattenArray(arr) {
-					return arr.reduce(
-						(acc, val) =>
-							acc.concat(
-								Array.isArray(val) ? flattenArray(val) : val
-							),
-						[]
-					);
-				}
-				return { links: flattenArray(attributes.links) };
-			},
-			save: version_1_1_3
-		},
-		{ attributes, save: version_1_1_5 },
-		{ attributes, save: version_1_1_6 },
-		{ attributes, save: version_1_1_8 },
-		{ attributes, save: version_2_0_0 }
+		convertFrom(version_1_0_8),
+		convertFrom(version_1_0_9),
+		convertFrom(version_1_1_3),
+		convertFrom(version_1_1_5),
+		convertFrom(version_1_1_6),
+		convertFrom(version_1_1_8),
+		convertFrom(version_2_0_0)
 	]
 });

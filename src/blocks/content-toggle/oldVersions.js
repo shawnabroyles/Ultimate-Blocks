@@ -86,3 +86,42 @@ export const panel_version_1_1_9 = props => {
 		</div>
 	);
 };
+
+export const panel_version_2_0_0 = props => {
+	const { theme, collapsed, titleColor, panelTitle } = props.attributes;
+	const classNamePrefix = 'wp-block-ub-content-toggle';
+	return (
+		<div
+			style={{ borderColor: theme }}
+			className={`${classNamePrefix}-accordion`}
+		>
+			<div
+				className={`${classNamePrefix}-accordion-title-wrap`}
+				style={{ backgroundColor: theme }}
+			>
+				<RichText.Content
+					tagName="span"
+					className={`${classNamePrefix}-accordion-title`}
+					style={{ color: titleColor }}
+					value={panelTitle}
+				/>
+				<span
+					className={
+						`${classNamePrefix}-accordion-state-indicator dashicons dashicons-arrow-right-alt2 ` +
+						(collapsed ? '' : 'open')
+					}
+				/>
+			</div>
+			<div
+				style={{
+					height: collapsed ? '0' : '',
+					paddingTop: collapsed ? '0' : '',
+					paddingBottom: collapsed ? '0' : ''
+				}}
+				className={`${classNamePrefix}-accordion-content-wrap`}
+			>
+				<InnerBlocks.Content />
+			</div>
+		</div>
+	);
+};

@@ -13,7 +13,7 @@ import './style.scss';
 import './editor.scss';
 import Inspector from './components/inspector';
 import { Component } from 'react';
-
+import { richTextToHTML } from '../../common';
 import { version_1_1_2 } from './oldVersions';
 
 const { __ } = wp.i18n;
@@ -23,6 +23,21 @@ const { withSelect, withDispatch } = wp.data;
 const { InnerBlocks } = wp.editor;
 
 const attributes = {
+	theme: {
+		type: 'string',
+		default: '#f63d3d'
+	},
+	collapsed: {
+		type: 'boolean',
+		default: false
+	},
+	titleColor: {
+		type: 'string',
+		default: '#ffffff'
+	}
+};
+
+const oldAttributes = Object.assign(attributes, {
 	accordions: {
 		source: 'query',
 		selector: '.wp-block-ub-content-toggle-accordion',
@@ -50,20 +65,8 @@ const attributes = {
 	activeControl: {
 		type: 'string',
 		default: ''
-	},
-	theme: {
-		type: 'string',
-		default: '#f63d3d'
-	},
-	collapsed: {
-		type: 'boolean',
-		default: false
-	},
-	titleColor: {
-		type: 'string',
-		default: '#ffffff'
 	}
-};
+});
 
 /**
  * Register: aa Gutenberg Block.
@@ -99,18 +102,13 @@ class PanelContent extends Component {
 			setState,
 			selectBlock,
 			insertBlock,
-			insertBlocks,
 			removeBlock,
 			selectedBlock,
 			parentOfSelectedBlock,
 			block
 		} = this.props;
 
-		const { accordions, collapsed, theme, titleColor } = attributes;
-
-		if (!accordions) {
-			attributes.accordions = [];
-		}
+		const { collapsed, theme, titleColor } = attributes;
 
 		const panels = this.getPanels();
 
@@ -147,22 +145,6 @@ class PanelContent extends Component {
 			);
 		};
 
-		const richTextToHTML = elem => {
-			let outputString = '';
-			outputString += `<${
-				elem.type === 'a'
-					? `${elem.type} href='${elem.href}'`
-					: elem.type
-			}>`;
-			elem.props.children.forEach(child => {
-				outputString +=
-					typeof child === 'string' ? child : richTextToHTML(child);
-			});
-			outputString += `</${elem.type}>`;
-
-			return outputString;
-		};
-
 		//Detect if one of the child blocks has received a command to add another child block
 		if (JSON.stringify(newBlockTarget) !== '[]') {
 			const { index, newBlockPosition } = newBlockTarget[0].attributes;
@@ -194,82 +176,19 @@ class PanelContent extends Component {
 				);
 				setState({ oldArrangement: newArrangement });
 			}
-		} else {
-			//Look for data intended for the old version
+		} else if (mainBlockSelected) {
+			const childBlocks = this.getPanels()
+				.filter(block => block.name === 'ub/content-toggle-panel')
+				.map(panels => panels.clientId);
 			if (
-				JSON.stringify(accordions) !== '[]' &&
-				oldArrangement ===
-					JSON.stringify([...Array(accordions.length).keys()])
+				selectedBlock !== block.clientId &&
+				childBlocks.includes(selectedBlock)
 			) {
-				panels.forEach((panel, i) => {
-					updateBlockAttributes(panel.clientId, {
-						panelTitle: accordions[i].title,
-						theme: theme,
-						collapsed: collapsed,
-						titleColor: titleColor
-					});
-
-					if (
-						accordions[i].content.filter(a => a.type === 'br')
-							.length > 0
-					) {
-						let paragraphs = [];
-
-						accordions[i].content.forEach((item, j) => {
-							const part =
-								typeof item === 'string'
-									? item
-									: richTextToHTML(item);
-							if (
-								paragraphs.length === 0 ||
-								accordions[i].content[j - 1].type === 'br'
-							) {
-								paragraphs.push(
-									item.type === 'br' ? item : part
-								);
-							} else if (item.type !== 'br') {
-								paragraphs[paragraphs.length - 1] += part;
-							}
-						});
-
-						const newParagraphs = paragraphs.map(part => {
-							return createBlock(
-								'core/paragraph',
-								typeof part === 'object'
-									? { type: part.type, content: part.content }
-									: {
-											content: part
-									  }
-							);
-						});
-
-						insertBlocks(newParagraphs, 0, panel.clientId);
-					} else {
-						insertBlock(
-							createBlock('core/paragraph', {
-								content: accordions[i].content
-							}),
-							0,
-							panel.clientId
-						);
-					}
-				});
-				setAttributes({ accordions: [] }); //clear old data after successful transfer
+				setState({ mainBlockSelected: false });
 			}
-			if (mainBlockSelected) {
-				const childBlocks = this.getPanels()
-					.filter(block => block.name === 'ub/content-toggle-panel')
-					.map(panels => panels.clientId);
-				if (
-					selectedBlock !== block.clientId &&
-					childBlocks.includes(selectedBlock)
-				) {
-					setState({ mainBlockSelected: false });
-				}
-			} else {
-				selectBlock(parentOfSelectedBlock);
-				setState({ mainBlockSelected: true });
-			}
+		} else {
+			selectBlock(parentOfSelectedBlock);
+			setState({ mainBlockSelected: true });
 		}
 
 		return [
@@ -285,14 +204,7 @@ class PanelContent extends Component {
 			),
 			<div className={className}>
 				<InnerBlocks
-					template={
-						Array.isArray(accordions) &&
-						Array(
-							JSON.stringify(accordions) !== '[]'
-								? accordions.length
-								: 1
-						).fill(['ub/content-toggle-panel'])
-					} //initial content
+					template={[['ub/content-toggle-panel']]} //initial content
 					templateLock={false}
 					allowedBlocks={['ub/content-toggle-panel']}
 				/>
@@ -335,7 +247,6 @@ registerBlockType('ub/content-toggle', {
 			const {
 				updateBlockAttributes,
 				insertBlock,
-				insertBlocks,
 				removeBlock,
 				selectBlock
 			} = dispatch('core/editor');
@@ -343,7 +254,6 @@ registerBlockType('ub/content-toggle', {
 			return {
 				updateBlockAttributes,
 				insertBlock,
-				insertBlocks,
 				removeBlock,
 				selectBlock
 			};
@@ -351,16 +261,74 @@ registerBlockType('ub/content-toggle', {
 		withState({ oldArrangement: '', mainBlockSelected: true })
 	])(PanelContent),
 
-	save(props) {
-		return (
-			<div>
-				<InnerBlocks.Content />
-			</div>
-		);
+	save() {
+		return <InnerBlocks.Content />;
 	},
 	deprecated: [
 		{
-			attributes,
+			//this entry should be first
+			attributes: oldAttributes,
+			save: () => (
+				<div>
+					<InnerBlocks.Content />
+				</div>
+			)
+		},
+		{
+			attributes: oldAttributes,
+			migrate: attributes => {
+				const {
+					accordions,
+					accordionsState,
+					timestamp,
+					activeControl,
+					...otherProps
+				} = attributes;
+				return [
+					otherProps,
+					accordions.map(a => {
+						let panelContent = [];
+						a.content.forEach((paragraph, i) => {
+							if (typeof paragraph === 'string') {
+								panelContent.push(
+									createBlock('core/paragraph', {
+										content: paragraph
+									})
+								);
+							} else if (paragraph.type === 'br') {
+								if (a.content[i - 1].type === 'br') {
+									panelContent.push(
+										createBlock('core/paragraph')
+									);
+								}
+							} else {
+								panelContent.push(
+									createBlock('core/paragraph', {
+										content: richTextToHTML(paragraph)
+									})
+								);
+							}
+						});
+
+						return createBlock(
+							'ub/content-toggle-panel',
+							{
+								theme: attributes.theme,
+								titleColor: attributes.titleColor,
+								collapsed: attributes.collapsed,
+								panelTitle: a.title
+									.map(aa =>
+										typeof aa == 'string'
+											? aa
+											: richTextToHTML(aa)
+									)
+									.join('')
+							},
+							panelContent
+						);
+					})
+				];
+			},
 			save: version_1_1_2
 		}
 	]

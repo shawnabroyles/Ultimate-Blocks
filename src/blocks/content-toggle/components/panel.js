@@ -2,7 +2,7 @@ import '../style.scss';
 import '../editor.scss';
 import icon from '../icons/icon';
 
-import { panel_version_1_1_9 } from '../oldVersions';
+import { panel_version_1_1_9, panel_version_2_0_0 } from '../oldVersions';
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
@@ -31,11 +31,11 @@ const attributes = {
 		default: '#ffffff'
 	},
 	panelTitle: {
-		type: 'text',
+		type: 'string',
 		default: ''
 	},
 	newBlockPosition: {
-		type: 'text',
+		type: 'string',
 		default: 'none' //changes into above/below depending on which button is clicked
 	}
 };
@@ -142,49 +142,18 @@ registerBlockType('ub/content-toggle-panel', {
 			</div>
 		);
 	}),
-	save(props) {
-		const { theme, collapsed, titleColor, panelTitle } = props.attributes;
-		const classNamePrefix = 'wp-block-ub-content-toggle';
-		return (
-			<div
-				style={{ borderColor: theme }}
-				className={`${classNamePrefix}-accordion`}
-			>
-				<div
-					className={`${classNamePrefix}-accordion-title-wrap`}
-					style={{ backgroundColor: theme }}
-				>
-					<RichText.Content
-						tagName="span"
-						className={`${classNamePrefix}-accordion-title`}
-						style={{ color: titleColor }}
-						value={panelTitle}
-					/>
-					<span
-						className={
-							`${classNamePrefix}-accordion-state-indicator dashicons dashicons-arrow-right-alt2 ` +
-							(collapsed ? '' : 'open')
-						}
-					/>
-				</div>
-				<div
-					style={{
-						height: collapsed ? '0' : '',
-						paddingTop: collapsed ? '0' : '',
-						paddingBottom: collapsed ? '0' : ''
-					}}
-					className={`${classNamePrefix}-accordion-content-wrap`}
-				>
-					<InnerBlocks.Content />
-				</div>
-			</div>
-		);
+	save() {
+		return <InnerBlocks.Content />;
 	},
 
 	deprecated: [
 		{
 			attributes,
 			save: panel_version_1_1_9
+		},
+		{
+			attributes,
+			save: panel_version_2_0_0
 		}
 	]
 });

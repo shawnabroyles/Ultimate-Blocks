@@ -35,6 +35,11 @@ document.addEventListener('DOMContentLoaded', function() {
 			tocContainer.style.height = `${
 				tocContainer.style.height === '0px' ? tocHeight : '0'
 			}px`;
+			instance.innerHTML = block.getAttribute(
+				tocContainer.style.height === '0px'
+					? 'data-showtext'
+					: 'data-hidetext'
+			);
 		});
 	});
 });

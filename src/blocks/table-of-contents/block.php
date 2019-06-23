@@ -39,26 +39,28 @@ function ub_render_table_of_contents_block($attributes){
 
     $listItems = '';
 
-    function ub_makeListItem($item, $listStyle){
-        static $outputString = '';
-        if (array_key_exists("level", $item)){
-            $anchor = $item["anchor"];
-            $content = $item["content"];
-            $outputString .= '<li><a href="#'.$anchor.'">'.$content.'</a></li>';
-        }
-        else{
-            $openingTag = $listStyle == 'numbered' ? '<ol>' : '<ul'.
-                ($listStyle == 'plain' ? ' style="list-style: \'none\';"' : '').'>';
-
-            $outputString = substr_replace($outputString, $openingTag,
-                strrpos($outputString, '</li>'), strlen('</li>'));
-
-            forEach($item as $subItem){
-                ub_makeListItem($subItem, $listStyle);
+    if (!function_exists('ub_makeListItem')) {
+        function ub_makeListItem($item, $listStyle){
+            static $outputString = '';
+            if (array_key_exists("level", $item)){
+                $anchor = $item["anchor"];
+                $content = $item["content"];
+                $outputString .= '<li><a href="#'.$anchor.'">'.$content.'</a></li>';
             }
-            $outputString .= ($listStyle == 'numbered' ? '</ol>' : '</ul>') . '</li>';
+            else{
+                $openingTag = $listStyle == 'numbered' ? '<ol>' : '<ul'.
+                    ($listStyle == 'plain' ? ' style="list-style: \'none\';"' : '').'>';
+
+                $outputString = substr_replace($outputString, $openingTag,
+                    strrpos($outputString, '</li>'), strlen('</li>'));
+
+                forEach($item as $subItem){
+                    ub_makeListItem($subItem, $listStyle);
+                }
+                $outputString .= ($listStyle == 'numbered' ? '</ol>' : '</ul>') . '</li>';
+            }
+            return $outputString;
         }
-        return $outputString;
     }
 
     foreach($sortedHeaders as $item){

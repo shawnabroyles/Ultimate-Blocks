@@ -1,4 +1,5 @@
 import { EmptyStar, FullStar } from './icons';
+import { richTextToHTML } from '../../common';
 
 export const version_1_1_2 = props => {
 	const {
@@ -102,4 +103,15 @@ export const version_2_0_0 = props => {
 			</div>
 		</div>
 	);
+};
+
+export const convertToNew = attributes => {
+	const { reviewText, ...otherProps } = attributes;
+	return Object.assign(otherProps, {
+		transitionReviewText: reviewText
+			.map(text =>
+				typeof text === 'string' ? text : richTextToHTML(text)
+			)
+			.join('')
+	});
 };

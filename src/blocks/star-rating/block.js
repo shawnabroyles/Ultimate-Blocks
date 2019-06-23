@@ -14,7 +14,12 @@ import './style.scss';
 import './editor.scss';
 
 import { EmptyStar, HalfStar, FullStar } from './icons';
-import { version_1_1_2, version_1_1_5, version_2_0_0 } from './oldVersions';
+import {
+	version_1_1_2,
+	version_1_1_5,
+	version_2_0_0,
+	convertToNew
+} from './oldVersions';
 
 const attributes = {
 	starCount: {
@@ -33,10 +38,9 @@ const attributes = {
 		type: 'number',
 		default: 0
 	},
-	reviewText: {
-		type: 'array',
-		source: 'children',
-		selector: '.ub-review-text'
+	transitionReviewText: {
+		type: 'string',
+		default: ''
 	},
 	reviewTextAlign: {
 		type: 'string',
@@ -47,6 +51,14 @@ const attributes = {
 		default: 'left'
 	}
 };
+
+const oldAttributes = Object.assign(attributes, {
+	reviewText: {
+		type: 'array',
+		source: 'children',
+		selector: '.ub-review-text'
+	}
+});
 
 registerBlockType('ub/star-rating', {
 	title: __('Star Rating'),
@@ -63,7 +75,7 @@ registerBlockType('ub/star-rating', {
 			starSize,
 			starColor,
 			selectedStars,
-			reviewText,
+			transitionReviewText,
 			reviewTextAlign,
 			starAlign
 		} = props.attributes;
@@ -205,7 +217,7 @@ registerBlockType('ub/star-rating', {
 					<RichText
 						tagName="div"
 						placeholder={__('The text of the review goes here')}
-						value={reviewText}
+						value={transitionReviewText}
 						style={{ textAlign: reviewTextAlign }}
 						onChange={text => setAttributes({ reviewText: text })}
 						keepPlaceholderOnFocus={true}
@@ -227,7 +239,7 @@ registerBlockType('ub/star-rating', {
 			starSize,
 			starColor,
 			selectedStars,
-			reviewText,
+			transitionReviewText,
 			reviewTextAlign,
 			starAlign
 		} = props.attributes;
@@ -263,7 +275,7 @@ registerBlockType('ub/star-rating', {
 					className="ub-review-text"
 					style={{ textAlign: reviewTextAlign }}
 				>
-					{reviewText}
+					{transitionReviewText}
 				</div>
 			</div>
 		);
@@ -271,15 +283,18 @@ registerBlockType('ub/star-rating', {
 
 	deprecated: [
 		{
-			attributes,
+			attributes: oldAttributes,
+			migrate: convertToNew,
 			save: version_1_1_2
 		},
 		{
-			attributes,
+			attributes: oldAttributes,
+			migrate: convertToNew,
 			save: version_1_1_5
 		},
 		{
-			attributes,
+			attributes: oldAttributes,
+			migrate: convertToNew,
 			save: version_2_0_0
 		}
 	]

@@ -1,6 +1,8 @@
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 
+import { richTextToHTML } from '../../common';
+
 export const version_1_1_2 = props => {
 	const {
 		buttonText,
@@ -187,4 +189,16 @@ export const version_2_0_0 = props => {
 			</a>
 		</div>
 	);
+};
+
+export const convertUrlAndButtonText = attributes => {
+	const { buttonText, url, ...others } = attributes;
+	return Object.assign(others, {
+		transitionButtonText: buttonText
+			.map(child =>
+				typeof child === 'string' ? child : richTextToHTML(child)
+			)
+			.join(''),
+		transitionURL: url
+	});
 };

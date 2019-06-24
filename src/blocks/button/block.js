@@ -16,7 +16,8 @@ import {
 	version_1_1_2,
 	version_1_1_4,
 	version_1_1_5,
-	version_2_0_0
+	version_2_0_0,
+	convertUrlAndButtonText
 } from './oldVersions';
 
 import { fas } from '@fortawesome/free-solid-svg-icons';
@@ -61,6 +62,65 @@ const {
  */
 
 const attributes = {
+	transitionButtonText: {
+		type: 'string',
+		default: ''
+	},
+	align: {
+		type: 'string',
+		default: 'center'
+	},
+	transitionURL: {
+		type: 'string',
+		default: ''
+	},
+	size: {
+		type: 'string',
+		default: 'medium'
+	},
+	buttonColor: {
+		type: 'string',
+		default: '#313131'
+	},
+	buttonHoverColor: {
+		type: 'string',
+		default: '#313131'
+	},
+	buttonTextColor: {
+		type: 'string',
+		default: '#ffffff'
+	},
+	buttonTextHoverColor: {
+		type: 'string',
+		default: '#ffffff'
+	},
+	buttonRounded: {
+		type: 'boolean',
+		default: false
+	},
+	chosenIcon: {
+		type: 'string',
+		default: ''
+	},
+	iconPosition: {
+		type: 'string',
+		default: 'left'
+	},
+	buttonIsTransparent: {
+		type: 'boolean',
+		default: false
+	},
+	addNofollow: {
+		type: 'boolean',
+		default: true
+	},
+	openInNewTab: {
+		type: 'boolean',
+		default: true
+	}
+};
+
+const oldAttributes = {
 	buttonText: {
 		type: 'array',
 		source: 'children',
@@ -123,7 +183,7 @@ const attributes = {
 	}
 };
 
-const oldAttributesAdjusted = Object.assign(attributes, {
+const oldAttributesAdjusted = Object.assign(oldAttributes, {
 	buttonColor: {
 		type: 'string',
 		default: '#44c767'
@@ -187,7 +247,7 @@ registerBlockType('ub/button-block', {
 		} = props;
 
 		const {
-			buttonText,
+			transitionButtonText,
 			align,
 			url,
 			size,
@@ -497,9 +557,11 @@ registerBlockType('ub/button-block', {
 								className="ub-button-block-btn"
 								placeholder={__('Button Text')}
 								onChange={value =>
-									setAttributes({ buttonText: value })
+									setAttributes({
+										transitionButtonText: value
+									})
 								}
-								value={buttonText}
+								value={transitionButtonText}
 								formattingControls={[
 									'bold',
 									'italic',
@@ -549,9 +611,9 @@ registerBlockType('ub/button-block', {
 	 */
 	save: function(props) {
 		const {
-			buttonText,
+			transitionButtonText,
 			align,
-			url,
+			transitionURL,
 			size,
 			buttonColor,
 			buttonTextColor,
@@ -572,7 +634,7 @@ registerBlockType('ub/button-block', {
 				} ub-button-container align-button-${align}`}
 			>
 				<a
-					href={url}
+					href={transitionURL}
 					target={openInNewTab ? '_blank' : '_self'}
 					rel={`noopener noreferrer${addNofollow ? ' nofollow' : ''}`}
 					className={`ub-button-block-main ub-button-${size}`}
@@ -615,7 +677,7 @@ registerBlockType('ub/button-block', {
 								</span>
 							)}
 						<span className={'ub-button-block-btn'}>
-							{buttonText}
+							{transitionButtonText}
 						</span>
 					</div>
 				</a>
@@ -625,18 +687,22 @@ registerBlockType('ub/button-block', {
 	deprecated: [
 		{
 			attributes: oldAttributesAdjusted,
+			migrate: convertUrlAndButtonText,
 			save: version_1_1_2
 		},
 		{
 			attributes: oldAttributesAdjusted,
+			migrate: convertUrlAndButtonText,
 			save: version_1_1_4
 		},
 		{
 			attributes: oldAttributesAdjusted,
+			migrate: convertUrlAndButtonText,
 			save: version_1_1_5
 		},
 		{
-			attributes,
+			attributes: oldAttributes,
+			migrate: convertUrlAndButtonText,
 			save: version_2_0_0
 		}
 	]

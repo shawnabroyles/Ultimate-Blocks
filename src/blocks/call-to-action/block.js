@@ -3,13 +3,6 @@ import './style.scss';
 import './editor.scss';
 import icon from './icons/icon';
 
-import {
-	version_1_1_2,
-	version_1_1_4,
-	version_1_1_5,
-	version_2_0_0
-} from './oldVersions';
-
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 const {
@@ -47,20 +40,17 @@ const { withState } = wp.compose;
  */
 
 const attributes = {
-	ub_call_to_action_headline_text: {
-		type: 'array',
-		source: 'children',
-		selector: '.ub_call_to_action_headline_text'
+	headline_text: {
+		type: 'string',
+		default: ''
 	},
-	ub_cta_content_text: {
-		type: 'array',
-		source: 'children',
-		selector: '.ub_cta_content_text'
+	content_text: {
+		type: 'string',
+		default: ''
 	},
-	ub_cta_button_text: {
-		type: 'array',
-		source: 'children',
-		selector: '.ub_cta_button_text'
+	button_text: {
+		type: 'string',
+		default: ''
 	},
 	headFontSize: {
 		type: 'number',
@@ -112,9 +102,7 @@ const attributes = {
 	},
 	url: {
 		type: 'string',
-		source: 'attribute',
-		selector: 'a',
-		attribute: 'href'
+		default: ''
 	},
 	contentAlign: {
 		type: 'string',
@@ -162,14 +150,14 @@ registerBlockType('ub/call-to-action', {
 			buttonFontSize,
 			buttonColor,
 			buttonTextColor,
-			ub_call_to_action_headline_text,
-			ub_cta_content_text,
-			ub_cta_button_text,
+			headline_text,
+			content_text,
+			button_text,
 			addNofollow,
-			openInNewTab
+			openInNewTab,
+			url
 		} = props.attributes;
 
-		// Creates a <p class='wp-block-cgb-block-click-to-tweet-block'></p>.
 		return [
 			isSelected && (
 				<BlockControls>
@@ -368,10 +356,10 @@ registerBlockType('ub/call-to-action', {
 							}}
 							onChange={value =>
 								setAttributes({
-									ub_call_to_action_headline_text: value
+									headline_text: value
 								})
 							}
-							value={ub_call_to_action_headline_text}
+							value={headline_text}
 							formattingControls={[
 								'bold',
 								'italic',
@@ -396,10 +384,10 @@ registerBlockType('ub/call-to-action', {
 							}}
 							onChange={value =>
 								setAttributes({
-									ub_cta_content_text: value
+									content_text: value
 								})
 							}
-							value={ub_cta_content_text}
+							value={content_text}
 							keepPlaceholderOnFocus={true}
 							unstableOnFocus={() =>
 								setState({ editable: 'content' })
@@ -425,10 +413,10 @@ registerBlockType('ub/call-to-action', {
 								}}
 								onChange={value =>
 									setAttributes({
-										ub_cta_button_text: value
+										button_text: value
 									})
 								}
-								value={ub_cta_button_text}
+								value={button_text}
 								keepPlaceholderOnFocus={true}
 								unstableOnFocus={() =>
 									setState({ editable: 'button' })
@@ -454,7 +442,7 @@ registerBlockType('ub/call-to-action', {
 							</div>
 							<URLInput
 								className="button-url"
-								value={props.attributes.url}
+								value={url}
 								onChange={value =>
 									setAttributes({ url: value })
 								}
@@ -482,106 +470,178 @@ registerBlockType('ub/call-to-action', {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
-	save: function(props) {
-		const {
-			ctaBackgroundColor,
-			ctaBorderSize,
-			ctaBorderColor,
-			headFontSize,
-			headColor,
-			headAlign,
-			ub_call_to_action_headline_text,
-			contentFontSize,
-			contentColor,
-			contentAlign,
-			ub_cta_content_text,
-			buttonColor,
-			buttonWidth,
-			url,
-			buttonTextColor,
-			buttonFontSize,
-			ub_cta_button_text,
-			addNofollow,
-			openInNewTab
-		} = props.attributes;
-		return (
-			<div className={props.className}>
-				<div
-					className="ub_call_to_action"
-					style={{
-						backgroundColor: ctaBackgroundColor,
-						border: ctaBorderSize + 'px solid',
-						borderColor: ctaBorderColor
-					}}
-				>
-					<div className="ub_call_to_action_headline">
-						<p
-							className="ub_call_to_action_headline_text"
-							style={{
-								fontSize: headFontSize + 'px',
-								color: headColor,
-								textAlign: headAlign
-							}}
-						>
-							{ub_call_to_action_headline_text}
-						</p>
-					</div>
-					<div className="ub_call_to_action_content">
-						<p
-							className="ub_cta_content_text"
-							style={{
-								fontSize: contentFontSize + 'px',
-								color: contentColor,
-								textAlign: contentAlign
-							}}
-						>
-							{ub_cta_content_text}
-						</p>
-					</div>
-					<div className="ub_call_to_action_button">
-						<a
-							href={url}
-							target={openInNewTab ? '_blank' : '_self'}
-							rel={`${
-								addNofollow ? 'nofollow ' : ''
-							}noopener noreferrer`}
-							className={`wp-block-button ub_cta_button`}
-							style={{
-								backgroundColor: buttonColor,
-								width: buttonWidth + 'px'
-							}}
-						>
-							<p
-								className="ub_cta_button_text"
-								style={{
-									color: buttonTextColor,
-									fontSize: buttonFontSize + 'px'
-								}}
-							>
-								{ub_cta_button_text}
-							</p>
-						</a>
-					</div>
-				</div>
-			</div>
-		);
+	save() {
+		return null;
 	},
 	deprecated: [
 		{
-			attributes,
-			save: version_1_1_2
-		},
-		{
-			attributes,
-			save: version_1_1_4
-		},
-		{
-			attributes,
-			save: version_1_1_5
-		},
-		{
-			attributes,
-			save: version_2_0_0
+			attributes: {
+				headline_text: {
+					type: 'string',
+					default: ''
+				},
+				content_text: {
+					type: 'string',
+					default: ''
+				},
+				button_text: {
+					type: 'string',
+					default: ''
+				},
+				headFontSize: {
+					type: 'number',
+					default: 30
+				},
+				headColor: {
+					type: 'string',
+					default: '#444444'
+				},
+				headAlign: {
+					type: 'string',
+					default: 'center'
+				},
+				contentFontSize: {
+					type: 'number',
+					default: 15
+				},
+				contentColor: {
+					type: 'string',
+					default: '#444444'
+				},
+				buttonFontSize: {
+					type: 'number',
+					default: 14
+				},
+				buttonColor: {
+					type: 'string',
+					default: '#E27330'
+				},
+				buttonTextColor: {
+					type: 'string',
+					default: '#ffffff'
+				},
+				buttonWidth: {
+					type: 'number',
+					default: 250
+				},
+				ctaBackgroundColor: {
+					type: 'string',
+					default: '#f8f8f8'
+				},
+				ctaBorderColor: {
+					type: 'string',
+					default: '#ECECEC'
+				},
+				ctaBorderSize: {
+					type: 'number',
+					default: 2
+				},
+				transitionUrl: {
+					type: 'string',
+					default: ''
+				},
+				contentAlign: {
+					type: 'string',
+					default: 'center'
+				},
+				addNofollow: {
+					type: 'boolean',
+					default: false
+				},
+				openInNewTab: {
+					type: 'boolean',
+					default: false
+				}
+			},
+			migrate: attributes => {
+				const { transitionUrl, ...otherProps } = attributes;
+				return Object.assign(otherProps, { url: transitionUrl });
+			},
+			save: props => {
+				const {
+					ctaBackgroundColor,
+					ctaBorderSize,
+					ctaBorderColor,
+					headFontSize,
+					headColor,
+					headAlign,
+					headline_text,
+					contentFontSize,
+					contentColor,
+					contentAlign,
+					content_text,
+					buttonColor,
+					buttonWidth,
+					transitionUrl,
+					buttonTextColor,
+					buttonFontSize,
+					button_text,
+					addNofollow,
+					openInNewTab
+				} = props.attributes;
+
+				return (
+					<div className={props.className}>
+						<div
+							className="ub_call_to_action"
+							style={{
+								backgroundColor: ctaBackgroundColor,
+								border: ctaBorderSize + 'px solid',
+								borderColor: ctaBorderColor
+							}}
+						>
+							<div className="ub_call_to_action_headline">
+								<p
+									className="ub_call_to_action_headline_text"
+									style={{
+										fontSize: headFontSize + 'px',
+										color: headColor,
+										textAlign: headAlign
+									}}
+								>
+									{headline_text}
+								</p>
+							</div>
+							<div className="ub_call_to_action_content">
+								<p
+									className="ub_cta_content_text"
+									style={{
+										fontSize: contentFontSize + 'px',
+										color: contentColor,
+										textAlign: contentAlign
+									}}
+								>
+									{content_text}
+								</p>
+							</div>
+							<div className="ub_call_to_action_button">
+								<a
+									href={transitionUrl}
+									target={openInNewTab ? '_blank' : '_self'}
+									rel={`${
+										addNofollow ? 'nofollow ' : ''
+									}noopener noreferrer`}
+									className={`wp-block-button ub_cta_button`}
+									style={{
+										backgroundColor: buttonColor,
+										width: buttonWidth + 'px'
+									}}
+								>
+									<p
+										className="ub_cta_button_text"
+										style={{
+											color: buttonTextColor,
+											fontSize: buttonFontSize + 'px'
+										}}
+									>
+										{button_text}
+									</p>
+								</a>
+							</div>
+						</div>
+					</div>
+				);
+			}
 		}
 	]
 });

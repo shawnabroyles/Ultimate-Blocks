@@ -171,3 +171,6 @@ require_once plugin_dir_path( __FILE__ ) . 'blocks/star-rating/block.php';
 
 // Call to Action Block
 require_once plugin_dir_path( __FILE__ ) . 'blocks/call-to-action/block.php';
+
+// Notification Box Block
+require_once plugin_dir_path( __FILE__ ) . 'blocks/notification-box/block.php';

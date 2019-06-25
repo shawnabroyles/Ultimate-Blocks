@@ -1,4 +1,5 @@
 const { RichText } = wp.editor;
+import richTextToHTML from '../../common';
 
 export const version_1_1_2 = props => {
 	return (
@@ -41,4 +42,39 @@ export const version_1_1_5 = props => {
 			</div>
 		</div>
 	);
+};
+
+const oldAttributes = {
+	ub_notify_info: {
+		type: 'array',
+		source: 'children',
+		selector: '.ub_notify_text'
+	},
+	ub_selected_notify: {
+		type: 'string',
+		default: 'ub_notify_info'
+	},
+	align: {
+		type: 'string',
+		default: 'left'
+	}
+};
+
+export const convertToNew = sourceVersion => {
+	return {
+		attributes: oldAttributes,
+		migrate: attributes => {
+			const { ub_notify_info, ub_selected_notify, align } = attributes;
+			return {
+				notifyInfo: ub_notify_info
+					.map(item =>
+						typeof item === 'string' ? item : richTextToHTML(item)
+					)
+					.join(''),
+				selectedNotify: ub_selected_notify,
+				align: align
+			};
+		},
+		save: sourceVersion
+	};
 };

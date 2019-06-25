@@ -18,7 +18,12 @@ import classnames from 'classnames';
 import './style.scss';
 import './editor.scss';
 
-import { version_1_1_2, version_1_1_4, version_1_1_5 } from './oldVersions';
+import {
+	version_1_1_2,
+	version_1_1_4,
+	version_1_1_5,
+	convertToNew
+} from './oldVersions';
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
@@ -28,12 +33,11 @@ const { RichText, BlockControls } = wp.editor;
 const { Toolbar, Button, IconButton } = wp.components;
 
 const attributes = {
-	ub_notify_info: {
-		type: 'array',
-		source: 'children',
-		selector: '.ub_notify_text'
+	notifyInfo: {
+		type: 'string',
+		default: ''
 	},
-	ub_selected_notify: {
+	selectedNotify: {
 		type: 'string',
 		default: 'ub_notify_info'
 	},
@@ -75,22 +79,22 @@ registerBlockType('ub/notification-box', {
 		const { isSelected, setAttributes } = props;
 
 		const onChangeNotifyInfo = value => {
-			setAttributes({ ub_notify_info: value });
+			setAttributes({ notifyInfo: value });
 		};
 
 		const infoClassChange = () => {
-			setAttributes({ ub_selected_notify: 'ub_notify_info' });
+			setAttributes({ selectedNotify: 'ub_notify_info' });
 		};
 
 		const successClassChange = () => {
-			setAttributes({ ub_selected_notify: 'ub_notify_success' });
+			setAttributes({ selectedNotify: 'ub_notify_success' });
 		};
 
 		const warningClassChange = () => {
-			setAttributes({ ub_selected_notify: 'ub_notify_warning' });
+			setAttributes({ selectedNotify: 'ub_notify_warning' });
 		};
 
-		const { align, ub_selected_notify, ub_notify_info } = props.attributes;
+		const { align, selectedNotify, notifyInfo } = props.attributes;
 
 		return [
 			isSelected && (
@@ -154,9 +158,9 @@ registerBlockType('ub/notification-box', {
 						'link',
 						'strikethrough'
 					]}
-					className={ub_selected_notify}
+					className={selectedNotify}
 					onChange={onChangeNotifyInfo}
-					value={ub_notify_info}
+					value={notifyInfo}
 					keepPlaceholderOnFocus={true}
 				/>
 			</div>
@@ -172,32 +176,23 @@ registerBlockType('ub/notification-box', {
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
 	save: function(props) {
-		const { align, ub_notify_info, ub_selected_notify } = props.attributes;
+		const { align, notifyInfo, selectedNotify } = props.attributes;
 		return (
 			<div className={props.className}>
-				<div className={ub_selected_notify}>
+				<div className={selectedNotify}>
 					<RichText.Content
 						tagName="p"
 						className={'ub_notify_text'}
 						style={{ textAlign: align }}
-						value={ub_notify_info}
+						value={notifyInfo}
 					/>
 				</div>
 			</div>
 		);
 	},
 	deprecated: [
-		{
-			attributes,
-			save: version_1_1_2
-		},
-		{
-			attributes,
-			save: version_1_1_4
-		},
-		{
-			attributes,
-			save: version_1_1_5
-		}
+		convertToNew(version_1_1_2),
+		convertToNew(version_1_1_4),
+		convertToNew(version_1_1_5)
 	]
 });

@@ -19,7 +19,7 @@ const attributes = {
 		default: 0
 	},
 	theme: {
-		type: 'text',
+		type: 'string',
 		default: '#f63d3d'
 	},
 	collapsed: {

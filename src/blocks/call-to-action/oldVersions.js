@@ -1,3 +1,5 @@
+import { richTextToHTML } from '../../common';
+
 export const version_1_1_2 = props => {
 	const {
 		ctaBackgroundColor,
@@ -317,4 +319,32 @@ export const version_2_0_0 = props => {
 			</div>
 		</div>
 	);
+};
+
+export const convertOlderProps = attributes => {
+	const {
+		ub_call_to_action_headline_text,
+		ub_cta_button_text,
+		ub_cta_content_text,
+		url,
+		...otherProps
+	} = attributes;
+	return Object.assign(otherProps, {
+		headline_text: ub_call_to_action_headline_text
+			.map(child =>
+				typeof child === 'string' ? child : richTextToHTML(child)
+			)
+			.join(''),
+		button_text: ub_cta_button_text
+			.map(child =>
+				typeof child === 'string' ? child : richTextToHTML(child)
+			)
+			.join(''),
+		content_text: ub_cta_content_text
+			.map(child =>
+				typeof child === 'string' ? child : richTextToHTML(child)
+			)
+			.join(''),
+		transitionUrl: url
+	});
 };

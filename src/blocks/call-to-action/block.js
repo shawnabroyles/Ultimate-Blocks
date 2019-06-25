@@ -7,7 +7,8 @@ import {
 	version_1_1_2,
 	version_1_1_4,
 	version_1_1_5,
-	version_2_0_0
+	version_2_0_0,
+	convertOlderProps
 } from './oldVersions';
 
 const { __ } = wp.i18n;
@@ -47,6 +48,85 @@ const { withState } = wp.compose;
  */
 
 const attributes = {
+	headline_text: {
+		type: 'string',
+		default: ''
+	},
+	content_text: {
+		type: 'string',
+		default: ''
+	},
+	button_text: {
+		type: 'string',
+		default: ''
+	},
+	headFontSize: {
+		type: 'number',
+		default: 30
+	},
+	headColor: {
+		type: 'string',
+		default: '#444444'
+	},
+	headAlign: {
+		type: 'string',
+		default: 'center'
+	},
+	contentFontSize: {
+		type: 'number',
+		default: 15
+	},
+	contentColor: {
+		type: 'string',
+		default: '#444444'
+	},
+	buttonFontSize: {
+		type: 'number',
+		default: 14
+	},
+	buttonColor: {
+		type: 'string',
+		default: '#E27330'
+	},
+	buttonTextColor: {
+		type: 'string',
+		default: '#ffffff'
+	},
+	buttonWidth: {
+		type: 'number',
+		default: 250
+	},
+	ctaBackgroundColor: {
+		type: 'string',
+		default: '#f8f8f8'
+	},
+	ctaBorderColor: {
+		type: 'string',
+		default: '#ECECEC'
+	},
+	ctaBorderSize: {
+		type: 'number',
+		default: 2
+	},
+	transitionUrl: {
+		type: 'string',
+		default: ''
+	},
+	contentAlign: {
+		type: 'string',
+		default: 'center'
+	},
+	addNofollow: {
+		type: 'boolean',
+		default: false
+	},
+	openInNewTab: {
+		type: 'boolean',
+		default: false
+	}
+};
+
+const oldAttributes = {
 	ub_call_to_action_headline_text: {
 		type: 'array',
 		source: 'children',
@@ -112,9 +192,7 @@ const attributes = {
 	},
 	url: {
 		type: 'string',
-		source: 'attribute',
-		selector: 'a',
-		attribute: 'href'
+		default: ''
 	},
 	contentAlign: {
 		type: 'string',
@@ -162,11 +240,12 @@ registerBlockType('ub/call-to-action', {
 			buttonFontSize,
 			buttonColor,
 			buttonTextColor,
-			ub_call_to_action_headline_text,
-			ub_cta_content_text,
-			ub_cta_button_text,
+			headline_text,
+			content_text,
+			button_text,
 			addNofollow,
-			openInNewTab
+			openInNewTab,
+			transitionUrl
 		} = props.attributes;
 
 		// Creates a <p class='wp-block-cgb-block-click-to-tweet-block'></p>.
@@ -368,10 +447,10 @@ registerBlockType('ub/call-to-action', {
 							}}
 							onChange={value =>
 								setAttributes({
-									ub_call_to_action_headline_text: value
+									headline_text: value
 								})
 							}
-							value={ub_call_to_action_headline_text}
+							value={headline_text}
 							formattingControls={[
 								'bold',
 								'italic',
@@ -396,10 +475,10 @@ registerBlockType('ub/call-to-action', {
 							}}
 							onChange={value =>
 								setAttributes({
-									ub_cta_content_text: value
+									content_text: value
 								})
 							}
-							value={ub_cta_content_text}
+							value={content_text}
 							keepPlaceholderOnFocus={true}
 							unstableOnFocus={() =>
 								setState({ editable: 'content' })
@@ -425,10 +504,10 @@ registerBlockType('ub/call-to-action', {
 								}}
 								onChange={value =>
 									setAttributes({
-										ub_cta_button_text: value
+										button_text: value
 									})
 								}
-								value={ub_cta_button_text}
+								value={button_text}
 								keepPlaceholderOnFocus={true}
 								unstableOnFocus={() =>
 									setState({ editable: 'button' })
@@ -454,9 +533,9 @@ registerBlockType('ub/call-to-action', {
 							</div>
 							<URLInput
 								className="button-url"
-								value={props.attributes.url}
+								value={transitionUrl}
 								onChange={value =>
-									setAttributes({ url: value })
+									setAttributes({ transitionUrl: value })
 								}
 								unstableOnFocus={() =>
 									setState({ editable: 'URLInput' })
@@ -490,17 +569,17 @@ registerBlockType('ub/call-to-action', {
 			headFontSize,
 			headColor,
 			headAlign,
-			ub_call_to_action_headline_text,
+			headline_text,
 			contentFontSize,
 			contentColor,
 			contentAlign,
-			ub_cta_content_text,
+			content_text,
 			buttonColor,
 			buttonWidth,
-			url,
+			transitionUrl,
 			buttonTextColor,
 			buttonFontSize,
-			ub_cta_button_text,
+			button_text,
 			addNofollow,
 			openInNewTab
 		} = props.attributes;
@@ -523,7 +602,7 @@ registerBlockType('ub/call-to-action', {
 								textAlign: headAlign
 							}}
 						>
-							{ub_call_to_action_headline_text}
+							{headline_text}
 						</p>
 					</div>
 					<div className="ub_call_to_action_content">
@@ -535,12 +614,12 @@ registerBlockType('ub/call-to-action', {
 								textAlign: contentAlign
 							}}
 						>
-							{ub_cta_content_text}
+							{content_text}
 						</p>
 					</div>
 					<div className="ub_call_to_action_button">
 						<a
-							href={url}
+							href={transitionUrl}
 							target={openInNewTab ? '_blank' : '_self'}
 							rel={`${
 								addNofollow ? 'nofollow ' : ''
@@ -558,7 +637,7 @@ registerBlockType('ub/call-to-action', {
 									fontSize: buttonFontSize + 'px'
 								}}
 							>
-								{ub_cta_button_text}
+								{button_text}
 							</p>
 						</a>
 					</div>
@@ -568,19 +647,23 @@ registerBlockType('ub/call-to-action', {
 	},
 	deprecated: [
 		{
-			attributes,
+			attributes: oldAttributes,
+			migrate: convertOlderProps,
 			save: version_1_1_2
 		},
 		{
-			attributes,
+			attributes: oldAttributes,
+			migrate: convertOlderProps,
 			save: version_1_1_4
 		},
 		{
-			attributes,
+			attributes: oldAttributes,
+			migrate: convertOlderProps,
 			save: version_1_1_5
 		},
 		{
-			attributes,
+			attributes: oldAttributes,
+			migrate: convertOlderProps,
 			save: version_2_0_0
 		}
 	]

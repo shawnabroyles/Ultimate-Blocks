@@ -65,6 +65,10 @@
 .ub-button-content-holder {
 	display: flex;
 	margin: 0 auto;
+	.fas,
+	.fab {
+		font-size: 1.75em;
+	}
 }
 
 .ub-button-icon-holder {

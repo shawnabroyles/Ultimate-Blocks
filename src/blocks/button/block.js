@@ -12,13 +12,6 @@ import icon from './icons/icons';
 import './style.scss';
 import './editor.scss';
 
-import {
-	version_1_1_2,
-	version_1_1_4,
-	version_1_1_5,
-	version_2_0_0
-} from './oldVersions';
-
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 
@@ -62,9 +55,7 @@ const {
 
 const attributes = {
 	buttonText: {
-		type: 'array',
-		source: 'children',
-		selector: '.ub-button-block-btn',
+		type: 'string',
 		default: 'Button Text'
 	},
 	align: {
@@ -73,9 +64,7 @@ const attributes = {
 	},
 	url: {
 		type: 'string',
-		source: 'attribute',
-		selector: 'a',
-		attribute: 'href'
+		default: ''
 	},
 	size: {
 		type: 'string',
@@ -122,21 +111,6 @@ const attributes = {
 		default: true
 	}
 };
-
-const oldAttributesAdjusted = Object.assign(attributes, {
-	buttonColor: {
-		type: 'string',
-		default: '#44c767'
-	},
-	buttonTextColor: {
-		type: 'string',
-		default: '#ffffff'
-	},
-	buttonRounded: {
-		type: 'boolean',
-		default: true
-	}
-});
 
 const dashesToCamelcase = str =>
 	str
@@ -547,97 +521,161 @@ registerBlockType('ub/button-block', {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
-	save: function(props) {
-		const {
-			buttonText,
-			align,
-			url,
-			size,
-			buttonColor,
-			buttonTextColor,
-			buttonHoverColor,
-			buttonTextHoverColor,
-			buttonRounded,
-			chosenIcon,
-			iconPosition,
-			buttonIsTransparent,
-			addNofollow,
-			openInNewTab
-		} = props.attributes;
-
-		return (
-			<div
-				className={`${
-					props.className
-				} ub-button-container align-button-${align}`}
-			>
-				<a
-					href={url}
-					target={openInNewTab ? '_blank' : '_self'}
-					rel={`noopener noreferrer${addNofollow ? ' nofollow' : ''}`}
-					className={`ub-button-block-main ub-button-${size}`}
-					data-defaultColor={buttonColor}
-					data-defaultTextColor={buttonTextColor}
-					data-hoverColor={buttonHoverColor}
-					data-hoverTextColor={buttonTextHoverColor}
-					data-buttonIsTransparent={buttonIsTransparent}
-					style={{
-						backgroundColor: buttonIsTransparent
-							? 'transparent'
-							: buttonColor,
-						color: buttonIsTransparent
-							? buttonColor
-							: buttonTextColor,
-						borderRadius: buttonRounded ? '60px' : '0px',
-						border: buttonIsTransparent
-							? `3px solid ${buttonColor}`
-							: 'none'
-					}}
-				>
-					<div
-						className="ub-button-content-holder"
-						style={{
-							flexDirection:
-								iconPosition === 'left' ? 'row' : 'row-reverse'
-						}}
-					>
-						{chosenIcon !== '' &&
-							allIcons.hasOwnProperty(
-								`fa${dashesToCamelcase(chosenIcon)}`
-							) && (
-								<span className="ub-button-icon-holder">
-									{generateIcon(
-										allIcons[
-											`fa${dashesToCamelcase(chosenIcon)}`
-										],
-										iconSize[size]
-									)}
-								</span>
-							)}
-						<span className={'ub-button-block-btn'}>
-							{buttonText}
-						</span>
-					</div>
-				</a>
-			</div>
-		);
+	save() {
+		return null;
 	},
 	deprecated: [
 		{
-			attributes: oldAttributesAdjusted,
-			save: version_1_1_2
-		},
-		{
-			attributes: oldAttributesAdjusted,
-			save: version_1_1_4
-		},
-		{
-			attributes: oldAttributesAdjusted,
-			save: version_1_1_5
-		},
-		{
-			attributes,
-			save: version_2_0_0
+			attributes: {
+				transitionButtonText: {
+					type: 'string',
+					default: ''
+				},
+				transitionURL: {
+					type: 'string',
+					default: ''
+				},
+				align: {
+					type: 'string',
+					default: 'center'
+				},
+				size: {
+					type: 'string',
+					default: 'medium'
+				},
+				buttonColor: {
+					type: 'string',
+					default: '#313131'
+				},
+				buttonHoverColor: {
+					type: 'string',
+					default: '#313131'
+				},
+				buttonTextColor: {
+					type: 'string',
+					default: '#ffffff'
+				},
+				buttonTextHoverColor: {
+					type: 'string',
+					default: '#ffffff'
+				},
+				buttonRounded: {
+					type: 'boolean',
+					default: false
+				},
+				chosenIcon: {
+					type: 'string',
+					default: ''
+				},
+				iconPosition: {
+					type: 'string',
+					default: 'left'
+				},
+				buttonIsTransparent: {
+					type: 'boolean',
+					default: false
+				},
+				addNofollow: {
+					type: 'boolean',
+					default: true
+				},
+				openInNewTab: {
+					type: 'boolean',
+					default: true
+				}
+			},
+			migrate: attributes => {
+				const {
+					transitionButtonText,
+					transitionURL,
+					...otherProps
+				} = attributes;
+				return Object.assign(otherProps, {
+					buttonText: transitionButtonText,
+					url: transitionURL
+				});
+			},
+			save: props => {
+				const {
+					transitionButtonText,
+					align,
+					transitionURL,
+					size,
+					buttonColor,
+					buttonTextColor,
+					buttonHoverColor,
+					buttonTextHoverColor,
+					buttonRounded,
+					chosenIcon,
+					iconPosition,
+					buttonIsTransparent,
+					addNofollow,
+					openInNewTab
+				} = props.attributes;
+
+				return (
+					<div
+						className={`${
+							props.className
+						} ub-button-container align-button-${align}`}
+					>
+						<a
+							href={transitionURL}
+							target={openInNewTab ? '_blank' : '_self'}
+							rel={`noopener noreferrer${
+								addNofollow ? ' nofollow' : ''
+							}`}
+							className={`ub-button-block-main ub-button-${size}`}
+							data-defaultColor={buttonColor}
+							data-defaultTextColor={buttonTextColor}
+							data-hoverColor={buttonHoverColor}
+							data-hoverTextColor={buttonTextHoverColor}
+							data-buttonIsTransparent={buttonIsTransparent}
+							style={{
+								backgroundColor: buttonIsTransparent
+									? 'transparent'
+									: buttonColor,
+								color: buttonIsTransparent
+									? buttonColor
+									: buttonTextColor,
+								borderRadius: buttonRounded ? '60px' : '0px',
+								border: buttonIsTransparent
+									? `3px solid ${buttonColor}`
+									: 'none'
+							}}
+						>
+							<div
+								className="ub-button-content-holder"
+								style={{
+									flexDirection:
+										iconPosition === 'left'
+											? 'row'
+											: 'row-reverse'
+								}}
+							>
+								{chosenIcon !== '' &&
+									allIcons.hasOwnProperty(
+										`fa${dashesToCamelcase(chosenIcon)}`
+									) && (
+										<span className="ub-button-icon-holder">
+											{generateIcon(
+												allIcons[
+													`fa${dashesToCamelcase(
+														chosenIcon
+													)}`
+												],
+												iconSize[size]
+											)}
+										</span>
+									)}
+								<span className={'ub-button-block-btn'}>
+									{transitionButtonText}
+								</span>
+							</div>
+						</a>
+					</div>
+				);
+			}
 		}
 	]
 });

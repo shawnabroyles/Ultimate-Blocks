@@ -646,6 +646,9 @@
   display: -ms-flexbox;
   display: flex;
   margin: 0 auto; }
+  .ub-button-content-holder .fas,
+  .ub-button-content-holder .fab {
+    font-size: 1.75em; }
 
 .ub-button-icon-holder {
   display: -ms-flexbox;

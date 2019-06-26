@@ -175,8 +175,11 @@ require_once plugin_dir_path( __FILE__ ) . 'blocks/call-to-action/block.php';
 // Notification Box Block
 require_once plugin_dir_path( __FILE__ ) . 'blocks/notification-box/block.php';
 
-// Notification Box Block
+// Testimonial Block
 require_once plugin_dir_path( __FILE__ ) . 'blocks/testimonial/block.php';
 
-// Notification Box Block
+// Feature Box Block
 require_once plugin_dir_path( __FILE__ ) . 'blocks/feature-box/block.php';
+
+// Number Box Block
+require_once plugin_dir_path( __FILE__ ) . 'blocks/number-box/block.php';

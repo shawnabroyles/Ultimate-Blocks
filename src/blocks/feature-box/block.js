@@ -515,29 +515,7 @@ registerBlockType('ub/feature-box', {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
-	save: function(props) {
-		const {
-			column,
-			columnOneTitle,
-			columnTwoTitle,
-			columnThreeTitle,
-			columnOneBody,
-			columnTwoBody,
-			columnThreeBody,
-			imgOneURL,
-			imgOneAlt,
-			imgTwoURL,
-			imgTwoAlt,
-			imgThreeURL,
-			imgThreeAlt,
-			title1Align,
-			title2Align,
-			title3Align,
-			body1Align,
-			body2Align,
-			body3Align
-		} = props.attributes;
-
+	save() {
 		return null;
 	},
 	deprecated: [

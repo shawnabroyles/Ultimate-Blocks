@@ -33,49 +33,40 @@ const attributes = {
 		default: '2'
 	},
 	columnOneNumber: {
-		type: 'array',
-		source: 'children',
-		selector: '.ub_number_one_number'
+        type: 'string',
+        default: ''
 	},
 	columnTwoNumber: {
-		type: 'array',
-		source: 'children',
-		selector: '.ub_number_two_number'
+        type: 'string',
+        default: ''
 	},
 	columnThreeNumber: {
-		type: 'array',
-		source: 'children',
-		selector: '.ub_number_three_number'
+        type: 'string',
+        default: ''
 	},
 	columnOneTitle: {
-		type: 'array',
-		source: 'children',
-		selector: '.ub_number_one_title'
+        type: 'string',
+        default: ''
 	},
 	columnTwoTitle: {
-		type: 'array',
-		source: 'children',
-		selector: '.ub_number_two_title'
+        type: 'string',
+        default: ''
 	},
 	columnThreeTitle: {
-		type: 'array',
-		source: 'children',
-		selector: '.ub_number_three_title'
+        type: 'string',
+        default: ''
 	},
 	columnOneBody: {
-		type: 'array',
-		source: 'children',
-		selector: '.ub_number_one_body'
+        type: 'string',
+        default: ''
 	},
 	columnTwoBody: {
-		type: 'array',
-		source: 'children',
-		selector: '.ub_number_two_body'
+        type: 'string',
+        default: ''
 	},
 	columnThreeBody: {
-		type: 'array',
-		source: 'children',
-		selector: '.ub_number_three_body'
+        type: 'string',
+        default: ''
 	},
 	numberBackground: {
 		type: 'string',
@@ -491,146 +482,247 @@ registerBlockType('ub/number-box', {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
-	save: function(props) {
-		const {
-			column,
-			columnOneNumber,
-			columnTwoNumber,
-			columnThreeNumber,
-			columnOneTitle,
-			columnTwoTitle,
-			columnThreeTitle,
-			columnOneBody,
-			columnTwoBody,
-			columnThreeBody,
-			numberBackground,
-			numberColor,
-			borderColor,
-			title1Align,
-			title2Align,
-			title3Align,
-			body1Align,
-			body2Align,
-			body3Align
-		} = props.attributes;
-
-		return (
-			<div className={props.className}>
-				<div className={`ub_number_box column_${column}`}>
-					<div
-						className="ub_number_1"
-						style={{
-							borderColor: borderColor
-						}}
-					>
-						<div
-							className="ub_number_box_number"
-							style={{
-								backgroundColor: numberBackground
-							}}
-						>
-							<p
-								className="ub_number_one_number"
-								style={{
-									color: numberColor
-								}}
-							>
-								{columnOneNumber}
-							</p>
-						</div>
-						<p
-							className="ub_number_one_title"
-							style={{ textAlign: title1Align }}
-						>
-							{columnOneTitle}
-						</p>
-						<p
-							className="ub_number_one_body"
-							style={{ textAlign: body1Align }}
-						>
-							{columnOneBody}
-						</p>
-					</div>
-					<div
-						className="ub_number_2"
-						style={{
-							borderColor: borderColor
-						}}
-					>
-						<div
-							className="ub_number_box_number"
-							style={{
-								backgroundColor: numberBackground
-							}}
-						>
-							<p
-								className="ub_number_two_number"
-								style={{
-									color: numberColor
-								}}
-							>
-								{columnTwoNumber}
-							</p>
-						</div>
-						<p
-							className="ub_number_two_title"
-							style={{ textAlign: title2Align }}
-						>
-							{columnTwoTitle}
-						</p>
-						<p
-							className="ub_number_two_body"
-							style={{ textAlign: body2Align }}
-						>
-							{columnTwoBody}
-						</p>
-					</div>
-					<div
-						className="ub_number_3"
-						style={{
-							borderColor: borderColor
-						}}
-					>
-						<div
-							className="ub_number_box_number"
-							style={{
-								backgroundColor: numberBackground
-							}}
-						>
-							<p
-								className="ub_number_three_number"
-								style={{
-									color: numberColor
-								}}
-							>
-								{columnThreeNumber}
-							</p>
-						</div>
-						<p
-							className="ub_number_three_title"
-							style={{ textAlign: title3Align }}
-						>
-							{columnThreeTitle}
-						</p>
-						<p
-							className="ub_number_three_body"
-							style={{ textAlign: body3Align }}
-						>
-							{columnThreeBody}
-						</p>
-					</div>
-				</div>
-			</div>
-		);
-	},
+	save(){
+        return null;
+    },
 	deprecated: [
 		{
-			attributes,
-			save: version_1_1_2
-		},
-		{
-			attributes,
-			save: version_1_1_5
-		}
+            attributes: {
+                column: {
+                    type: 'select',
+                    default: '2'
+                },
+                transitionColumnOneNumber: {
+                    type: 'string',
+                    default: ''
+                },
+                transitionColumnTwoNumber: {
+                    type: 'string',
+                    default: ''
+                },
+                transitionColumnThreeNumber: {
+                    type: 'string',
+                    default: ''
+                },
+                transitionColumnOneTitle: {
+                    type: 'string',
+                    default: ''
+                },
+                transitionColumnTwoTitle: {
+                    type: 'string',
+                    default: ''
+                },
+                transitionColumnThreeTitle: {
+                    type: 'string',
+                    default: ''
+                },
+                transitionColumnOneBody: {
+                    type: 'string',
+                    default: ''
+                },
+                transitionColumnTwoBody: {
+                    type: 'string',
+                    default: ''
+                },
+                transitionColumnThreeBody: {
+                    type: 'string',
+                    default: ''
+                },
+                numberBackground: {
+                    type: 'string',
+                    default: '#CCCCCC'
+                },
+                numberColor: {
+                    type: 'string',
+                    default: '#000000'
+                },
+                borderColor: {
+                    type: 'string',
+                    default: '#CCCCCC'
+                },
+                title1Align: {
+                    type: 'string',
+                    default: 'center'
+                },
+                title2Align: {
+                    type: 'string',
+                    default: 'center'
+                },
+                title3Align: {
+                    type: 'string',
+                    default: 'center'
+                },
+                body1Align: {
+                    type: 'string',
+                    default: 'left'
+                },
+                body2Align: {
+                    type: 'string',
+                    default: 'left'
+                },
+                body3Align: {
+                    type: 'string',
+                    default: 'left'
+                }
+            },
+            migrate: attributes => {
+                const {
+                    transitionColumnOneNumber,
+                    transitionColumnTwoNumber,
+                    transitionColumnThreeNumber,
+                    transitionColumnOneTitle,
+                    transitionColumnTwoTitle,
+                    transitionColumnThreeTitle,
+                    transitionColumnOneBody,
+                    transitionColumnTwoBody,
+                    transitionColumnThreeBody,
+                    ...otherProps} = attributes;
+                return Object.assign(otherProps, {
+                    columnOneNumber: transitionColumnOneNumber,
+                    columnTwoNumber: transitionColumnTwoNumber,
+                    columnThreeNumber: transitionColumnThreeNumber,
+                    columnOneTitle: transitionColumnOneTitle,
+                    columnTwoTitle: transitionColumnTwoTitle,
+                    columnThreeTitle: transitionColumnThreeTitle,
+                    columnOneBody: transitionColumnOneBody,
+                    columnTwoBody: transitionColumnTwoBody,
+                    columnThreeBody: transitionColumnThreeBody
+                });
+            },
+            save: props => {
+                const {
+                    column,
+                    transitionColumnOneNumber,
+                    transitionColumnTwoNumber,
+                    transitionColumnThreeNumber,
+                    transitionColumnOneTitle,
+                    transitionColumnTwoTitle,
+                    transitionColumnThreeTitle,
+                    transitionColumnOneBody,
+                    transitionColumnTwoBody,
+                    transitionColumnThreeBody,
+                    numberBackground,
+                    numberColor,
+                    borderColor,
+                    title1Align,
+                    title2Align,
+                    title3Align,
+                    body1Align,
+                    body2Align,
+                    body3Align
+                } = props.attributes;
+
+                console.log(JSON.stringify(props.attributes))
+        
+                return (
+                    <div className={props.className}>
+                        <div className={`ub_number_box column_${column}`}>
+                            <div
+                                className="ub_number_1"
+                                style={{
+                                    borderColor: borderColor
+                                }}
+                            >
+                                <div
+                                    className="ub_number_box_number"
+                                    style={{
+                                        backgroundColor: numberBackground
+                                    }}
+                                >
+                                    <p
+                                        className="ub_number_one_number"
+                                        style={{
+                                            color: numberColor
+                                        }}
+                                    >
+                                        {transitionColumnOneNumber}
+                                    </p>
+                                </div>
+                                <p
+                                    className="ub_number_one_title"
+                                    style={{ textAlign: title1Align }}
+                                >
+                                    {transitionColumnOneTitle}
+                                </p>
+                                <p
+                                    className="ub_number_one_body"
+                                    style={{ textAlign: body1Align }}
+                                >
+                                    {transitionColumnOneBody}
+                                </p>
+                            </div>
+                            <div
+                                className="ub_number_2"
+                                style={{
+                                    borderColor: borderColor
+                                }}
+                            >
+                                <div
+                                    className="ub_number_box_number"
+                                    style={{
+                                        backgroundColor: numberBackground
+                                    }}
+                                >
+                                    <p
+                                        className="ub_number_two_number"
+                                        style={{
+                                            color: numberColor
+                                        }}
+                                    >
+                                        {transitionColumnTwoNumber}
+                                    </p>
+                                </div>
+                                <p
+                                    className="ub_number_two_title"
+                                    style={{ textAlign: title2Align }}
+                                >
+                                    {transitionColumnTwoTitle}
+                                </p>
+                                <p
+                                    className="ub_number_two_body"
+                                    style={{ textAlign: body2Align }}
+                                >
+                                    {transitionColumnTwoBody}
+                                </p>
+                            </div>
+                            <div
+                                className="ub_number_3"
+                                style={{
+                                    borderColor: borderColor
+                                }}
+                            >
+                                <div
+                                    className="ub_number_box_number"
+                                    style={{
+                                        backgroundColor: numberBackground
+                                    }}
+                                >
+                                    <p
+                                        className="ub_number_three_number"
+                                        style={{
+                                            color: numberColor
+                                        }}
+                                    >
+                                        {transitionColumnThreeNumber}
+                                    </p>
+                                </div>
+                                <p
+                                    className="ub_number_three_title"
+                                    style={{ textAlign: title3Align }}
+                                >
+                                    {transitionColumnThreeTitle}
+                                </p>
+                                <p
+                                    className="ub_number_three_body"
+                                    style={{ textAlign: body3Align }}
+                                >
+                                    {transitionColumnThreeBody}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                );
+                                    }
+        }
 	]
 });

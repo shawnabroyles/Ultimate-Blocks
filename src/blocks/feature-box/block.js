@@ -16,7 +16,6 @@ import remove_icon from './icons/remove_icon';
 //  Import CSS.
 import './style.scss';
 import './editor.scss';
-import { version_1_1_2, version_1_1_5 } from './oldVersions';
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
@@ -29,13 +28,11 @@ const { withState } = wp.compose;
 
 const attributes = {
 	column: {
-		type: 'select',
+		type: 'string',
 		default: '2'
 	},
 	columnOneTitle: {
-		type: 'array',
-		source: 'children',
-		selector: '.ub_feature_one_title',
+		type: 'string',
 		default: 'Title One'
 	},
 	title1Align: {
@@ -43,9 +40,7 @@ const attributes = {
 		default: 'center'
 	},
 	columnTwoTitle: {
-		type: 'array',
-		source: 'children',
-		selector: '.ub_feature_two_title',
+		type: 'string',
 		default: 'Title Two'
 	},
 	title2Align: {
@@ -53,9 +48,7 @@ const attributes = {
 		default: 'center'
 	},
 	columnThreeTitle: {
-		type: 'array',
-		source: 'children',
-		selector: '.ub_feature_three_title',
+		type: 'string',
 		default: 'Title Three'
 	},
 	title3Align: {
@@ -63,9 +56,7 @@ const attributes = {
 		default: 'center'
 	},
 	columnOneBody: {
-		type: 'array',
-		source: 'children',
-		selector: '.ub_feature_one_body',
+		type: 'string',
 		default:
 			'Gutenberg is really awesome! Ultimate Blocks makes it more awesome!'
 	},
@@ -74,9 +65,7 @@ const attributes = {
 		default: 'left'
 	},
 	columnTwoBody: {
-		type: 'array',
-		source: 'children',
-		selector: '.ub_feature_two_body',
+		type: 'string',
 		default:
 			'Gutenberg is really awesome! Ultimate Blocks makes it more awesome!'
 	},
@@ -85,9 +74,7 @@ const attributes = {
 		default: 'left'
 	},
 	columnThreeBody: {
-		type: 'array',
-		source: 'children',
-		selector: '.ub_feature_three_body',
+		type: 'string',
 		default:
 			'Gutenberg is really awesome! Ultimate Blocks makes it more awesome!'
 	},
@@ -97,48 +84,36 @@ const attributes = {
 	},
 	imgOneURL: {
 		type: 'string',
-		source: 'attribute',
-		attribute: 'src',
-		selector: '.ub_feature_one_img'
+        default: ''
 	},
 	imgOneID: {
 		type: 'number'
 	},
 	imgOneAlt: {
 		type: 'string',
-		source: 'attribute',
-		attribute: 'alt',
-		selector: '.ub_feature_one_img'
+        default: ''
 	},
 	imgTwoURL: {
 		type: 'string',
-		source: 'attribute',
-		attribute: 'src',
-		selector: '.ub_feature_two_img'
+        default: ''
 	},
 	imgTwoID: {
 		type: 'number'
 	},
 	imgTwoAlt: {
 		type: 'string',
-		source: 'attribute',
-		attribute: 'alt',
-		selector: '.ub_feature_two_img'
+        default: ''
 	},
 	imgThreeURL: {
 		type: 'string',
-		source: 'attribute',
-		attribute: 'src',
-		selector: '.ub_feature_three_img'
+        default: ''
 	},
 	imgThreeID: {
 		type: 'number'
 	},
 	imgThreeAlt: {
 		type: 'string',
-		source: 'attribute',
-		attribute: 'alt',
-		selector: '.ub_feature_three_img'
+        default: ''
 	}
 };
 
@@ -363,14 +338,14 @@ registerBlockType('ub/feature-box', {
 							</div>
 						) : (
 							<React.Fragment>
-								{isSelected ? (
+								{isSelected && (
 									<Button
 										className="remove-image"
 										onClick={onRemoveImageOne}
 									>
 										{remove_icon}
 									</Button>
-								) : null}
+								)}
 								<img
 									className="ub_feature_one_img"
 									src={imgOneURL}
@@ -424,14 +399,14 @@ registerBlockType('ub/feature-box', {
 							</div>
 						) : (
 							<React.Fragment>
-								{isSelected ? (
+								{isSelected && (
 									<Button
 										className="remove-image"
 										onClick={onRemoveImageTwo}
 									>
 										{remove_icon}
 									</Button>
-								) : null}
+								)}
 								<img
 									className="ub_feature_two_img"
 									src={imgTwoURL}
@@ -485,14 +460,14 @@ registerBlockType('ub/feature-box', {
 							</div>
 						) : (
 							<React.Fragment>
-								{isSelected ? (
+								{isSelected && (
 									<Button
 										className="remove-image"
 										onClick={onRemoveImageThree}
 									>
 										{remove_icon}
 									</Button>
-								) : null}
+								) }
 								<img
 									className="ub_feature_three_img"
 									src={imgThreeURL}
@@ -563,78 +538,218 @@ registerBlockType('ub/feature-box', {
 			body3Align
 		} = props.attributes;
 
-		return (
-			<div className={props.className}>
-				<div className={`ub_feature_box column_${column}`}>
-					<div class="ub_feature_1">
-						<img
-							className="ub_feature_one_img"
-							src={imgOneURL}
-							alt={imgOneAlt}
-						/>
-						<p
-							className="ub_feature_one_title"
-							style={{ textAlign: title1Align }}
-						>
-							{columnOneTitle}
-						</p>
-						<p
-							className="ub_feature_one_body"
-							style={{ textAlign: body1Align }}
-						>
-							{columnOneBody}
-						</p>
-					</div>
-					<div class="ub_feature_2">
-						<img
-							className="ub_feature_two_img"
-							src={imgTwoURL}
-							alt={imgTwoAlt}
-						/>
-						<p
-							className="ub_feature_two_title"
-							style={{ textAlign: title2Align }}
-						>
-							{columnTwoTitle}
-						</p>
-						<p
-							className="ub_feature_two_body"
-							style={{ textAlign: body2Align }}
-						>
-							{columnTwoBody}
-						</p>
-					</div>
-					<div class="ub_feature_3">
-						<img
-							className="ub_feature_three_img"
-							src={imgThreeURL}
-							alt={imgThreeAlt}
-						/>
-						<p
-							className="ub_feature_three_title"
-							style={{ align: title3Align }}
-						>
-							{columnThreeTitle}
-						</p>
-						<p
-							className="ub_feature_three_body"
-							style={{ align: body3Align }}
-						>
-							{columnThreeBody}
-						</p>
-					</div>
-				</div>
-			</div>
-		);
+		return null;
 	},
 	deprecated: [
 		{
-			attributes,
-			save: version_1_1_2
+			attributes: {
+                column: {
+                    type: 'string',
+                    default: '2'
+                },
+                transitionColumnOneTitle: {
+                    type: 'string',
+                    default: 'Title One'
+                },
+                title1Align: {
+                    type: 'string',
+                    default: 'center'
+                },
+                transitionColumnTwoTitle: {
+                    type: 'string',
+                    default: 'Title Two'
+                },
+                title2Align: {
+                    type: 'string',
+                    default: 'center'
+                },
+                transitionColumnThreeTitle: {
+                    type: 'string',
+                    default: 'Title Three'
+                },
+                title3Align: {
+                    type: 'string',
+                    default: 'center'
+                },
+                transitionColumnOneBody: {
+                    type: 'string',
+                    default:
+                        'Gutenberg is really awesome! Ultimate Blocks makes it more awesome!'
+                },
+                body1Align: {
+                    type: 'string',
+                    default: 'left'
+                },
+                transitionColumnTwoBody: {
+                    type: 'string',
+                    default:
+                        'Gutenberg is really awesome! Ultimate Blocks makes it more awesome!'
+                },
+                body2Align: {
+                    type: 'string',
+                    default: 'left'
+                },
+                transitionColumnThreeBody: {
+                    type: 'string',
+                    default:
+                        'Gutenberg is really awesome! Ultimate Blocks makes it more awesome!'
+                },
+                body3Align: {
+                    type: 'string',
+                    default: 'left'
+                },
+                transitionImgOneURL: {
+                    type: 'string',
+                    default: ''
+                },
+                imgOneID: {
+                    type: 'number'
+                },
+                transitionImgOneAlt: {
+                    type: 'string',
+                    default: ''
+                },
+                transitionImgTwoURL: {
+                    type: 'string',
+                    default: ''
+                },
+                imgTwoID: {
+                    type: 'number'
+                },
+                transitionImgTwoAlt: {
+                    type: 'string',
+                    default: ''
+                },
+                transitionImgThreeURL: {
+                    type: 'string',
+                    default: ''
+                },
+                imgThreeID: {
+                    type: 'number'
+                },
+                transitionImgThreeAlt: {
+                    type: 'string',
+                    default: ''
+                }
+            },
+            migrate: attributes => {
+                const {
+                    transitionColumnOneTitle,
+                    transitionColumnOneBody,
+                    transitionColumnTwoTitle,
+                    transitionColumnTwoBody,
+                    transitionColumnThreeTitle,
+                    transitionColumnThreeBody,
+                    transitionImgOneAlt,
+                    transitionImgOneURL,
+                    transitionImgTwoAlt,
+                    transitionImgTwoURL,
+                    transitionImgThreeAlt,
+                    transitionImgThreeURL,
+                    ...otherProps
+                } = attributes;
+                return Object.assign(otherProps, {
+                    columnOneTitle: transitionColumnOneTitle,
+                    columnOneBody: transitionColumnOneBody,
+                    columnTwoTitle: transitionColumnTwoTitle,
+                    columnTwoBody: transitionColumnTwoBody,
+                    columnThreeTitle: transitionColumnThreeTitle,
+                    columnThreeBody: transitionColumnThreeBody,
+                    imgOneAlt: transitionImgOneAlt,
+                    imgOneURL: transitionImgOneURL,
+                    imgTwoAlt: transitionImgTwoAlt ,
+                    imgTwoURL: transitionImgTwoURL,
+                    imgThreeAlt: transitionImgThreeAlt,
+                    imgThreeURL: transitionImgThreeURL
+                });
+            },
+			save: props => {
+                const {
+                    column,
+                    transitionColumnOneTitle,
+                    transitionColumnTwoTitle,
+                    transitionColumnThreeTitle,
+                    transitionColumnOneBody,
+                    transitionColumnTwoBody,
+                    transitionColumnThreeBody,
+                    transitionImgOneURL,
+                    transitionImgOneAlt,
+                    transitionImgTwoURL,
+                    transitionImgTwoAlt,
+                    transitionImgThreeURL,
+                    transitionImgThreeAlt,
+                    title1Align,
+                    title2Align,
+                    title3Align,
+                    body1Align,
+                    body2Align,
+                    body3Align
+                } = props.attributes;
+        
+                return (
+                    <div className={props.className}>
+                        <div className={`ub_feature_box column_${column}`}>
+                            <div className="ub_feature_1">
+                                <img
+                                    className="ub_feature_one_img"
+                                    src={transitionImgOneURL}
+                                    alt={transitionImgOneAlt}
+                                />
+                                <p
+                                    className="ub_feature_one_title"
+                                    style={{ textAlign: title1Align }}
+                                >
+                                    {transitionColumnOneTitle}
+                                </p>
+                                <p
+                                    className="ub_feature_one_body"
+                                    style={{ textAlign: body1Align }}
+                                >
+                                    {transitionColumnOneBody}
+                                </p>
+                            </div>
+                            <div className="ub_feature_2">
+                                <img
+                                    className="ub_feature_two_img"
+                                    src={transitionImgTwoURL}
+                                    alt={transitionImgTwoAlt}
+                                />
+                                <p
+                                    className="ub_feature_two_title"
+                                    style={{ textAlign: title2Align }}
+                                >
+                                    {transitionColumnTwoTitle}
+                                </p>
+                                <p
+                                    className="ub_feature_two_body"
+                                    style={{ textAlign: body2Align }}
+                                >
+                                    {transitionColumnTwoBody}
+                                </p>
+                            </div>
+                            <div className="ub_feature_3">
+                                <img
+                                    className="ub_feature_three_img"
+                                    src={transitionImgThreeURL}
+                                    alt={transitionImgThreeAlt}
+                                />
+                                <p
+                                    className="ub_feature_three_title"
+                                    style={{ align: title3Align }}
+                                >
+                                    {transitionColumnThreeTitle}
+                                </p>
+                                <p
+                                    className="ub_feature_three_body"
+                                    style={{ align: body3Align }}
+                                >
+                                    {transitionColumnThreeBody}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
 		},
-		{
-			attributes,
-			save: version_1_1_5
-		}
 	]
 });

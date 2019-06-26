@@ -1,5 +1,5 @@
 import icons from './icons';
-import { version_1_1_2, version_1_1_5 } from './oldVersions';
+import { version_1_1_2, version_1_1_5, convertOldFormat } from './oldVersions';
 
 //  Import CSS.
 import './style.scss';
@@ -22,47 +22,40 @@ const { Button, PanelBody, RangeControl, Toolbar, IconButton } = wp.components;
 const { withState } = wp.compose;
 
 const attributes = {
-	ub_testimonial_text: {
-		type: 'array',
-		source: 'children',
-		selector: '.ub_testimonial_text'
+	text: {
+		type: 'string',
+		default: ''
 	},
 	textAlign: {
 		type: 'string',
 		default: 'justify'
 	},
-	ub_testimonial_author: {
-		type: 'array',
-		source: 'children',
-		selector: '.ub_testimonial_author'
+	author: {
+		type: 'string',
+		default: ''
 	},
 	authorAlign: {
 		type: 'string',
 		default: 'right'
 	},
-	ub_testimonial_author_role: {
-		type: 'array',
-		source: 'children',
-		selector: '.ub_testimonial_author_role'
+	authorRole: {
+		type: 'string',
+		default: ''
 	},
 	authorRoleAlign: {
 		type: 'string',
 		default: 'right'
 	},
-	imgURL: {
+	transitionImgURL: {
 		type: 'string',
-		source: 'attribute',
-		attribute: 'src',
-		selector: 'img'
+		default: ''
 	},
 	imgID: {
 		type: 'number'
 	},
-	imgAlt: {
+	transitionImgAlt: {
 		type: 'string',
-		source: 'attribute',
-		attribute: 'alt',
-		selector: 'img'
+		default: ''
 	},
 	backgroundColor: {
 		type: 'string',
@@ -114,40 +107,40 @@ registerBlockType('ub/testimonial-block', {
 			textColor,
 			textSize,
 			imgID,
-			imgURL,
-			imgAlt,
-			ub_testimonial_author,
-			ub_testimonial_author_role,
-			ub_testimonial_text,
+			transitionImgURL,
+			transitionImgAlt,
+			author,
+			authorRole,
+			text,
 			textAlign,
 			authorAlign,
 			authorRoleAlign
 		} = props.attributes;
 
 		const onChangeTestimonialText = value => {
-			setAttributes({ ub_testimonial_text: value });
+			setAttributes({ text: value });
 		};
 
 		const onChangeTestimonialAuthor = value => {
-			setAttributes({ ub_testimonial_author: value });
+			setAttributes({ author: value });
 		};
 
 		const onChangeTestimonialAuthorRole = value => {
-			setAttributes({ ub_testimonial_author_role: value });
+			setAttributes({ authorRole: value });
 		};
 
 		const onSelectImage = img => {
 			setAttributes({
 				imgID: img.id,
-				imgURL: img.url,
-				imgAlt: img.alt
+				transitionImgURL: img.url,
+				transitionImgAlt: img.alt
 			});
 		};
 		const onRemoveImage = () => {
 			setAttributes({
 				imgID: null,
-				imgURL: null,
-				imgAlt: null
+				transitionImgURL: null,
+				transitionImgAlt: null
 			});
 		};
 
@@ -273,8 +266,8 @@ registerBlockType('ub/testimonial-block', {
 						) : (
 							<div>
 								<img
-									src={imgURL}
-									alt={imgAlt}
+									src={transitionImgURL}
+									alt={transitionImgAlt}
 									height={100}
 									width={100}
 								/>
@@ -301,7 +294,7 @@ registerBlockType('ub/testimonial-block', {
 								textAlign: textAlign
 							}}
 							onChange={onChangeTestimonialText}
-							value={ub_testimonial_text}
+							value={text}
 							keepPlaceholderOnFocus={true}
 							formattingControls={[
 								'bold',
@@ -320,7 +313,7 @@ registerBlockType('ub/testimonial-block', {
 							style={{ textAlign: authorAlign }}
 							className="ub_testimonial_author"
 							onChange={onChangeTestimonialAuthor}
-							value={ub_testimonial_author}
+							value={author}
 							keepPlaceholderOnFocus={true}
 							unstableOnFocus={() =>
 								setState({ editable: 'author' })
@@ -332,7 +325,7 @@ registerBlockType('ub/testimonial-block', {
 							style={{ textAlign: authorRoleAlign }}
 							className="ub_testimonial_author_role"
 							onChange={onChangeTestimonialAuthorRole}
-							value={ub_testimonial_author_role}
+							value={authorRole}
 							keepPlaceholderOnFocus={true}
 							formattingControls={[
 								'bold',
@@ -357,16 +350,16 @@ registerBlockType('ub/testimonial-block', {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
-	save: function(props) {
+	save(props) {
 		const {
 			backgroundColor,
 			textColor,
 			textSize,
-			imgURL,
-			imgAlt,
-			ub_testimonial_author,
-			ub_testimonial_author_role,
-			ub_testimonial_text,
+			transitionImgURL,
+			transitionImgAlt,
+			author,
+			authorRole,
+			text,
 			textAlign,
 			authorAlign,
 			authorRoleAlign
@@ -382,8 +375,8 @@ registerBlockType('ub/testimonial-block', {
 				>
 					<div className="ub_testimonial_img">
 						<img
-							src={imgURL}
-							alt={imgAlt}
+							src={transitionImgURL}
+							alt={transitionImgAlt}
 							height={100}
 							width={100}
 						/>
@@ -396,7 +389,7 @@ registerBlockType('ub/testimonial-block', {
 								textAlign: textAlign
 							}}
 						>
-							{ub_testimonial_text}
+							{text}
 						</p>
 					</div>
 					<div className="ub_testimonial_sign">
@@ -404,13 +397,13 @@ registerBlockType('ub/testimonial-block', {
 							className="ub_testimonial_author"
 							style={{ textAlign: authorAlign }}
 						>
-							{ub_testimonial_author}
+							{author}
 						</p>
 						<p
 							className="ub_testimonial_author_role"
 							style={{ textAlign: authorRoleAlign }}
 						>
-							{ub_testimonial_author_role}
+							{authorRole}
 						</p>
 					</div>
 				</div>
@@ -418,13 +411,7 @@ registerBlockType('ub/testimonial-block', {
 		);
 	},
 	deprecated: [
-		{
-			attributes,
-			save: version_1_1_2
-		},
-		{
-			attributes,
-			save: version_1_1_5
-		}
+		convertOldFormat(version_1_1_2),
+		convertOldFormat(version_1_1_5)
 	]
 });

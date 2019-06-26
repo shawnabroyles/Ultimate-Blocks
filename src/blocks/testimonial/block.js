@@ -1,5 +1,4 @@
 import icons from './icons';
-import { version_1_1_2, version_1_1_5 } from './oldVersions';
 
 //  Import CSS.
 import './style.scss';
@@ -22,28 +21,25 @@ const { Button, PanelBody, RangeControl, Toolbar, IconButton } = wp.components;
 const { withState } = wp.compose;
 
 const attributes = {
-	ub_testimonial_text: {
-		type: 'array',
-		source: 'children',
-		selector: '.ub_testimonial_text'
+	text: {
+		type: 'string',
+		default: ''
 	},
 	textAlign: {
 		type: 'string',
 		default: 'justify'
 	},
-	ub_testimonial_author: {
-		type: 'array',
-		source: 'children',
-		selector: '.ub_testimonial_author'
+	author: {
+		type: 'string',
+		default: ''
 	},
 	authorAlign: {
 		type: 'string',
 		default: 'right'
 	},
-	ub_testimonial_author_role: {
-		type: 'array',
-		source: 'children',
-		selector: '.ub_testimonial_author_role'
+	authorRole: {
+		type: 'string',
+		default: ''
 	},
 	authorRoleAlign: {
 		type: 'string',
@@ -51,18 +47,14 @@ const attributes = {
 	},
 	imgURL: {
 		type: 'string',
-		source: 'attribute',
-		attribute: 'src',
-		selector: 'img'
+		default: ''
 	},
 	imgID: {
 		type: 'number'
 	},
 	imgAlt: {
 		type: 'string',
-		source: 'attribute',
-		attribute: 'alt',
-		selector: 'img'
+		default: ''
 	},
 	backgroundColor: {
 		type: 'string',
@@ -116,24 +108,24 @@ registerBlockType('ub/testimonial-block', {
 			imgID,
 			imgURL,
 			imgAlt,
-			ub_testimonial_author,
-			ub_testimonial_author_role,
-			ub_testimonial_text,
+			author,
+			authorRole,
+			text,
 			textAlign,
 			authorAlign,
 			authorRoleAlign
 		} = props.attributes;
 
 		const onChangeTestimonialText = value => {
-			setAttributes({ ub_testimonial_text: value });
+			setAttributes({ text: value });
 		};
 
 		const onChangeTestimonialAuthor = value => {
-			setAttributes({ ub_testimonial_author: value });
+			setAttributes({ author: value });
 		};
 
 		const onChangeTestimonialAuthorRole = value => {
-			setAttributes({ ub_testimonial_author_role: value });
+			setAttributes({ authorRole: value });
 		};
 
 		const onSelectImage = img => {
@@ -301,7 +293,7 @@ registerBlockType('ub/testimonial-block', {
 								textAlign: textAlign
 							}}
 							onChange={onChangeTestimonialText}
-							value={ub_testimonial_text}
+							value={text}
 							keepPlaceholderOnFocus={true}
 							formattingControls={[
 								'bold',
@@ -320,7 +312,7 @@ registerBlockType('ub/testimonial-block', {
 							style={{ textAlign: authorAlign }}
 							className="ub_testimonial_author"
 							onChange={onChangeTestimonialAuthor}
-							value={ub_testimonial_author}
+							value={author}
 							keepPlaceholderOnFocus={true}
 							unstableOnFocus={() =>
 								setState({ editable: 'author' })
@@ -332,7 +324,7 @@ registerBlockType('ub/testimonial-block', {
 							style={{ textAlign: authorRoleAlign }}
 							className="ub_testimonial_author_role"
 							onChange={onChangeTestimonialAuthorRole}
-							value={ub_testimonial_author_role}
+							value={authorRole}
 							keepPlaceholderOnFocus={true}
 							formattingControls={[
 								'bold',
@@ -357,74 +349,131 @@ registerBlockType('ub/testimonial-block', {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
-	save: function(props) {
-		const {
-			backgroundColor,
-			textColor,
-			textSize,
-			imgURL,
-			imgAlt,
-			ub_testimonial_author,
-			ub_testimonial_author_role,
-			ub_testimonial_text,
-			textAlign,
-			authorAlign,
-			authorRoleAlign
-		} = props.attributes;
-		return (
-			<div className={props.className}>
-				<div
-					className="ub_testimonial"
-					style={{
-						backgroundColor: backgroundColor,
-						color: textColor
-					}}
-				>
-					<div className="ub_testimonial_img">
-						<img
-							src={imgURL}
-							alt={imgAlt}
-							height={100}
-							width={100}
-						/>
-					</div>
-					<div className="ub_testimonial_content">
-						<p
-							className="ub_testimonial_text"
-							style={{
-								fontSize: textSize,
-								textAlign: textAlign
-							}}
-						>
-							{ub_testimonial_text}
-						</p>
-					</div>
-					<div className="ub_testimonial_sign">
-						<p
-							className="ub_testimonial_author"
-							style={{ textAlign: authorAlign }}
-						>
-							{ub_testimonial_author}
-						</p>
-						<p
-							className="ub_testimonial_author_role"
-							style={{ textAlign: authorRoleAlign }}
-						>
-							{ub_testimonial_author_role}
-						</p>
-					</div>
-				</div>
-			</div>
-		);
+	save() {
+		return null;
 	},
 	deprecated: [
 		{
-			attributes,
-			save: version_1_1_2
-		},
-		{
-			attributes,
-			save: version_1_1_5
+			attributes: {
+				text: {
+					type: 'string',
+					default: ''
+				},
+				textAlign: {
+					type: 'string',
+					default: 'justify'
+				},
+				author: {
+					type: 'string',
+					default: ''
+				},
+				authorAlign: {
+					type: 'string',
+					default: 'right'
+				},
+				authorRole: {
+					type: 'string',
+					default: ''
+				},
+				authorRoleAlign: {
+					type: 'string',
+					default: 'right'
+				},
+				transitionImgURL: {
+					type: 'string',
+					default: ''
+				},
+				imgID: {
+					type: 'number'
+				},
+				transitionImgAlt: {
+					type: 'string',
+					default: ''
+				},
+				backgroundColor: {
+					type: 'string',
+					default: '#f4f6f6'
+				},
+				textColor: {
+					type: 'string',
+					default: '#444444'
+				},
+				textSize: {
+					type: 'number',
+					default: 17
+				}
+			},
+			migrate: attributes => {
+				const {
+					transitionImgAlt,
+					transitionImgURL,
+					...otherProps
+				} = attributes;
+				return Object.assign(otherProps, {
+					imgAlt: transitionImgAlt,
+					imgURL: transitionImgURL
+				});
+			},
+			save: props => {
+				const {
+					backgroundColor,
+					textColor,
+					textSize,
+					transitionImgURL,
+					transitionImgAlt,
+					author,
+					authorRole,
+					text,
+					textAlign,
+					authorAlign,
+					authorRoleAlign
+				} = props.attributes;
+				return (
+					<div className={props.className}>
+						<div
+							className="ub_testimonial"
+							style={{
+								backgroundColor: backgroundColor,
+								color: textColor
+							}}
+						>
+							<div className="ub_testimonial_img">
+								<img
+									src={transitionImgURL}
+									alt={transitionImgAlt}
+									height={100}
+									width={100}
+								/>
+							</div>
+							<div className="ub_testimonial_content">
+								<p
+									className="ub_testimonial_text"
+									style={{
+										fontSize: textSize,
+										textAlign: textAlign
+									}}
+								>
+									{text}
+								</p>
+							</div>
+							<div className="ub_testimonial_sign">
+								<p
+									className="ub_testimonial_author"
+									style={{ textAlign: authorAlign }}
+								>
+									{author}
+								</p>
+								<p
+									className="ub_testimonial_author_role"
+									style={{ textAlign: authorRoleAlign }}
+								>
+									{authorRole}
+								</p>
+							</div>
+						</div>
+					</div>
+				);
+			}
 		}
 	]
 });

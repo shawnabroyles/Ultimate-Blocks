@@ -168,9 +168,7 @@ registerBlockType('ub/notification-box', {
 	 *
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
-	save(props) {
-		console.log('current attributes');
-		console.log(JSON.stringify(props.attributes));
+	save() {
 		return null;
 	},
 	deprecated: [

@@ -16,7 +16,7 @@ import remove_icon from './icons/remove_icon';
 //  Import CSS.
 import './style.scss';
 import './editor.scss';
-import { version_1_1_2, version_1_1_5 } from './oldVersions';
+import { version_1_1_2, version_1_1_5, convertFrom } from './oldVersions';
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
@@ -29,43 +29,35 @@ const { withState } = wp.compose;
 
 const attributes = {
 	column: {
-		type: 'select',
+		type: 'string',
 		default: '2'
 	},
-	columnOneTitle: {
-		type: 'array',
-		source: 'children',
-		selector: '.ub_feature_one_title',
+	transitionColumnOneTitle: {
+		type: 'string',
 		default: 'Title One'
 	},
 	title1Align: {
 		type: 'string',
 		default: 'center'
 	},
-	columnTwoTitle: {
-		type: 'array',
-		source: 'children',
-		selector: '.ub_feature_two_title',
+	transitionColumnTwoTitle: {
+		type: 'string',
 		default: 'Title Two'
 	},
 	title2Align: {
 		type: 'string',
 		default: 'center'
 	},
-	columnThreeTitle: {
-		type: 'array',
-		source: 'children',
-		selector: '.ub_feature_three_title',
+	transitionColumnThreeTitle: {
+		type: 'string',
 		default: 'Title Three'
 	},
 	title3Align: {
 		type: 'string',
 		default: 'center'
 	},
-	columnOneBody: {
-		type: 'array',
-		source: 'children',
-		selector: '.ub_feature_one_body',
+	transitionColumnOneBody: {
+		type: 'string',
 		default:
 			'Gutenberg is really awesome! Ultimate Blocks makes it more awesome!'
 	},
@@ -73,10 +65,8 @@ const attributes = {
 		type: 'string',
 		default: 'left'
 	},
-	columnTwoBody: {
-		type: 'array',
-		source: 'children',
-		selector: '.ub_feature_two_body',
+	transitionColumnTwoBody: {
+		type: 'string',
 		default:
 			'Gutenberg is really awesome! Ultimate Blocks makes it more awesome!'
 	},
@@ -84,10 +74,8 @@ const attributes = {
 		type: 'string',
 		default: 'left'
 	},
-	columnThreeBody: {
-		type: 'array',
-		source: 'children',
-		selector: '.ub_feature_three_body',
+	transitionColumnThreeBody: {
+		type: 'string',
 		default:
 			'Gutenberg is really awesome! Ultimate Blocks makes it more awesome!'
 	},
@@ -95,50 +83,38 @@ const attributes = {
 		type: 'string',
 		default: 'left'
 	},
-	imgOneURL: {
+	transitionImgOneURL: {
 		type: 'string',
-		source: 'attribute',
-		attribute: 'src',
-		selector: '.ub_feature_one_img'
+		default: ''
 	},
 	imgOneID: {
 		type: 'number'
 	},
-	imgOneAlt: {
+	transitionImgOneAlt: {
 		type: 'string',
-		source: 'attribute',
-		attribute: 'alt',
-		selector: '.ub_feature_one_img'
+		default: ''
 	},
-	imgTwoURL: {
+	transitionImgTwoURL: {
 		type: 'string',
-		source: 'attribute',
-		attribute: 'src',
-		selector: '.ub_feature_two_img'
+		default: ''
 	},
 	imgTwoID: {
 		type: 'number'
 	},
-	imgTwoAlt: {
+	transitionImgTwoAlt: {
 		type: 'string',
-		source: 'attribute',
-		attribute: 'alt',
-		selector: '.ub_feature_two_img'
+		default: ''
 	},
-	imgThreeURL: {
+	transitionImgThreeURL: {
 		type: 'string',
-		source: 'attribute',
-		attribute: 'src',
-		selector: '.ub_feature_three_img'
+		default: ''
 	},
 	imgThreeID: {
 		type: 'number'
 	},
-	imgThreeAlt: {
+	transitionImgThreeAlt: {
 		type: 'string',
-		source: 'attribute',
-		attribute: 'alt',
-		selector: '.ub_feature_three_img'
+		default: ''
 	}
 };
 
@@ -175,21 +151,21 @@ registerBlockType('ub/feature-box', {
 
 		const {
 			column,
-			columnOneTitle,
-			columnTwoTitle,
-			columnThreeTitle,
-			columnOneBody,
-			columnTwoBody,
-			columnThreeBody,
-			imgOneURL,
+			transitionColumnOneTitle,
+			transitionColumnTwoTitle,
+			transitionColumnThreeTitle,
+			transitionColumnOneBody,
+			transitionColumnTwoBody,
+			transitionColumnThreeBody,
+			transitionImgOneURL,
 			imgOneID,
-			imgOneAlt,
-			imgTwoURL,
+			transitionImgOneAlt,
+			transitionImgTwoURL,
 			imgTwoID,
-			imgTwoAlt,
-			imgThreeURL,
+			transitionImgTwoAlt,
+			transitionImgThreeURL,
 			imgThreeID,
-			imgThreeAlt,
+			transitionImgThreeAlt,
 			title1Align,
 			body1Align,
 			title2Align,
@@ -201,48 +177,48 @@ registerBlockType('ub/feature-box', {
 		const onSelectImageOne = img => {
 			setAttributes({
 				imgOneID: img.id,
-				imgOneURL: img.url,
-				imgOneAlt: img.alt
+				transitionImgOneURL: img.url,
+				transitionImgOneAlt: img.alt
 			});
 		};
 
 		const onSelectImageTwo = img => {
 			setAttributes({
 				imgTwoID: img.id,
-				imgTwoURL: img.url,
-				imgTwoAlt: img.alt
+				transitionImgTwoURL: img.url,
+				transitionImgTwoAlt: img.alt
 			});
 		};
 
 		const onSelectImageThree = img => {
 			setAttributes({
 				imgThreeID: img.id,
-				imgThreeURL: img.url,
-				imgThreeAlt: img.alt
+				transitionImgThreeURL: img.url,
+				transitionImgThreeAlt: img.alt
 			});
 		};
 
 		const onRemoveImageOne = () => {
 			setAttributes({
 				imgOneID: null,
-				imgOneURL: null,
-				imgOneAlt: null
+				transitionImgOneURL: null,
+				transitionImgOneAlt: null
 			});
 		};
 
 		const onRemoveImageTwo = () => {
 			setAttributes({
 				imgTwoID: null,
-				imgTwoURL: null,
-				imgTwoAlt: null
+				transitionImgTwoURL: null,
+				transitionImgTwoAlt: null
 			});
 		};
 
 		const onRemoveImageThree = () => {
 			setAttributes({
 				imgThreeID: null,
-				imgThreeURL: null,
-				imgThreeAlt: null
+				transitionImgThreeURL: null,
+				transitionImgThreeAlt: null
 			});
 		};
 
@@ -363,18 +339,18 @@ registerBlockType('ub/feature-box', {
 							</div>
 						) : (
 							<React.Fragment>
-								{isSelected ? (
+								{isSelected && (
 									<Button
 										className="remove-image"
 										onClick={onRemoveImageOne}
 									>
 										{remove_icon}
 									</Button>
-								) : null}
+								)}
 								<img
 									className="ub_feature_one_img"
-									src={imgOneURL}
-									alt={imgOneAlt}
+									src={transitionImgOneURL}
+									alt={transitionImgOneAlt}
 								/>
 							</React.Fragment>
 						)}
@@ -382,9 +358,11 @@ registerBlockType('ub/feature-box', {
 							tagName="p"
 							className="ub_feature_one_title"
 							style={{ textAlign: title1Align }}
-							value={columnOneTitle}
+							value={transitionColumnOneTitle}
 							onChange={value =>
-								setAttributes({ columnOneTitle: value })
+								setAttributes({
+									transitionColumnOneTitle: value
+								})
 							}
 							keepPlaceholderOnFocus={true}
 							unstableOnFocus={() =>
@@ -395,9 +373,11 @@ registerBlockType('ub/feature-box', {
 							tagName="p"
 							className="ub_feature_one_body"
 							style={{ textAlign: body1Align }}
-							value={columnOneBody}
+							value={transitionColumnOneBody}
 							onChange={value =>
-								setAttributes({ columnOneBody: value })
+								setAttributes({
+									transitionColumnOneBody: value
+								})
 							}
 							keepPlaceholderOnFocus={true}
 							unstableOnFocus={() =>
@@ -424,18 +404,18 @@ registerBlockType('ub/feature-box', {
 							</div>
 						) : (
 							<React.Fragment>
-								{isSelected ? (
+								{isSelected && (
 									<Button
 										className="remove-image"
 										onClick={onRemoveImageTwo}
 									>
 										{remove_icon}
 									</Button>
-								) : null}
+								)}
 								<img
 									className="ub_feature_two_img"
-									src={imgTwoURL}
-									alt={imgTwoAlt}
+									src={transitionImgTwoURL}
+									alt={transitionImgTwoAlt}
 								/>
 							</React.Fragment>
 						)}
@@ -443,9 +423,11 @@ registerBlockType('ub/feature-box', {
 							tagName="p"
 							className="ub_feature_two_title"
 							style={{ textAlign: title2Align }}
-							value={columnTwoTitle}
+							value={transitionColumnTwoTitle}
 							onChange={value =>
-								setAttributes({ columnTwoTitle: value })
+								setAttributes({
+									transitionColumnTwoTitle: value
+								})
 							}
 							keepPlaceholderOnFocus={true}
 							unstableOnFocus={() =>
@@ -456,9 +438,11 @@ registerBlockType('ub/feature-box', {
 							tagName="p"
 							className="ub_feature_two_body"
 							style={{ textAlign: body2Align }}
-							value={columnTwoBody}
+							value={transitionColumnTwoBody}
 							onChange={value =>
-								setAttributes({ columnTwoBody: value })
+								setAttributes({
+									transitionColumnTwoBody: value
+								})
 							}
 							keepPlaceholderOnFocus={true}
 							unstableOnFocus={() =>
@@ -485,18 +469,18 @@ registerBlockType('ub/feature-box', {
 							</div>
 						) : (
 							<React.Fragment>
-								{isSelected ? (
+								{isSelected && (
 									<Button
 										className="remove-image"
 										onClick={onRemoveImageThree}
 									>
 										{remove_icon}
 									</Button>
-								) : null}
+								)}
 								<img
 									className="ub_feature_three_img"
-									src={imgThreeURL}
-									alt={imgThreeAlt}
+									src={transitionImgThreeURL}
+									alt={transitionImgThreeAlt}
 								/>
 							</React.Fragment>
 						)}
@@ -504,9 +488,11 @@ registerBlockType('ub/feature-box', {
 							tagName="p"
 							className="ub_feature_three_title"
 							style={{ textAlign: title3Align }}
-							value={columnThreeTitle}
+							value={transitionColumnThreeTitle}
 							onChange={value =>
-								setAttributes({ columnThreeTitle: value })
+								setAttributes({
+									transitionColumnThreeTitle: value
+								})
 							}
 							keepPlaceholderOnFocus={true}
 							unstableOnFocus={() =>
@@ -517,9 +503,11 @@ registerBlockType('ub/feature-box', {
 							tagName="p"
 							className="ub_feature_three_body"
 							style={{ textAlign: body3Align }}
-							value={columnThreeBody}
+							value={transitionColumnThreeBody}
 							onChange={value =>
-								setAttributes({ columnThreeBody: value })
+								setAttributes({
+									transitionColumnThreeBody: value
+								})
 							}
 							keepPlaceholderOnFocus={true}
 							unstableOnFocus={() =>
@@ -543,18 +531,18 @@ registerBlockType('ub/feature-box', {
 	save: function(props) {
 		const {
 			column,
-			columnOneTitle,
-			columnTwoTitle,
-			columnThreeTitle,
-			columnOneBody,
-			columnTwoBody,
-			columnThreeBody,
-			imgOneURL,
-			imgOneAlt,
-			imgTwoURL,
-			imgTwoAlt,
-			imgThreeURL,
-			imgThreeAlt,
+			transitionColumnOneTitle,
+			transitionColumnTwoTitle,
+			transitionColumnThreeTitle,
+			transitionColumnOneBody,
+			transitionColumnTwoBody,
+			transitionColumnThreeBody,
+			transitionImgOneURL,
+			transitionImgOneAlt,
+			transitionImgTwoURL,
+			transitionImgTwoAlt,
+			transitionImgThreeURL,
+			transitionImgThreeAlt,
 			title1Align,
 			title2Align,
 			title3Align,
@@ -566,75 +554,66 @@ registerBlockType('ub/feature-box', {
 		return (
 			<div className={props.className}>
 				<div className={`ub_feature_box column_${column}`}>
-					<div class="ub_feature_1">
+					<div className="ub_feature_1">
 						<img
 							className="ub_feature_one_img"
-							src={imgOneURL}
-							alt={imgOneAlt}
+							src={transitionImgOneURL}
+							alt={transitionImgOneAlt}
 						/>
 						<p
 							className="ub_feature_one_title"
 							style={{ textAlign: title1Align }}
 						>
-							{columnOneTitle}
+							{transitionColumnOneTitle}
 						</p>
 						<p
 							className="ub_feature_one_body"
 							style={{ textAlign: body1Align }}
 						>
-							{columnOneBody}
+							{transitionColumnOneBody}
 						</p>
 					</div>
-					<div class="ub_feature_2">
+					<div className="ub_feature_2">
 						<img
 							className="ub_feature_two_img"
-							src={imgTwoURL}
-							alt={imgTwoAlt}
+							src={transitionImgTwoURL}
+							alt={transitionImgTwoAlt}
 						/>
 						<p
 							className="ub_feature_two_title"
 							style={{ textAlign: title2Align }}
 						>
-							{columnTwoTitle}
+							{transitionColumnTwoTitle}
 						</p>
 						<p
 							className="ub_feature_two_body"
 							style={{ textAlign: body2Align }}
 						>
-							{columnTwoBody}
+							{transitionColumnTwoBody}
 						</p>
 					</div>
-					<div class="ub_feature_3">
+					<div className="ub_feature_3">
 						<img
 							className="ub_feature_three_img"
-							src={imgThreeURL}
-							alt={imgThreeAlt}
+							src={transitionImgThreeURL}
+							alt={transitionImgThreeAlt}
 						/>
 						<p
 							className="ub_feature_three_title"
 							style={{ align: title3Align }}
 						>
-							{columnThreeTitle}
+							{transitionColumnThreeTitle}
 						</p>
 						<p
 							className="ub_feature_three_body"
 							style={{ align: body3Align }}
 						>
-							{columnThreeBody}
+							{transitionColumnThreeBody}
 						</p>
 					</div>
 				</div>
 			</div>
 		);
 	},
-	deprecated: [
-		{
-			attributes,
-			save: version_1_1_2
-		},
-		{
-			attributes,
-			save: version_1_1_5
-		}
-	]
+	deprecated: [convertFrom(version_1_1_2), convertFrom(version_1_1_5)]
 });

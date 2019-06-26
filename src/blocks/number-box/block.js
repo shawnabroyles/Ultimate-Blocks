@@ -11,7 +11,7 @@ import icon from './icons/icon';
 //  Import CSS.
 import './style.scss';
 import './editor.scss';
-import { version_1_1_2, version_1_1_5 } from './oldVersions';
+import { version_1_1_2, version_1_1_5, convertFrom } from './oldVersions';
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
@@ -32,50 +32,41 @@ const attributes = {
 		type: 'select',
 		default: '2'
 	},
-	columnOneNumber: {
-		type: 'array',
-		source: 'children',
-		selector: '.ub_number_one_number'
+	transitionColumnOneNumber: {
+		type: 'string',
+		default: ''
 	},
-	columnTwoNumber: {
-		type: 'array',
-		source: 'children',
-		selector: '.ub_number_two_number'
+	transitionColumnTwoNumber: {
+		type: 'string',
+		default: ''
 	},
-	columnThreeNumber: {
-		type: 'array',
-		source: 'children',
-		selector: '.ub_number_three_number'
+	transitionColumnThreeNumber: {
+		type: 'string',
+		default: ''
 	},
-	columnOneTitle: {
-		type: 'array',
-		source: 'children',
-		selector: '.ub_number_one_title'
+	transitionColumnOneTitle: {
+		type: 'string',
+		default: ''
 	},
-	columnTwoTitle: {
-		type: 'array',
-		source: 'children',
-		selector: '.ub_number_two_title'
+	transitionColumnTwoTitle: {
+		type: 'string',
+		default: ''
 	},
-	columnThreeTitle: {
-		type: 'array',
-		source: 'children',
-		selector: '.ub_number_three_title'
+	transitionColumnThreeTitle: {
+		type: 'string',
+		default: ''
 	},
-	columnOneBody: {
-		type: 'array',
-		source: 'children',
-		selector: '.ub_number_one_body'
+	transitionColumnOneBody: {
+		type: 'string',
+		default: ''
 	},
-	columnTwoBody: {
-		type: 'array',
-		source: 'children',
-		selector: '.ub_number_two_body'
+	transitionColumnTwoBody: {
+		type: 'string',
+		default: ''
 	},
-	columnThreeBody: {
-		type: 'array',
-		source: 'children',
-		selector: '.ub_number_three_body'
+	transitionColumnThreeBody: {
+		type: 'string',
+		default: ''
 	},
 	numberBackground: {
 		type: 'string',
@@ -148,15 +139,15 @@ registerBlockType('ub/number-box', {
 
 		const {
 			column,
-			columnOneNumber,
-			columnTwoNumber,
-			columnThreeNumber,
-			columnOneTitle,
-			columnTwoTitle,
-			columnThreeTitle,
-			columnOneBody,
-			columnTwoBody,
-			columnThreeBody,
+			transitionColumnOneNumber,
+			transitionColumnTwoNumber,
+			transitionColumnThreeNumber,
+			transitionColumnOneTitle,
+			transitionColumnTwoTitle,
+			transitionColumnThreeTitle,
+			transitionColumnOneBody,
+			transitionColumnTwoBody,
+			transitionColumnThreeBody,
 			numberBackground,
 			numberColor,
 			borderColor,
@@ -317,10 +308,10 @@ registerBlockType('ub/number-box', {
 								style={{
 									color: numberColor
 								}}
-								value={columnOneNumber}
+								value={transitionColumnOneNumber}
 								onChange={value =>
 									setAttributes({
-										columnOneNumber: value
+										transitionColumnOneNumber: value
 									})
 								}
 								keepPlaceholderOnFocus={true}
@@ -334,9 +325,11 @@ registerBlockType('ub/number-box', {
 							placeholder={__('Title One')}
 							style={{ textAlign: title1Align }}
 							className="ub_number_one_title"
-							value={columnOneTitle}
+							value={transitionColumnOneTitle}
 							onChange={value =>
-								setAttributes({ columnOneTitle: value })
+								setAttributes({
+									transitionColumnOneTitle: value
+								})
 							}
 							keepPlaceholderOnFocus={true}
 							unstableOnFocus={() =>
@@ -348,9 +341,11 @@ registerBlockType('ub/number-box', {
 							placeholder={__('Your content goes here.')}
 							style={{ textAlign: body1Align }}
 							className="ub_number_one_body"
-							value={columnOneBody}
+							value={transitionColumnOneBody}
 							onChange={value =>
-								setAttributes({ columnOneBody: value })
+								setAttributes({
+									transitionColumnOneBody: value
+								})
 							}
 							keepPlaceholderOnFocus={true}
 							unstableOnFocus={() =>
@@ -377,10 +372,10 @@ registerBlockType('ub/number-box', {
 								style={{
 									color: numberColor
 								}}
-								value={columnTwoNumber}
+								value={transitionColumnTwoNumber}
 								onChange={value =>
 									setAttributes({
-										columnTwoNumber: value
+										transitionColumnTwoNumber: value
 									})
 								}
 								keepPlaceholderOnFocus={true}
@@ -394,9 +389,11 @@ registerBlockType('ub/number-box', {
 							placeholder={__('Title Two')}
 							style={{ textAlign: title2Align }}
 							className="ub_number_two_title"
-							value={columnTwoTitle}
+							value={transitionColumnTwoTitle}
 							onChange={value =>
-								setAttributes({ columnTwoTitle: value })
+								setAttributes({
+									transitionColumnTwoTitle: value
+								})
 							}
 							keepPlaceholderOnFocus={true}
 							unstableOnFocus={() =>
@@ -408,9 +405,11 @@ registerBlockType('ub/number-box', {
 							placeholder={__('Your content goes here.')}
 							style={{ textAlign: body2Align }}
 							className="ub_number_two_body"
-							value={columnTwoBody}
+							value={transitionColumnTwoBody}
 							onChange={value =>
-								setAttributes({ columnTwoBody: value })
+								setAttributes({
+									transitionColumnTwoBody: value
+								})
 							}
 							keepPlaceholderOnFocus={true}
 							unstableOnFocus={() =>
@@ -437,10 +436,10 @@ registerBlockType('ub/number-box', {
 								style={{
 									color: numberColor
 								}}
-								value={columnThreeNumber}
+								value={transitionColumnThreeNumber}
 								onChange={value =>
 									setAttributes({
-										columnThreeNumber: value
+										transitionColumnThreeNumber: value
 									})
 								}
 								keepPlaceholderOnFocus={true}
@@ -454,9 +453,11 @@ registerBlockType('ub/number-box', {
 							placeholder={__('Title Three')}
 							style={{ textAlign: title3Align }}
 							className="ub_number_three_title"
-							value={columnThreeTitle}
+							value={transitionColumnThreeTitle}
 							onChange={value =>
-								setAttributes({ columnThreeTitle: value })
+								setAttributes({
+									transitionColumnThreeTitle: value
+								})
 							}
 							keepPlaceholderOnFocus={true}
 							unstableOnFocus={() =>
@@ -468,9 +469,11 @@ registerBlockType('ub/number-box', {
 							placeholder={__('Your content goes here.')}
 							style={{ textAlign: body3Align }}
 							className="ub_number_three_body"
-							value={columnThreeBody}
+							value={transitionColumnThreeBody}
 							onChange={value =>
-								setAttributes({ columnThreeBody: value })
+								setAttributes({
+									transitionColumnThreeBody: value
+								})
 							}
 							keepPlaceholderOnFocus={true}
 							unstableOnFocus={() =>
@@ -494,15 +497,15 @@ registerBlockType('ub/number-box', {
 	save: function(props) {
 		const {
 			column,
-			columnOneNumber,
-			columnTwoNumber,
-			columnThreeNumber,
-			columnOneTitle,
-			columnTwoTitle,
-			columnThreeTitle,
-			columnOneBody,
-			columnTwoBody,
-			columnThreeBody,
+			transitionColumnOneNumber,
+			transitionColumnTwoNumber,
+			transitionColumnThreeNumber,
+			transitionColumnOneTitle,
+			transitionColumnTwoTitle,
+			transitionColumnThreeTitle,
+			transitionColumnOneBody,
+			transitionColumnTwoBody,
+			transitionColumnThreeBody,
 			numberBackground,
 			numberColor,
 			borderColor,
@@ -535,20 +538,20 @@ registerBlockType('ub/number-box', {
 									color: numberColor
 								}}
 							>
-								{columnOneNumber}
+								{transitionColumnOneNumber}
 							</p>
 						</div>
 						<p
 							className="ub_number_one_title"
 							style={{ textAlign: title1Align }}
 						>
-							{columnOneTitle}
+							{transitionColumnOneTitle}
 						</p>
 						<p
 							className="ub_number_one_body"
 							style={{ textAlign: body1Align }}
 						>
-							{columnOneBody}
+							{transitionColumnOneBody}
 						</p>
 					</div>
 					<div
@@ -569,20 +572,20 @@ registerBlockType('ub/number-box', {
 									color: numberColor
 								}}
 							>
-								{columnTwoNumber}
+								{transitionColumnTwoNumber}
 							</p>
 						</div>
 						<p
 							className="ub_number_two_title"
 							style={{ textAlign: title2Align }}
 						>
-							{columnTwoTitle}
+							{transitionColumnTwoTitle}
 						</p>
 						<p
 							className="ub_number_two_body"
 							style={{ textAlign: body2Align }}
 						>
-							{columnTwoBody}
+							{transitionColumnTwoBody}
 						</p>
 					</div>
 					<div
@@ -603,34 +606,25 @@ registerBlockType('ub/number-box', {
 									color: numberColor
 								}}
 							>
-								{columnThreeNumber}
+								{transitionColumnThreeNumber}
 							</p>
 						</div>
 						<p
 							className="ub_number_three_title"
 							style={{ textAlign: title3Align }}
 						>
-							{columnThreeTitle}
+							{transitionColumnThreeTitle}
 						</p>
 						<p
 							className="ub_number_three_body"
 							style={{ textAlign: body3Align }}
 						>
-							{columnThreeBody}
+							{transitionColumnThreeBody}
 						</p>
 					</div>
 				</div>
 			</div>
 		);
 	},
-	deprecated: [
-		{
-			attributes,
-			save: version_1_1_2
-		},
-		{
-			attributes,
-			save: version_1_1_5
-		}
-	]
+	deprecated: [convertFrom(version_1_1_2), convertFrom(version_1_1_5)]
 });

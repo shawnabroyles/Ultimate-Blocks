@@ -1,3 +1,5 @@
+import { richTextFromHTML } from '../../common';
+
 export const version_1_1_2 = props => {
 	const {
 		column,
@@ -226,4 +228,158 @@ export const version_1_1_5 = props => {
 			</div>
 		</div>
 	);
+};
+
+export const convertFrom = oldVersion => {
+	return {
+		attributes: {
+			column: {
+				type: 'select',
+				default: '2'
+			},
+			columnOneNumber: {
+				type: 'array',
+				source: 'children',
+				selector: '.ub_number_one_number'
+			},
+			columnTwoNumber: {
+				type: 'array',
+				source: 'children',
+				selector: '.ub_number_two_number'
+			},
+			columnThreeNumber: {
+				type: 'array',
+				source: 'children',
+				selector: '.ub_number_three_number'
+			},
+			columnOneTitle: {
+				type: 'array',
+				source: 'children',
+				selector: '.ub_number_one_title'
+			},
+			columnTwoTitle: {
+				type: 'array',
+				source: 'children',
+				selector: '.ub_number_two_title'
+			},
+			columnThreeTitle: {
+				type: 'array',
+				source: 'children',
+				selector: '.ub_number_three_title'
+			},
+			columnOneBody: {
+				type: 'array',
+				source: 'children',
+				selector: '.ub_number_one_body'
+			},
+			columnTwoBody: {
+				type: 'array',
+				source: 'children',
+				selector: '.ub_number_two_body'
+			},
+			columnThreeBody: {
+				type: 'array',
+				source: 'children',
+				selector: '.ub_number_three_body'
+			},
+			numberBackground: {
+				type: 'string',
+				default: '#CCCCCC'
+			},
+			numberColor: {
+				type: 'string',
+				default: '#000000'
+			},
+			borderColor: {
+				type: 'string',
+				default: '#CCCCCC'
+			},
+			title1Align: {
+				type: 'string',
+				default: 'center'
+			},
+			title2Align: {
+				type: 'string',
+				default: 'center'
+			},
+			title3Align: {
+				type: 'string',
+				default: 'center'
+			},
+			body1Align: {
+				type: 'string',
+				default: 'left'
+			},
+			body2Align: {
+				type: 'string',
+				default: 'left'
+			},
+			body3Align: {
+				type: 'string',
+				default: 'left'
+			}
+		},
+		migrate: attributes => {
+			const {
+				columnOneBody,
+				columnOneNumber,
+				columnOneTitle,
+				columnTwoBody,
+				columnTwoNumber,
+				columnTwoTitle,
+				columnThreeBody,
+				columnThreeNumber,
+				columnThreeTitle,
+				...otherProps
+			} = attributes;
+			return Object.assign(otherProps, {
+				transitionColumnOneBody: columnOneBody
+					.map(item =>
+						typeof item === 'string' ? item : richTextFromHTML(item)
+					)
+					.join(''),
+				transitionColumnOneNumber: columnOneNumber
+					.map(item =>
+						typeof item === 'string' ? item : richTextFromHTML(item)
+					)
+					.join(''),
+				transitionColumnOneTitle: columnOneTitle
+					.map(item =>
+						typeof item === 'string' ? item : richTextFromHTML(item)
+					)
+					.join(''),
+				transitionColumnTwoBody: columnTwoBody
+					.map(item =>
+						typeof item === 'string' ? item : richTextFromHTML(item)
+					)
+					.join(''),
+				transitionColumnTwoNumber: columnTwoNumber
+					.map(item =>
+						typeof item === 'string' ? item : richTextFromHTML(item)
+					)
+					.join(''),
+				transitionColumnTwoTitle: columnTwoTitle
+					.map(item =>
+						typeof item === 'string' ? item : richTextFromHTML(item)
+					)
+					.join(''),
+				transitionColumnThreeBody: columnThreeBody
+					.map(item =>
+						typeof item === 'string' ? item : richTextFromHTML(item)
+					)
+					.join(''),
+				transitionColumnThreeNumber: columnThreeNumber
+					.map(item =>
+						typeof item === 'string' ? item : richTextFromHTML(item)
+					)
+					.join(''),
+				transitionColumnThreeTitle: columnThreeTitle
+					.map(item =>
+						typeof item === 'string' ? item : richTextFromHTML(item)
+					)
+					.join('')
+			});
+		},
+		save: oldVersion
+	};
 };

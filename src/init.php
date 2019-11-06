@@ -479,6 +479,9 @@ function ub_include_block_attribute_css() {
                 case 'ub/post-grid':
                     $prefix = '#ub_post-grid-block_' . $attributes['blockID'];
                     break;
+                case 'ub/row-block':
+                    $prefix = '#ub_row-block_' . $attributes['blockID'];
+                    break;
             }
         }
     }
@@ -598,6 +601,9 @@ require_once plugin_dir_path( __FILE__ ) . 'blocks/divider/block.php';
 
 //Post-Grid
 require_once plugin_dir_path( __File__ ) . 'blocks/post-grid/block.php';
+
+// Row-block
+require_once plugin_dir_path( __FILE__ ) . 'blocks/row-block/block.php';
 
 //Styled Box
 require_once plugin_dir_path( __FILE__ ) . 'blocks/styled-box/block.php';

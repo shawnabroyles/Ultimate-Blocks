@@ -35,3 +35,4 @@ import './blocks/styled-box/block';
 import './blocks/expand/block';
 import './blocks/styled-list/block';
 import './blocks/post-grid/block';
+import './blocks/row-block/block';

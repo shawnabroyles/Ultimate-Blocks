@@ -122,7 +122,12 @@
             label: 'Post Grid',
             name: 'ub/post-grid',
             active: true
-        }
+        },
+		{
+			label: 'Row Block',
+			name: 'ub/row-block',
+			active: true
+		},
 	];
 
 	$(function() {

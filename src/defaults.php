@@ -1113,5 +1113,13 @@ $defaultValues = array(
                 'default' => 'post',
             ),
         )
-    )
+    ),
+    'ub/row-block' => array(
+        'attributes' => array(
+            'blockID' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+        )
+    ),
 );

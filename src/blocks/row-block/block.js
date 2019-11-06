@@ -1,7 +1,8 @@
 // Import icon.
 import icons from './icons/icons';
 
-import attributes from "./attributes";
+import attributes from './attributes';
+import rowEditor from './editor';
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
@@ -12,7 +13,7 @@ export default registerBlockType( 'ub/row-block', {
         'Row Block',
         'ultimate-blocks'
     ),
-    icon: icons,
+    icon: icons.menuIcon,
     category: 'ultimateblocks',
     keywords: [
         __('row-block', 'ultimate-blocks'),
@@ -21,7 +22,9 @@ export default registerBlockType( 'ub/row-block', {
     ],
     attributes,
     edit: () => {
-        return('Row block')
+        return(
+           <rowEditor/>
+        )
     },
     save: () => null
 });

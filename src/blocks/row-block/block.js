@@ -1,11 +1,22 @@
+/**
+ * BLOCK: Section
+ */
+
 // Import icon.
 import icons from './icons/icons';
 
+// Import style
+import './style.scss';
+import './editor.scss';
+
+// Import attributes
 import attributes from './attributes';
-import rowEditor from './editor';
+import RowEditor from './editor';
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
+const { withSelect } = wp.data;
+const { Fragment } = wp.element;
 
 export default registerBlockType( 'ub/row-block', {
     title: __('Row Block', 'ultimate-blocks'),
@@ -21,10 +32,18 @@ export default registerBlockType( 'ub/row-block', {
         __('Ultimate Blocks', 'ultimate-blocks')
     ],
     attributes,
-    edit: () => {
+    edit: withSelect((select, ownProps) => ({
+        block: (
+            select('core/block-editor') || select('core/editor')
+        ).getBlock(ownProps.clientId)
+    }))( props => {
+        const { block } = props;
+        const { setAttributes } = props;
         return(
-           <rowEditor/>
+           <Fragment>
+               <RowEditor {...props}/>
+           </Fragment>
         )
-    },
+    }),
     save: () => null
 });

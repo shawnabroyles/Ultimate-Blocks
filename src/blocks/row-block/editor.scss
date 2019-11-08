@@ -1,0 +1,34 @@
+/**
+ * Editor Styles
+ */
+
+.ub-section-block-wrap {
+  padding: 30px;
+  border: 2px solid #ddd;
+  text-align: center;
+  position: relative;
+}
+
+.ub-select-section{
+
+    .components-button-group{
+
+         .ub-section-btn{
+              height: 49px;
+              border: 0;
+              margin-right: 10px;
+              margin-bottom: 10px;
+              background: transparent;
+              box-shadow: none;
+                   svg{
+                     width: 90px;
+                     height: 45px;
+                   }
+         }
+    }
+
+    .components-button-group .ub-section-btn:hover svg rect{
+         fill: #666666;
+    }
+
+}

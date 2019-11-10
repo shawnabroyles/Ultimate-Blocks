@@ -41,7 +41,7 @@ function ub_expand_block_add_frontend_assets() {
         if($block['blockName'] == 'ub/expand' || $block['blockName'] == 'ub/expand-portion'){
             wp_enqueue_script(
                 'ultimate_blocks-expand-block-front-script',
-                plugins_url( 'expand/front.js', dirname( __FILE__ ) ),
+                plugins_url( 'expand/front.build.js', dirname( __FILE__ ) ),
                 array( ),
                 Ultimate_Blocks_Constants::plugin_version(),
                 true

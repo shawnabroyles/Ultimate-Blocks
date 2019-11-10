@@ -51,6 +51,7 @@ export default class RowEditor extends Component {
         const ColWidthOne = '';
         const ColWidthTwo = '';
         const ColWidthThree = '';
+        const ColWidthFour = '';
 
         if('equal' === colSection){
             this.ColWidthOne = '100%';
@@ -88,16 +89,16 @@ export default class RowEditor extends Component {
             this.ColWidthTwo = '70%';
             this.ColWidthThree = '15%'
         }else if('equal-four' === colSection){
-            this.ColWidthOne = '20%';
-            this.ColWidthTwo = '20%';
-            this.ColWidthThree = '20%';
-            this.ColWidthFour = '20%'
+            this.ColWidthOne = '25%';
+            this.ColWidthTwo = '25%';
+            this.ColWidthThree = '25%';
+            this.ColWidthFour = '25%'
         }else if('left-forty' === colSection){
             this.ColWidthOne = '40%';
             this.ColWidthTwo = '20%';
             this.ColWidthThree = '20%';
             this.ColWidthFour = '20%'
-        }else if('left-forty' === colSection){
+        }else if('right-forty' === colSection){
             this.ColWidthOne = '20%';
             this.ColWidthTwo = '20%';
             this.ColWidthThree = '20%';
@@ -108,7 +109,7 @@ export default class RowEditor extends Component {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            border: "solid 1px #ddd",
+            border: "dashed 1px #ddd",
         };
 
         return[
@@ -177,7 +178,7 @@ export default class RowEditor extends Component {
                         </div>
                     )}
                     { colSection && 3 === columns &&(
-                        <Fragment>
+                    <Fragment>
                         <div className="ub-section-column-wrap" style={{ width: this.ColWidthTwo}}>
                             <Resizable
                                 style={style}
@@ -204,6 +205,49 @@ export default class RowEditor extends Component {
                                 <InnerBlocks/>
                             </Resizable>
                         </div>
+                    </Fragment>
+                )}
+                    { colSection && 4 === columns &&(
+                        <Fragment>
+                            <div className="ub-section-column-wrap" style={{ width: this.ColWidthTwo}}>
+                                <Resizable
+                                    style={style}
+                                    className="ub-editor-row-column"
+                                    size={{ width: '100%' }}
+                                    enable={{right:false, left:false}}
+                                    onResizeStart ={()=>{}}
+                                    onResize = {()=>{}}
+                                    onResizeStop = { ()=>{}}
+                                >
+                                    <InnerBlocks/>
+                                </Resizable>
+                            </div>
+                            <div className="ub-section-column-wrap" style={{ width: this.ColWidthThree}}>
+                                <Resizable
+                                    style={style}
+                                    className="ub-editor-row-column"
+                                    size={{ width: '100%' }}
+                                    enable={{right:false, left:false}}
+                                    onResizeStart ={()=>{}}
+                                    onResize = {()=>{}}
+                                    onResizeStop = { ()=>{}}
+                                >
+                                    <InnerBlocks/>
+                                </Resizable>
+                            </div>
+                            <div className="ub-section-column-wrap" style={{ width: this.ColWidthFour}}>
+                                <Resizable
+                                    style={style}
+                                    className="ub-editor-row-column"
+                                    size={{ width: '100%' }}
+                                    enable={{right:false, left:false}}
+                                    onResizeStart ={()=>{}}
+                                    onResize = {()=>{}}
+                                    onResizeStop = { ()=>{}}
+                                >
+                                    <InnerBlocks/>
+                                </Resizable>
+                            </div>
                         </Fragment>
                     )}
                 </div>

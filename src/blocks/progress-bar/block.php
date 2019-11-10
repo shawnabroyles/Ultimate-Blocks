@@ -61,7 +61,7 @@ function ub_progress_bar_add_frontend_assets() {
         if($block['blockName'] == 'ub/progress-bar'){
             wp_enqueue_script(
                 'ultimate_blocks-progress-bar-front-script',
-                plugins_url( 'progress-bar/front.js', dirname( __FILE__ ) ),
+                plugins_url( 'progress-bar/front.build.js', dirname( __FILE__ ) ),
                 array( ),
                 Ultimate_Blocks_Constants::plugin_version(),
                 true

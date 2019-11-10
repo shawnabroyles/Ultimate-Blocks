@@ -20,12 +20,23 @@ const {
 } = wp.blockEditor || wp.editor;
 
 export default class RowEditor extends Component {
+
+    constructor() {
+        super( ...arguments );
+        this.state = {
+            firstWidth: null,
+            secondWidth: null,
+        };
+    }
+
     render(){
         const {
             attributes:{
                 colSection,
                 columns,
                 columnsUnlocked,
+                firstColumnWidth,
+                secondColumnWidth,
             },
             setAttributes,
         } = this.props;
@@ -112,6 +123,42 @@ export default class RowEditor extends Component {
             border: "dashed 1px #ddd",
         };
 
+        const onResize = ( event, direction, elt ) => {
+            let firstCol;
+            let secondCol;
+            if ( columnsUnlocked ) {
+                firstCol = Math.round( parseFloat( elt.style.width ) * 10 ) / 10;
+                secondCol = Math.round( ( 100 - firstCol ) * 10 ) / 10;
+            } else {
+                firstCol = Math.round( parseInt( elt.style.width ) / 5 ) * 5;
+                secondCol = 100 - ( Math.round( parseInt( elt.style.width ) / 5 ) * 5 );
+            }
+            this.setState( {
+                firstWidth: firstCol,
+            } );
+            this.setState( {
+                secondWidth: secondCol,
+            } );
+        };
+
+        const onResizeStop = ( event, direction, elt ) => {
+            let firstCol;
+            let secondCol;
+            if ( columnsUnlocked ) {
+                firstCol = Math.round( parseFloat( elt.style.width ) * 10 ) / 10;
+                secondCol = Math.round( ( 100 - firstCol ) * 10 ) / 10;
+            } else {
+                firstCol = Math.round( parseInt( elt.style.width ) / 5 ) * 5;
+                secondCol = 100 - ( Math.round( parseInt( elt.style.width ) / 5 ) * 5 );
+            }
+            setAttributes( { firstColumnWidth: firstCol } );
+            setAttributes( { secondColumnWidth: secondCol } );
+            this.setState( {
+                firstWidth: null,
+                secondWidth: null,
+            } );
+        };
+
         return[
             <Fragment>
                 <div className='ub-section-overhad-wrap'>
@@ -145,17 +192,17 @@ export default class RowEditor extends Component {
                                 {({width}) =>
                                     <Resizable
                                         style={style}
-                                        className="ub-editor-row-column_resizer"
+                                        className="ub-editor-row-column"
                                         minWidth="10%"
                                         maxWidth="100%"
-                                        size={{ width: '100%'}}
+                                        size={{ width:  ( ! firstColumnWidth ? '100%' : firstColumnWidth + '%' )}}
                                         enable={{right:true}}
                                         handleClasses={ {
                                             right: 'ub_handle-right',
                                         } }
                                         onResizeStart ={()=>{}}
-                                        onResize = {()=>{}}
-                                        onResizeStop = { ()=>{}}
+                                        onResize = {onResize}
+                                        onResizeStop = {onResizeStop}
                                         axis="x"
                                     ><InnerBlocks/>
                                     </Resizable>
@@ -167,11 +214,23 @@ export default class RowEditor extends Component {
                             <Resizable
                                 style={style}
                                 className="ub-editor-row-column"
-                                size={{ width: '100%' }}
-                                enable={{right:false, left:false}}
+                                size={ { width:  ( ! firstColumnWidth ? '100%' : '100%'-firstColumnWidth + '%' ) }}
+                                enable={{
+                                    top: false,
+                                    right: false,
+                                    bottom: false,
+                                    left: true,
+                                    topRight: false,
+                                    bottomRight: false,
+                                    bottomLeft: false,
+                                    topLeft: false,
+                                }}
+                                handleClasses={ {
+                                    left: 'ub_handle-left',
+                                } }
                                 onResizeStart ={()=>{}}
-                                onResize = {()=>{}}
-                                onResizeStop = { ()=>{}}
+                                onResize = {onResize}
+                                onResizeStop = {onResizeStop}
                             >
                                 <InnerBlocks/>
                             </Resizable>
@@ -184,10 +243,13 @@ export default class RowEditor extends Component {
                                 style={style}
                                 className="ub-editor-row-column"
                                 size={{ width: '100%' }}
-                                enable={{right:false, left:false}}
+                                enable={{right:false, left:true}}
+                                handleClasses={ {
+                                    left: 'ub_handle-left',
+                                } }
                                 onResizeStart ={()=>{}}
-                                onResize = {()=>{}}
-                                onResizeStop = { ()=>{}}
+                                onResize = {onResize}
+                                onResizeStop = {onResizeStop}
                             >
                                 <InnerBlocks/>
                             </Resizable>
@@ -216,8 +278,8 @@ export default class RowEditor extends Component {
                                     size={{ width: '100%' }}
                                     enable={{right:false, left:false}}
                                     onResizeStart ={()=>{}}
-                                    onResize = {()=>{}}
-                                    onResizeStop = { ()=>{}}
+                                    onResize = {onResize}
+                                    onResizeStop = {onResizeStop}
                                 >
                                     <InnerBlocks/>
                                 </Resizable>

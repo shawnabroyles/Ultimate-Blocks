@@ -9,7 +9,15 @@ const attributes = {
     },
     columnsUnlocked: {
         type: 'bool',
-        default: false,
+        default: true,
+    },
+    firstColumnWidth: {
+        type: 'string',
+        default: '',
+    },
+    secondColumnWidth: {
+        type: 'string',
+        default: '',
     },
 };
 

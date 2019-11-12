@@ -16,7 +16,9 @@ const {
 } = wp.components;
 
 const {
-    InnerBlocks
+    InnerBlocks,
+    BlockControls,
+    BlockAlignmentToolbar,
 } = wp.blockEditor || wp.editor;
 
 export default class RowEditor extends Component {
@@ -26,6 +28,9 @@ export default class RowEditor extends Component {
         this.state = {
             firstWidth: null,
             secondWidth: null,
+            threeWidth: null,
+            display: 'none',
+            displaythree: 'none',
         };
     }
 
@@ -35,11 +40,21 @@ export default class RowEditor extends Component {
                 colSection,
                 columns,
                 columnsUnlocked,
+                blockAlignment,
                 firstColumnWidth,
                 secondColumnWidth,
+                threeColumnWidth,
+                ColWidthOne,
+                ColWidthTwo,
+                ColWidthThree,
+                ColWidthFour,
+                ColWidthFive,
+                ColWidthSix,
             },
             setAttributes,
         } = this.props;
+
+        console.log(this.props);
 
         const startSectionOptions = [
             { key: 'equal', col: 1, name: __( 'Row' ), icon: icons.row },
@@ -59,256 +74,327 @@ export default class RowEditor extends Component {
             { key: 'equal-six', col: 6, name: __( 'Six: Equal' ), icon: icons.sixcol },
         ];
 
-        const ColWidthOne = '';
-        const ColWidthTwo = '';
-        const ColWidthThree = '';
-        const ColWidthFour = '';
-
         if('equal' === colSection){
-            this.ColWidthOne = '100%';
+            setAttributes({ColWidthOne: '100%'});
         }else if('equal-two' === colSection){
-            this.ColWidthOne = '50%';
-            this.ColWidthTwo = '50%';
+            setAttributes({ColWidthOne: '50%'});
+            setAttributes({ColWidthTwo: '50%'});
         }else if('left-golden' === colSection){
-            this.ColWidthOne = '66%';
-            this.ColWidthTwo = '33%';
+            setAttributes({ColWidthOne: '66%'});
+            setAttributes({ColWidthTwo: '33%'});
         }else if('right-golden' === colSection){
-            this.ColWidthOne = '33%';
-            this.ColWidthTwo = '66%'
+            setAttributes({ColWidthOne: '33%'});
+            setAttributes({ColWidthTwo: '66%'});
         }else if('equal-three' === colSection){
-            this.ColWidthOne = '33%';
-            this.ColWidthTwo = '66%';
-            this.ColWidthThree = ''
+            setAttributes({ColWidthOne: '33%'});
+            setAttributes({ColWidthTwo: '33%'});
+            setAttributes({ColWidthThree: '33%'});
         }else if('left-half' === colSection){
-            this.ColWidthOne = '50%';
-            this.ColWidthTwo = '25%';
-            this.ColWidthThree = '25%'
+            setAttributes({ColWidthOne: '50%'});
+            setAttributes({ColWidthTwo: '25%'});
+            setAttributes({ColWidthThree: '25%'});
         }else if('right-half' === colSection){
-            this.ColWidthOne = '25%';
-            this.ColWidthTwo = '25%';
-            this.ColWidthThree = '50%'
+            setAttributes({ColWidthOne: '25%'});
+            setAttributes({ColWidthTwo: '25%'});
+            setAttributes({ColWidthThree: '50%'});
         }else if('center-half' === colSection){
-            this.ColWidthOne = '25%';
-            this.ColWidthTwo = '50%';
-            this.ColWidthThree = '25%'
+            setAttributes({ColWidthOne: '25%'});
+            setAttributes({ColWidthTwo: '50%'});
+            setAttributes({ColWidthThree: '25%'});
         }else if('center-wide' === colSection){
-            this.ColWidthOne = '20%';
-            this.ColWidthTwo = '60%';
-            this.ColWidthThree = '20%'
+            setAttributes({ColWidthOne: '20%'});
+            setAttributes({ColWidthTwo: '60%'});
+            setAttributes({ColWidthThree: '20%'});
         }else if('center-exwide' === colSection){
-            this.ColWidthOne = '15%';
-            this.ColWidthTwo = '70%';
-            this.ColWidthThree = '15%'
+            setAttributes({ColWidthOne: '15%'});
+            setAttributes({ColWidthTwo: '70%'});
+            setAttributes({ColWidthThree: '15%'});
         }else if('equal-four' === colSection){
-            this.ColWidthOne = '25%';
-            this.ColWidthTwo = '25%';
-            this.ColWidthThree = '25%';
-            this.ColWidthFour = '25%'
+            setAttributes({ColWidthOne: '25%'});
+            setAttributes({ColWidthTwo: '25%'});
+            setAttributes({ColWidthThree: '25%'});
+            setAttributes({ColWidthFour: '25%'});
         }else if('left-forty' === colSection){
-            this.ColWidthOne = '40%';
-            this.ColWidthTwo = '20%';
-            this.ColWidthThree = '20%';
-            this.ColWidthFour = '20%'
+            setAttributes({ColWidthOne: '40%'});
+            setAttributes({ColWidthTwo: '20%'});
+            setAttributes({ColWidthThree: '20%'});
+            setAttributes({ColWidthFour: '20%'});
         }else if('right-forty' === colSection){
-            this.ColWidthOne = '20%';
-            this.ColWidthTwo = '20%';
-            this.ColWidthThree = '20%';
-            this.ColWidthFour = '40%'
+            setAttributes({ColWidthOne: '20%'});
+            setAttributes({ColWidthTwo: '20%'});
+            setAttributes({ColWidthThree: '20%'});
+            setAttributes({ColWidthFour: '40%'});
+        }else if('equal-five' === colSection){
+            setAttributes({ColWidthOne: '20%'});
+            setAttributes({ColWidthTwo: '20%'});
+            setAttributes({ColWidthThree: '20%'});
+            setAttributes({ColWidthFour: '20%'});
+            setAttributes({ColWidthFive: '20%'});
+        }else if('equal-six' === colSection){
+            setAttributes({ColWidthOne: '16.2%'});
+            setAttributes({ColWidthTwo: '16.2%'});
+            setAttributes({ColWidthThree: '16.2%'});
+            setAttributes({ColWidthFour: '16.2%'});
+            setAttributes({ColWidthFive: '16.2%'});
+            setAttributes({ColWidthSix: '16.2%'});
         }
 
         const style = {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            border: "dashed 1px #ddd",
-        };
-
-        const onResize = ( event, direction, elt ) => {
-            let firstCol;
-            let secondCol;
-            if ( columnsUnlocked ) {
-                firstCol = Math.round( parseFloat( elt.style.width ) * 10 ) / 10;
-                secondCol = Math.round( ( 100 - firstCol ) * 10 ) / 10;
-            } else {
-                firstCol = Math.round( parseInt( elt.style.width ) / 5 ) * 5;
-                secondCol = 100 - ( Math.round( parseInt( elt.style.width ) / 5 ) * 5 );
-            }
-            this.setState( {
-                firstWidth: firstCol,
-            } );
-            this.setState( {
-                secondWidth: secondCol,
-            } );
-        };
-
-        const onResizeStop = ( event, direction, elt ) => {
-            let firstCol;
-            let secondCol;
-            if ( columnsUnlocked ) {
-                firstCol = Math.round( parseFloat( elt.style.width ) * 10 ) / 10;
-                secondCol = Math.round( ( 100 - firstCol ) * 10 ) / 10;
-            } else {
-                firstCol = Math.round( parseInt( elt.style.width ) / 5 ) * 5;
-                secondCol = 100 - ( Math.round( parseInt( elt.style.width ) / 5 ) * 5 );
-            }
-            setAttributes( { firstColumnWidth: firstCol } );
-            setAttributes( { secondColumnWidth: secondCol } );
-            this.setState( {
-                firstWidth: null,
-                secondWidth: null,
-            } );
         };
 
         return[
             <Fragment>
+                <BlockControls>
+                    <BlockAlignmentToolbar
+                        value={ blockAlignment }
+                        controls={ [ 'center', 'wide', 'full' ] }
+                        onChange={ value => setAttributes( { blockAlignment: value } ) }
+                    />
+                </BlockControls>
                 <div className='ub-section-overhad-wrap'>
                     { !colSection &&(<div className='ub-section-block-wrap'>
                         <div className="ub-select-section">
-                             <div className="ub-select-section-title">
-                                 { __( 'Select section' ) }
-                             </div>
-                             <ButtonGroup aria-label={ __( 'Column Section' ) }>
-                                 { map( startSectionOptions, ( { name, key, icon, col } ) => (
-                                     <Tooltip text={ name }>
-                                         <Button
-                                             key={ key }
-                                             className="ub-section-btn"
-                                             isSmall
-                                             onClick={ () => setAttributes( {
-                                                 colSection: key,
-                                                 columns: col,
-                                             } ) }
-                                         >
-                                             { icon }
-                                         </Button>
-                                     </Tooltip>
-                                 ) ) }
-                             </ButtonGroup>
+                            <div className="ub-select-section-title">
+                                { __( 'Select section' ) }
+                            </div>
+                            <ButtonGroup aria-label={ __( 'Column Section' ) }>
+                                { map( startSectionOptions, ( { name, key, icon, col } ) => (
+                                    <Tooltip text={ name }>
+                                        <Button
+                                            key={ key }
+                                            className="ub-section-btn"
+                                            isSmall
+                                            onClick={ () => setAttributes( {
+                                                colSection: key,
+                                                columns: col,
+                                            } ) }
+                                        >
+                                            { icon }
+                                        </Button>
+                                    </Tooltip>
+                                ) ) }
+                            </ButtonGroup>
                         </div>
                     </div>)}
-                    { colSection &&(
-                        <div className="ub-section-column-wrap" style={{ width: this.ColWidthOne}}>
-                            <ContainerDimensions>
-                                {({width}) =>
+                    { colSection && 1 === columns &&(
+                        <div className="ub-section-column-wrap">
+                            <div style={{
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                width: "100%",
+                            }}>
+                                {<InnerBlocks/>}
+                            </div>
+                        </div>
+                    )}
+                    { colSection && columns && 1 !== columns && 4 !== columns && 5 !== columns && 6 !== columns &&(
+                        <Fragment>
+                             <div className="ub-section-column-wrap">
+                                 <ContainerDimensions>{({width}) =>
+                                     <Resizable
+                                         style={style}
+                                         className="ub-editor-row-column"
+                                         minWidth="10%"
+                                         maxWidth="90%"
+                                         size={{ width:  ( ! firstColumnWidth ? ColWidthOne : firstColumnWidth + '%' )}}
+                                         enable={{right:true}}
+                                         handleClasses={ {
+                                             right: 'ub_handle-right',
+                                         } }
+                                         grid={ ( columnsUnlocked ? [ width / 1000, 1 ] : [ width / 20, 1 ] ) }
+                                         onResize = {( event, direction, elt ) => {
+                                             let firstCol;
+                                             let secondCol;
+                                             this.setState({
+                                                 display: 'block',
+                                             });
+                                             if ( columnsUnlocked ) {
+                                                 firstCol = Math.round( parseFloat( elt.style.width ) * 10 ) / 10;
+                                                 secondCol = Math.round( ( 100 - firstCol ) * 10 ) / 10;
+                                             } else {
+                                                 firstCol = Math.round( parseInt( elt.style.width ) / 5 ) * 5;
+                                                 secondCol = 100 - ( Math.round( parseInt( elt.style.width ) / 5 ) * 5 );
+                                             }
+                                             this.setState( {
+                                                 firstWidth: firstCol,
+                                             } );
+                                             this.setState( {
+                                                 secondWidth: secondCol,
+                                             } );
+                                         }}
+                                         onResizeStop = {( event, direction, elt ) => {
+                                             let firstCol;
+                                             let secondCol;
+                                             if ( columnsUnlocked ) {
+                                                 firstCol = Math.round( parseFloat( elt.style.width ) * 10 ) / 10;
+                                                 secondCol = Math.round( ( 100 - firstCol ) * 10 ) / 10;
+                                             } else {
+                                                 firstCol = Math.round( parseInt( elt.style.width ) / 5 ) * 5;
+                                                 secondCol = 100 - ( Math.round( parseInt( elt.style.width ) / 5 ) * 5 );
+                                             }
+                                             setAttributes( { firstColumnWidth: firstCol } );
+                                             setAttributes( { secondColumnWidth: secondCol } );
+                                             this.setState( {
+                                                 firstWidth: null,
+                                                 secondWidth: null,
+                                                 display: 'none',
+                                             } );
+                                         }}
+                                         axis="x"
+                                     ><InnerBlocks/>
+                                         <span className="left-column-width-size-top" style={{ display: this.state.display }}>{! firstColumnWidth ? ColWidthOne : this.state.firstWidth + '%'}</span>
+                                         <span className="left-column-width-size-bottom" style={{ display: this.state.display }}>{! firstColumnWidth ? ColWidthOne : this.state.firstWidth + '%'}</span>
+                                         <span className="right-column-width-size-top" style={{ display: this.state.display }}>{! secondColumnWidth ? ColWidthTwo : this.state.secondWidth + '%'}</span>
+                                         <span className="right-column-width-size-bottom" style={{ display: this.state.display }}>{! secondColumnWidth ? ColWidthTwo : this.state.secondWidth + '%'}</span>
+                                     </Resizable>
+                                 }</ContainerDimensions>
+                                 <ContainerDimensions>
+                                 {({width}) =>
+                                     <Resizable
+                                         style={style}
+                                         className="ub-editor-row-column"
+                                         size={ { width:  ( ! secondColumnWidth ? ColWidthTwo : secondColumnWidth + '%' ) }}
+                                         enable={{
+                                             top: false,
+                                             right: false,
+                                             bottom: true,
+                                             left: false,
+                                             topRight: false,
+                                             bottomRight: false,
+                                             bottomLeft: false,
+                                             topLeft: false,
+                                         }}
+                                     >
+                                         <InnerBlocks/>
+                                         <span className="left-column-width-size-top" style={{ display: this.state.displaythree }}>{! secondColumnWidth ? ColWidthTwo : this.state.secondWidth + '%'}</span>
+                                         <span className="left-column-width-size-bottom" style={{ display: this.state.displaythree }}>{! secondColumnWidth ? ColWidthTwo : this.state.secondWidth + '%'}</span>
+                                         <span className="right-column-width-size-top" style={{ display: this.state.displaythree }}>{! threeColumnWidth ? ColWidthOne : this.state.threeWidth + '%'}</span>
+                                         <span className="right-column-width-size-bottom" style={{ display: this.state.displaythree }}>{! threeColumnWidth ? ColWidthOne : this.state.threeWidth + '%'}</span>
+                                     </Resizable>
+                                 }</ContainerDimensions>
+                                 { 3 === columns &&(
+                                     <ContainerDimensions>
+                                         {({width}) =>
+                                             <Resizable
+                                                 style={style}
+                                                 className="ub-editor-row-column"
+                                                 minWidth="10%"
+                                                 maxWidth="90%"
+                                                 size={{ width:  ( ! threeColumnWidth ? ColWidthThree : threeColumnWidth + '%' )}}
+                                                 enable={{left:true}}
+                                                 handleClasses={ {
+                                                     left: 'ub_handle-left',
+                                                 } }
+                                                 grid={ ( columnsUnlocked ? [ width / 1000, 1 ] : [ width / 20, 1 ] ) }
+                                                 onResize = {(event, direction, elt) => {
+                                                     let secondCol;
+                                                     let threeCol;
+                                                     this.setState({
+                                                         displaythree: 'block',
+                                                     });
+                                                     if ( columnsUnlocked ) {
+                                                         secondCol = Math.round( parseFloat( elt.style.width ) * 10 ) / 10;
+                                                         threeCol = Math.round( ( 100 - secondCol ) * 10 ) / 10;
+                                                     } else {
+                                                         secondCol = Math.round( parseInt( elt.style.width ) / 5 ) * 5;
+                                                         threeCol = 100 - ( Math.round( parseInt( elt.style.width ) / 5 ) * 5 );
+                                                     }
+                                                     this.setState( {
+                                                         secondWidth: secondCol,
+                                                     } );
+                                                     this.setState( {
+                                                         threeWidth: threeCol,
+                                                     } );
+                                                 }}
+                                                 onResizeStop = {(event, direction, elt) => {
+                                                     let secondCol;
+                                                     let threeCol;
+                                                     if ( columnsUnlocked ) {
+                                                         secondCol = Math.round( parseFloat( elt.style.width ) * 10 ) / 10;
+                                                         threeCol = Math.round( ( 100 - secondCol ) * 10 ) / 10;
+                                                     } else {
+                                                         secondCol = Math.round( parseInt( elt.style.width ) / 5 ) * 5;
+                                                         threeCol = 100 - ( Math.round( parseInt( elt.style.width ) / 5 ) * 5 );
+                                                     }
+                                                     setAttributes( { secondColumnWidth: secondCol } );
+                                                     setAttributes( { threeColumnWidth: threeCol } );
+                                                     this.setState( {
+                                                         firstWidth: null,
+                                                         threeWidth: null,
+                                                         displaythree: 'none',
+                                                     } );
+                                                 }}
+                                                 axis="x"
+                                             >
+                                              <InnerBlocks/>
+                                             </Resizable>
+                                         }</ContainerDimensions>
+                                 )}
+                             </div>
+                        </Fragment>
+                    )}
+                    { colSection && columns && 1 !== columns && 2 !== columns && 3 !== columns &&(
+                        <Fragment>
+                            <div className="ub-section-column-wrap">
+                                <Resizable
+                                    style={style}
+                                    className="ub-editor-row-column"
+                                    size={{ width: ColWidthOne }}
+                                >
+                                    <InnerBlocks/>
+                                </Resizable>
+                                <Resizable
+                                    style={style}
+                                    className="ub-editor-row-column"
+                                    size={{ width: ColWidthTwo }}
+                                >
+                                    <InnerBlocks/>
+                                </Resizable>
+                                <Resizable
+                                    style={style}
+                                    className="ub-editor-row-column"
+                                    size={{ width: ColWidthThree }}
+                                >
+                                    <InnerBlocks/>
+                                </Resizable>
+                                <Resizable
+                                    style={style}
+                                    className="ub-editor-row-column"
+                                    size={{ width: ColWidthFour }}
+                                >
+                                    <InnerBlocks/>
+                                </Resizable>
+                                {5 === columns &&(
                                     <Resizable
                                         style={style}
                                         className="ub-editor-row-column"
-                                        minWidth="10%"
-                                        maxWidth="100%"
-                                        size={{ width:  ( ! firstColumnWidth ? '100%' : firstColumnWidth + '%' )}}
-                                        enable={{right:true}}
-                                        handleClasses={ {
-                                            right: 'ub_handle-right',
-                                        } }
-                                        onResizeStart ={()=>{}}
-                                        onResize = {onResize}
-                                        onResizeStop = {onResizeStop}
-                                        axis="x"
-                                    ><InnerBlocks/>
+                                        size={{ width: ColWidthFive }}
+                                    >
+                                        <InnerBlocks/>
                                     </Resizable>
-                                }</ContainerDimensions>
-                        </div>
-                    )}
-                    { colSection && 2 === columns &&(
-                        <div className="ub-section-column-wrap" style={{ width: this.ColWidthTwo}}>
-                            <Resizable
-                                style={style}
-                                className="ub-editor-row-column"
-                                size={ { width:  ( ! firstColumnWidth ? '100%' : '100%'-firstColumnWidth + '%' ) }}
-                                enable={{
-                                    top: false,
-                                    right: false,
-                                    bottom: false,
-                                    left: true,
-                                    topRight: false,
-                                    bottomRight: false,
-                                    bottomLeft: false,
-                                    topLeft: false,
-                                }}
-                                handleClasses={ {
-                                    left: 'ub_handle-left',
-                                } }
-                                onResizeStart ={()=>{}}
-                                onResize = {onResize}
-                                onResizeStop = {onResizeStop}
-                            >
-                                <InnerBlocks/>
-                            </Resizable>
-                        </div>
-                    )}
-                    { colSection && 3 === columns &&(
-                    <Fragment>
-                        <div className="ub-section-column-wrap" style={{ width: this.ColWidthTwo}}>
-                            <Resizable
-                                style={style}
-                                className="ub-editor-row-column"
-                                size={{ width: '100%' }}
-                                enable={{right:false, left:true}}
-                                handleClasses={ {
-                                    left: 'ub_handle-left',
-                                } }
-                                onResizeStart ={()=>{}}
-                                onResize = {onResize}
-                                onResizeStop = {onResizeStop}
-                            >
-                                <InnerBlocks/>
-                            </Resizable>
-                        </div>
-                        <div className="ub-section-column-wrap" style={{ width: this.ColWidthThree}}>
-                            <Resizable
-                                style={style}
-                                className="ub-editor-row-column"
-                                size={{ width: '100%' }}
-                                enable={{right:false, left:false}}
-                                onResizeStart ={()=>{}}
-                                onResize = {()=>{}}
-                                onResizeStop = { ()=>{}}
-                            >
-                                <InnerBlocks/>
-                            </Resizable>
-                        </div>
-                    </Fragment>
-                )}
-                    { colSection && 4 === columns &&(
-                        <Fragment>
-                            <div className="ub-section-column-wrap" style={{ width: this.ColWidthTwo}}>
-                                <Resizable
-                                    style={style}
-                                    className="ub-editor-row-column"
-                                    size={{ width: '100%' }}
-                                    enable={{right:false, left:false}}
-                                    onResizeStart ={()=>{}}
-                                    onResize = {onResize}
-                                    onResizeStop = {onResizeStop}
-                                >
-                                    <InnerBlocks/>
-                                </Resizable>
-                            </div>
-                            <div className="ub-section-column-wrap" style={{ width: this.ColWidthThree}}>
-                                <Resizable
-                                    style={style}
-                                    className="ub-editor-row-column"
-                                    size={{ width: '100%' }}
-                                    enable={{right:false, left:false}}
-                                    onResizeStart ={()=>{}}
-                                    onResize = {()=>{}}
-                                    onResizeStop = { ()=>{}}
-                                >
-                                    <InnerBlocks/>
-                                </Resizable>
-                            </div>
-                            <div className="ub-section-column-wrap" style={{ width: this.ColWidthFour}}>
-                                <Resizable
-                                    style={style}
-                                    className="ub-editor-row-column"
-                                    size={{ width: '100%' }}
-                                    enable={{right:false, left:false}}
-                                    onResizeStart ={()=>{}}
-                                    onResize = {()=>{}}
-                                    onResizeStop = { ()=>{}}
-                                >
-                                    <InnerBlocks/>
-                                </Resizable>
+                                )}
+                                {6 === columns &&(
+                                    <Fragment>
+                                        <Resizable
+                                            style={style}
+                                            className="ub-editor-row-column"
+                                            size={{ width: ColWidthSix }}
+                                        >
+                                            <InnerBlocks/>
+                                        </Resizable>
+                                        <Resizable
+                                        style={style}
+                                        className="ub-editor-row-column"
+                                        size={{ width: ColWidthSix }}
+                                        >
+                                        <InnerBlocks/>
+                                        </Resizable>
+                                    </Fragment>
+                                )}
                             </div>
                         </Fragment>
                     )}

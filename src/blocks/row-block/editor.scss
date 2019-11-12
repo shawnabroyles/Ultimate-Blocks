@@ -2,8 +2,10 @@
  * Editor Styles
  */
 
-.ub-section-overhad-wrap{
+.ub-section-column-wrap{
   display: flex;
+  border-width: 5px;
+  border: dashed 2px #ddd;
 }
 
 .ub-section-block-wrap {
@@ -35,4 +37,93 @@
          fill: #666666;
     }
 
+}
+
+.ub_handle-right,
+.ub_handle-left{
+  padding-left: 3px;
+  padding-right: 3px;
+}
+.ub_handle-right:after,
+.ub_handle-left:after{
+  display: block;
+  content: "";
+  right: -8px !important;
+  border-width: 5px;
+  border: dashed 2px #ddd;
+  width: 1px;
+  height: 100%;
+}
+.ub_handle-right:before,
+.ub_handle-left:before{
+  display: block;
+  content: "";
+  top: 50%;
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: #f53d3d;
+  cursor: inherit;
+  position: absolute;
+  transform: translateX(-50%);
+  margin-top: -8px;
+  z-index: 2;
+}
+.left-column-width-size-top,
+.right-column-width-size-top,
+.left-column-width-size-bottom,
+.right-column-width-size-bottom{
+  position: absolute;
+  font-size: 12px;
+  background: #f53d3d;
+  width: 40px;
+  height: 16px;
+  color: #ffffff;
+  text-align: center;
+  line-height: 16px;
+  z-index: 1;
+}
+.left-column-width-size-top:before,
+.left-column-width-size-bottom:before{
+  display: block;
+  position: absolute;
+  content: "";
+  border: 8px solid transparent;
+  border-left: 15px solid #f53d3d;
+  z-index: -1;
+  right: -23px;
+}
+.left-column-width-size-top,
+.right-column-width-size-top{
+  top: -5px;
+  margin-top: 3px;
+}
+.left-column-width-size-bottom,
+.right-column-width-size-bottom{
+  bottom: -5px;
+  margin-bottom: 3px;
+}
+.left-column-width-size-top{
+  right: 15px;
+}
+.left-column-width-size-bottom{
+  right: 15px;
+}
+.right-column-width-size-top{
+  right: -55px;
+}
+.right-column-width-size-bottom{
+  right: -55px;
+}
+.right-column-width-size-top:before,
+.right-column-width-size-bottom:before{
+  display: block;
+  position: absolute;
+  content: "";
+  border: 8px solid transparent;
+  border-right: 15px solid #f53d3d;
+  z-index: -1;
+  left: -23px;
 }

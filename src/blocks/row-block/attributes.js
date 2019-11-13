@@ -54,6 +54,22 @@ const attributes = {
     startOptions: {
         type: 'bool',
         default: true,
+    },
+    marginTopWrap: {
+        type:'string',
+        default: ''
+    },
+    marginBottomWrap: {
+        type:'string',
+        default: ''
+    },
+    marginRightWrap: {
+        type:'string',
+        default: '0'
+    },
+    marginLeftWrap: {
+        type:'string',
+        default: '0'
     }
 };
 

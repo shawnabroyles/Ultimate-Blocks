@@ -127,3 +127,37 @@
   z-index: -1;
   left: -23px;
 }
+
+//Inspector style
+
+.ub-layout-wrap_margin_box{
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ddd;
+  width: 100%;
+  height: 200px;
+
+  p{
+    margin: 0;
+  }
+
+  .components-base-control__field {
+    margin: 0px;
+
+    .components-range-control__slider {
+      display: none;
+    }
+    .components-range-control__number {
+      width: 45px;
+      height: 25px;
+    }
+  }
+  .margin-st_box1{
+    display: flex;
+  }
+  .margin-st_box2{
+    height: 148px;
+    border: 1px solid #ddd;
+    margin:0 25px;
+  }
+}

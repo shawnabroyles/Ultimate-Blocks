@@ -39,6 +39,8 @@ export default class Inspector extends Component {
         const {
             attributes: {
                 startOptions,
+                marginTopWrap,
+                marginBottomWrap,
             },
             setAttributes,
         } = this.props;
@@ -46,9 +48,38 @@ export default class Inspector extends Component {
         const startSetting = (
             <Fragment>
                 <PanelBody
-                    title={ __( 'Margin Wrap' ) }
+                    title={ __( 'Margin/Padding/Border Wrap' ) }
                     initialOpen={ false }
-                />
+                >
+                    <div className="ub-layout-wrap_margin_box">
+                        <div className="margin-st_box1">
+                            <p>Margin</p>
+                            <RangeControl
+                               value={ marginTopWrap }
+                               onChange={ value => {
+                                   setAttributes({
+                                       marginTopWrap: value
+                                   });
+                               }}
+                               min={ 0 }
+                               max={ 100 }
+                            />
+                        </div>
+                        <div className="margin-st_box2"></div>
+                        <div className="margin-st_box3">
+                            <RangeControl
+                               value={ marginBottomWrap }
+                               onChange={ value => {
+                                   setAttributes({
+                                       marginBottomWrap: value
+                                   });
+                               }}
+                               min={ 0 }
+                               max={ 100 }
+                            />
+                        </div>
+                    </div>
+                </PanelBody>
                 <PanelBody
                     title={ __( 'Padding Wrap' ) }
                     initialOpen={ false }

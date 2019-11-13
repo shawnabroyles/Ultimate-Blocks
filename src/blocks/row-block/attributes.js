@@ -51,6 +51,10 @@ const attributes = {
         type: 'string',
         default: '',
     },
+    startOptions: {
+        type: 'bool',
+        default: true,
+    }
 };
 
 export default attributes;

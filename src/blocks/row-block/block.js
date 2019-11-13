@@ -11,6 +11,9 @@ import './editor.scss';
 
 // Import attributes
 import attributes from './attributes';
+
+// Import Inspector and Editor
+import Inspector from './inspector'
 import RowEditor from './editor';
 
 const { __ } = wp.i18n;
@@ -41,6 +44,7 @@ export default registerBlockType( 'ub/row-block', {
         const { setAttributes } = props;
         return(
            <Fragment>
+               <Inspector {...props}/>
                <RowEditor {...props}/>
            </Fragment>
         )

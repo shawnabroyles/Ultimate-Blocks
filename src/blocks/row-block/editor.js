@@ -39,6 +39,7 @@ export default class RowEditor extends Component {
             attributes:{
                 colSection,
                 columns,
+                startOptions,
                 columnsUnlocked,
                 blockAlignment,
                 firstColumnWidth,
@@ -167,9 +168,10 @@ export default class RowEditor extends Component {
                                             key={ key }
                                             className="ub-section-btn"
                                             isSmall
-                                            onClick={ () => setAttributes( {
+                                            onClick={ (props) => setAttributes( {
                                                 colSection: key,
                                                 columns: col,
+                                                startOptions: false,
                                             } ) }
                                         >
                                             { icon }

@@ -57,20 +57,48 @@ const attributes = {
     },
     marginTopWrap: {
         type:'string',
-        default: ''
+        default: 0,
     },
     marginBottomWrap: {
         type:'string',
-        default: ''
+        default: 0,
     },
     marginRightWrap: {
         type:'string',
-        default: '0'
+        default: 0,
     },
     marginLeftWrap: {
         type:'string',
-        default: '0'
-    }
+        default: 0,
+    },
+    paddingTopWrap: {
+        type:'string',
+        default: 0,
+    },
+    paddingBottomWrap: {
+        type:'string',
+        default: 0,
+    },
+    paddingRightWrap: {
+        type:'string',
+        default: 0,
+    },
+    paddingLeftWrap: {
+        type:'string',
+        default: 0,
+    },
+    borderWrap: {
+        type: 'string',
+        default: 0
+    },
+    textColor: {
+        type: 'string',
+        default: '',
+    },
+    WrapTag:{
+        type: 'string',
+        default: 'div',
+    },
 };
 
 export default attributes;

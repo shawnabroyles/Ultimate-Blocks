@@ -6,6 +6,26 @@
   display: flex;
   border-width: 5px;
   border: dashed 2px #ddd;
+
+  .ub-editor-row-column_left,
+  .ub-editor-row-column_right{
+    position: absolute !important;
+    height: 100% !important;
+  }
+
+  .ub-editor-row-column_left{
+    left: 0;
+  }
+  .ub-editor-row-column_right{
+    right: 0;
+  }
+
+  .editor-inner-blocks.block-editor-inner-blocks{
+    width: 100%;
+    .editor-block-list__layout.block-editor-block-list__layout{
+      display: flex;
+    }
+  }
 }
 
 .ub-section-block-wrap {
@@ -127,7 +147,10 @@
   z-index: -1;
   left: -23px;
 }
-
+//Single column
+.ub-single-column{
+  width: 100%;
+}
 //Inspector style
 
 .ub-layout-wrap_margin_box{

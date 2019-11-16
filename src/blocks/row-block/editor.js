@@ -3,11 +3,13 @@ import icons from './icons/icons';
 
 // Import External
 import map from 'lodash/map';
+import times from 'lodash/times';
 import { Resizable } from 're-resizable';
 import ContainerDimensions from 'react-container-dimensions';
 
 // Setup the block
 const { __ } = wp.i18n;
+const { createBlock } = wp.blocks;
 const { Component, Fragment } = wp.element;
 const {
     Button,
@@ -21,20 +23,34 @@ const {
     BlockAlignmentToolbar,
 } = wp.blockEditor || wp.editor;
 
+const ALLOWED_BLOCKS = [ 'ub/row-column' ];
+
 export default class RowEditor extends Component {
 
     constructor() {
+        console.log('constructor');
         super( ...arguments );
         this.state = {
             firstWidth: null,
             secondWidth: null,
             threeWidth: null,
+            ColWidthOne: null,
+            ColWidthTwo: null,
             display: 'none',
             displaythree: 'none',
         };
     }
 
+    componentDidMount() {
+        console.log('componentDidMount');
+    }
+
+    componentDidUpdate(prevProps, prevState){
+        console.log('componentDidUpdate');
+    }
+
     render(){
+    console.log('render');
         const {
             attributes:{
                 colSection,
@@ -52,10 +68,16 @@ export default class RowEditor extends Component {
                 ColWidthFive,
                 ColWidthSix,
             },
+            block:{clientId},
             setAttributes,
         } = this.props;
 
-        console.log(this.props);
+        const createColumn = (col) => {
+            createBlock('ub/row-column',{});
+            return times( col, col => ['ub/row-column',{}]);
+        };
+
+        console.log(clientId);
 
         const startSectionOptions = [
             { key: 'equal', col: 1, name: __( 'Row' ), icon: icons.row },
@@ -75,9 +97,7 @@ export default class RowEditor extends Component {
             { key: 'equal-six', col: 6, name: __( 'Six: Equal' ), icon: icons.sixcol },
         ];
 
-        if('equal' === colSection){
-            setAttributes({ColWidthOne: '100%'});
-        }else if('equal-two' === colSection){
+        if('equal-two' === colSection){
             setAttributes({ColWidthOne: '50%'});
             setAttributes({ColWidthTwo: '50%'});
         }else if('left-golden' === colSection){
@@ -156,8 +176,10 @@ export default class RowEditor extends Component {
                     />
                 </BlockControls>
                 <div className='ub-section-overhad-wrap'>
-                    { !colSection &&(<div className='ub-section-block-wrap'>
-                        <div className="ub-select-section">
+                    { !colSection &&(
+                        console.log('Let start'),
+                        <div className='ub-section-block-wrap'>
+                          <div className="ub-select-section">
                             <div className="ub-select-section-title">
                                 { __( 'Select section' ) }
                             </div>
@@ -189,17 +211,27 @@ export default class RowEditor extends Component {
                                 justifyContent: "center",
                                 width: "100%",
                             }}>
-                                {<InnerBlocks/>}
+                                <InnerBlocks
+                                    template={createColumn( columns )}
+                                    templateLock={'all'}
+                                    renderAppender={ ()=> (null) }
+                                />
                             </div>
                         </div>
                     )}
                     { colSection && columns && 1 !== columns && 4 !== columns && 5 !== columns && 6 !== columns &&(
                         <Fragment>
                              <div className="ub-section-column-wrap">
+                                 <style>
+                                     <Fragment>
+                                         { ( ! firstColumnWidth ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( ColWidthOne ) }%; }` :`.ub-section-column-wrap > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( firstColumnWidth ) }%; }`  ) }
+                                         { ( ! secondColumnWidth ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( ColWidthTwo ) }%; }` :`.ub-section-column-wrap  > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( secondColumnWidth ) }%; }` ) }
+                                     </Fragment>
+                                 </style>
                                  <ContainerDimensions>{({width}) =>
                                      <Resizable
                                          style={style}
-                                         className="ub-editor-row-column"
+                                         className="ub-editor-row-column_left"
                                          minWidth="10%"
                                          maxWidth="90%"
                                          size={{ width:  ( ! firstColumnWidth ? ColWidthOne : firstColumnWidth + '%' )}}
@@ -211,9 +243,6 @@ export default class RowEditor extends Component {
                                          onResize = {( event, direction, elt ) => {
                                              let firstCol;
                                              let secondCol;
-                                             this.setState({
-                                                 display: 'block',
-                                             });
                                              if ( columnsUnlocked ) {
                                                  firstCol = Math.round( parseFloat( elt.style.width ) * 10 ) / 10;
                                                  secondCol = Math.round( ( 100 - firstCol ) * 10 ) / 10;
@@ -222,9 +251,8 @@ export default class RowEditor extends Component {
                                                  secondCol = 100 - ( Math.round( parseInt( elt.style.width ) / 5 ) * 5 );
                                              }
                                              this.setState( {
+                                                 display: 'block',
                                                  firstWidth: firstCol,
-                                             } );
-                                             this.setState( {
                                                  secondWidth: secondCol,
                                              } );
                                          }}
@@ -247,43 +275,23 @@ export default class RowEditor extends Component {
                                              } );
                                          }}
                                          axis="x"
-                                     ><InnerBlocks/>
-                                         <span className="left-column-width-size-top" style={{ display: this.state.display }}>{! firstColumnWidth ? ColWidthOne : this.state.firstWidth + '%'}</span>
+                                     ><span className="left-column-width-size-top" style={{ display: this.state.display }}>{! firstColumnWidth ? ColWidthOne : this.state.firstWidth + '%'}</span>
                                          <span className="left-column-width-size-bottom" style={{ display: this.state.display }}>{! firstColumnWidth ? ColWidthOne : this.state.firstWidth + '%'}</span>
                                          <span className="right-column-width-size-top" style={{ display: this.state.display }}>{! secondColumnWidth ? ColWidthTwo : this.state.secondWidth + '%'}</span>
                                          <span className="right-column-width-size-bottom" style={{ display: this.state.display }}>{! secondColumnWidth ? ColWidthTwo : this.state.secondWidth + '%'}</span>
                                      </Resizable>
                                  }</ContainerDimensions>
-                                 <ContainerDimensions>
-                                 {({width}) =>
-                                     <Resizable
-                                         style={style}
-                                         className="ub-editor-row-column"
-                                         size={ { width:  ( ! secondColumnWidth ? ColWidthTwo : secondColumnWidth + '%' ) }}
-                                         enable={{
-                                             top: false,
-                                             right: false,
-                                             bottom: true,
-                                             left: false,
-                                             topRight: false,
-                                             bottomRight: false,
-                                             bottomLeft: false,
-                                             topLeft: false,
-                                         }}
-                                     >
-                                         <InnerBlocks/>
-                                         <span className="left-column-width-size-top" style={{ display: this.state.displaythree }}>{! secondColumnWidth ? ColWidthTwo : this.state.secondWidth + '%'}</span>
-                                         <span className="left-column-width-size-bottom" style={{ display: this.state.displaythree }}>{! secondColumnWidth ? ColWidthTwo : this.state.secondWidth + '%'}</span>
-                                         <span className="right-column-width-size-top" style={{ display: this.state.displaythree }}>{! threeColumnWidth ? ColWidthOne : this.state.threeWidth + '%'}</span>
-                                         <span className="right-column-width-size-bottom" style={{ display: this.state.displaythree }}>{! threeColumnWidth ? ColWidthOne : this.state.threeWidth + '%'}</span>
-                                     </Resizable>
-                                 }</ContainerDimensions>
+                                 <InnerBlocks
+                                     template= {createColumn( columns )}
+                                     templateLock={'all'}
+                                     renderAppender={ ()=> (null) }
+                                 />
                                  { 3 === columns &&(
                                      <ContainerDimensions>
                                          {({width}) =>
                                              <Resizable
                                                  style={style}
-                                                 className="ub-editor-row-column"
+                                                 className="ub-editor-row-column_right"
                                                  minWidth="10%"
                                                  maxWidth="90%"
                                                  size={{ width:  ( ! threeColumnWidth ? ColWidthThree : threeColumnWidth + '%' )}}
@@ -295,9 +303,6 @@ export default class RowEditor extends Component {
                                                  onResize = {(event, direction, elt) => {
                                                      let secondCol;
                                                      let threeCol;
-                                                     this.setState({
-                                                         displaythree: 'block',
-                                                     });
                                                      if ( columnsUnlocked ) {
                                                          secondCol = Math.round( parseFloat( elt.style.width ) * 10 ) / 10;
                                                          threeCol = Math.round( ( 100 - secondCol ) * 10 ) / 10;
@@ -306,9 +311,8 @@ export default class RowEditor extends Component {
                                                          threeCol = 100 - ( Math.round( parseInt( elt.style.width ) / 5 ) * 5 );
                                                      }
                                                      this.setState( {
+                                                         displaythree: 'block',
                                                          secondWidth: secondCol,
-                                                     } );
-                                                     this.setState( {
                                                          threeWidth: threeCol,
                                                      } );
                                                  }}
@@ -332,7 +336,6 @@ export default class RowEditor extends Component {
                                                  }}
                                                  axis="x"
                                              >
-                                              <InnerBlocks/>
                                              </Resizable>
                                          }</ContainerDimensions>
                                  )}
@@ -342,61 +345,11 @@ export default class RowEditor extends Component {
                     { colSection && columns && 1 !== columns && 2 !== columns && 3 !== columns &&(
                         <Fragment>
                             <div className="ub-section-column-wrap">
-                                <Resizable
-                                    style={style}
-                                    className="ub-editor-row-column"
-                                    size={{ width: ColWidthOne }}
-                                >
-                                    <InnerBlocks/>
-                                </Resizable>
-                                <Resizable
-                                    style={style}
-                                    className="ub-editor-row-column"
-                                    size={{ width: ColWidthTwo }}
-                                >
-                                    <InnerBlocks/>
-                                </Resizable>
-                                <Resizable
-                                    style={style}
-                                    className="ub-editor-row-column"
-                                    size={{ width: ColWidthThree }}
-                                >
-                                    <InnerBlocks/>
-                                </Resizable>
-                                <Resizable
-                                    style={style}
-                                    className="ub-editor-row-column"
-                                    size={{ width: ColWidthFour }}
-                                >
-                                    <InnerBlocks/>
-                                </Resizable>
-                                {5 === columns &&(
-                                    <Resizable
-                                        style={style}
-                                        className="ub-editor-row-column"
-                                        size={{ width: ColWidthFive }}
-                                    >
-                                        <InnerBlocks/>
-                                    </Resizable>
-                                )}
-                                {6 === columns &&(
-                                    <Fragment>
-                                        <Resizable
-                                            style={style}
-                                            className="ub-editor-row-column"
-                                            size={{ width: ColWidthSix }}
-                                        >
-                                            <InnerBlocks/>
-                                        </Resizable>
-                                        <Resizable
-                                        style={style}
-                                        className="ub-editor-row-column"
-                                        size={{ width: ColWidthSix }}
-                                        >
-                                        <InnerBlocks/>
-                                        </Resizable>
-                                    </Fragment>
-                                )}
+                                <InnerBlocks
+                                    template={createColumn( columns )}
+                                    templateLock={'all'}
+                                    renderAppender={ ()=> (null) }
+                                />
                             </div>
                         </Fragment>
                     )}

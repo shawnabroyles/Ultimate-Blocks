@@ -20,6 +20,7 @@ const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 const { withSelect } = wp.data;
 const { Fragment } = wp.element;
+const { InnerBlocks } = wp.blockEditor || wp.editor;
 
 export default registerBlockType( 'ub/row-block', {
     title: __('Row Block', 'ultimate-blocks'),
@@ -49,5 +50,5 @@ export default registerBlockType( 'ub/row-block', {
            </Fragment>
         )
     }),
-    save: () => null
+    save: () => <InnerBlocks.Content />
 });

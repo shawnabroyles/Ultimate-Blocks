@@ -22,8 +22,11 @@
 
   .editor-inner-blocks.block-editor-inner-blocks{
     width: 100%;
+
     .editor-block-list__layout.block-editor-block-list__layout{
       display: flex;
+      margin-left: 0px;
+      margin-right: 0px;
     }
   }
 }

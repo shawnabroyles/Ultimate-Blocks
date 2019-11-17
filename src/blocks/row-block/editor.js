@@ -34,8 +34,9 @@ export default class RowEditor extends Component {
             firstWidth: null,
             secondWidth: null,
             threeWidth: null,
-            ColWidthOne: null,
-            ColWidthTwo: null,
+            ResizeColWidthOne: null,
+            ResizeColWidthTwo: null,
+            ResizeColWidthThree: null,
             display: 'none',
             displaythree: 'none',
         };
@@ -45,9 +46,10 @@ export default class RowEditor extends Component {
         console.log('componentDidMount');
     }
 
-    componentDidUpdate(prevProps, prevState){
+    componentDidUpdate(prevProps, prevState) {
         console.log('componentDidUpdate');
     }
+
 
     render(){
     console.log('render');
@@ -58,9 +60,6 @@ export default class RowEditor extends Component {
                 startOptions,
                 columnsUnlocked,
                 blockAlignment,
-                firstColumnWidth,
-                secondColumnWidth,
-                threeColumnWidth,
                 ColWidthOne,
                 ColWidthTwo,
                 ColWidthThree,
@@ -77,24 +76,24 @@ export default class RowEditor extends Component {
             return times( col, col => ['ub/row-column',{}]);
         };
 
-        console.log(clientId);
+        console.log(this.state);
 
         const startSectionOptions = [
-            { key: 'equal', col: 1, name: __( 'Row' ), icon: icons.row },
-            { key: 'equal-two', col: 2, name: __( 'Two: Equal' ), icon: icons.twocol },
-            { key: 'left-golden', col: 2, name: __( 'Two: Left Heavy 66/33' ), icon: icons.twoleftgolden },
-            { key: 'right-golden', col: 2, name: __( 'Two: Right Heavy 33/66' ), icon: icons.tworightgolden },
-            { key: 'equal-three', col: 3, name: __( 'Three: Equal' ), icon: icons.threecol },
-            { key: 'left-half', col: 3, name: __( 'Three: Left Heavy 50/25/25' ), icon: icons.lefthalf },
-            { key: 'right-half', col: 3, name: __( 'Three: Right Heavy 25/25/50' ), icon: icons.righthalf },
-            { key: 'center-half', col: 3, name: __( 'Three: Center Heavy 25/50/25' ), icon: icons.centerhalf },
-            { key: 'center-wide', col: 3, name: __( 'Three: Wide Center 20/60/20' ), icon: icons.widecenter },
-            { key: 'center-exwide', col: 3, name: __( 'Three: Wider Center 15/70/15' ), icon: icons.exwidecenter },
-            { key: 'equal-four', col: 4, name: __( 'Four: Equal' ), icon: icons.fourcol },
-            { key: 'left-forty', col: 4, name: __( 'Four: Left Heavy 40/20/20/20' ), icon: icons.lfourforty },
-            { key: 'right-forty', col: 4, name: __( 'Four: Right Heavy 20/20/20/40' ), icon: icons.rfourforty },
-            { key: 'equal-five', col: 5, name: __( 'Five: Equal' ), icon: icons.fivecol },
-            { key: 'equal-six', col: 6, name: __( 'Six: Equal' ), icon: icons.sixcol },
+            { key: 'equal', col: 1, name: __( 'Size: 100%' ), icon: icons.row },
+            { key: 'equal-two', col: 2, name: __( 'Size: 50%|50%' ), icon: icons.twocol },
+            { key: 'left-golden', col: 2, name: __( 'Size: 66%|33%' ), icon: icons.twoleftgolden },
+            { key: 'right-golden', col: 2, name: __( 'Size: 33%|66%' ), icon: icons.tworightgolden },
+            { key: 'equal-three', col: 3, name: __( 'Size: 25%|25%|25%' ), icon: icons.threecol },
+            { key: 'left-half', col: 3, name: __( 'Size: 50%|25%|25%' ), icon: icons.lefthalf },
+            { key: 'right-half', col: 3, name: __( 'Size: 25%|25%|25%' ), icon: icons.righthalf },
+            { key: 'center-half', col: 3, name: __( 'Size: 25%|50%|25%' ), icon: icons.centerhalf },
+            { key: 'center-wide', col: 3, name: __( 'Size: 20%|60%|20%' ), icon: icons.widecenter },
+            { key: 'center-exwide', col: 3, name: __( 'Size: 15%|70%|15%' ), icon: icons.exwidecenter },
+            { key: 'equal-four', col: 4, name: __( 'Size: 25%|25%|25%|25%' ), icon: icons.fourcol },
+            { key: 'left-forty', col: 4, name: __( 'Size: 40%|20%|20%|20%' ), icon: icons.lfourforty },
+            { key: 'right-forty', col: 4, name: __( 'Size: 20%|20%|20%|40%' ), icon: icons.rfourforty },
+            { key: 'equal-five', col: 5, name: __( 'Size: 5-|20%|' ), icon: icons.fivecol },
+            { key: 'equal-six', col: 6, name: __( 'Size: 6-|16%|' ), icon: icons.sixcol },
         ];
 
         if('equal-two' === colSection){
@@ -224,8 +223,8 @@ export default class RowEditor extends Component {
                              <div className="ub-section-column-wrap">
                                  <style>
                                      <Fragment>
-                                         { ( ! firstColumnWidth ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( ColWidthOne ) }%; }` :`.ub-section-column-wrap > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( firstColumnWidth ) }%; }`  ) }
-                                         { ( ! secondColumnWidth ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( ColWidthTwo ) }%; }` :`.ub-section-column-wrap  > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( secondColumnWidth ) }%; }` ) }
+                                         { ( !this.state.ResizeColWidthOne ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( ColWidthOne ) }%; }` :`.ub-section-column-wrap > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthOne ) }%; }`  ) }
+                                         { ( !this.state.ResizeColWidthTwo ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( ColWidthTwo ) }%; }` :`.ub-section-column-wrap  > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthTwo)  }%; }` ) }
                                      </Fragment>
                                  </style>
                                  <ContainerDimensions>{({width}) =>
@@ -234,7 +233,7 @@ export default class RowEditor extends Component {
                                          className="ub-editor-row-column_left"
                                          minWidth="10%"
                                          maxWidth="90%"
-                                         size={{ width:  ( ! firstColumnWidth ? ColWidthOne : firstColumnWidth + '%' )}}
+                                         size={{ width:  ( !this.state.ResizeColWidthOne ? ColWidthOne : this.state.ResizeColWidthOne + '%' )}}
                                          enable={{right:true}}
                                          handleClasses={ {
                                              right: 'ub_handle-right',
@@ -254,6 +253,8 @@ export default class RowEditor extends Component {
                                                  display: 'block',
                                                  firstWidth: firstCol,
                                                  secondWidth: secondCol,
+                                                 ResizeColWidthOne: firstCol,
+                                                 ResizeColWidthTwo: secondCol,
                                              } );
                                          }}
                                          onResizeStop = {( event, direction, elt ) => {
@@ -266,19 +267,19 @@ export default class RowEditor extends Component {
                                                  firstCol = Math.round( parseInt( elt.style.width ) / 5 ) * 5;
                                                  secondCol = 100 - ( Math.round( parseInt( elt.style.width ) / 5 ) * 5 );
                                              }
-                                             setAttributes( { firstColumnWidth: firstCol } );
-                                             setAttributes( { secondColumnWidth: secondCol } );
                                              this.setState( {
                                                  firstWidth: null,
                                                  secondWidth: null,
+                                                 ResizeColWidthOne: firstCol,
+                                                 ResizeColWidthTwo: secondCol,
                                                  display: 'none',
                                              } );
                                          }}
                                          axis="x"
-                                     ><span className="left-column-width-size-top" style={{ display: this.state.display }}>{! firstColumnWidth ? ColWidthOne : this.state.firstWidth + '%'}</span>
-                                         <span className="left-column-width-size-bottom" style={{ display: this.state.display }}>{! firstColumnWidth ? ColWidthOne : this.state.firstWidth + '%'}</span>
-                                         <span className="right-column-width-size-top" style={{ display: this.state.display }}>{! secondColumnWidth ? ColWidthTwo : this.state.secondWidth + '%'}</span>
-                                         <span className="right-column-width-size-bottom" style={{ display: this.state.display }}>{! secondColumnWidth ? ColWidthTwo : this.state.secondWidth + '%'}</span>
+                                     ><span className="left-column-width-size-top" style={{ display: this.state.display }}>{!this.state.ResizeColWidthOne ? ColWidthOne : this.state.firstWidth + '%'}</span>
+                                         <span className="left-column-width-size-bottom" style={{ display: this.state.display }}>{!this.state.ResizeColWidthOne ? ColWidthOne : this.state.firstWidth + '%'}</span>
+                                         <span className="right-column-width-size-top" style={{ display: this.state.display }}>{!this.state.ResizeColWidthTwo ? ColWidthTwo : this.state.secondWidth + '%'}</span>
+                                         <span className="right-column-width-size-bottom" style={{ display: this.state.display }}>{!this.state.ResizeColWidthTwo ? ColWidthTwo : this.state.secondWidth + '%'}</span>
                                      </Resizable>
                                  }</ContainerDimensions>
                                  <InnerBlocks
@@ -294,7 +295,7 @@ export default class RowEditor extends Component {
                                                  className="ub-editor-row-column_right"
                                                  minWidth="10%"
                                                  maxWidth="90%"
-                                                 size={{ width:  ( ! threeColumnWidth ? ColWidthThree : threeColumnWidth + '%' )}}
+                                                 size={{ width:  ( !this.state.ResizeColWidthOne ? ColWidthThree : this.state.ResizeColWidthOne + '%' )}}
                                                  enable={{left:true}}
                                                  handleClasses={ {
                                                      left: 'ub_handle-left',
@@ -326,11 +327,10 @@ export default class RowEditor extends Component {
                                                          secondCol = Math.round( parseInt( elt.style.width ) / 5 ) * 5;
                                                          threeCol = 100 - ( Math.round( parseInt( elt.style.width ) / 5 ) * 5 );
                                                      }
-                                                     setAttributes( { secondColumnWidth: secondCol } );
-                                                     setAttributes( { threeColumnWidth: threeCol } );
                                                      this.setState( {
-                                                         firstWidth: null,
+                                                         secondWidth: null,
                                                          threeWidth: null,
+                                                         ResizeColWidthThree: threeCol,
                                                          displaythree: 'none',
                                                      } );
                                                  }}

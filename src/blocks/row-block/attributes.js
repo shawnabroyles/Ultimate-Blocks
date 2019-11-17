@@ -15,18 +15,6 @@ const attributes = {
         type: 'string',
         default: 'none',
     },
-    firstColumnWidth: {
-        type: 'string',
-        default: '',
-    },
-    secondColumnWidth: {
-        type: 'string',
-        default: '',
-    },
-    threeColumnWidth: {
-        type: 'string',
-        default: '',
-    },
     ColWidthOne: {
         type: 'string',
         default: '',

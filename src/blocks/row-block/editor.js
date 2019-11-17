@@ -76,6 +76,8 @@ export default class RowEditor extends Component {
             return times( col, col => ['ub/row-column',{}]);
         };
 
+        console.log(clientId);
+
         console.log(this.state);
 
         const startSectionOptions = [
@@ -100,15 +102,15 @@ export default class RowEditor extends Component {
             setAttributes({ColWidthOne: '50%'});
             setAttributes({ColWidthTwo: '50%'});
         }else if('left-golden' === colSection){
-            setAttributes({ColWidthOne: '66%'});
-            setAttributes({ColWidthTwo: '33%'});
+            setAttributes({ColWidthOne: '66.6%'});
+            setAttributes({ColWidthTwo: '33.3%'});
         }else if('right-golden' === colSection){
-            setAttributes({ColWidthOne: '33%'});
-            setAttributes({ColWidthTwo: '66%'});
+            setAttributes({ColWidthOne: '33.3%'});
+            setAttributes({ColWidthTwo: '66%.6'});
         }else if('equal-three' === colSection){
-            setAttributes({ColWidthOne: '33%'});
-            setAttributes({ColWidthTwo: '33%'});
-            setAttributes({ColWidthThree: '33%'});
+            setAttributes({ColWidthOne: '33.3%'});
+            setAttributes({ColWidthTwo: '33%.3'});
+            setAttributes({ColWidthThree: '33.3%'});
         }else if('left-half' === colSection){
             setAttributes({ColWidthOne: '50%'});
             setAttributes({ColWidthTwo: '25%'});
@@ -222,10 +224,19 @@ export default class RowEditor extends Component {
                         <Fragment>
                              <div className="ub-section-column-wrap">
                                  <style>
+                                     { columns && columns === 2 && (
                                      <Fragment>
-                                         { ( !this.state.ResizeColWidthOne ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( ColWidthOne ) }%; }` :`.ub-section-column-wrap > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthOne ) }%; }`  ) }
-                                         { ( !this.state.ResizeColWidthTwo ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( ColWidthTwo ) }%; }` :`.ub-section-column-wrap  > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthTwo)  }%; }` ) }
+                                         { ( !this.state.ResizeColWidthOne ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( ColWidthOne ) }%; }` :`#block-${clientId} .ub-section-column-wrap > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthOne ) }%; }`  ) }
+                                         { ( !this.state.ResizeColWidthTwo ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( ColWidthTwo ) }%; }` :`#block-${clientId} .ub-section-column-wrap  > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthTwo) }%; }` ) }
                                      </Fragment>
+                                     )}
+                                     { columns && columns === 3 && (
+                                         <Fragment>
+                                             { ( !this.state.ResizeColWidthOne ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( ColWidthOne ) }%; }` :`#block-${clientId} .ub-section-column-wrap > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthOne ) }%; }`  ) }
+                                             { ( !this.state.ResizeColWidthTwo ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( ColWidthTwo ) }%; }` :`#block-${clientId} .ub-section-column-wrap  > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthTwo) }%; }` ) }
+                                             { ( !this.state.ResizeColWidthThree ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(3) { flex: 0 1 ${ parseFloat( ColWidthThree ) }%; }` :`#block-${clientId} .ub-section-column-wrap  > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(3) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthThree) }%; }` ) }
+                                         </Fragment>
+                                     )}
                                  </style>
                                  <ContainerDimensions>{({width}) =>
                                      <Resizable
@@ -281,7 +292,7 @@ export default class RowEditor extends Component {
                                          <span className="right-column-width-size-top" style={{ display: this.state.display }}>{!this.state.ResizeColWidthTwo ? ColWidthTwo : this.state.secondWidth + '%'}</span>
                                          <span className="right-column-width-size-bottom" style={{ display: this.state.display }}>{!this.state.ResizeColWidthTwo ? ColWidthTwo : this.state.secondWidth + '%'}</span>
                                      </Resizable>
-                                 }</ContainerDimensions>
+                                     }</ContainerDimensions>
                                  <InnerBlocks
                                      template= {createColumn( columns )}
                                      templateLock={'all'}
@@ -295,7 +306,7 @@ export default class RowEditor extends Component {
                                                  className="ub-editor-row-column_right"
                                                  minWidth="10%"
                                                  maxWidth="90%"
-                                                 size={{ width:  ( !this.state.ResizeColWidthOne ? ColWidthThree : this.state.ResizeColWidthOne + '%' )}}
+                                                 size={{ width:  ( !this.state.ResizeColWidthThree ? ColWidthThree : this.state.ResizeColWidthThree + '%' )}}
                                                  enable={{left:true}}
                                                  handleClasses={ {
                                                      left: 'ub_handle-left',

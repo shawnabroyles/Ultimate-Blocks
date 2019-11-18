@@ -1,7 +1,10 @@
 <?php
-function ub_render_row_block(){
-    return(
-        '<div>This is row-block</div>'
+function ub_render_row_block($attributes, $contents){
+    $section_block_name = 'wp-block-ub-section-block';
+    extract($attributes);
+
+    return (
+        '<div class="'.$section_block_name.'" style="margin:'.$attributes['marginTopWrap'].'px '.$attributes['marginRightWrap'].'px '.$attributes['marginBottomWrap'].'px '.$attributes['marginLeftWrap'].'px'.'">'.$contents.'</div>'
     );
 }
 

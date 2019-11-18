@@ -44,39 +44,39 @@ const attributes = {
         default: true,
     },
     marginTopWrap: {
-        type:'string',
+        type:'number',
         default: 0,
     },
     marginBottomWrap: {
-        type:'string',
+        type:'number',
         default: 0,
     },
     marginRightWrap: {
-        type:'string',
+        type:'number',
         default: 0,
     },
     marginLeftWrap: {
-        type:'string',
+        type:'number',
         default: 0,
     },
     paddingTopWrap: {
-        type:'string',
+        type:'number',
         default: 0,
     },
     paddingBottomWrap: {
-        type:'string',
+        type:'number',
         default: 0,
     },
     paddingRightWrap: {
-        type:'string',
+        type:'number',
         default: 0,
     },
     paddingLeftWrap: {
-        type:'string',
+        type:'number',
         default: 0,
     },
     borderWrap: {
-        type: 'string',
+        type: 'number',
         default: 0
     },
     textColor: {

@@ -1120,6 +1120,22 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => ''
             ),
+            'marginTopWrap' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'marginRightWrap' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'marginBottomWrap' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'marginLeftWrap' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
         )
     ),
 );

@@ -85,7 +85,7 @@ export default class RowEditor extends Component {
             { key: 'equal-two', col: 2, name: __( 'Size: 50%|50%' ), icon: icons.twocol },
             { key: 'left-golden', col: 2, name: __( 'Size: 66%|33%' ), icon: icons.twoleftgolden },
             { key: 'right-golden', col: 2, name: __( 'Size: 33%|66%' ), icon: icons.tworightgolden },
-            { key: 'equal-three', col: 3, name: __( 'Size: 25%|25%|25%' ), icon: icons.threecol },
+            { key: 'equal-three', col: 3, name: __( 'Size: 33%|33%|33%' ), icon: icons.threecol },
             { key: 'left-half', col: 3, name: __( 'Size: 50%|25%|25%' ), icon: icons.lefthalf },
             { key: 'right-half', col: 3, name: __( 'Size: 25%|25%|25%' ), icon: icons.righthalf },
             { key: 'center-half', col: 3, name: __( 'Size: 25%|50%|25%' ), icon: icons.centerhalf },
@@ -98,9 +98,9 @@ export default class RowEditor extends Component {
             { key: 'equal-six', col: 6, name: __( 'Size: 6-|16%|' ), icon: icons.sixcol },
         ];
 
-        if('equal-two' === colSection){
-            setAttributes({ColWidthOne: '50%'});
-            setAttributes({ColWidthTwo: '50%'});
+        if ( 'equal-two' === colSection ) {
+            setAttributes( { ColWidthOne: '50%' } );
+            setAttributes( { ColWidthTwo: '50%' } );
         }else if('left-golden' === colSection){
             setAttributes({ColWidthOne: '66.6%'});
             setAttributes({ColWidthTwo: '33.3%'});
@@ -109,7 +109,7 @@ export default class RowEditor extends Component {
             setAttributes({ColWidthTwo: '66%.6'});
         }else if('equal-three' === colSection){
             setAttributes({ColWidthOne: '33.3%'});
-            setAttributes({ColWidthTwo: '33%.3'});
+            setAttributes({ColWidthTwo: '33.3%'});
             setAttributes({ColWidthThree: '33.3%'});
         }else if('left-half' === colSection){
             setAttributes({ColWidthOne: '50%'});
@@ -194,7 +194,6 @@ export default class RowEditor extends Component {
                                             onClick={ (props) => setAttributes( {
                                                 colSection: key,
                                                 columns: col,
-                                                startOptions: false,
                                             } ) }
                                         >
                                             { icon }
@@ -226,15 +225,15 @@ export default class RowEditor extends Component {
                                  <style>
                                      { columns && columns === 2 && (
                                      <Fragment>
-                                         { ( !this.state.ResizeColWidthOne ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( ColWidthOne ) }%; }` :`#block-${clientId} .ub-section-column-wrap > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthOne ) }%; }`  ) }
-                                         { ( !this.state.ResizeColWidthTwo ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( ColWidthTwo ) }%; }` :`#block-${clientId} .ub-section-column-wrap  > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthTwo) }%; }` ) }
+                                         { ( !this.state.ResizeColWidthOne ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( ColWidthOne ) }%; }` :`#block-${clientId} .ub-section-column-wrap > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthOne ) }%; overflow: hidden }` ) }
+                                         { ( !this.state.ResizeColWidthTwo ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( ColWidthTwo ) }%; }` :`#block-${clientId} .ub-section-column-wrap  > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthTwo) }%; overflow: hidden }` ) }
                                      </Fragment>
                                      )}
                                      { columns && columns === 3 && (
                                          <Fragment>
-                                             { ( !this.state.ResizeColWidthOne ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( ColWidthOne ) }%; }` :`#block-${clientId} .ub-section-column-wrap > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthOne ) }%; }`  ) }
-                                             { ( !this.state.ResizeColWidthTwo ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( ColWidthTwo ) }%; }` :`#block-${clientId} .ub-section-column-wrap  > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthTwo) }%; }` ) }
-                                             { ( !this.state.ResizeColWidthThree ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(3) { flex: 0 1 ${ parseFloat( ColWidthThree ) }%; }` :`#block-${clientId} .ub-section-column-wrap  > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(3) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthThree) }%; }` ) }
+                                             { ( !this.state.ResizeColWidthOne ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( ColWidthOne ) }%; }` :`#block-${clientId} .ub-section-column-wrap > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthOne ) }%; overflow: hidden }` ) }
+                                             { ( !this.state.ResizeColWidthTwo ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( ColWidthTwo ) }%; }` :`#block-${clientId} .ub-section-column-wrap  > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthTwo ) }%; overflow: hidden }` ) }
+                                             { ( !this.state.ResizeColWidthThree ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(3) { flex: 0 1 ${ parseFloat( ColWidthThree ) }%; }` :`#block-${clientId} .ub-section-column-wrap  > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(3) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthThree ) }%; overflow: hidden }` ) }
                                          </Fragment>
                                      )}
                                  </style>
@@ -243,22 +242,24 @@ export default class RowEditor extends Component {
                                          style={style}
                                          className="ub-editor-row-column_left"
                                          minWidth="10%"
-                                         maxWidth="90%"
+                                         maxWidth={ columns === 2 ? "90%" : 100 - ( ( parseInt ( ColWidthThree ) ) + 11 ) + '%'}
                                          size={{ width:  ( !this.state.ResizeColWidthOne ? ColWidthOne : this.state.ResizeColWidthOne + '%' )}}
-                                         enable={{right:true}}
+                                         enable={{right:true, bottom:true}}
                                          handleClasses={ {
                                              right: 'ub_handle-right',
                                          } }
-                                         grid={ ( columnsUnlocked ? [ width / 1000, 1 ] : [ width / 20, 1 ] ) }
+                                         grid={ ( columns === 2 ? [ width / 1000, 1 ] : [ width / 20, 1 ] ) }
                                          onResize = {( event, direction, elt ) => {
                                              let firstCol;
                                              let secondCol;
-                                             if ( columnsUnlocked ) {
+                                             let widthCol;
+                                             if ( columns === 2 ) {
                                                  firstCol = Math.round( parseFloat( elt.style.width ) * 10 ) / 10;
                                                  secondCol = Math.round( ( 100 - firstCol ) * 10 ) / 10;
-                                             } else {
-                                                 firstCol = Math.round( parseInt( elt.style.width ) / 5 ) * 5;
-                                                 secondCol = 100 - ( Math.round( parseInt( elt.style.width ) / 5 ) * 5 );
+                                             } else if ( columns === 3 ) {
+                                                 firstCol = Math.round( parseFloat( elt.style.width ) * 10 ) / 10;
+                                                 widthCol = ( Math.round ( parseFloat ( ColWidthOne ) ) );
+                                                 secondCol = ( Math.round( ( widthCol - firstCol ) * 10 ) / 10 );
                                              }
                                              this.setState( {
                                                  display: 'block',
@@ -271,19 +272,21 @@ export default class RowEditor extends Component {
                                          onResizeStop = {( event, direction, elt ) => {
                                              let firstCol;
                                              let secondCol;
-                                             if ( columnsUnlocked ) {
+                                             let widthCol;
+                                             if ( columns === 2 ) {
                                                  firstCol = Math.round( parseFloat( elt.style.width ) * 10 ) / 10;
                                                  secondCol = Math.round( ( 100 - firstCol ) * 10 ) / 10;
-                                             } else {
-                                                 firstCol = Math.round( parseInt( elt.style.width ) / 5 ) * 5;
-                                                 secondCol = 100 - ( Math.round( parseInt( elt.style.width ) / 5 ) * 5 );
+                                             } else if ( columns === 3 ) {
+                                                 firstCol = Math.round( parseFloat( elt.style.width ) * 10 ) / 10;
+                                                 widthCol = ( Math.round ( parseFloat ( ColWidthOne ) ) );
+                                                 secondCol =  ( Math.round( ( widthCol - firstCol  ) * 10 ) / 10 );
                                              }
                                              this.setState( {
+                                                 display: 'none',
                                                  firstWidth: null,
                                                  secondWidth: null,
                                                  ResizeColWidthOne: firstCol,
                                                  ResizeColWidthTwo: secondCol,
-                                                 display: 'none',
                                              } );
                                          }}
                                          axis="x"
@@ -293,11 +296,6 @@ export default class RowEditor extends Component {
                                          <span className="right-column-width-size-bottom" style={{ display: this.state.display }}>{!this.state.ResizeColWidthTwo ? ColWidthTwo : this.state.secondWidth + '%'}</span>
                                      </Resizable>
                                      }</ContainerDimensions>
-                                 <InnerBlocks
-                                     template= {createColumn( columns )}
-                                     templateLock={'all'}
-                                     renderAppender={ ()=> (null) }
-                                 />
                                  { 3 === columns &&(
                                      <ContainerDimensions>
                                          {({width}) =>
@@ -306,21 +304,18 @@ export default class RowEditor extends Component {
                                                  className="ub-editor-row-column_right"
                                                  minWidth="10%"
                                                  maxWidth="90%"
-                                                 size={{ width:  ( !this.state.ResizeColWidthThree ? ColWidthThree : this.state.ResizeColWidthThree + '%' )}}
-                                                 enable={{left:true}}
+                                                 size={{ width:  ( !this.state.ResizeColWidthThree ? ( ( parseFloat ( ColWidthOne) ) + ( parseFloat ( ColWidthThree ) ) + '%') : this.state.ResizeColWidthThree + '%' )}}
+                                                 enable={{right:true}}
                                                  handleClasses={ {
-                                                     left: 'ub_handle-left',
+                                                     right: 'ub_handle-left',
                                                  } }
-                                                 grid={ ( columnsUnlocked ? [ width / 1000, 1 ] : [ width / 20, 1 ] ) }
+                                                 grid={ ( columns === 3 ? [ width / 1000, 1 ] : [ width / 20, 1 ] ) }
                                                  onResize = {(event, direction, elt) => {
                                                      let secondCol;
                                                      let threeCol;
-                                                     if ( columnsUnlocked ) {
-                                                         secondCol = Math.round( parseFloat( elt.style.width ) * 10 ) / 10;
-                                                         threeCol = Math.round( ( 100 - secondCol ) * 10 ) / 10;
-                                                     } else {
-                                                         secondCol = Math.round( parseInt( elt.style.width ) / 5 ) * 5;
-                                                         threeCol = 100 - ( Math.round( parseInt( elt.style.width ) / 5 ) * 5 );
+                                                     if ( columns === 3 ) {
+                                                         secondCol = Math.round(parseFloat(elt.style.width) * 10) / 10;
+                                                         threeCol = Math.round((100 - secondCol) * 10) / 10;
                                                      }
                                                      this.setState( {
                                                          displaythree: 'block',
@@ -331,25 +326,32 @@ export default class RowEditor extends Component {
                                                  onResizeStop = {(event, direction, elt) => {
                                                      let secondCol;
                                                      let threeCol;
-                                                     if ( columnsUnlocked ) {
+                                                     if ( columns === 3 ) {
                                                          secondCol = Math.round( parseFloat( elt.style.width ) * 10 ) / 10;
                                                          threeCol = Math.round( ( 100 - secondCol ) * 10 ) / 10;
-                                                     } else {
-                                                         secondCol = Math.round( parseInt( elt.style.width ) / 5 ) * 5;
-                                                         threeCol = 100 - ( Math.round( parseInt( elt.style.width ) / 5 ) * 5 );
                                                      }
                                                      this.setState( {
                                                          secondWidth: null,
                                                          threeWidth: null,
+                                                         ResizeColWidthTwo: secondCol,
                                                          ResizeColWidthThree: threeCol,
                                                          displaythree: 'none',
                                                      } );
                                                  }}
                                                  axis="x"
                                              >
+                                                 <span className="left-column-width-size-top" style={{ display: this.state.displaythree }}>{!this.state.ResizeColWidthTwo ? ColWidthOne : this.state.secondWidth + '%'}</span>
+                                                 <span className="left-column-width-size-bottom" style={{ display: this.state.displaythree }}>{!this.state.ResizeColWidthTwo ? ColWidthOne : this.state.secondWidth + '%'}</span>
+                                                 <span className="right-column-width-size-top" style={{ display: this.state.displaythree }}>{!this.state.ResizeColWidthThree ? ColWidthTwo : this.state.threeWidth + '%'}</span>
+                                                 <span className="right-column-width-size-bottom" style={{ display: this.state.displaythree }}>{!this.state.ResizeColWidthThree ? ColWidthTwo : this.state.threeWidth + '%'}</span>
                                              </Resizable>
                                          }</ContainerDimensions>
                                  )}
+                                 <InnerBlocks
+                                     template= {createColumn( columns )}
+                                     templateLock={'all'}
+                                     renderAppender={ ()=> (null) }
+                                 />
                              </div>
                         </Fragment>
                     )}

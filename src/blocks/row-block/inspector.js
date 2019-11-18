@@ -53,6 +53,8 @@ export default class Inspector extends Component {
             setAttributes,
         } = this.props;
 
+        console.log(this.props);
+
         const startSetting = (
             <Fragment>
                 <PanelBody
@@ -214,7 +216,7 @@ export default class Inspector extends Component {
         return[
             <Fragment>
                 <InspectorControls>
-                    {startOptions &&(startSetting)}
+                    {startSetting}
                 </InspectorControls>
             </Fragment>
         ]

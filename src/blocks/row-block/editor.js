@@ -87,7 +87,7 @@ export default class RowEditor extends Component {
             { key: 'right-golden', col: 2, name: __( 'Size: 33%|66%' ), icon: icons.tworightgolden },
             { key: 'equal-three', col: 3, name: __( 'Size: 33%|33%|33%' ), icon: icons.threecol },
             { key: 'left-half', col: 3, name: __( 'Size: 50%|25%|25%' ), icon: icons.lefthalf },
-            { key: 'right-half', col: 3, name: __( 'Size: 25%|25%|25%' ), icon: icons.righthalf },
+            { key: 'right-half', col: 3, name: __( 'Size: 25%|25%|50%' ), icon: icons.righthalf },
             { key: 'center-half', col: 3, name: __( 'Size: 25%|50%|25%' ), icon: icons.centerhalf },
             { key: 'center-wide', col: 3, name: __( 'Size: 20%|60%|20%' ), icon: icons.widecenter },
             { key: 'center-exwide', col: 3, name: __( 'Size: 15%|70%|15%' ), icon: icons.exwidecenter },
@@ -241,25 +241,27 @@ export default class RowEditor extends Component {
                                      <Resizable
                                          style={style}
                                          className="ub-editor-row-column_left"
-                                         minWidth="10%"
-                                         maxWidth={ columns === 2 ? "90%" : 100 - ( ( parseInt ( ColWidthThree ) ) + 11 ) + '%'}
+                                         minWidth="15%"
+                                         maxWidth={ columns === 2 ? "90%" : !this.state.ResizeColWidthThree ? ( ( Math.round ( parseFloat ( ColWidthOne ) ) ) + ( Math.round ( parseFloat ( ColWidthTwo ) ) ) ) - 15 + '%' : ( ( Math.round( parseFloat( this.state.ResizeColWidthOne ) ) ) + ( Math.round( parseFloat( this.state.ResizeColWidthTwo ) ) ) ) - 15 + '%' }
                                          size={{ width:  ( !this.state.ResizeColWidthOne ? ColWidthOne : this.state.ResizeColWidthOne + '%' )}}
                                          enable={{right:true, bottom:true}}
                                          handleClasses={ {
                                              right: 'ub_handle-right',
                                          } }
-                                         grid={ ( columns === 2 ? [ width / 1000, 1 ] : [ width / 20, 1 ] ) }
+                                         grid={ [ width / 1000, 1 ] }
                                          onResize = {( event, direction, elt ) => {
                                              let firstCol;
                                              let secondCol;
-                                             let widthCol;
+                                             let sumCol;
+                                             let sumColstate;
                                              if ( columns === 2 ) {
                                                  firstCol = Math.round( parseFloat( elt.style.width ) * 10 ) / 10;
                                                  secondCol = Math.round( ( 100 - firstCol ) * 10 ) / 10;
                                              } else if ( columns === 3 ) {
                                                  firstCol = Math.round( parseFloat( elt.style.width ) * 10 ) / 10;
-                                                 widthCol = ( Math.round ( parseFloat ( ColWidthOne ) ) );
-                                                 secondCol = ( Math.round( ( widthCol - firstCol ) * 10 ) / 10 );
+                                                 sumCol = ( Math.round( parseFloat( ColWidthOne ) ) ) + ( Math.round( parseFloat( ColWidthTwo ) ) ) ;
+                                                 sumColstate = this.state.ResizeColWidthOne + this.state.ResizeColWidthTwo ;
+                                                 secondCol = ( Math.round( ( ( ! this.state.ResizeColWidthOne ? sumCol : sumColstate ) - firstCol ) * 10 ) / 10 );
                                              }
                                              this.setState( {
                                                  display: 'block',
@@ -272,14 +274,14 @@ export default class RowEditor extends Component {
                                          onResizeStop = {( event, direction, elt ) => {
                                              let firstCol;
                                              let secondCol;
-                                             let widthCol;
+                                             let sumCol;
                                              if ( columns === 2 ) {
                                                  firstCol = Math.round( parseFloat( elt.style.width ) * 10 ) / 10;
                                                  secondCol = Math.round( ( 100 - firstCol ) * 10 ) / 10;
                                              } else if ( columns === 3 ) {
                                                  firstCol = Math.round( parseFloat( elt.style.width ) * 10 ) / 10;
-                                                 widthCol = ( Math.round ( parseFloat ( ColWidthOne ) ) );
-                                                 secondCol =  ( Math.round( ( widthCol - firstCol  ) * 10 ) / 10 );
+                                                 sumCol = ( Math.round( parseFloat( this.state.ResizeColWidthOne ) ) ) + ( Math.round( parseFloat( this.state.ResizeColWidthTwo ) ) ) ;
+                                                 secondCol =  ( Math.round( ( sumCol - firstCol  ) * 10 ) / 10 );
                                              }
                                              this.setState( {
                                                  display: 'none',
@@ -302,40 +304,49 @@ export default class RowEditor extends Component {
                                              <Resizable
                                                  style={style}
                                                  className="ub-editor-row-column_right"
-                                                 minWidth="10%"
-                                                 maxWidth="90%"
-                                                 size={{ width:  ( !this.state.ResizeColWidthThree ? ( ( parseFloat ( ColWidthOne) ) + ( parseFloat ( ColWidthThree ) ) + '%') : this.state.ResizeColWidthThree + '%' )}}
+                                                 minWidth= { !this.state.ResizeColWidthOne ? ( ( ( Math.round ( parseFloat ( ColWidthOne ) ) ) + ( Math.round ( parseFloat ( ColWidthTwo ) ) ) ) - ( Math.round ( parseFloat ( ColWidthOne ) ) ) + 10  ) + '%' : ( ( ( Math.round ( parseFloat ( this.state.ResizeColWidthOne ) ) ) + ( Math.round ( parseFloat ( this.state.ResizeColWidthTwo ) ) ) ) - ( Math.round ( parseFloat ( this.state.ResizeColWidthTwo ) ) ) + 15  ) + '%' }
+                                                 maxWidth= "90%"
+                                                 size={{ width:  ( !this.state.ResizeColWidthThree ? ( parseFloat ( ColWidthOne ) ) + ( parseFloat ( ColWidthTwo ) ) + '%' : ( (! this.state.ResizeColWidthOne ? ( parseFloat ( ColWidthOne ) ) : this.state.ResizeColWidthOne ) + this.state.ResizeColWidthTwo ) + '%' )}}
                                                  enable={{right:true}}
                                                  handleClasses={ {
                                                      right: 'ub_handle-left',
                                                  } }
-                                                 grid={ ( columns === 3 ? [ width / 1000, 1 ] : [ width / 20, 1 ] ) }
+                                                 grid={ [ width / 1000, 1 ] }
                                                  onResize = {(event, direction, elt) => {
+                                                     let secondColStart;
                                                      let secondCol;
                                                      let threeCol;
                                                      if ( columns === 3 ) {
-                                                         secondCol = Math.round(parseFloat(elt.style.width) * 10) / 10;
-                                                         threeCol = Math.round((100 - secondCol) * 10) / 10;
+                                                         secondColStart = Math.round(parseFloat(elt.style.width) * 10) / 10;
+                                                         secondCol = Math.round( ( secondColStart - ( parseFloat ( this.state.ResizeColWidthOne ? this.state.ResizeColWidthOne : ColWidthOne ) ) ) * 10 ) / 10;
+                                                         threeCol = Math.round( ( 100 - ( parseFloat ( ! this.state.ResizeColWidthOne ? ColWidthOne : this.state.ResizeColWidthOne ) + secondCol ) ) * 10 ) / 10;
                                                      }
                                                      this.setState( {
                                                          displaythree: 'block',
                                                          secondWidth: secondCol,
                                                          threeWidth: threeCol,
+                                                         ResizeColWidthTwo: secondCol,
+                                                         ResizeColWidthThree: threeCol,
                                                      } );
                                                  }}
                                                  onResizeStop = {(event, direction, elt) => {
+                                                     let firstCol;
+                                                     let secondColStart;
                                                      let secondCol;
                                                      let threeCol;
                                                      if ( columns === 3 ) {
-                                                         secondCol = Math.round( parseFloat( elt.style.width ) * 10 ) / 10;
-                                                         threeCol = Math.round( ( 100 - secondCol ) * 10 ) / 10;
+                                                         firstCol = !this.state.ResizeColWidthOne ? parseFloat( ColWidthOne ) : this.state.ResizeColWidthOne;
+                                                         secondColStart = Math.round(parseFloat(elt.style.width) * 10) / 10;
+                                                         secondCol = Math.round( ( secondColStart - ( parseFloat ( this.state.ResizeColWidthOne ? this.state.ResizeColWidthOne : ColWidthOne ) ) ) * 10 ) / 10;
+                                                         threeCol = Math.round( ( 100 - ( parseFloat ( ! this.state.ResizeColWidthOne ? ColWidthOne : this.state.ResizeColWidthOne ) + secondCol ) ) * 10 ) / 10;
                                                      }
                                                      this.setState( {
+                                                         displaythree: 'none',
                                                          secondWidth: null,
                                                          threeWidth: null,
+                                                         ResizeColWidthOne: firstCol,
                                                          ResizeColWidthTwo: secondCol,
                                                          ResizeColWidthThree: threeCol,
-                                                         displaythree: 'none',
                                                      } );
                                                  }}
                                                  axis="x"

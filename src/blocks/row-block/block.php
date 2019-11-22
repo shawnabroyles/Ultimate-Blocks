@@ -3,7 +3,7 @@ function ub_render_row_column_block($attributes){
     global $post;
     $blocks = parse_blocks( $post->post_content );
     $result = '';
-    var_dump($blocks);
+    //var_dump($blocks);
     for($b=0; $b< count($blocks); $b++) {
         $block = $blocks[$b];
         $sizeCol = array();

@@ -47,7 +47,102 @@ export default class RowEditor extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        console.log('componentDidUpdate');
+        const {
+            attributes:{
+                colSection,
+                mode,
+                ColWidthOne,
+                ColWidthTwo,
+                ColWidthThree,
+                ColWidthFour,
+                ColWidthFive,
+                ColWidthSix,
+            },
+            setAttributes,
+        } = this.props;
+
+        if( prevProps !== this.props ) {
+            if ('equal-two' === colSection) {
+                if( mode === '' ) {
+                    setAttributes({ColWidthOne: '50%'});
+                    setAttributes({ColWidthTwo: '50%'});
+                }
+            } else if ('left-golden' === colSection) {
+                if( mode === '' ) {
+                    setAttributes({ColWidthOne: '66.6%'});
+                    setAttributes({ColWidthTwo: '33.3%'});
+                }
+            } else if ('right-golden' === colSection) {
+                if( mode === '' ) {
+                    setAttributes({ColWidthOne: '33.3%'});
+                    setAttributes({ColWidthTwo: '66%.6'});
+                }
+            } else if ('equal-three' === colSection) {
+                if( mode === '' ) {
+                    setAttributes({ColWidthOne: '33.3%'});
+                    setAttributes({ColWidthTwo: '33.3%'});
+                    setAttributes({ColWidthThree: '33.3%'});
+                }
+            } else if ('left-half' === colSection) {
+                if( mode === '' ) {
+                    setAttributes({ColWidthOne: '50%'});
+                    setAttributes({ColWidthTwo: '25%'});
+                    setAttributes({ColWidthThree: '25%'});
+                }
+            } else if ('right-half' === colSection) {
+                if( mode === '' ) {
+                    setAttributes({ColWidthOne: '25%'});
+                    setAttributes({ColWidthTwo: '25%'});
+                    setAttributes({ColWidthThree: '50%'});
+                }
+            } else if ('center-half' === colSection) {
+                if( mode === '' ) {
+                    setAttributes({ColWidthOne: '25%'});
+                    setAttributes({ColWidthTwo: '50%'});
+                    setAttributes({ColWidthThree: '25%'});
+                }
+            } else if ('center-wide' === colSection) {
+                if( mode === '' ) {
+                    setAttributes({ColWidthOne: '20%'});
+                    setAttributes({ColWidthTwo: '60%'});
+                    setAttributes({ColWidthThree: '20%'});
+                }
+            } else if ('center-exwide' === colSection) {
+                if( mode === '' ) {
+                    setAttributes({ColWidthOne: '15%'});
+                    setAttributes({ColWidthTwo: '70%'});
+                    setAttributes({ColWidthThree: '15%'});
+                }
+            } else if ('equal-four' === colSection) {
+                setAttributes({ColWidthOne: '25%'});
+                setAttributes({ColWidthTwo: '25%'});
+                setAttributes({ColWidthThree: '25%'});
+                setAttributes({ColWidthFour: '25%'});
+            } else if ('left-forty' === colSection) {
+                setAttributes({ColWidthOne: '40%'});
+                setAttributes({ColWidthTwo: '20%'});
+                setAttributes({ColWidthThree: '20%'});
+                setAttributes({ColWidthFour: '20%'});
+            } else if ('right-forty' === colSection) {
+                setAttributes({ColWidthOne: '20%'});
+                setAttributes({ColWidthTwo: '20%'});
+                setAttributes({ColWidthThree: '20%'});
+                setAttributes({ColWidthFour: '40%'});
+            } else if ('equal-five' === colSection) {
+                setAttributes({ColWidthOne: '20%'});
+                setAttributes({ColWidthTwo: '20%'});
+                setAttributes({ColWidthThree: '20%'});
+                setAttributes({ColWidthFour: '20%'});
+                setAttributes({ColWidthFive: '20%'});
+            } else if ('equal-six' === colSection) {
+                setAttributes({ColWidthOne: '16.2%'});
+                setAttributes({ColWidthTwo: '16.2%'});
+                setAttributes({ColWidthThree: '16.2%'});
+                setAttributes({ColWidthFour: '16.2%'});
+                setAttributes({ColWidthFive: '16.2%'});
+                setAttributes({ColWidthSix: '16.2%'});
+            }
+        }
     }
 
 
@@ -57,8 +152,8 @@ export default class RowEditor extends Component {
             attributes:{
                 colSection,
                 columns,
+                mode,
                 startOptions,
-                columnsUnlocked,
                 blockAlignment,
                 ColWidthOne,
                 ColWidthTwo,
@@ -72,8 +167,8 @@ export default class RowEditor extends Component {
         } = this.props;
 
         const createColumn = (col) => {
-            createBlock('ub/row-column',{});
-            return times( col, col => ['ub/row-column',{}]);
+            createBlock('ub/row-column', {} );
+            return times( col, col => [ 'ub/row-column', {} ] );
         };
 
         console.log(clientId);
@@ -98,69 +193,6 @@ export default class RowEditor extends Component {
             { key: 'equal-six', col: 6, name: __( 'Size: 6-|16%|' ), icon: icons.sixcol },
         ];
 
-        if ( 'equal-two' === colSection ) {
-            setAttributes( { ColWidthOne: '50%' } );
-            setAttributes( { ColWidthTwo: '50%' } );
-        }else if('left-golden' === colSection){
-            setAttributes({ColWidthOne: '66.6%'});
-            setAttributes({ColWidthTwo: '33.3%'});
-        }else if('right-golden' === colSection){
-            setAttributes({ColWidthOne: '33.3%'});
-            setAttributes({ColWidthTwo: '66%.6'});
-        }else if('equal-three' === colSection){
-            setAttributes({ColWidthOne: '33.3%'});
-            setAttributes({ColWidthTwo: '33.3%'});
-            setAttributes({ColWidthThree: '33.3%'});
-        }else if('left-half' === colSection){
-            setAttributes({ColWidthOne: '50%'});
-            setAttributes({ColWidthTwo: '25%'});
-            setAttributes({ColWidthThree: '25%'});
-        }else if('right-half' === colSection){
-            setAttributes({ColWidthOne: '25%'});
-            setAttributes({ColWidthTwo: '25%'});
-            setAttributes({ColWidthThree: '50%'});
-        }else if('center-half' === colSection){
-            setAttributes({ColWidthOne: '25%'});
-            setAttributes({ColWidthTwo: '50%'});
-            setAttributes({ColWidthThree: '25%'});
-        }else if('center-wide' === colSection){
-            setAttributes({ColWidthOne: '20%'});
-            setAttributes({ColWidthTwo: '60%'});
-            setAttributes({ColWidthThree: '20%'});
-        }else if('center-exwide' === colSection){
-            setAttributes({ColWidthOne: '15%'});
-            setAttributes({ColWidthTwo: '70%'});
-            setAttributes({ColWidthThree: '15%'});
-        }else if('equal-four' === colSection){
-            setAttributes({ColWidthOne: '25%'});
-            setAttributes({ColWidthTwo: '25%'});
-            setAttributes({ColWidthThree: '25%'});
-            setAttributes({ColWidthFour: '25%'});
-        }else if('left-forty' === colSection){
-            setAttributes({ColWidthOne: '40%'});
-            setAttributes({ColWidthTwo: '20%'});
-            setAttributes({ColWidthThree: '20%'});
-            setAttributes({ColWidthFour: '20%'});
-        }else if('right-forty' === colSection){
-            setAttributes({ColWidthOne: '20%'});
-            setAttributes({ColWidthTwo: '20%'});
-            setAttributes({ColWidthThree: '20%'});
-            setAttributes({ColWidthFour: '40%'});
-        }else if('equal-five' === colSection){
-            setAttributes({ColWidthOne: '20%'});
-            setAttributes({ColWidthTwo: '20%'});
-            setAttributes({ColWidthThree: '20%'});
-            setAttributes({ColWidthFour: '20%'});
-            setAttributes({ColWidthFive: '20%'});
-        }else if('equal-six' === colSection){
-            setAttributes({ColWidthOne: '16.2%'});
-            setAttributes({ColWidthTwo: '16.2%'});
-            setAttributes({ColWidthThree: '16.2%'});
-            setAttributes({ColWidthFour: '16.2%'});
-            setAttributes({ColWidthFive: '16.2%'});
-            setAttributes({ColWidthSix: '16.2%'});
-        }
-
         const style = {
             display: "flex",
             alignItems: "center",
@@ -178,7 +210,6 @@ export default class RowEditor extends Component {
                 </BlockControls>
                 <div className='ub-section-overhad-wrap'>
                     { !colSection &&(
-                        console.log('Let start'),
                         <div className='ub-section-block-wrap'>
                           <div className="ub-select-section">
                             <div className="ub-select-section-title">
@@ -290,6 +321,11 @@ export default class RowEditor extends Component {
                                                  ResizeColWidthOne: firstCol,
                                                  ResizeColWidthTwo: secondCol,
                                              } );
+                                             setAttributes({
+                                                 ColWidthOne: this.state.ResizeColWidthOne+'%',
+                                                 ColWidthTwo: this.state.ResizeColWidthTwo+'%',
+                                                 mode: 'edit',
+                                             });
                                          }}
                                          axis="x"
                                      ><span className="left-column-width-size-top" style={{ display: this.state.display }}>{!this.state.ResizeColWidthOne ? ColWidthOne : this.state.firstWidth + '%'}</span>
@@ -328,6 +364,10 @@ export default class RowEditor extends Component {
                                                          ResizeColWidthTwo: secondCol,
                                                          ResizeColWidthThree: threeCol,
                                                      } );
+                                                     setAttributes( {
+                                                         ColWidthThree: this.state.ResizeColWidthThree+'%',
+                                                         mode: 'edit',
+                                                     } );
                                                  }}
                                                  onResizeStop = {(event, direction, elt) => {
                                                      let firstCol;
@@ -348,6 +388,9 @@ export default class RowEditor extends Component {
                                                          ResizeColWidthTwo: secondCol,
                                                          ResizeColWidthThree: threeCol,
                                                      } );
+                                                     setAttributes( {
+                                                             ColWidthThree: this.state.ResizeColWidthThree+'%',
+                                                         } );
                                                  }}
                                                  axis="x"
                                              >

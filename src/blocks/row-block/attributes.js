@@ -7,9 +7,9 @@ const attributes = {
         type: 'number',
         default: 2,
     },
-    columnsUnlocked: {
-        type: 'bool',
-        default: true,
+    mode: {
+        type: 'string',
+        default: '',
     },
     blockAlignment: {
         type: 'string',

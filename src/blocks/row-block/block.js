@@ -50,5 +50,5 @@ export default registerBlockType( 'ub/row-block', {
            </Fragment>
         )
     }),
-    save: () => <InnerBlocks.Content />
+    save:() => <InnerBlocks.Content/>
 });

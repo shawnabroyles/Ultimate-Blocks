@@ -1,11 +1,15 @@
 const attributes = {
+    blockID: {
+        type: 'string',
+        default: ''
+    },
     colSection: {
         type: 'string',
         default: '',
     },
     columns: {
         type: 'number',
-        default: 2,
+        default: 1,
     },
     mode: {
         type: 'string',
@@ -79,11 +83,19 @@ const attributes = {
         type: 'number',
         default: 0
     },
+    gutter: {
+        type: 'string',
+        default: '0px',
+    },
     textColor: {
         type: 'string',
         default: '',
     },
-    WrapTag:{
+    wrapColor: {
+        type: 'string',
+        background: '#ffffff',
+    },
+    wrapTag: {
         type: 'string',
         default: 'div',
     },

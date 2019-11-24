@@ -41,8 +41,17 @@ export default registerBlockType( 'ub/row-block', {
             select('core/block-editor') || select('core/editor')
         ).getBlock(ownProps.clientId)
     }))( props => {
-        const { block } = props;
-        const { setAttributes } = props;
+        const {
+            block: {
+                clientId,
+            } } = props;
+        const {
+            attributes:{
+              blockID,
+            },
+            setAttributes } = props;
+
+        setAttributes({ blockID: clientId });
         return(
            <Fragment>
                <Inspector {...props}/>

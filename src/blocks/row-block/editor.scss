@@ -40,21 +40,21 @@
     .components-button-group{
 
          .ub-section-btn{
-              height: 49px;
-              border: 0;
-              margin-right: 10px;
-              margin-bottom: 10px;
-              background: transparent;
-              box-shadow: none;
-                   svg{
-                     width: 90px;
-                     height: 45px;
-                   }
+           height: 49px;
+           border: 0;
+           margin-right: 10px;
+           margin-bottom: 10px;
+           background: transparent;
+           box-shadow: none;
+           svg{
+             width: 90px;
+             height: 45px;
+           }
          }
-    }
+       }
 
     .components-button-group .ub-section-btn:hover svg rect{
-         fill: #666666;
+      fill: #666666;
     }
 
 }
@@ -156,6 +156,45 @@
    }
 }
 //Inspector style
+.ub-select-layout-grid{
+
+  .components-button-group{
+
+    .ub-section-btn{
+      height: 25px;
+      border: 0;
+      margin-right: 10px;
+      margin-bottom: 10px;
+      background: transparent;
+      box-shadow: none;
+      svg{
+        width: 50px;
+        height: 25px;
+      }
+    }
+
+    .components-button .is-default:active,
+    .components-button .is-default:focus{
+      background: #ffffff;
+      border-color: #ffffff;
+      box-shadow: none;
+    }
+  }
+
+  .components-button-group .ub-section-btn:hover svg rect{
+    fill: #666666;
+  }
+
+  label{
+     margin: 5% 1%;
+  };
+  .components-base-control__field{
+    margin-bottom: 1px;
+  }
+  p{
+    margin: 5% 1%;
+  }
+}
 
 .ub-layout-wrap_margin_box{
   display: flex;
@@ -194,7 +233,6 @@
   .margin-st_box2{
     display: flex;
     flex-direction: row;
-    border: 1px solid #ddd;
     border-left: 0px;
     border-right: 0px;
 
@@ -214,7 +252,7 @@
 
       .padding-st_box1{
         display: flex;
-        border-right: 1px solid #ddd;
+        border-top: 1px solid #ddd;
 
          p,.components-base-control__field{
            margin: 0;
@@ -230,7 +268,7 @@
       }
 
       .padding-st_box3{
-        border-right: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
       }
     }
     .margin-col-3{

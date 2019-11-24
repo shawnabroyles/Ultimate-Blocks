@@ -1,5 +1,7 @@
 // import CSS.
 import './editor.scss';
+import icons from "./icons/icons";
+import map from "lodash/map";
 
 // Setup the block
 const { __ } = wp.i18n;
@@ -13,7 +15,8 @@ const {
     MediaUpload,
     InnerBlocks,
     InspectorControls,
-} = wp.blockEditor;
+    ColorPalette,
+} = wp.blockEditor || wp.editor;
 
 const {
     Button,
@@ -39,6 +42,9 @@ export default class Inspector extends Component {
         const {
             attributes: {
                 startOptions,
+                colSection,
+                columns,
+                mode,
                 marginTopWrap,
                 marginBottomWrap,
                 marginLeftWrap,
@@ -47,13 +53,91 @@ export default class Inspector extends Component {
                 paddingBottomWrap,
                 paddingLeftWrap,
                 paddingRightWrap,
-                WrapTag,
                 borderWrap,
+                wrapColor,
+                gutter,
+                wrapTag,
             },
             setAttributes,
         } = this.props;
 
         console.log(this.props);
+
+        const columnTypeTwo = [
+            { key: 'equal-two', col: 2, icon: icons.twocol },
+            { key: 'left-golden', col: 2, icon: icons.twoleftgolden },
+            { key: 'right-golden', col: 2, icon: icons.tworightgolden },
+        ];
+
+        const columnTypeThree = [
+            { key: 'equal-three', col: 3, icon: icons.threecol },
+            { key: 'left-half', col: 3, icon: icons.lefthalf },
+            { key: 'right-half', col: 3, icon: icons.righthalf },
+            { key: 'center-half', col: 3, icon: icons.centerhalf },
+            { key: 'center-wide', col: 3, icon: icons.widecenter },
+            { key: 'center-exwide', col: 3, icon: icons.exwidecenter },
+        ];
+
+        const columnTypeFour = [
+            { key: 'equal-four', col: 4, icon: icons.fourcol },
+            { key: 'left-forty', col: 4, icon: icons.lfourforty },
+            { key: 'right-forty', col: 4, icon: icons.rfourforty }
+        ];
+
+        const columnTypeFive = [
+
+        ];
+
+        const columnTypeSix = [
+
+        ];
+
+        let selectTypeColumn;
+
+        if( columns == 2 ){
+            selectTypeColumn = columnTypeTwo;
+        } else if ( columns == 3 ){
+            selectTypeColumn = columnTypeThree;
+        } else if ( columns == 4 ){
+            selectTypeColumn == columnTypeFive;
+        }
+
+        const selectGrid = (props) => (
+            <Fragment>
+                <div className="ub-select-layout-grid">
+                    <p>Select column type for column: {columns} </p>
+                    <ButtonGroup aria-label={ __( 'Select Type Column' ) }>
+                        { map( selectTypeColumn, ( { key, icon, col } ) => (
+                            <Button
+                                key={ key }
+                                className="ub-section-btn"
+                                isSmall
+                                onClick={ (props) => setAttributes( {
+                                    colSection: key,
+                                    columns: col,
+                                    mode: '',
+                                } ) }
+                            >
+                                { icon }
+                            </Button>
+                        ) ) }
+                    </ButtonGroup>
+                    <SelectControl
+                        label={ __( 'Size Gutter' ) }
+                        value={ gutter }
+                        options={ [
+                            { value: 'None', label: __( 'None 0px' ) },
+                            { value: 'Small', label: __( 'Small 4px' ) },
+                            { value: 'Medium', label: __( 'Medium 12px' ) },
+                            { value: 'Large', label: __( 'Large 34px' ) },
+                            { value: 'Huge', label: __( 'Huge 88px' ) },
+                        ] }
+                        onChange={ value => setAttributes( { gutter: value } ) }
+                    />
+                    <p>Space between each column.</p>
+                </div>
+            </Fragment>
+        )
 
         const startSetting = (
             <Fragment>
@@ -130,7 +214,7 @@ export default class Inspector extends Component {
                                         />
                                     </div>
                                 </div>
-                                <div className="margin-st_box3">
+                                <div className="padding-st_box3">
                                     <RangeControl
                                         value={ paddingBottomWrap }
                                         onChange={ value => {
@@ -184,14 +268,22 @@ export default class Inspector extends Component {
                 <PanelBody
                     title={ __( 'Background Setting Wrap' ) }
                     initialOpen={ false }
-                />
+                >
+                    <ColorPalette
+                        value={wrapColor}
+                        onChange={colorBackground =>
+                            setAttributes({ wrapColor: colorBackground })
+                        }
+                        allowReset
+                    />
+                </PanelBody>
                 <PanelBody
                     title={ __( 'Stucture Setting' ) }
                     initialOpen={ false }
                 >
                     <SelectControl
                         label={ __( 'Wrap HTML tag' ) }
-                        value={ WrapTag }
+                        value={ wrapTag }
                         options={ [
                             { value: 'div', label: __( 'div' ) },
                             { value: 'header', label: __( 'header' ) },
@@ -201,7 +293,7 @@ export default class Inspector extends Component {
                             { value: 'aside', label: __( 'aside' ) },
                             { value: 'footer', label: __( 'footer' ) },
                         ] }
-                        onChange={ value => setAttributes( { WrapTag: value } ) }
+                        onChange={ value => setAttributes( { wrapTag: value } ) }
                     />
                 </PanelBody>
                 <PanelBody
@@ -215,6 +307,9 @@ export default class Inspector extends Component {
 
         return[
             <Fragment>
+                <InspectorControls>
+                    {selectGrid}
+                </InspectorControls>
                 <InspectorControls>
                     {startSetting}
                 </InspectorControls>

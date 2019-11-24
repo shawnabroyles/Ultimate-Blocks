@@ -161,6 +161,8 @@ export default class RowEditor extends Component {
                 ColWidthFour,
                 ColWidthFive,
                 ColWidthSix,
+                wrapColor,
+                wrapTag,
             },
             block:{clientId},
             setAttributes,
@@ -210,32 +212,32 @@ export default class RowEditor extends Component {
                 </BlockControls>
                 <div className='ub-section-overhad-wrap'>
                     { !colSection &&(
-                        <div className='ub-section-block-wrap'>
-                          <div className="ub-select-section">
-                            <div className="ub-select-section-title">
-                                { __( 'Select section' ) }
-                            </div>
-                            <ButtonGroup aria-label={ __( 'Column Section' ) }>
-                                { map( startSectionOptions, ( { name, key, icon, col } ) => (
-                                    <Tooltip text={ name }>
-                                        <Button
-                                            key={ key }
-                                            className="ub-section-btn"
-                                            isSmall
-                                            onClick={ (props) => setAttributes( {
-                                                colSection: key,
-                                                columns: col,
-                                            } ) }
-                                        >
-                                            { icon }
-                                        </Button>
-                                    </Tooltip>
-                                ) ) }
-                            </ButtonGroup>
-                        </div>
+                       <div className='ub-section-block-wrap'>
+                         <div className="ub-select-section">
+                           <div className="ub-select-section-title">
+                               { __( 'Select section' ) }
+                           </div>
+                           <ButtonGroup aria-label={ __( 'Column Section' ) }>
+                               { map( startSectionOptions, ( { name, key, icon, col } ) => (
+                                   <Tooltip text={ name }>
+                                       <Button
+                                           key={ key }
+                                           className="ub-section-btn"
+                                           isSmall
+                                           onClick={ (props) => setAttributes( {
+                                               colSection: key,
+                                               columns: col,
+                                           } ) }
+                                       >
+                                           { icon }
+                                       </Button>
+                                   </Tooltip>
+                               ) ) }
+                           </ButtonGroup>
+                       </div>
                     </div>)}
                     { colSection && 1 === columns &&(
-                        <div className="ub-section-column-wrap">
+                        <div className="ub-section-column-wrap" style={ { background: wrapColor } }>
                             <div style={{
                                 display: "flex",
                                 alignItems: "center",
@@ -252,7 +254,7 @@ export default class RowEditor extends Component {
                     )}
                     { colSection && columns && 1 !== columns && 4 !== columns && 5 !== columns && 6 !== columns &&(
                         <Fragment>
-                             <div className="ub-section-column-wrap">
+                             <div className="ub-section-column-wrap" style={ { background: wrapColor } }>
                                  <style>
                                      { columns && columns === 2 && (
                                      <Fragment>
@@ -411,7 +413,17 @@ export default class RowEditor extends Component {
                     )}
                     { colSection && columns && 1 !== columns && 2 !== columns && 3 !== columns &&(
                         <Fragment>
-                            <div className="ub-section-column-wrap">
+                            <div className="ub-section-column-wrap" style={ { background: wrapColor } }>
+                                <style>
+                                    <Fragment>
+                                        { `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( ColWidthOne ) }%; }` }
+                                        { `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( ColWidthTwo ) }%; }` }
+                                        { `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(3) { flex: 0 1 ${ parseFloat( ColWidthThree ) }%; }` }
+                                        { `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(4) { flex: 0 1 ${ parseFloat( ColWidthFour ) }%; }` }
+                                        { `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(5) { flex: 0 1 ${ parseFloat( ColWidthFive ) }%; }` }
+                                        { `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(6) { flex: 0 1 ${ parseFloat( ColWidthSix ) }%; }` }
+                                    </Fragment>
+                                </style>
                                 <InnerBlocks
                                     template={createColumn( columns )}
                                     templateLock={'all'}

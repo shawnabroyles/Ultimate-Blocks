@@ -12,6 +12,7 @@ function ub_render_row_block($attributes){
         $coutColumns = '';
         $gutter = '';
         $colorBackground = '';
+        $backgroundImg = '';
         $sizeCol = array();
         $col = $block['attrs'];
         foreach ($col as $key => $item) {
@@ -35,6 +36,8 @@ function ub_render_row_block($attributes){
                 $gutter = $item;
             } elseif ($key == 'wrapColor') {
                 $colorBackground = $item;
+            } elseif ($key == 'imgURL') {
+                $backgroundImg = $item;
             }
         }
         //var_dump($col);
@@ -42,7 +45,7 @@ function ub_render_row_block($attributes){
         //var_dump($block);
         if ($attributes['blockID'] === $blockID) {
             $result .= '<div class="ub-single-section-block" style="margin:' . $attributes['marginTopWrap'] . 'px ' . $attributes['marginRightWrap'] . 'px ' .
-                $attributes['marginBottomWrap'] . 'px ' . $attributes['marginLeftWrap'] . 'px' . ';background-color:'.$colorBackground.'">';
+                $attributes['marginBottomWrap'] . 'px ' . $attributes['marginLeftWrap'] . 'px' . '; background-image: url('.$backgroundImg.'); background-size: '. $attributes['wrapBackgoundSize'] .'; background-color:'.$colorBackground.'">';
             for ($i = 0; $i < count($columns); $i++) {
                 $cS = count($columns);
                 if ($coutColumns == $cS && $attributes['gutter'] == 'None') {

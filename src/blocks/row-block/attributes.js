@@ -11,9 +11,9 @@ const attributes = {
         type: 'number',
         default: 1,
     },
-    mode: {
-        type: 'string',
-        default: '',
+    inspectorTypeColumn: {
+        type: 'bool',
+        default: false
     },
     blockAlignment: {
         type: 'string',
@@ -91,13 +91,40 @@ const attributes = {
         type: 'string',
         default: '',
     },
+    wrapTag: {
+        type: 'string',
+        default: 'div',
+    },
     wrapColor: {
         type: 'string',
         background: '#ffffff',
     },
-    wrapTag: {
+    wrapBackgoundSize: {
         type: 'string',
-        default: 'div',
+        default: 'cover',
+    },
+    wrapBackgroundPosition: {
+        type: 'string',
+        default: 'center center',
+    },
+    wrapBackgroundRepeat: {
+        type: 'string',
+        default: 'no-repeat',
+    },
+    wrapBackgroundAttachment: {
+        type: 'string',
+        default: 'scroll',
+    },
+    imgURL: {
+        type: 'string',
+        default: ''
+    },
+    imgID: {
+        type: 'number'
+    },
+    imgAlt: {
+        type: 'string',
+        default: ''
     },
 };
 

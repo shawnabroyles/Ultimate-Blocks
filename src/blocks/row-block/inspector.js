@@ -28,7 +28,6 @@ const {
     Dashicon,
     PanelBody,
     RangeControl,
-    Toolbar,
     ToggleControl,
     SelectControl,
 } = wp.components;
@@ -44,7 +43,11 @@ export default class Inspector extends Component {
                 startOptions,
                 colSection,
                 columns,
-                mode,
+                inspectorTypeColumn,
+                ColWidthOne,
+                ColWidthTwo,
+                ColWidthThree,
+                ColWidthFour,
                 marginTopWrap,
                 marginBottomWrap,
                 marginLeftWrap,
@@ -54,8 +57,15 @@ export default class Inspector extends Component {
                 paddingLeftWrap,
                 paddingRightWrap,
                 borderWrap,
-                wrapColor,
                 gutter,
+                wrapColor,
+                wrapBackgoundSize,
+                wrapBackgroundPosition,
+                wrapBackgroundRepeat,
+                wrapBackgroundAttachment,
+                imgID,
+                imgURL,
+                imgAlt,
                 wrapTag,
             },
             setAttributes,
@@ -64,24 +74,24 @@ export default class Inspector extends Component {
         console.log(this.props);
 
         const columnTypeTwo = [
-            { key: 'equal-two', col: 2, icon: icons.twocol },
-            { key: 'left-golden', col: 2, icon: icons.twoleftgolden },
-            { key: 'right-golden', col: 2, icon: icons.tworightgolden },
+            { key: 'equal-two', col: 2, One: '50%', Two: '50%', icon: icons.twocol },
+            { key: 'left-golden', col: 2, One: '66%', Two: '33%', icon: icons.twoleftgolden },
+            { key: 'right-golden', col: 2, One: '33%', Two: '66%', icon: icons.tworightgolden },
         ];
 
         const columnTypeThree = [
-            { key: 'equal-three', col: 3, icon: icons.threecol },
-            { key: 'left-half', col: 3, icon: icons.lefthalf },
-            { key: 'right-half', col: 3, icon: icons.righthalf },
-            { key: 'center-half', col: 3, icon: icons.centerhalf },
-            { key: 'center-wide', col: 3, icon: icons.widecenter },
-            { key: 'center-exwide', col: 3, icon: icons.exwidecenter },
+            { key: 'equal-three', col: 3, One: '33%', Two: '33%', Three: '33%', icon: icons.threecol },
+            { key: 'left-half', col: 3, One: '50%', Two: '25%', Three: '25%', icon: icons.lefthalf },
+            { key: 'right-half', col: 3, One: '25%', Two: '25%', Three: '50%', icon: icons.righthalf },
+            { key: 'center-half', col: 3, One: '25%', Two: '50%', Three: '25%', icon: icons.centerhalf },
+            { key: 'center-wide', col: 3, One: '20%', Two: '60%', Three: '20%', icon: icons.widecenter },
+            { key: 'center-exwide', col: 3, One: '15%', Two: '70%', Three: '15%', icon: icons.exwidecenter },
         ];
 
         const columnTypeFour = [
-            { key: 'equal-four', col: 4, icon: icons.fourcol },
-            { key: 'left-forty', col: 4, icon: icons.lfourforty },
-            { key: 'right-forty', col: 4, icon: icons.rfourforty }
+            { key: 'equal-four', col: 4, One: '25%', Two: '25%', Three: '25%', Four: '25%', icon: icons.fourcol },
+            { key: 'left-forty', col: 4, One: '40%', Two: '20%', Three: '20%', Four: '20%', icon: icons.lfourforty },
+            { key: 'right-forty', col: 4, One: '20%', Two: '20%', Three: '20%', Four: '40%', icon: icons.rfourforty }
         ];
 
         const columnTypeFive = [
@@ -99,7 +109,7 @@ export default class Inspector extends Component {
         } else if ( columns == 3 ){
             selectTypeColumn = columnTypeThree;
         } else if ( columns == 4 ){
-            selectTypeColumn == columnTypeFive;
+            selectTypeColumn == columnTypeFour;
         }
 
         const selectGrid = (props) => (
@@ -107,7 +117,7 @@ export default class Inspector extends Component {
                 <div className="ub-select-layout-grid">
                     <p>Select column type for column: {columns} </p>
                     <ButtonGroup aria-label={ __( 'Select Type Column' ) }>
-                        { map( selectTypeColumn, ( { key, icon, col } ) => (
+                        { map( selectTypeColumn, ( { key, icon, col, One, Two, Three, Four } ) => (
                             <Button
                                 key={ key }
                                 className="ub-section-btn"
@@ -115,7 +125,11 @@ export default class Inspector extends Component {
                                 onClick={ (props) => setAttributes( {
                                     colSection: key,
                                     columns: col,
-                                    mode: '',
+                                    ColWidthOne: One,
+                                    ColWidthTwo: Two,
+                                    ColWidthThree: Three,
+                                    ColWidthFour: Four,
+                                    inspectorTypeColumn: true,
                                 } ) }
                             >
                                 { icon }
@@ -269,6 +283,7 @@ export default class Inspector extends Component {
                     title={ __( 'Background Setting Wrap' ) }
                     initialOpen={ false }
                 >
+                    <p>Background Color</p>
                     <ColorPalette
                         value={wrapColor}
                         onChange={colorBackground =>
@@ -276,6 +291,92 @@ export default class Inspector extends Component {
                         }
                         allowReset
                     />
+                    <p>Background Image</p>
+                    <div>
+                    { imgURL ? (
+                        <Fragment>
+                            <img src={imgURL} id={imgID} alt={imgAlt}/>
+                            <Button
+                                className="components-button button button-medium"
+                                onClick = {({props}) => {
+                                      setAttributes({
+                                          imgURL: '',
+                                          imgID: '',
+                                          imgAlt: '',
+                                      })
+                                }}
+                            >
+                            Delete image
+                            </Button>
+                            <SelectControl
+                                label={ __( 'Background Image Size' ) }
+                                value={ wrapBackgoundSize }
+                                options={ [
+                                    { value: 'cover', label: __( 'Cover' ) },
+                                    { value: 'contain', label: __( 'Contain' ) },
+                                    { value: 'auto', label: __( 'Auto' ) },
+                                ] }
+                                onChange={ value => setAttributes( { wrapBackgoundSize: value } ) }
+                            />
+                            <SelectControl
+                                label={ __( 'Background Image Position' ) }
+                                value={ wrapBackgroundPosition }
+                                options={ [
+                                    { value: 'center top', label: __( 'Center Top' ) },
+                                    { value: 'center center', label: __( 'Center Center' ) },
+                                    { value: 'center bottom', label: __( 'Center Bottom' ) },
+                                    { value: 'left top', label: __( 'Left Top' ) },
+                                    { value: 'left center', label: __( 'Left Center' ) },
+                                    { value: 'left bottom', label: __( 'Left Bottom' ) },
+                                    { value: 'right top', label: __( 'Right Top' ) },
+                                    { value: 'right center', label: __( 'Right Center' ) },
+                                    { value: 'right bottom', label: __( 'Right Bottom' ) },
+                                ] }
+                                onChange={ value => setAttributes( { wrapBackgoundPosition: value } ) }
+                            />
+                            <SelectControl
+                                label={ __( 'Background Image Repeat' ) }
+                                value={ wrapBackgroundRepeat }
+                                options={ [
+                                    { value: 'no-repeat', label: __( 'No Repeat' ) },
+                                    { value: 'repeat', label: __( 'Repeat' ) },
+                                    { value: 'repeat-x', label: __( 'Repeat-x' ) },
+                                    { value: 'repeat-y', label: __( 'Repeat-y' ) },
+                                ] }
+                                onChange={ value => setAttributes( { wrapBackgroundRepeat: value } ) }
+                            />
+                            <SelectControl
+                                label={ __( 'Background Image Attachment' ) }
+                                value={ wrapBackgroundAttachment }
+                                options={ [
+                                    { value: 'scroll', label: __( 'Scroll' ) },
+                                    { value: 'fixed', label: __( 'Fixed' ) },
+                                ] }
+                                onChange={ value => setAttributes( { wrapBackgroundAttachment: value } ) }
+                            />
+                        </Fragment>
+                    ) : (
+                        <MediaUpload
+                            onSelect={img =>
+                                setAttributes({
+                                    imgID: img.id,
+                                    imgURL: img.url,
+                                    imgAlt: img.alt
+                                })
+                            }
+                            type="image"
+                            value={imgID}
+                            render={({open}) => (
+                                <Button
+                                    className="components-button button button-medium"
+                                    onClick={open}
+                                >
+                                    {__('Upload Image')}
+                                </Button>
+                            )}
+                        />)
+                    }
+                    </div>
                 </PanelBody>
                 <PanelBody
                     title={ __( 'Stucture Setting' ) }

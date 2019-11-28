@@ -101,7 +101,7 @@ function ub_countdown_add_frontend_assets() {
         if($block['blockName'] == 'ub/countdown'){
             wp_enqueue_script(
                 'ultimate_blocks-countdown-script',
-                plugins_url( 'countdown/front.build.js', dirname( __FILE__ ) ),
+                plugins_url( 'countdown/front.js', dirname( __FILE__ ) ),
                 array(  ),
                 Ultimate_Blocks_Constants::plugin_version(),
                 true

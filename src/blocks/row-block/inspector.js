@@ -48,6 +48,7 @@ export default class Inspector extends Component {
                 ColWidthTwo,
                 ColWidthThree,
                 ColWidthFour,
+                selectUnits,
                 marginTopWrap,
                 marginBottomWrap,
                 marginLeftWrap,
@@ -56,10 +57,11 @@ export default class Inspector extends Component {
                 paddingBottomWrap,
                 paddingLeftWrap,
                 paddingRightWrap,
-                borderWrap,
                 gutter,
                 wrapColor,
-                wrapBackgoundSize,
+                wrapBorderColor,
+                wrapBorder,
+                wrapBackgroundSize,
                 wrapBackgroundPosition,
                 wrapBackgroundRepeat,
                 wrapBackgroundAttachment,
@@ -67,6 +69,7 @@ export default class Inspector extends Component {
                 imgURL,
                 imgAlt,
                 wrapTag,
+                textColor,
             },
             setAttributes,
         } = this.props;
@@ -159,6 +162,63 @@ export default class Inspector extends Component {
                     title={ __( 'Margin | Padding | Border Wrap' ) }
                     initialOpen={ false }
                 >
+                    <div className="ub-layout-wrap-select-units">
+                        <style>
+                            { selectUnits == 'px' ? `.ub-layout-wrap-select-units .components-button-group .components-button:nth-child(1) { background: #f53d3d; border: 1px solid #f53d3d; border-radius: 5px; }` : '' }
+                            { selectUnits == 'vh' ? `.ub-layout-wrap-select-units .components-button-group .components-button:nth-child(2) { background: #f53d3d; border: 1px solid #f53d3d; border-radius: 5px; }` : '' }
+                            { selectUnits == '%' ? `.ub-layout-wrap-select-units .components-button-group .components-button:nth-child(3) { background: #f53d3d; border: 1px solid #f53d3d; border-radius: 5px; }` : '' }
+                            { selectUnits == 'rem' ? `.ub-layout-wrap-select-units .components-button-group .components-button:nth-child(4) { background: #f53d3d; border: 1px solid #f53d3d; border-radius: 5px; }` : '' }
+                            { selectUnits == 'em' ? `.ub-layout-wrap-select-units .components-button-group .components-button:nth-child(5) { background: #f53d3d; border: 1px solid #f53d3d; border-radius: 5px; }` : '' }
+                        </style>
+                        <p>Select units</p>
+                        <ButtonGroup>
+                            <Button
+                                onClick = {(props) =>{
+                                    setAttributes({
+                                       selectUnits: 'px',
+                                    });
+                                }}
+                            >
+                                px
+                            </Button>
+                            <Button
+                                onClick = { () =>{
+                                    setAttributes({
+                                        selectUnits: 'vh',
+                                    });
+                                }}
+                            >
+                                vh
+                            </Button>
+                            <Button
+                                onClick = { () =>{
+                                    setAttributes({
+                                        selectUnits: '%',
+                                    });
+                                }}
+                            >
+                                %
+                            </Button>
+                            <Button
+                                onClick = { () =>{
+                                    setAttributes({
+                                        selectUnits: 'rem',
+                                    });
+                                }}
+                            >
+                                rem
+                            </Button>
+                            <Button
+                                onClick = { () =>{
+                                    setAttributes({
+                                        selectUnits: 'em',
+                                    });
+                                }}
+                            >
+                                em
+                            </Button>
+                        </ButtonGroup>
+                    </div>
                     <div className="ub-layout-wrap_margin_box">
                         <div className="margin-st_box1">
                             <RangeControl
@@ -267,16 +327,26 @@ export default class Inspector extends Component {
                             />
                         </div>
                     </div>
+                    <p>Border Color</p>
+                    <ColorPalette
+                        value={ wrapBorderColor }
+                        onChange={ value =>
+                            setAttributes({
+                                wrapBorderColor: value
+                            })
+                        }
+                        allowReset
+                    />
                     <RangeControl
                         label = {__( 'Border Size' )}
-                        value={ borderWrap }
+                        value={ wrapBorder }
                         onChange={ value => {
                             setAttributes({
-                                borderWrap: value
+                                wrapBorder: value
                             });
                         }}
                         min={ 0 }
-                        max={ 100 }
+                        max={ 50 }
                     />
                 </PanelBody>
                 <PanelBody
@@ -310,13 +380,13 @@ export default class Inspector extends Component {
                             </Button>
                             <SelectControl
                                 label={ __( 'Background Image Size' ) }
-                                value={ wrapBackgoundSize }
+                                value={ wrapBackgroundSize }
                                 options={ [
                                     { value: 'cover', label: __( 'Cover' ) },
                                     { value: 'contain', label: __( 'Contain' ) },
                                     { value: 'auto', label: __( 'Auto' ) },
                                 ] }
-                                onChange={ value => setAttributes( { wrapBackgoundSize: value } ) }
+                                onChange={ value => setAttributes( { wrapBackgroundSize: value } ) }
                             />
                             <SelectControl
                                 label={ __( 'Background Image Position' ) }
@@ -332,7 +402,7 @@ export default class Inspector extends Component {
                                     { value: 'right center', label: __( 'Right Center' ) },
                                     { value: 'right bottom', label: __( 'Right Bottom' ) },
                                 ] }
-                                onChange={ value => setAttributes( { wrapBackgoundPosition: value } ) }
+                                onChange={ value => setAttributes( { wrapBackgroundPosition: value } ) }
                             />
                             <SelectControl
                                 label={ __( 'Background Image Repeat' ) }
@@ -401,7 +471,14 @@ export default class Inspector extends Component {
                     title={ __( 'Text Color Setting' ) }
                     initialOpen={ false }
                 >
-
+                    <p>Text Color</p>
+                    <ColorPalette
+                        value={ textColor }
+                        onChange={ value =>
+                            setAttributes({ textColor: value })
+                        }
+                        allowReset
+                    />
                 </PanelBody>
             </Fragment>
         );

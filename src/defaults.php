@@ -1136,6 +1136,58 @@ $defaultValues = array(
                 'type' => 'number',
                 'default' => 0
             ),
+            'gutter' => array(
+                'type' => 'string',
+                'default' => 'none',
+            ),
+            'wrapBorder' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'wrapBorderColor' => array(
+                'type' => 'string',
+                'default' => '#ffffff',
+            ),
+            'wrapBorderTop' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'wrapBorderLeft' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'wrapBorderRight' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'wrapBorderBottom' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'wrapColor' => array(
+                'type' => 'string',
+                'background' => '#ffffff',
+            ),
+            'wrapBackgroundSize' => array(
+                'type' => 'string',
+                'default' => 'cover',
+            ),
+            'wrapBackgroundPosition' => array(
+                'type' => 'string',
+                'default' => 'center center',
+            ),
+            'wrapBackgroundRepeat' => array(
+                'type' => 'string',
+                'default' => 'no-repeat',
+            ),
+            'wrapBackgroundAttachment' => array(
+                'type' => 'string',
+                'default' => 'scroll',
+            ),
+            'textColor' => array(
+                'type' => 'string',
+                'default' => '',
+            )
         )
     ),
 );

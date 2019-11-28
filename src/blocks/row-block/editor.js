@@ -15,9 +15,12 @@ const {
     Button,
     ButtonGroup,
     Tooltip,
+    Toolbar,
+    IconButton,
 } = wp.components;
 
 const {
+    MediaUpload,
     InnerBlocks,
     BlockControls,
     BlockAlignmentToolbar,
@@ -92,8 +95,10 @@ export default class RowEditor extends Component {
                 paddingBottomWrap,
                 paddingLeftWrap,
                 paddingRightWrap,
+                wrapBorderColor,
+                wrapBorder,
                 wrapColor,
-                wrapBackgoundSize,
+                wrapBackgroundSize,
                 wrapBackgroundPosition,
                 wrapBackgroundRepeat,
                 wrapBackgroundAttachment,
@@ -101,6 +106,7 @@ export default class RowEditor extends Component {
                 imgURL,
                 imgAlt,
                 wrapTag,
+                textColor,
             },
             block:{clientId},
             setAttributes,
@@ -142,7 +148,7 @@ export default class RowEditor extends Component {
         const BackgroundStyle = {
             backgroundImage: ( imgURL ? `url( ${imgURL} )` : undefined ),
             backgroundColor: ( wrapColor ? wrapColor : undefined ),
-            backgroundSize: wrapBackgoundSize,
+            backgroundSize: wrapBackgroundSize,
             backgroundPosition: wrapBackgroundPosition,
             backgroundRepeat: wrapBackgroundRepeat,
             backgroundAttachment: wrapBackgroundAttachment,
@@ -150,7 +156,7 @@ export default class RowEditor extends Component {
             paddingBottom: paddingBottomWrap,
             paddingLeft: paddingLeftWrap,
             paddingRight: paddingRightWrap,
-        }
+        };
 
         return[
             <Fragment>
@@ -160,12 +166,33 @@ export default class RowEditor extends Component {
                         controls={ [ 'center', 'wide', 'full' ] }
                         onChange={ value => setAttributes( { blockAlignment: value } ) }
                     />
+                    <Toolbar>
+                        <MediaUpload
+                            onSelect={ img =>
+                                setAttributes({
+                                    imgID: img.id,
+                                    imgURL: img.url,
+                                }) }
+                            type="image"
+                            value={ null }
+                            render={ ( { open } ) => (
+                                <IconButton
+                                    className="components-toolbar__control"
+                                    label={ __( 'Background Image' ) }
+                                    icon="format-image"
+                                    onClick={ open }
+                                />
+                            ) }
+                        />
+                    </Toolbar>
                 </BlockControls>
                 <div className='ub-section-overhad-wrap' style={{
                     marginTop: marginTopWrap,
                     marginBottom: marginBottomWrap,
                     marginLeft: marginLeftWrap,
                     marginRight: marginRightWrap,
+                    border: `${wrapBorder}px solid${wrapBorderColor}`,
+                    color: textColor,
                 }}>
                     { !colSection &&(
                        <div className='ub-section-block-wrap'>
@@ -208,7 +235,7 @@ export default class RowEditor extends Component {
                                 width: "100%",
                                 backgroundImage: ( imgURL ? `url( ${imgURL} )` : undefined ),
                                 backgroundColor: ( wrapColor ? wrapColor : undefined ),
-                                backgroundSize: wrapBackgoundSize,
+                                backgroundSize: wrapBackgroundSize,
                                 backgroundPosition: wrapBackgroundPosition,
                                 backgroundRepeat: wrapBackgroundRepeat,
                                 backgroundAttachment: wrapBackgroundAttachment,
@@ -231,15 +258,15 @@ export default class RowEditor extends Component {
                                  <style>
                                      { columns && columns === 2 && (
                                      <Fragment>
-                                         { ( !this.state.ResizeColWidthOne ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( ColWidthOne ) }%; }` :`#block-${clientId} .ub-section-column-wrap > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthOne ) }%; overflow: hidden }` ) }
-                                         { ( !this.state.ResizeColWidthTwo ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( ColWidthTwo ) }%; }` :`#block-${clientId} .ub-section-column-wrap  > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthTwo) }%; overflow: hidden }` ) }
+                                         { ( !this.state.ResizeColWidthOne ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( ColWidthOne ) }%; overflow: hidden; word-break: break-word }` :`#block-${clientId} .ub-section-column-wrap > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthOne ) }%; overflow: hidden; word-break: break-word }` ) }
+                                         { ( !this.state.ResizeColWidthTwo ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( ColWidthTwo ) }%; overflow: hidden; word-break: break-word }` :`#block-${clientId} .ub-section-column-wrap  > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthTwo) }%; overflow: hidden; word-break: break-word }` ) }
                                      </Fragment>
                                      )}
                                      { columns && columns === 3 && (
                                          <Fragment>
-                                             { ( !this.state.ResizeColWidthOne ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( ColWidthOne ) }%; }` :`#block-${clientId} .ub-section-column-wrap > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthOne ) }%; overflow: hidden }` ) }
-                                             { ( !this.state.ResizeColWidthTwo ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( ColWidthTwo ) }%; }` :`#block-${clientId} .ub-section-column-wrap  > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthTwo ) }%; overflow: hidden }` ) }
-                                             { ( !this.state.ResizeColWidthThree ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(3) { flex: 0 1 ${ parseFloat( ColWidthThree ) }%; }` :`#block-${clientId} .ub-section-column-wrap  > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(3) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthThree ) }%; overflow: hidden }` ) }
+                                             { ( !this.state.ResizeColWidthOne ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( ColWidthOne ) }%; overflow: hidden; word-break: break-word }` :`#block-${clientId} .ub-section-column-wrap > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthOne ) }%; overflow: hidden; word-break: break-word }` ) }
+                                             { ( !this.state.ResizeColWidthTwo ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( ColWidthTwo ) }%; overflow: hidden; word-break: break-word }` :`#block-${clientId} .ub-section-column-wrap  > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthTwo ) }%; overflow: hidden; word-break: break-word }` ) }
+                                             { ( !this.state.ResizeColWidthThree ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(3) { flex: 0 1 ${ parseFloat( ColWidthThree ) }%; overflow: hidden; word-break: break-word }` :`#block-${clientId} .ub-section-column-wrap  > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(3) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthThree ) }%; overflow: hidden; word-break: break-word }` ) }
                                          </Fragment>
                                      )}
                                  </style>

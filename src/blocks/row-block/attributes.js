@@ -47,6 +47,10 @@ const attributes = {
         type: 'bool',
         default: true,
     },
+    selectUnits: {
+        type: 'string',
+        default: 'px',
+    },
     marginTopWrap: {
         type:'number',
         default: 0,
@@ -87,19 +91,39 @@ const attributes = {
         type: 'string',
         default: '0px',
     },
-    textColor: {
-        type: 'string',
-        default: '',
-    },
     wrapTag: {
         type: 'string',
         default: 'div',
+    },
+    wrapBorder: {
+        type: 'number',
+        default: 0,
+    },
+    wrapBorderColor: {
+        type: 'string',
+        default: '#ffffff',
+    },
+    wrapBorderTop: {
+        type: 'number',
+        default: 0,
+    },
+    wrapBorderLeft: {
+        type: 'number',
+        default: 0,
+    },
+    wrapBorderRight: {
+        type: 'number',
+        default: 0,
+    },
+    wrapBorderTopBottom: {
+        type: 'number',
+        default: 0,
     },
     wrapColor: {
         type: 'string',
         background: '#ffffff',
     },
-    wrapBackgoundSize: {
+    wrapBackgroundSize: {
         type: 'string',
         default: 'cover',
     },
@@ -125,6 +149,10 @@ const attributes = {
     imgAlt: {
         type: 'string',
         default: ''
+    },
+    textColor: {
+        type: 'string',
+        default: '',
     },
 };
 

@@ -34,8 +34,6 @@ function ub_render_row_block($attributes){
                 $coutColumns = $item;
             } elseif ($key == 'gutter') {
                 $gutter = $item;
-            } elseif ($key == 'wrapColor') {
-                $colorBackground = $item;
             } elseif ($key == 'imgURL') {
                 $backgroundImg = $item;
             }
@@ -44,8 +42,11 @@ function ub_render_row_block($attributes){
         $columns = $block['innerBlocks'];
         //var_dump($block);
         if ($attributes['blockID'] === $blockID) {
-            $result .= '<div class="ub-single-section-block" style="margin:' . $attributes['marginTopWrap'] . 'px ' . $attributes['marginRightWrap'] . 'px ' .
-                $attributes['marginBottomWrap'] . 'px ' . $attributes['marginLeftWrap'] . 'px' . '; background-image: url('.$backgroundImg.'); background-size: '. $attributes['wrapBackgoundSize'] .'; background-color:'.$colorBackground.'">';
+            $result .= '<div class="ub-single-section-block" style="margin:' . $attributes['marginTopWrap'] . $attributes['selectUnits'] .' '. $attributes['marginRightWrap'] . $attributes['selectUnits'] .
+                ' '.$attributes['marginBottomWrap'] . $attributes['selectUnits'] .' '. $attributes['marginLeftWrap'] . $attributes['selectUnits'] . '; background-image: url('.$backgroundImg.'); background-size: '.
+                $attributes['wrapBackgroundSize'] .'; background-color:'.$attributes['wrapColor'].'; background-position:'. $attributes['wrapBackgroundPosition'].
+                '; background-repeat:'. $attributes['wrapBackgroundRepeat'] .'; background-attachment:'. $attributes['wrapBackgroundAttachment'] .
+                '; border:'. $attributes['wrapBorder'] .'px solid'. $attributes['wrapBorderColor']. '; color:'.$attributes['textColor'].'">';
             for ($i = 0; $i < count($columns); $i++) {
                 $cS = count($columns);
                 if ($coutColumns == $cS && $attributes['gutter'] == 'None') {

@@ -50,7 +50,7 @@ function ub_button_add_frontend_assets() {
         if(($block['blockName'] == 'ub/button' && !isset($block['attrs']['blockID'])) || $block['blockName'] == 'ub/button-block'){
             wp_enqueue_script(
                 'ultimate_blocks-button-front-script',
-                plugins_url( 'button/front.build.js', dirname( __FILE__ ) ),
+                plugins_url( 'button/front.js', dirname( __FILE__ ) ),
                 array( ),
                 Ultimate_Blocks_Constants::plugin_version(),
                 true

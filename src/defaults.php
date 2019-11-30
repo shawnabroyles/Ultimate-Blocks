@@ -1140,7 +1140,15 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => 'none',
             ),
-            'wrapBorder' => array(
+            'wrapBorderStyle' => array(
+                 'type' => 'string',
+                 'default' => 'solid',
+            ),
+            'wrapBorderSize' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'wrapBorderRadius' => array(
                 'type' => 'number',
                 'default' => 0,
             ),
@@ -1183,6 +1191,13 @@ $defaultValues = array(
             'wrapBackgroundAttachment' => array(
                 'type' => 'string',
                 'default' => 'scroll',
+            ),
+            'videoID' => array(
+                'type' => 'number',
+            ),
+            'videoURL' => array(
+                'type' => 'string',
+                'default' => '',
             ),
             'textColor' => array(
                 'type' => 'string',

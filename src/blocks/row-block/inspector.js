@@ -60,7 +60,9 @@ export default class Inspector extends Component {
                 gutter,
                 wrapColor,
                 wrapBorderColor,
-                wrapBorder,
+                wrapBorderStyle,
+                wrapBorderSize,
+                wrapBorderRadius,
                 wrapBackgroundSize,
                 wrapBackgroundPosition,
                 wrapBackgroundRepeat,
@@ -68,6 +70,8 @@ export default class Inspector extends Component {
                 imgID,
                 imgURL,
                 imgAlt,
+                videoID,
+                videoURL,
                 wrapTag,
                 textColor,
             },
@@ -143,11 +147,11 @@ export default class Inspector extends Component {
                         label={ __( 'Size Gutter' ) }
                         value={ gutter }
                         options={ [
-                            { value: 'None', label: __( 'None 0px' ) },
-                            { value: 'Small', label: __( 'Small 4px' ) },
-                            { value: 'Medium', label: __( 'Medium 12px' ) },
-                            { value: 'Large', label: __( 'Large 34px' ) },
-                            { value: 'Huge', label: __( 'Huge 88px' ) },
+                            { value: '0px', label: __( 'None 0px' ) },
+                            { value: '4px', label: __( 'Small 4px' ) },
+                            { value: '12px', label: __( 'Medium 12px' ) },
+                            { value: '34px', label: __( 'Large 34px' ) },
+                            { value: '88px', label: __( 'Huge 88px' ) },
                         ] }
                         onChange={ value => setAttributes( { gutter: value } ) }
                     />
@@ -337,12 +341,39 @@ export default class Inspector extends Component {
                         }
                         allowReset
                     />
+                    <SelectControl
+                        label={ __( 'Border Style' ) }
+                        value={ wrapBorderStyle }
+                        options={ [
+                            { value: 'none', label: __( 'None' ) },
+                            { value: 'solid', label: __( 'Solid' ) },
+                            { value: 'dotted', label: __( 'Dotted' ) },
+                            { value: 'dashed', label: __( 'Dashed' ) },
+                            { value: 'double', label: __( 'Double' ) },
+                            { value: 'groove', label: __( 'Groove' ) },
+                            { value: 'ridge', label: __( 'Ridge' ) },
+                            { value: 'inset', label: __( 'Inset' ) },
+                            { value: 'Outset', label: __( 'Outset' ) },
+                        ] }
+                        onChange={ value => setAttributes( { wrapBorderStyle: value } ) }
+                    />
                     <RangeControl
                         label = {__( 'Border Size' )}
-                        value={ wrapBorder }
+                        value={ wrapBorderSize }
                         onChange={ value => {
                             setAttributes({
-                                wrapBorder: value
+                                wrapBorderSize: value
+                            });
+                        }}
+                        min={ 0 }
+                        max={ 50 }
+                    />
+                    <RangeControl
+                        label = {__( 'Border Radius' )}
+                        value={ wrapBorderRadius }
+                        onChange={ value => {
+                            setAttributes({
+                                wrapBorderRadius: value
                             });
                         }}
                         min={ 0 }
@@ -376,7 +407,7 @@ export default class Inspector extends Component {
                                       })
                                 }}
                             >
-                            Delete image
+                            Delete Image
                             </Button>
                             <SelectControl
                                 label={ __( 'Background Image Size' ) }
@@ -446,6 +477,42 @@ export default class Inspector extends Component {
                             )}
                         />)
                     }
+                    </div>
+                    <p>Background Video</p>
+                    <div>
+                        { videoURL ? (
+                            <Button
+                                className="components-button button button-medium"
+                                onClick = {({props}) => {
+                                    setAttributes({
+                                        videoURL: '',
+                                        videoID: '',
+                                    })
+                                }}
+                            >
+                                Delete Video
+                            </Button>
+                        ) : (
+                            <MediaUpload
+                                onSelect={ video =>
+                                    setAttributes({
+                                        videoID: video.id,
+                                        videoURL: video.url,
+                                    })
+                                }
+                                type="video"
+                                allowedTypes={ [ 'video' ] }
+                                value={ videoID }
+                                render={({open}) => (
+                                    <Button
+                                        className="components-button button button-medium"
+                                        onClick={open}
+                                    >
+                                        {__('Upload Video')}
+                                    </Button>
+                                )}
+                            />
+                        )}
                     </div>
                 </PanelBody>
                 <PanelBody

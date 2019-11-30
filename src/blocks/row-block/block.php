@@ -42,14 +42,20 @@ function ub_render_row_block($attributes){
         $columns = $block['innerBlocks'];
         //var_dump($block);
         if ($attributes['blockID'] === $blockID) {
-            $result .= '<div class="ub-single-section-block" style="margin:' . $attributes['marginTopWrap'] . $attributes['selectUnits'] .' '. $attributes['marginRightWrap'] . $attributes['selectUnits'] .
-                ' '.$attributes['marginBottomWrap'] . $attributes['selectUnits'] .' '. $attributes['marginLeftWrap'] . $attributes['selectUnits'] . '; background-image: url('.$backgroundImg.'); background-size: '.
+            $result .= '<div class="ub-section-block-wrap" style="position: relative; overflow: hidden; margin:' . $attributes['marginTopWrap'] . $attributes['selectUnits'] .' '. $attributes['marginRightWrap'] . $attributes['selectUnits'] .
+                ' '.$attributes['marginBottomWrap'] . $attributes['selectUnits'] .' '. $attributes['marginLeftWrap'] . $attributes['selectUnits'] . '; border:'. $attributes['wrapBorderSize'] .'px '.
+                $attributes['wrapBorderStyle']. $attributes['wrapBorderColor'] . '; border-radius:'. $attributes['wrapBorderRadius'].'px;">';
+
+            if($attributes['videoURL']){
+                $result .='<div class="ub-section-block-video-wrap"><video class="ub-block-video" autoplay loop muted src="'. $attributes['videoURL'].'"></video></div>';
+            }
+
+            $result .= '<div class="ub-single-block" style="display: flex; background-image: url('.$backgroundImg.'); background-size: '.
                 $attributes['wrapBackgroundSize'] .'; background-color:'.$attributes['wrapColor'].'; background-position:'. $attributes['wrapBackgroundPosition'].
-                '; background-repeat:'. $attributes['wrapBackgroundRepeat'] .'; background-attachment:'. $attributes['wrapBackgroundAttachment'] .
-                '; border:'. $attributes['wrapBorder'] .'px solid'. $attributes['wrapBorderColor']. '; color:'.$attributes['textColor'].'">';
+                '; background-repeat:'. $attributes['wrapBackgroundRepeat'] .'; background-attachment:'. $attributes['wrapBackgroundAttachment'] . '; color:'.$attributes['textColor'].'">';
             for ($i = 0; $i < count($columns); $i++) {
                 $cS = count($columns);
-                if ($coutColumns == $cS && $attributes['gutter'] == 'None') {
+                if ($coutColumns == $cS && $attributes['gutter'] == '0px') {
                     switch ($cS) {
                         case 1:
                             $mleft = array(0, 0);
@@ -76,7 +82,7 @@ function ub_render_row_block($attributes){
                             $mright = array(0, 0, 0, 0);
                             break;
                     }
-                } elseif ($coutColumns == $cS && $attributes['gutter'] == 'Small') {
+                } elseif ($coutColumns == $cS && $attributes['gutter'] == '4px') {
                     switch ($cS) {
                         case 1:
                             $mleft = array(0, 0);
@@ -103,7 +109,7 @@ function ub_render_row_block($attributes){
                             $mright = array(2, 2, 2, 2, 2, 0);
                             break;
                     }
-                } elseif ($coutColumns == $cS && $attributes['gutter'] == 'Medium') {
+                } elseif ($coutColumns == $cS && $attributes['gutter'] == '12px') {
                     switch ($cS) {
                         case 1:
                             $mleft = array(0, 0);
@@ -130,7 +136,7 @@ function ub_render_row_block($attributes){
                             $mright = array(6, 6, 6, 6, 6, 0);
                             break;
                     }
-                } elseif ($coutColumns == $cS && $attributes['gutter'] == 'Large') {
+                } elseif ($coutColumns == $cS && $attributes['gutter'] == '34px') {
                     switch ($cS) {
                         case 1:
                             $mleft = array(0, 0);
@@ -157,7 +163,7 @@ function ub_render_row_block($attributes){
                             $mright = array(17, 17, 17, 17, 17, 0);
                             break;
                     }
-                } elseif ($coutColumns == $cS && $attributes['gutter'] == 'Huge') {
+                } elseif ($coutColumns == $cS && $attributes['gutter'] == '88px') {
                     switch ($cS) {
                         case 1:
                             $mleft = array(0, 0);
@@ -193,7 +199,7 @@ function ub_render_row_block($attributes){
                 }
                 $result .= '</div>';
             }
-            $result .= '</div>';
+            $result .= '</div></div>';
         }
     }
     return $result;

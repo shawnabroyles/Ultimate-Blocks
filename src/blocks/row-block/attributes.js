@@ -83,10 +83,6 @@ const attributes = {
         type:'number',
         default: 0,
     },
-    borderWrap: {
-        type: 'number',
-        default: 0
-    },
     gutter: {
         type: 'string',
         default: '0px',
@@ -95,7 +91,15 @@ const attributes = {
         type: 'string',
         default: 'div',
     },
-    wrapBorder: {
+    wrapBorderStyle: {
+        type: 'string',
+        default: 'solid',
+    },
+    wrapBorderSize: {
+        type: 'number',
+        default: 0,
+    },
+    wrapBorderRadius: {
         type: 'number',
         default: 0,
     },
@@ -144,11 +148,18 @@ const attributes = {
         default: ''
     },
     imgID: {
-        type: 'number'
+        type: 'number',
     },
     imgAlt: {
         type: 'string',
         default: ''
+    },
+    videoURL: {
+        type: 'string',
+        default: '',
+    },
+    videoID: {
+        type: 'number',
     },
     textColor: {
         type: 'string',

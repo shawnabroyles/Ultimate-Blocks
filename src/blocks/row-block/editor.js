@@ -87,6 +87,7 @@ export default class RowEditor extends Component {
                 ColWidthFour,
                 ColWidthFive,
                 ColWidthSix,
+                selectUnits,
                 marginTopWrap,
                 marginBottomWrap,
                 marginLeftWrap,
@@ -95,8 +96,11 @@ export default class RowEditor extends Component {
                 paddingBottomWrap,
                 paddingLeftWrap,
                 paddingRightWrap,
+                gutter,
                 wrapBorderColor,
-                wrapBorder,
+                wrapBorderStyle,
+                wrapBorderSize,
+                wrapBorderRadius,
                 wrapColor,
                 wrapBackgroundSize,
                 wrapBackgroundPosition,
@@ -187,11 +191,12 @@ export default class RowEditor extends Component {
                     </Toolbar>
                 </BlockControls>
                 <div className='ub-section-overhad-wrap' style={{
-                    marginTop: marginTopWrap,
-                    marginBottom: marginBottomWrap,
-                    marginLeft: marginLeftWrap,
-                    marginRight: marginRightWrap,
-                    border: `${wrapBorder}px solid${wrapBorderColor}`,
+                    marginTop: `${marginTopWrap}${selectUnits}`,
+                    marginLeft: `${marginLeftWrap}${selectUnits}`,
+                    marginBottom: `${marginBottomWrap}${selectUnits}`,
+                    marginRight: `${marginRightWrap}${selectUnits}`,
+                    border: `${wrapBorderSize}px ${wrapBorderStyle}${wrapBorderColor}`,
+                    borderRadius: `${wrapBorderRadius}px`,
                     color: textColor,
                 }}>
                     { !colSection &&(
@@ -258,14 +263,14 @@ export default class RowEditor extends Component {
                                  <style>
                                      { columns && columns === 2 && (
                                      <Fragment>
-                                         { ( !this.state.ResizeColWidthOne ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( ColWidthOne ) }%; overflow: hidden; word-break: break-word }` :`#block-${clientId} .ub-section-column-wrap > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthOne ) }%; overflow: hidden; word-break: break-word }` ) }
+                                         { ( !this.state.ResizeColWidthOne ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( ColWidthOne ) }%; margin-right: ${ gutter }; overflow: hidden; word-break: break-word }` :`#block-${clientId} .ub-section-column-wrap > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthOne ) }%; margin-right: ${ gutter }; overflow: hidden; word-break: break-word }` ) }
                                          { ( !this.state.ResizeColWidthTwo ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( ColWidthTwo ) }%; overflow: hidden; word-break: break-word }` :`#block-${clientId} .ub-section-column-wrap  > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthTwo) }%; overflow: hidden; word-break: break-word }` ) }
                                      </Fragment>
                                      )}
                                      { columns && columns === 3 && (
                                          <Fragment>
-                                             { ( !this.state.ResizeColWidthOne ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( ColWidthOne ) }%; overflow: hidden; word-break: break-word }` :`#block-${clientId} .ub-section-column-wrap > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthOne ) }%; overflow: hidden; word-break: break-word }` ) }
-                                             { ( !this.state.ResizeColWidthTwo ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( ColWidthTwo ) }%; overflow: hidden; word-break: break-word }` :`#block-${clientId} .ub-section-column-wrap  > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthTwo ) }%; overflow: hidden; word-break: break-word }` ) }
+                                             { ( !this.state.ResizeColWidthOne ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( ColWidthOne ) }%; margin-right: ${ gutter }; overflow: hidden; word-break: break-word }` :`#block-${clientId} .ub-section-column-wrap > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthOne ) }%; margin-right: ${ gutter }; overflow: hidden; word-break: break-word }` ) }
+                                             { ( !this.state.ResizeColWidthTwo ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( ColWidthTwo ) }%; margin-right: ${ gutter }; overflow: hidden; word-break: break-word }` :`#block-${clientId} .ub-section-column-wrap  > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthTwo ) }%; margin-right: ${ gutter }; overflow: hidden; word-break: break-word }` ) }
                                              { ( !this.state.ResizeColWidthThree ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(3) { flex: 0 1 ${ parseFloat( ColWidthThree ) }%; overflow: hidden; word-break: break-word }` :`#block-${clientId} .ub-section-column-wrap  > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(3) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthThree ) }%; overflow: hidden; word-break: break-word }` ) }
                                          </Fragment>
                                      )}
@@ -368,7 +373,6 @@ export default class RowEditor extends Component {
                                                      } );
                                                      setAttributes( {
                                                          ColWidthThree: this.state.ResizeColWidthThree+'%',
-                                                         mode: 'edit',
                                                      } );
                                                  }}
                                                  onResizeStop = {(event, direction, elt) => {
@@ -391,7 +395,9 @@ export default class RowEditor extends Component {
                                                          ResizeColWidthThree: threeCol,
                                                      } );
                                                      setAttributes( {
-                                                             ColWidthThree: this.state.ResizeColWidthThree+'%',
+                                                         ColWidthTwo: this.state.ResizeColWidthTwo+'%',
+                                                         ColWidthThree: this.state.ResizeColWidthThree+'%',
+                                                         inspectorTypeColumn: false,
                                                          } );
                                                  }}
                                                  axis="x"

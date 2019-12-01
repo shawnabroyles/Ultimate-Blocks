@@ -161,6 +161,22 @@ const attributes = {
     videoID: {
         type: 'number',
     },
+    videoMuted: {
+        type: 'bool',
+        default: true,
+    },
+    videoLoop: {
+        type: 'bool',
+        default: true,
+    },
+    wrapBackgroundOverlay: {
+        type: 'number',
+        default: 0,
+    },
+    wrapBackgroundOverlayCol: {
+        type: 'string',
+        default : '#ffffff',
+    },
     textColor: {
         type: 'string',
         default: '',

@@ -155,6 +155,7 @@
     flex-direction: column;
   }
 }
+
 //Inspector wrap style
 .ub-layout-wrap-select-units{
   display: flex;
@@ -294,4 +295,37 @@
        border-left: 1px solid #ddd;
     }
   }
+}
+
+//video and overlay inspector block
+.ub-section-editor-video-wrap {
+  bottom: 0;
+  right: 0;
+  top: 0;
+  left: 0;
+  position: absolute;
+  overflow: hidden;
+
+  .ub-editor-video{
+    object-position: 50% 50%;
+    object-fit: cover;
+    background-position: center center;
+    width: 100%;
+    height: 100%;
+  }
+}
+.ub-section-editor-overlay{
+  top: 0px;
+  bottom: 0px;
+  left: 0;
+  position: absolute;
+  height: auto;
+  width: 100%;
+}
+
+.ub-video-inspector-panel{
+
+   .components-button{
+     margin: 20px 0px;
+   }
 }

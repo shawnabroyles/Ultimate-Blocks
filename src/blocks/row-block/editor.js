@@ -109,6 +109,10 @@ export default class RowEditor extends Component {
                 imgID,
                 imgURL,
                 imgAlt,
+                videoID,
+                videoURL,
+                wrapBackgroundOverlay,
+                wrapBackgroundOverlayCol,
                 wrapTag,
                 textColor,
             },
@@ -260,6 +264,21 @@ export default class RowEditor extends Component {
                     { colSection && columns && 1 !== columns && 4 !== columns && 5 !== columns && 6 !== columns &&(
                         <Fragment>
                              <div className="ub-section-column-wrap" style={BackgroundStyle}>
+                                 {<Fragment>
+                                         <div className="ub-section-editor-video-wrap">
+                                             <video className="ub-editor-video" playsinline src={videoURL}></video>
+                                         </div>
+                                         <div className="ub-section-editor-overlay" style={{
+                                             backgroundSize: 'cover',
+                                             backgroundPosition: 'center center',
+                                             backgroundRepeat: 'no-repeat',
+                                             backgroundAttachment: 'scroll',
+                                             backgroundColor: wrapBackgroundOverlayCol,
+                                             opacity: ( wrapBackgroundOverlay == 100 ? 1 : `0.${wrapBackgroundOverlay}`),
+                                         }}>
+                                         </div>
+                                     </Fragment>
+                                 }
                                  <style>
                                      { columns && columns === 2 && (
                                      <Fragment>
@@ -420,6 +439,21 @@ export default class RowEditor extends Component {
                     { colSection && columns && 1 !== columns && 2 !== columns && 3 !== columns &&(
                         <Fragment>
                             <div className="ub-section-column-wrap" style={BackgroundStyle}>
+                                {<Fragment>
+                                        <div className="ub-section-editor-video-wrap">
+                                            <video className="ub-editor-video" playsinline src={videoURL}></video>
+                                        </div>
+                                        <div className="ub-section-editor-overlay" style={{
+                                            backgroundSize: 'cover',
+                                            backgroundPosition: 'center center',
+                                            backgroundRepeat: 'no-repeat',
+                                            backgroundAttachment: 'scroll',
+                                            backgroundColor: wrapBackgroundOverlayCol,
+                                            opacity: ( wrapBackgroundOverlay == 100 ? 1 : `0.${wrapBackgroundOverlay}`),
+                                        }}>
+                                        </div>
+                                    </Fragment>
+                                 }
                                 <style>
                                     <Fragment>
                                         { `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( ColWidthOne ) }%; }` }

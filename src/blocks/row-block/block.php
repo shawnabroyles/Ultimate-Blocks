@@ -46,9 +46,8 @@ function ub_render_row_block($attributes){
                 ' '.$attributes['marginBottomWrap'] . $attributes['selectUnits'] .' '. $attributes['marginLeftWrap'] . $attributes['selectUnits'] . '; border:'. $attributes['wrapBorderSize'] .'px '.
                 $attributes['wrapBorderStyle']. $attributes['wrapBorderColor'] . '; border-radius:'. $attributes['wrapBorderRadius'].'px;">';
 
-            if($attributes['videoURL']){
-                $result .='<div class="ub-section-block-video-wrap"><video class="ub-block-video" autoplay loop muted src="'. $attributes['videoURL'].'"></video></div>';
-            }
+            $result .='<div class="ub-section-block-video-wrap"><video class="ub-block-video" autoplay '.(false == $attributes['videoLoop'] ? '' : 'loop' ).' '.(false == $attributes['videoMuted'] ? '' : 'muted' ).' src="'. $attributes['videoURL'].'"></video></div>';
+            $result .='<div class="ub-section-block-overlay" style="background-size: cover; background-repeat: no-repeat; background-position: center center; background-attachment: scroll; opacity: '.($attributes['wrapBackgroundOverlay'] == 100 ? 1 : '0.'. $attributes['wrapBackgroundOverlay']).'; background-color: '. $attributes['wrapBackgroundOverlayCol'].'"></div>';
 
             $result .= '<div class="ub-single-block" style="display: flex; background-image: url('.$backgroundImg.'); background-size: '.
                 $attributes['wrapBackgroundSize'] .'; background-color:'.$attributes['wrapColor'].'; background-position:'. $attributes['wrapBackgroundPosition'].
@@ -191,7 +190,7 @@ function ub_render_row_block($attributes){
                             break;
                     }
                 }
-                $result .= '<div id="' . $columns[$i]['attrs']['id_column'] . '" class="ub-single-column" style="flex: 0 1 ' . $sizeCol[$i] . '; margin-left:' . $mleft[$i] . 'px; margin-right:' . $mright[$i] . 'px;">';
+                $result .= '<div id="' . $columns[$i]['attrs']['id_column'] . '" class="ub-single-column" style="flex: 0 1 ' . $sizeCol[$i] . '; margin-left:' . $mleft[$i] . 'px; margin-right:' . $mright[$i] . 'px; background-color:'. $attributes['columnBgColor'].'">';
                 foreach ($columns[$i]['innerBlocks'] as $content) {
                     //var_dump($content);
                     $blocrRender = render_block($content);

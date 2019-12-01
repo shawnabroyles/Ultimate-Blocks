@@ -72,6 +72,10 @@ export default class Inspector extends Component {
                 imgAlt,
                 videoID,
                 videoURL,
+                videoMuted,
+                videoLoop,
+                wrapBackgroundOverlay,
+                wrapBackgroundOverlayCol,
                 wrapTag,
                 textColor,
             },
@@ -393,7 +397,7 @@ export default class Inspector extends Component {
                         allowReset
                     />
                     <p>Background Image</p>
-                    <div>
+                    <div className="ub-image-inspector-panel">
                     { imgURL ? (
                         <Fragment>
                             <img src={imgURL} id={imgID} alt={imgAlt}/>
@@ -475,23 +479,47 @@ export default class Inspector extends Component {
                                     {__('Upload Image')}
                                 </Button>
                             )}
-                        />)
-                    }
+                        />
+                    )}
                     </div>
                     <p>Background Video</p>
-                    <div>
+                    <div className="ub-video-inspector-panel">
                         { videoURL ? (
-                            <Button
-                                className="components-button button button-medium"
-                                onClick = {({props}) => {
-                                    setAttributes({
-                                        videoURL: '',
-                                        videoID: '',
-                                    })
-                                }}
-                            >
-                                Delete Video
-                            </Button>
+                            <Fragment>
+                                <video
+                                    autoplay loop muted id={videoID} src={videoURL}
+                                >
+                                </video>
+                                <Button
+                                    className="components-button button button-medium"
+                                    onClick = {({props}) => {
+                                        setAttributes({
+                                            videoURL: '',
+                                            videoID: '',
+                                        })
+                                    }}
+                                >
+                                    Delete Video
+                                </Button>
+                                <ToggleControl
+                                    label={ __( 'Mute Video' ) }
+                                    checked={ videoMuted }
+                                    onChange={ ( videoMuted ) => {
+                                        setAttributes ({
+                                            videoMuted,
+                                        })
+                                    }}
+                                />
+                                <ToggleControl
+                                     label={ __( 'Loop Video' ) }
+                                     checked={ videoLoop }
+                                     onChange={ ( videoLoop ) => {
+                                         setAttributes ({
+                                             videoLoop,
+                                         })
+                                     }}
+                                />
+                            </Fragment>
                         ) : (
                             <MediaUpload
                                 onSelect={ video =>
@@ -514,6 +542,30 @@ export default class Inspector extends Component {
                             />
                         )}
                     </div>
+                </PanelBody>
+                <PanelBody
+                    title={ __( 'Background Overlay Setting' ) }
+                    initialOpen={ false }
+                >
+                    <p>Overlay Opacity</p>
+                    <RangeControl
+                        value={ wrapBackgroundOverlay }
+                        onChange={ value => {
+                            setAttributes({
+                                wrapBackgroundOverlay: value
+                            });
+                        }}
+                        min={ 0 }
+                        max={ 100 }
+                    />
+                    <p>Overlay Color</p>
+                    <ColorPalette
+                        value={ wrapBackgroundOverlayCol }
+                        onChange={ value =>
+                            setAttributes({ wrapBackgroundOverlayCol: value })
+                        }
+                        allowReset
+                    />
                 </PanelBody>
                 <PanelBody
                     title={ __( 'Stucture Setting' ) }

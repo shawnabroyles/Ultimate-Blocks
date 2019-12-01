@@ -1199,7 +1199,27 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => '',
             ),
+            'videoMuted' => array(
+                'type' => 'bool',
+                'default' => true,
+            ),
+            'videoLoop' => array(
+                'type' => 'bool',
+                'default' => true,
+            ),
+            'wrapBackgroundOverlay' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'wrarBackgroundOverlayCol' => array(
+                'type' => 'string',
+                'default' => '#ffffff',
+            ),
             'textColor' => array(
+                'type' => 'string',
+                'default' => '',
+            ),
+            'columnBgColor' => array(
                 'type' => 'string',
                 'default' => '',
             )

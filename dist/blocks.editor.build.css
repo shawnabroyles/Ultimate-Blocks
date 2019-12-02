@@ -1323,6 +1323,12 @@ div[data-block] > .ub_image_slider {
     .ub-layout-wrap_margin_box .margin-st_box2 .margin-col-3 {
       border-left: 1px solid #ddd; }
 
+.ub-start-panel {
+  margin: 15px 0px; }
+
+.ub-margin-padding-panel .components-range-control .components-base-control__label {
+  width: 35px; }
+
 .ub-section-editor-video-wrap {
   bottom: 0;
   right: 0;

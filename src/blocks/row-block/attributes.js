@@ -107,22 +107,6 @@ const attributes = {
         type: 'string',
         default: '#ffffff',
     },
-    wrapBorderTop: {
-        type: 'number',
-        default: 0,
-    },
-    wrapBorderLeft: {
-        type: 'number',
-        default: 0,
-    },
-    wrapBorderRight: {
-        type: 'number',
-        default: 0,
-    },
-    wrapBorderTopBottom: {
-        type: 'number',
-        default: 0,
-    },
     wrapColor: {
         type: 'string',
         background: '#ffffff',

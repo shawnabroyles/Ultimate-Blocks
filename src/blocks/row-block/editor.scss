@@ -298,6 +298,19 @@
 }
 
 //video and overlay inspector block
+.ub-start-panel{
+  margin: 15px 0px;
+}
+
+.ub-margin-padding-panel{
+
+  .components-range-control {
+    .components-base-control__label {
+      width: 35px;
+    }
+  }
+}
+
 .ub-section-editor-video-wrap {
   bottom: 0;
   right: 0;

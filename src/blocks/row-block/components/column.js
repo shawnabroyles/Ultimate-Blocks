@@ -54,6 +54,86 @@ registerBlockType( 'ub/row-column', {
             type: 'string',
             default: 'scroll',
         },
+        columnBorderStyle: {
+            type: 'string',
+            default: 'solid',
+        },
+        columnBorderSize: {
+            type: 'number',
+            default: 0,
+        },
+        columnBorderRadius: {
+            type: 'number',
+            default: 0,
+        },
+        columnBorderColor: {
+            type: 'string',
+            default: '#ffffff',
+        },
+        columnBorderTop: {
+            type: 'number',
+            default: 0,
+        },
+        columnBorderLeft: {
+            type: 'number',
+            default: 0,
+        },
+        columnBorderRight: {
+            type: 'number',
+            default: 0,
+        },
+        columnBorderBottom: {
+            type: 'number',
+            default: 0,
+        },
+        columnBrTopRadius: {
+            type: 'number',
+            default: 0,
+        },
+        columnBrLeftRadius: {
+            type: 'number',
+            default: 0,
+        },
+        columnBrdRightRadius: {
+            type: 'number',
+            default: 0,
+        },
+        columnBrBottomRadius: {
+            type: 'number',
+            default: 0,
+        },
+        columnPaddingTop: {
+            type: 'number',
+            default: 0,
+        },
+        columnPaddingRight: {
+            type: 'number',
+            default: 0,
+        },
+        columnPaddingLeft: {
+            type: 'number',
+            default: 0,
+        },
+        columnPaddingBottom: {
+            type: 'number',
+            default: 0,
+        },
+        columnMarginTop: {
+            type: 'number',
+            default: 0,
+        },
+        columnMarginRight: {
+            type: 'number',
+            default: 0,
+        },
+        columnMarginLeft: {
+            type: 'number',
+            default: 0,
+        },
+        columnMarginBottom: {
+            type: 'number',
+            default: 0,
+        },
     },
     supports: {
         inserter: false,
@@ -75,6 +155,26 @@ registerBlockType( 'ub/row-column', {
                 columnBgRepeat,
                 columnBgPosition,
                 columnBgAttachment,
+                columnBorderColor,
+                columnBorderStyle,
+                columnBorderSize,
+                columnBorderRadius,
+                columnBorderTop,
+                columnBorderLeft,
+                columnBorderRight,
+                columnBorderBottom,
+                columnBrTopRadius,
+                columnBrLeftRadius,
+                columnBrdRightRadius,
+                columnBrBottomRadius,
+                columnPaddingTop,
+                columnPaddingRight,
+                columnPaddingLeft,
+                columnPaddingBottom,
+                columnMarginTop,
+                columnMarginRight,
+                columnMarginLeft,
+                columnMarginBottom,
             },
             block:{
               clientId
@@ -91,17 +191,24 @@ registerBlockType( 'ub/row-column', {
         return(
            <Fragment>
                {isSelected && <ColumnInspector {...props}/>}
-               <div className='ub-single-column' style={{
-                   backgroundImage: ( columnImgURL ? `url( ${columnImgURL} )` : undefined ),
-                   backgroundColor: columnBgColor,
-                   backgroundSize: columnBgSize,
-                   backgroundPosition: columnBgPosition,
-                   backgroundRepeat: columnBgRepeat,
-                   backgroundAttachment: columnBgAttachment,
+               <div className='ub-single-column-wrap' style={{
+                   margin: `${columnMarginTop}px ${columnMarginRight}px ${columnMarginBottom}px ${columnMarginLeft}px`,
                }}>
-                  <InnerBlocks
-                      templateLock={false}
-                  />
+                   <div className='ub-single-column' style={{
+                       padding: `${columnPaddingTop}px ${columnPaddingRight}px ${columnPaddingBottom}px ${columnPaddingLeft}px`,
+                       backgroundImage: ( columnImgURL ? `url( ${columnImgURL} )` : undefined ),
+                       backgroundColor: columnBgColor,
+                       backgroundSize: columnBgSize,
+                       backgroundPosition: columnBgPosition,
+                       backgroundRepeat: columnBgRepeat,
+                       backgroundAttachment: columnBgAttachment,
+                       border: `${columnBorderSize}px ${columnBorderStyle}${columnBorderColor}`,
+                       borderRadius: columnBorderRadius,
+                   }}>
+                      <InnerBlocks
+                          templateLock={false}
+                      />
+                   </div>
                </div>
            </Fragment>
         );

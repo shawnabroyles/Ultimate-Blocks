@@ -1,6 +1,9 @@
 //Import icons layout
 import icons from '../icons/icons';
 
+//Import External
+import map from 'lodash/map';
+
 // Setup the block
 const { __ } = wp.i18n;
 
@@ -21,7 +24,6 @@ const {
     ButtonGroup,
     Tooltip,
     TabPanel,
-    TextControl,
     IconButton,
     Dashicon,
     PanelBody,
@@ -56,7 +58,7 @@ export default class ColumnInspector extends Component {
                columnBorderBottom,
                columnBrTopRadius,
                columnBrLeftRadius,
-               columnBrdRightRadius,
+               columnBrRightRadius,
                columnBrBottomRadius,
                columnPaddingTop,
                columnPaddingRight,
@@ -66,9 +68,21 @@ export default class ColumnInspector extends Component {
                columnMarginRight,
                columnMarginLeft,
                columnMarginBottom,
+               onControlBrSize,
+               onControlBrRadius,
            },
            setAttributes,
        } = this.props;
+
+        const controlTypesSize = [
+            { key: 'linked', name: __( 'Linked' ), icon: icons.linked },
+            { key: 'individual', name: __( 'Individual' ), icon: icons.individual },
+        ];
+
+        const controlTypesRadius = [
+            { key: 'linked', name: __( 'Linked' ), icon: icons.radiuslinked },
+            { key: 'individual', name: __( 'Individual' ), icon: icons.radiusindividual },
+        ];
 
        const InspectorColumn = (
            <Fragment>
@@ -198,28 +212,167 @@ export default class ColumnInspector extends Component {
                        ] }
                        onChange={ value => setAttributes( { columnBorderStyle: value } ) }
                    />
-                   <RangeControl
-                       label = {__( 'Border Size' )}
-                       value={ columnBorderSize }
-                       onChange={ value => {
-                           setAttributes({
-                               columnBorderSize: value
-                           });
-                       }}
-                       min={ 0 }
-                       max={ 50 }
-                   />
-                   <RangeControl
-                       label = {__( 'Border Radius' )}
-                       value={ columnBorderRadius }
-                       onChange={ value => {
-                           setAttributes({
-                               columnBorderRadius: value
-                           });
-                       }}
-                       min={ 0 }
-                       max={ 200 }
-                   />
+                   <ButtonGroup className="ub-size-type-options" aria-label={ __( 'Control Type' ) }>
+                       { map( controlTypesSize, ( { name, key, icon } ) => (
+                           <Tooltip text={ name }>
+                               <Button
+                                   key={ key }
+                                   className="ub-size-btn"
+                                   isSmall
+                                   onClick={ () => setAttributes( {
+                                           onControlBrSize: false,
+                                       } )
+                                   }
+                               >
+                                   { icon }
+                               </Button>
+                           </Tooltip>
+                       ) ) }
+                   </ButtonGroup>
+                           { onControlBrSize ? (
+                           <div className='ub-border-control'>
+                               <RangeControl
+                                   label = {__( 'Border Size' )}
+                                   value={ columnBorderSize }
+                                   onChange={ value => {
+                                       setAttributes({
+                                           columnBorderSize: value
+                                       });
+                                   }}
+                                   min={ 0 }
+                                   max={ 200 }
+                               />
+                           </div>
+                   ) : (
+                       <div className='ub-border-control-idividual'>
+                           <p>{ __( 'Border Size' ) }</p>
+                           <RangeControl
+                               label={ icons.outlinetop }
+                               value={ columnBorderTop }
+                               onChange={ value => {
+                                   setAttributes({
+                                       columnBorderTop: value
+                                   });
+                               }}
+                               min={ 0 }
+                               max={ 50 }
+                           />
+                           <RangeControl
+                               label={ icons.outlineright }
+                               value={ columnBorderRight }
+                               onChange={ value => {
+                                  setAttributes({
+                                      columnBorderRight: value
+                                  });
+                               }}
+                               min={ 0 }
+                               max={ 50 }
+                           />
+                           <RangeControl
+                               label={ icons.outlineleft }
+                               value={ columnBorderBottom }
+                               onChange={ value => {
+                               setAttributes({
+                                       columnBorderBottom: value
+                                   });
+                               }}
+                               min={ 0 }
+                               max={ 50 }
+                           />
+                           <RangeControl
+                               label={ icons.outlinebottom }
+                               value={ columnBorderLeft }
+                               onChange={ value => {
+                               setAttributes({
+                                      columnBorderLeft: value
+                                  });
+                               }}
+                               min={ 0 }
+                               max={ 50 }
+                           />
+                       </div>
+                   )}
+                   <ButtonGroup className="ub-size-type-options kt-outline-control" aria-label={ __( 'Control Type' ) }>
+                       { map( controlTypesRadius, ( { name, key, icon } ) => (
+                           <Tooltip text={ name }>
+                               <Button
+                                   key={ key }
+                                   className="ub-size-btn"
+                                   isSmall
+                                   aria-pressed={ key }
+                                   onClick={ (props) => setAttributes({
+                                           onControlBrRadius: false,
+                                       })
+                                   }
+                               >
+                                   { icon }
+                               </Button>
+                           </Tooltip>
+                       ) ) }
+                   </ButtonGroup>
+                   { onControlBrRadius ? (
+                       <div className='ub-border-control'>
+                           <RangeControl
+                           label = {__( 'Border Radius' )}
+                           value = { columnBorderRadius }
+                           onChange={ value => {
+                               setAttributes({
+                                   columnBorderRadius: value
+                               });
+                           }}
+                           min={ 0 }
+                           max={ 200 }
+                           />
+                       </div>
+                   ) : (
+                       <div className='ub-border-control-linked'>
+                           <p>{ __( 'Border Radius' ) }</p>
+                           <RangeControl
+                               label={ icons.outlinetop }
+                               value={ columnBrTopRadius }
+                               onChange={ value => {
+                                   setAttributes({
+                                       columnBrTopRadius: value
+                                   });
+                               }}
+                               min={ 0 }
+                               max={ 200 }
+                           />
+                           <RangeControl
+                               label={ icons.outlineright }
+                               value={ columnBrRightRadius }
+                               onChange={ value => {
+                                   setAttributes({
+                                       columnBrRightRadius: value
+                                   });
+                               }}
+                               min={ 0 }
+                               max={ 200 }
+                           />
+                           <RangeControl
+                               label={ icons.outlineleft }
+                               value={ columnBrBottomRadius }
+                               onChange={ value => {
+                                   setAttributes({
+                                       columnBrBottomRadius: value
+                                   });
+                               }}
+                               min={ 0 }
+                               max={ 200 }
+                           />
+                           <RangeControl
+                               label={ icons.outlinebottom }
+                               value={ columnBrLeftRadius }
+                               onChange={ value => {
+                                   setAttributes({
+                                       columnBrLeftRadius: value
+                                   });
+                               }}
+                               min={ 0 }
+                               max={ 200 }
+                           />
+                       </div>
+                       )}
                </PanelBody>
                <PanelBody
                    title={ __( 'Margin | Padding Column' ) }

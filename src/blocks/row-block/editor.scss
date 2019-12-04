@@ -150,6 +150,7 @@
 //Single column
 .ub-single-column {
   width: 100%;
+  border: 0px solid transparent;
 
   .editor-block-list__layout.block-editor-block-list__layout {
     flex-direction: column;
@@ -306,7 +307,7 @@
 
   .components-range-control {
     .components-base-control__label {
-      width: 35px;
+      width: 25px;
     }
   }
 }
@@ -341,4 +342,39 @@
    .components-button{
      margin: 20px 0px;
    }
+}
+
+.ub-size-type-options{
+  margin: 0;
+  text-align: right;
+  display: block;
+  margin-bottom: -22px;
+   .ub-size-btn,
+   .ub-size-btn:hover:not(:disabled):not([aria-disabled=true]),
+   .ub-size-btn:focus:not(:disabled):not([aria-disabled=true]){
+     text-decoration: underline;
+     background: transparent;
+     box-shadow: none;
+     border: none;
+     outline: none;
+     z-index: 1;
+   }
+}
+
+.ub-border-control{
+  .components-base-control__label{
+    z-index: -1;
+  }
+}
+
+.ub-border-control-idividual{
+  .components-base-control__label{
+    width: 25px;
+  }
+}
+
+.ub-border-control-linked{
+  .components-base-control__label{
+    width: 25px;
+  }
 }

@@ -60,7 +60,7 @@ registerBlockType( 'ub/row-column', {
         },
         columnBorderSize: {
             type: 'number',
-            default: 0,
+            default: 0
         },
         columnBorderRadius: {
             type: 'number',
@@ -94,7 +94,7 @@ registerBlockType( 'ub/row-column', {
             type: 'number',
             default: 0,
         },
-        columnBrdRightRadius: {
+        columnBrRightRadius: {
             type: 'number',
             default: 0,
         },
@@ -134,6 +134,14 @@ registerBlockType( 'ub/row-column', {
             type: 'number',
             default: 0,
         },
+        onControlBrSize: {
+            type: 'bool',
+            default: true,
+        },
+        onControlBrRadius: {
+            type: 'bool',
+            default: true,
+        }
     },
     supports: {
         inserter: false,
@@ -165,7 +173,7 @@ registerBlockType( 'ub/row-column', {
                 columnBorderBottom,
                 columnBrTopRadius,
                 columnBrLeftRadius,
-                columnBrdRightRadius,
+                columnBrRightRadius,
                 columnBrBottomRadius,
                 columnPaddingTop,
                 columnPaddingRight,
@@ -175,6 +183,8 @@ registerBlockType( 'ub/row-column', {
                 columnMarginRight,
                 columnMarginLeft,
                 columnMarginBottom,
+                onControlBrSize,
+                onControlBrRadius,
             },
             block:{
               clientId
@@ -202,8 +212,10 @@ registerBlockType( 'ub/row-column', {
                        backgroundPosition: columnBgPosition,
                        backgroundRepeat: columnBgRepeat,
                        backgroundAttachment: columnBgAttachment,
-                       border: `${columnBorderSize}px ${columnBorderStyle}${columnBorderColor}`,
-                       borderRadius: columnBorderRadius,
+                       borderColor: columnBorderColor,
+                       borderStyle: columnBorderStyle,
+                       borderWidth: ( !onControlBrSize ? `${columnBorderTop}px ${columnBorderRight}px ${columnBorderBottom}px ${columnBorderLeft}px` : `${columnBorderSize}px`),
+                       borderRadius: ( !onControlBrRadius ? `${columnBrTopRadius}px ${columnBrRightRadius}px ${columnBrBottomRadius}px ${columnBrLeftRadius}px` : `${columnBorderRadius}px`),
                    }}>
                       <InnerBlocks
                           templateLock={false}

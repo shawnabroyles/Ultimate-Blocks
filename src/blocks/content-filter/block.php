@@ -98,7 +98,7 @@ function ub_content_filter_add_frontend_assets() {
         if($block['blockName'] == 'ub/content-filter' || $block['blockName'] == 'ub/content-filter-block'){
             wp_enqueue_script(
                 'ultimate_blocks-content-filter-front-script',
-                plugins_url( 'content-filter/front.js', dirname( __FILE__ ) ),
+                plugins_url( 'content-filter/front.build.js', dirname( __FILE__ ) ),
                 array( ),
                 Ultimate_Blocks_Constants::plugin_version(),
                 true

@@ -292,7 +292,7 @@ export default class ColumnInspector extends Component {
                            />
                        </div>
                    )}
-                   <ButtonGroup className="ub-size-type-options kt-outline-control" aria-label={ __( 'Control Type' ) }>
+                   <ButtonGroup className="ub-size-type-options" aria-label={ __( 'Control Type' ) }>
                        { map( controlTypesRadius, ( { name, key, icon } ) => (
                            <Tooltip text={ name }>
                                <Button

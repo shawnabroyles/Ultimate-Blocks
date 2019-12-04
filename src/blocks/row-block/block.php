@@ -190,7 +190,9 @@ function ub_render_row_block($attributes){
                             break;
                     }
                 }
-                $result .= '<div id="' . $columns[$i]['attrs']['id_column'] . '" class="ub-single-column" style="flex: 0 1 ' . $sizeCol[$i] . '; margin-left:' . $mleft[$i] . 'px; margin-right:' . $mright[$i] . 'px; background-color:'. $attributes['columnBgColor'].'">';
+                $result .= '<div id="' . $columns[$i]['attrs']['id_column'] . '" class="ub-single-column" style="flex: 0 1 ' . $sizeCol[$i] . '; margin-left:' . $mleft[$i] . 'px; margin-right:' . $mright[$i] . 'px; background-color:'.
+                    $attributes['columnBgColor'].'; border-width:'.$columns[$i]['attrs']['columnBorderSize'].'px; border-color:'.$columns[$i]['attrs']['columnBorderColor'].'; border-style:'.$columns[$i]['attrs']['columnBorderStyle'].
+                    '; border-radius:'.$columns[$i]['attrs']['columnBrTopRadius'].'px; background-image: url('.$columns[$i]['attrs']['columnImgURL'].')">';
                 foreach ($columns[$i]['innerBlocks'] as $content) {
                     //var_dump($content);
                     $blocrRender = render_block($content);

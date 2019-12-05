@@ -249,7 +249,11 @@ export default class ColumnInspector extends Component {
                                    value={ columnBorderSize }
                                    onChange={ value => {
                                        setAttributes({
-                                           columnBorderSize: value
+                                           columnBorderSize: value,
+                                           columnBorderTop: value,
+                                           columnBorderRight: value,
+                                           columnBorderLeft: value,
+                                           columnBorderBottom: value,
                                        });
                                    }}
                                    min={ 0 }
@@ -282,10 +286,10 @@ export default class ColumnInspector extends Component {
                                max={ 50 }
                            />
                            <RangeControl
-                               label={ icons.outlineleft }
+                               label={ icons.outlinebottom }
                                value={ columnBorderBottom }
                                onChange={ value => {
-                               setAttributes({
+                                   setAttributes({
                                        columnBorderBottom: value
                                    });
                                }}
@@ -293,12 +297,12 @@ export default class ColumnInspector extends Component {
                                max={ 50 }
                            />
                            <RangeControl
-                               label={ icons.outlinebottom }
+                               label={ icons.outlineleft }
                                value={ columnBorderLeft }
                                onChange={ value => {
-                               setAttributes({
-                                      columnBorderLeft: value
-                                  });
+                                   setAttributes({
+                                       columnBorderLeft: value
+                                   });
                                }}
                                min={ 0 }
                                max={ 50 }
@@ -344,7 +348,11 @@ export default class ColumnInspector extends Component {
                            value = { columnBorderRadius }
                            onChange={ value => {
                                setAttributes({
-                                   columnBorderRadius: value
+                                   columnBorderRadius: value,
+                                   columnBrTopRadius: value,
+                                   columnBrRightRadius: value,
+                                   columnBrLeftRadius: value,
+                                   columnBrBottomRadius: value,
                                });
                            }}
                            min={ 0 }
@@ -377,7 +385,7 @@ export default class ColumnInspector extends Component {
                                max={ 200 }
                            />
                            <RangeControl
-                               label={ icons.outlineleft }
+                               label={ icons.outlinebottom }
                                value={ columnBrBottomRadius }
                                onChange={ value => {
                                    setAttributes({
@@ -388,7 +396,7 @@ export default class ColumnInspector extends Component {
                                max={ 200 }
                            />
                            <RangeControl
-                               label={ icons.outlinebottom }
+                               label={ icons.outlineleft }
                                value={ columnBrLeftRadius }
                                onChange={ value => {
                                    setAttributes({

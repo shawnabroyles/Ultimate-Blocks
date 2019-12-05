@@ -215,17 +215,30 @@ export default class ColumnInspector extends Component {
                    <ButtonGroup className="ub-size-type-options" aria-label={ __( 'Control Type' ) }>
                        { map( controlTypesSize, ( { name, key, icon } ) => (
                            <Tooltip text={ name }>
-                               <Button
-                                   key={ key }
-                                   className="ub-size-btn"
-                                   isSmall
-                                   onClick={ () => setAttributes( {
+                               { key === 'linked' ?
+                                   <Button
+                                       key={ key }
+                                       className="ub-size-btn"
+                                       isSmall
+                                       onClick={ () => setAttributes( {
+                                               onControlBrSize: true,
+                                           } )
+                                       }
+                                   >
+                                       { icon }
+                                   </Button> :
+                                   <Button
+                                       key={ key }
+                                       className="ub-size-btn"
+                                       isSmall
+                                       onClick={ () => setAttributes( {
                                            onControlBrSize: false,
                                        } )
-                                   }
-                               >
-                                   { icon }
-                               </Button>
+                                       }
+                                   >
+                                       { icon }
+                                   </Button>
+                               }
                            </Tooltip>
                        ) ) }
                    </ButtonGroup>
@@ -295,18 +308,32 @@ export default class ColumnInspector extends Component {
                    <ButtonGroup className="ub-size-type-options" aria-label={ __( 'Control Type' ) }>
                        { map( controlTypesRadius, ( { name, key, icon } ) => (
                            <Tooltip text={ name }>
-                               <Button
-                                   key={ key }
-                                   className="ub-size-btn"
-                                   isSmall
-                                   aria-pressed={ key }
-                                   onClick={ (props) => setAttributes({
+                               { key === 'linked' ?
+                                   <Button
+                                       key={key}
+                                       className="ub-size-btn"
+                                       isSmall
+                                       aria-pressed={key}
+                                       onClick={(props) => setAttributes({
+                                           onControlBrRadius: true,
+                                       })
+                                       }
+                                   >
+                                       {icon}
+                                   </Button> :
+                                   <Button
+                                       key={key}
+                                       className="ub-size-btn"
+                                       isSmall
+                                       aria-pressed={key}
+                                       onClick={(props) => setAttributes({
                                            onControlBrRadius: false,
                                        })
-                                   }
-                               >
-                                   { icon }
-                               </Button>
+                                       }
+                                   >
+                                       {icon}
+                                   </Button>
+                               }
                            </Tooltip>
                        ) ) }
                    </ButtonGroup>

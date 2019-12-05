@@ -190,9 +190,25 @@ function ub_render_row_block($attributes){
                             break;
                     }
                 }
-                $result .= '<div id="' . $columns[$i]['attrs']['id_column'] . '" class="ub-single-column" style="flex: 0 1 ' . $sizeCol[$i] . '; margin-left:' . $mleft[$i] . 'px; margin-right:' . $mright[$i] . 'px; background-color:'.
-                    $attributes['columnBgColor'].'; border-width:'.$columns[$i]['attrs']['columnBorderSize'].'px; border-color:'.$columns[$i]['attrs']['columnBorderColor'].'; border-style:'.$columns[$i]['attrs']['columnBorderStyle'].
-                    '; border-radius:'.$columns[$i]['attrs']['columnBrTopRadius'].'px; background-image: url('.$columns[$i]['attrs']['columnImgURL'].')">';
+                $result .= '<div id="' . $columns[$i]['attrs']['id_column'] . '" class="ub-single-column" style="flex: 0 1 ' . $sizeCol[$i] . '; margin-left:' . $mleft[$i] . 'px; margin-right:' . $mright[$i] . 'px;'.
+                    ($columns[$i]['attrs']['columnBgColor'] ? 'background-color:'.$columns[$i]['attrs']['columnBgColor'] : '' ).';'.
+                    ($columns[$i]['attrs']['columnBorderSize'] ? 'border-width:'.$columns[$i]['attrs']['columnBorderSize'].'px;' : '').
+                    ($columns[$i]['attrs']['columnBorderColor'] ? 'border-color:'.$columns[$i]['attrs']['columnBorderColor'] : '' ).';'.
+                    ($columns[$i]['attrs']['columnBorderStyle'] ? 'border-style:'.$columns[$i]['attrs']['columnBorderStyle'] : '' ).';'.
+                    ($columns[$i]['attrs']['columnBrTopRadius'] ? 'border-radius:'.$columns[$i]['attrs']['columnBrTopRadius'].'px;' : '').
+                    ($columns[$i]['attrs']['columnImgURL'] ? 'background-image: url('.$columns[$i]['attrs']['columnImgURL'].')': '').';'.
+                    ($columns[$i]['attrs']['columnBgSize'] ? 'background-size:'.$columns[$i]['attrs']['columnBgSize'] : 'background-size: cover;').';'.
+                    ($columns[$i]['attrs']['columnBgPosition'] ? 'background-position:'.$columns[$i]['attrs']['columnBgPosition'] : 'background-position: center center;').';'.
+                    ($columns[$i]['attrs']['columnBgRepeat'] ? 'background-repeat:'.$columns[$i]['attrs']['columnBgRepeat'] : 'background-repeat: no-repeat;' ).';'.
+                    ($columns[$i]['attrs']['columnBgAttachment'] ? 'background-attachment:'.$columns[$i]['attrs']['columnBgAttachment'] : 'background-attachment: scroll;' ).';'.
+                    ($columns[$i]['attrs']['columnMarginTop'] ? 'margin-top:'.$columns[$i]['attrs']['columnMarginTop'].'px;': '').
+                    ($columns[$i]['attrs']['columnMarginRight'] ? 'margin-right:'.$columns[$i]['attrs']['columnMarginRight'].'px;': '').
+                    ($columns[$i]['attrs']['columnMarginBottom'] ? 'margin-bottom:'.$columns[$i]['attrs']['columnMarginBottom'].'px;': '').
+                    ($columns[$i]['attrs']['columnMarginLeft'] ? 'margin-left:'.$columns[$i]['attrs']['columnMarginLeft'].'px;': '') .
+                    ($columns[$i]['attrs']['columnPaddingTop'] ? 'padding-top:'.$columns[$i]['attrs']['columnPaddingTop'].'px;' : '').
+                    ($columns[$i]['attrs']['columnPaddingRight'] ? 'padding-right:'.$columns[$i]['attrs']['columnPaddingRight'].'px;' : '').
+                    ($columns[$i]['attrs']['columnPaddingBottom'] ? 'padding-bottom:'.$columns[$i]['attrs']['columnPaddingBottom'].'px;' : '').
+                    ($columns[$i]['attrs']['columnPaddingLeft'] ? 'padding-left:'.$columns[$i]['attrs']['columnPaddingLeft'].'px;': '').'">';
                 foreach ($columns[$i]['innerBlocks'] as $content) {
                     //var_dump($content);
                     $blocrRender = render_block($content);

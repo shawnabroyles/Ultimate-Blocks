@@ -169,9 +169,15 @@
 }
 .ub-select-layout-grid{
 
+  .components-base-control+p{
+      margin: 0 0 10px;
+  }
+
   .components-button-group{
 
-    .ub-section-btn{
+    .ub-section-btn,
+    .ub-section-btn-select
+    {
       height: 25px;
       border: 0;
       margin-right: 10px;
@@ -184,8 +190,8 @@
       }
     }
 
-    .components-button .is-default:active,
-    .components-button .is-default:focus{
+    .components-button.is-default:active:not(:disabled):not([aria-disabled=true]),
+    .components-button.is-default:focus:not(:disabled):not([aria-disabled=true]){
       background: #ffffff;
       border-color: #ffffff;
       box-shadow: none;
@@ -193,6 +199,10 @@
   }
 
   .components-button-group .ub-section-btn:hover svg rect{
+    fill: #a6a6a6;
+  }
+
+  .components-button-group .ub-section-btn-select svg rect{
     fill: #666666;
   }
 

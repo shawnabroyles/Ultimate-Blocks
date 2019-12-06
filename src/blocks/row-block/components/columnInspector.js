@@ -413,97 +413,113 @@ export default class ColumnInspector extends Component {
                    title={ __( 'Margin | Padding Column' ) }
                    initialOpen={ false }
                >
-                   <div className='ub-margin-padding-panel'>
-                       <p>{ __( 'Padding (px)' )}</p>
-                       <RangeControl
-                           label={ icons.outlinetop }
-                           value={ columnPaddingTop }
-                           onChange={ value => {
-                               setAttributes({
-                                   columnPaddingTop: value
-                               });
-                           }}
-                           min={ 0 }
-                           max={ 500 }
-                       />
-                       <RangeControl
-                           label={ icons.outlineright }
-                           value={ columnPaddingRight }
-                           onChange={ value => {
-                               setAttributes({
-                                   columnPaddingRight: value
-                               });
-                           }}
-                           min={ 0 }
-                           max={ 500 }
-                       />
-                       <RangeControl
-                           label={ icons.outlineleft }
-                           value={ columnPaddingLeft }
-                           onChange={ value => {
-                               setAttributes({
-                                   columnPaddingLeft: value
-                               });
-                           }}
-                           min={ 0 }
-                           max={ 500 }
-                       />
-                       <RangeControl
-                           label={ icons.outlinebottom }
-                           value={ columnPaddingBottom }
-                           onChange={ value => {
-                               setAttributes({
-                                   columnPaddingBottom: value
-                               });
-                           }}
-                           min={ 0 }
-                           max={ 500 }
-                       />
-                       <p>{ __( 'Margin (px)' )}</p>
-                       <RangeControl
-                           label={ icons.outlinetop }
-                           value={ columnMarginTop }
-                           onChange={ value => {
-                               setAttributes({
-                                   columnMarginTop: value
-                               });
-                           }}
-                           min={ -200 }
-                           max={ 200 }
-                       />
-                       <RangeControl
-                           label={ icons.outlineright }
-                           value={ columnMarginRight }
-                           onChange={ value => {
-                               setAttributes({
-                                   columnMarginRight: value
-                               });
-                           }}
-                           min={ -200 }
-                           max={ 200 }
-                       />
-                       <RangeControl
-                           label={ icons.outlineleft }
-                           value={ columnMarginLeft }
-                           onChange={ value => {
-                               setAttributes({
-                                   columnMarginLeft: value
-                               });
-                           }}
-                           min={ -200 }
-                           max={ 200 }
-                       />
-                       <RangeControl
-                           label={ icons.outlinebottom }
-                           value={ columnMarginBottom }
-                           onChange={ value => {
-                               setAttributes({
-                                   columnMarginBottom: value
-                               });
-                           }}
-                           min={ -200 }
-                           max={ 200 }
-                       />
+                   <div className="ub-layout-wrap_margin_box">
+                       <div className="margin-st_box1">
+                           <RangeControl
+                               value={ columnMarginTop }
+                               onChange={ value => {
+                                   setAttributes({
+                                       columnMarginTop: value
+                                   });
+                               }}
+                               min={ 0 }
+                               max={ 100 }
+                           />
+                       </div>
+                       <div className="margin-st_box2">
+                           <div className="margin-col-1">
+                               <RangeControl
+                                   value={ columnMarginLeft }
+                                   onChange={ value => {
+                                       setAttributes({
+                                           columnMarginLeft: value
+                                       });
+                                   }}
+                                   min={ 0 }
+                                   max={ 100 }
+                               />
+                           </div>
+                           <div className="margin-col-2">
+                               <div className="padding-st_box1">
+                                   <p>Padding</p>
+                                   <RangeControl
+                                       value={ columnPaddingTop }
+                                       onChange={ value => {
+                                           setAttributes({
+                                               columnPaddingTop: value
+                                           });
+                                       }}
+                                       min={ 0 }
+                                       max={ 100 }
+                                   />
+                               </div>
+                               <div className="padding-st_box2">
+                                   <div className="padding-col-1">
+                                       <RangeControl
+                                           value={ columnPaddingLeft }
+                                           onChange={ value => {
+                                               setAttributes({
+                                                   columnPaddingLeft: value
+                                               });
+                                           }}
+                                           min={ 0 }
+                                           max={ 100 }
+                                       />
+                                   </div>
+                                   <div className="padding-col-2">
+                                       <p>Content</p>
+                                   </div>
+                                   <div className="padding-col-3">
+                                       <RangeControl
+                                           value={ columnPaddingRight }
+                                           onChange={ value => {
+                                               setAttributes({
+                                                   columnPaddingRight: value
+                                               });
+                                           }}
+                                           min={ 0 }
+                                           max={ 100 }
+                                       />
+                                   </div>
+                               </div>
+                               <div className="padding-st_box3">
+                                   <RangeControl
+                                       value={ columnPaddingBottom }
+                                       onChange={ value => {
+                                           setAttributes({
+                                               columnPaddingBottom: value
+                                           });
+                                       }}
+                                       min={ 0 }
+                                       max={ 100 }
+                                   />
+                               </div>
+                           </div>
+                           <div className="margin-col-3">
+                               <RangeControl
+                                   value={ columnMarginRight }
+                                   onChange={ value => {
+                                       setAttributes({
+                                           columnMarginRight: value
+                                       });
+                                   }}
+                                   min={ 0 }
+                                   max={ 100 }
+                               />
+                           </div>
+                       </div>
+                       <div className="margin-st_box3">
+                           <RangeControl
+                               value={ columnMarginBottom }
+                               onChange={ value => {
+                                   setAttributes({
+                                       columnMarginBottom: value
+                                   });
+                               }}
+                               min={ 0 }
+                               max={ 100 }
+                           />
+                       </div>
                    </div>
                </PanelBody>
            </Fragment>

@@ -42,16 +42,16 @@ function ub_render_row_block($attributes){
         $columns = $block['innerBlocks'];
         //var_dump($block);
         if ($attributes['blockID'] === $blockID) {
-            $result .= '<'.($attributes['wrapTag'] ? $attributes['wrapTag'] : 'div').' class="ub-section-block-wrap" style="position: relative; overflow: hidden; margin:' . $attributes['marginTopWrap'] . $attributes['selectUnits'] .' '. $attributes['marginRightWrap'] . $attributes['selectUnits'] .
+            $result .= '<'.$attributes['wrapTag'].' class="ub-section-block-wrap align'.$attributes['wrapAlignment'].'" style="position: relative; overflow: hidden; margin:' . $attributes['marginTopWrap'] . $attributes['selectUnits'] .' '. $attributes['marginRightWrap'] . $attributes['selectUnits'] .
                 ' '.$attributes['marginBottomWrap'] . $attributes['selectUnits'] .' '. $attributes['marginLeftWrap'] . $attributes['selectUnits'] . '; border:'. $attributes['wrapBorderSize'] .'px '.
                 $attributes['wrapBorderStyle']. $attributes['wrapBorderColor'] . '; border-radius:'. $attributes['wrapBorderRadius'].'px;">';
 
             $result .='<div class="ub-section-block-video-wrap"><video class="ub-block-video" autoplay '.(false == $attributes['videoLoop'] ? '' : 'loop' ).' '.(false == $attributes['videoMuted'] ? '' : 'muted' ).' src="'. $attributes['videoURL'].'"></video></div>';
             $result .='<div class="ub-section-block-overlay" style="background-size: cover; background-repeat: no-repeat; background-position: center center; background-attachment: scroll; opacity: '.($attributes['wrapBackgroundOverlay'] == 100 ? 1 : '0.'. $attributes['wrapBackgroundOverlay']).'; background-color: '. $attributes['wrapBackgroundOverlayCol'].'"></div>';
 
-            $result .= '<div class="ub-single-block" style="display: flex; background-image: url('.$backgroundImg.'); background-size: '.
-                $attributes['wrapBackgroundSize'] .'; '.($attributes['wrapColor'] ? 'background-color:'.$attributes['wrapColor'] : '').'; background-position:'. $attributes['wrapBackgroundPosition'].
-                '; background-repeat:'. $attributes['wrapBackgroundRepeat'] .'; background-attachment:'. $attributes['wrapBackgroundAttachment'] . '; color:'.($attributes['textColor'] ? $attributes['textColor'] : '#ffffff;').'">';
+            $result .= '<div class="ub-single-block" style="display: flex; background-image: url('.$backgroundImg.'); background-size:'.
+                $attributes['wrapBackgroundSize'].'; background-color:'.$attributes['wrapColor'].'; background-position:'.$attributes['wrapBackgroundPosition'].
+                '; background-repeat:'.$attributes['wrapBackgroundRepeat'].'; background-attachment:'.$attributes['wrapBackgroundAttachment'].'; color:'.$attributes['textColor'].'">';
             for ($i = 0; $i < count($columns); $i++) {
                 $cS = count($columns);
                 if ($coutColumns == $cS && $attributes['gutter'] == '0px') {
@@ -222,7 +222,7 @@ function ub_render_row_block($attributes){
                 }
                 $result .= '</div></div>';
             }
-            $result .= '</div></'.($attributes['wrapTag'] ? $attributes['wrapTag'] : 'div').'>';
+            $result .= '</div></'.$attributes['wrapTag'].'>';
         }
     }
     return $result;

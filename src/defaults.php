@@ -1120,6 +1120,10 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => ''
             ),
+            'wrapAlignment' => array(
+                'type' => 'string',
+                'default' => '',
+            ),
             'marginTopWrap' => array(
                 'type' => 'number',
                 'default' => 0
@@ -1135,6 +1139,10 @@ $defaultValues = array(
             'marginLeftWrap' => array(
                 'type' => 'number',
                 'default' => 0
+            ),
+            'selectUnits' => array(
+                'type' => 'string',
+                'default' => 'px',
             ),
             'gutter' => array(
                 'type' => 'string',
@@ -1174,7 +1182,7 @@ $defaultValues = array(
             ),
             'wrapColor' => array(
                 'type' => 'string',
-                'background' => '#ffffff',
+                'background' => '',
             ),
             'wrapBackgroundSize' => array(
                 'type' => 'string',
@@ -1191,6 +1199,10 @@ $defaultValues = array(
             'wrapBackgroundAttachment' => array(
                 'type' => 'string',
                 'default' => 'scroll',
+            ),
+            'wrapTag' => array(
+                'type' => 'string',
+                'default' => 'div',
             ),
             'videoID' => array(
                 'type' => 'number',
@@ -1211,13 +1223,13 @@ $defaultValues = array(
                 'type' => 'number',
                 'default' => 0
             ),
-            'wrarBackgroundOverlayCol' => array(
+            'wrapBackgroundOverlayCol' => array(
                 'type' => 'string',
                 'default' => '#ffffff',
             ),
             'textColor' => array(
                 'type' => 'string',
-                'default' => '',
+                'default' => '#ffffff',
             ),
             'columnBgColor' => array(
                 'type' => 'string',

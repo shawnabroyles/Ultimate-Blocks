@@ -102,15 +102,15 @@ export default class Inspector extends Component {
         const columnTypeFour = [
             { key: 'equal-four', col: 4, One: '25%', Two: '25%', Three: '25%', Four: '25%', icon: icons.fourcol },
             { key: 'left-forty', col: 4, One: '40%', Two: '20%', Three: '20%', Four: '20%', icon: icons.lfourforty },
-            { key: 'right-forty', col: 4, One: '20%', Two: '20%', Three: '20%', Four: '40%', icon: icons.rfourforty }
+            { key: 'right-forty', col: 4, One: '20%', Two: '20%', Three: '20%', Four: '40%', icon: icons.rfourforty },
         ];
 
         const columnTypeFive = [
-
+            { key: 'equal-five', col: 5, One: '20%', Two: '20%', Three: '20%', Four: '20%', Five: '20%', icon: icons.fivecol },
         ];
 
         const columnTypeSix = [
-
+            { key: 'equal-six', col: 6, One: '16,3%', Two: '16,3%', Three: '16,3%', Four: '16,3%', Six: '16,3%', icon: icons.sixcol },
         ];
 
         let selectTypeColumn;
@@ -120,7 +120,11 @@ export default class Inspector extends Component {
         } else if ( columns == 3 ){
             selectTypeColumn = columnTypeThree;
         } else if ( columns == 4 ){
-            selectTypeColumn == columnTypeFour;
+            selectTypeColumn = columnTypeFour;
+        } else if ( columns == 5 ){
+            selectTypeColumn = columnTypeFive;
+        } else if ( columns == 6 ){
+            selectTypeColumn = columnTypeSix;
         }
 
         const selectGrid = (props) => (
@@ -131,7 +135,7 @@ export default class Inspector extends Component {
                         { map( selectTypeColumn, ( { key, icon, col, One, Two, Three, Four } ) => (
                             <Button
                                 key={ key }
-                                className="ub-section-btn"
+                                className={ colSection === key ? `ub-section-btn-select` : `ub-section-btn` }
                                 isSmall
                                 onClick={ (props) => setAttributes( {
                                     colSection: key,

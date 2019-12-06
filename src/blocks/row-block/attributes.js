@@ -15,9 +15,9 @@ const attributes = {
         type: 'bool',
         default: false
     },
-    blockAlignment: {
+    wrapAlignment: {
         type: 'string',
-        default: 'none',
+        default: '',
     },
     ColWidthOne: {
         type: 'string',

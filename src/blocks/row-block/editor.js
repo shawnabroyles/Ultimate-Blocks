@@ -80,7 +80,7 @@ export default class RowEditor extends Component {
                 colSection,
                 columns,
                 startOptions,
-                blockAlignment,
+                wrapAlignment,
                 ColWidthOne,
                 ColWidthTwo,
                 ColWidthThree,
@@ -170,9 +170,9 @@ export default class RowEditor extends Component {
             <Fragment>
                 <BlockControls>
                     <BlockAlignmentToolbar
-                        value={ blockAlignment }
+                        value={ wrapAlignment }
                         controls={ [ 'center', 'wide', 'full' ] }
-                        onChange={ value => setAttributes( { blockAlignment: value } ) }
+                        onChange={ value => setAttributes( { wrapAlignment: value } ) }
                     />
                     <Toolbar>
                         <MediaUpload

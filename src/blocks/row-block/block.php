@@ -190,7 +190,7 @@ function ub_render_row_block($attributes){
                             break;
                     }
                 }
-                $result .= '<div id="' . $columns[$i]['attrs']['id_column'] . '" class="ub-single-wrap" style="flex: 0 1 ' . $sizeCol[$i] . '; margin-left:' . ($mleft[$i] ? $mleft[$i].'px;' : '0px;') . 'margin-right:' . ($mright[$i] ? $mright[$i].'px;' : '0px;') .'">';
+                $result .= '<div id="' . $columns[$i]['attrs']['id_column'] . '" class="ub-single-wrap" style="flex: 0 1 ' . $sizeCol[$i] . '; margin-left:' . ($mleft[$i] ? $mleft[$i].'px;' : '0px;') . 'margin-right:' . ($mright[$i] ? $mright[$i].'px;' : '0px;') .' display: flex; flex-direction: column; justify-content:'.$attributes['wrapVerticalAligment'].'">';
                 $result .= '<div class="ub-single-column" style="'. ($columns[$i]['attrs']['columnBgColor'] ? 'background-color:'.$columns[$i]['attrs']['columnBgColor'].'; ' : '' ).
                     ($columns[$i]['attrs']['onControlBrSize']  === false && $columns[$i]['attrs']['columnBorderSize'] ? 'border-width:'.($columns[$i]['attrs']['columnBorderTop'] ? $columns[$i]['attrs']['columnBorderTop'].'px ' : '0px ').
                     ($columns[$i]['attrs']['columnBorderRight'] ? $columns[$i]['attrs']['columnBorderRight'].'px ' : '0px ').

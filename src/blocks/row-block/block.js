@@ -36,6 +36,11 @@ export default registerBlockType( 'ub/row-block', {
         __('Ultimate Blocks', 'ultimate-blocks')
     ],
     attributes,
+    getEditWrapperProps( { wrapAlignment } ) {
+        if ( 'full' === wrapAlignment || 'wide' === wrapAlignment || 'center' === wrapAlignment ) {
+            return { 'data-align': wrapAlignment };
+        }
+    },
     edit: withSelect((select, ownProps) => ({
         block: (
             select('core/block-editor') || select('core/editor')

@@ -1124,6 +1124,10 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => '',
             ),
+            'wrapVerticalAligment' => array(
+                'type' => 'string',
+                'default' => '',
+            ),
             'marginTopWrap' => array(
                 'type' => 'number',
                 'default' => 0

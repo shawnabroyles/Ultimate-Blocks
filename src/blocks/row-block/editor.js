@@ -6,6 +6,7 @@ import map from 'lodash/map';
 import times from 'lodash/times';
 import { Resizable } from 're-resizable';
 import ContainerDimensions from 'react-container-dimensions';
+import classnames from 'classnames';
 
 // Setup the block
 const { __ } = wp.i18n;
@@ -31,7 +32,6 @@ const ALLOWED_BLOCKS = [ 'ub/row-column' ];
 export default class RowEditor extends Component {
 
     constructor() {
-        console.log('constructor');
         super( ...arguments );
         this.state = {
             firstWidth: null,
@@ -81,6 +81,7 @@ export default class RowEditor extends Component {
                 columns,
                 startOptions,
                 wrapAlignment,
+                wrapVerticalAligment,
                 ColWidthOne,
                 ColWidthTwo,
                 ColWidthThree,
@@ -193,8 +194,64 @@ export default class RowEditor extends Component {
                             ) }
                         />
                     </Toolbar>
+                    <Toolbar>
+                        <Tooltip text={ __( 'Vertical Align Top' ) }>
+                            <Button
+                                className={ classnames(
+                                    'components-icon-button',
+                                    'components-toolbar__control',
+                                    { 'is-active': wrapVerticalAligment === 'flex-start' },
+                                ) }
+                                onClick={ () => setAttributes( { wrapVerticalAligment: 'flex-start' } ) }
+                            >
+                                { icons.wrapVerticalTop }
+                            </Button>
+                        </Tooltip>
+                    </Toolbar>
+                    <Toolbar>
+                        <Tooltip text={ __( 'Vertical Align Middle' ) }>
+                            <Button
+                                className={ classnames(
+                                    'components-icon-button',
+                                    'components-toolbar__control',
+                                    { 'is-active': wrapVerticalAligment === 'center' },
+                                ) }
+                                onClick={ () => setAttributes( { wrapVerticalAligment: 'center' } ) }
+                            >
+                                { icons.wrapVerticalMiddle }
+                            </Button>
+                        </Tooltip>
+                    </Toolbar>
+                    <Toolbar>
+                        <Tooltip text={ __( 'Vertical Align Bottom' ) }>
+                            <Button
+                                className={ classnames(
+                                    'components-icon-button',
+                                    'components-toolbar__control',
+                                    { 'is-active': wrapVerticalAligment === 'flex-end' },
+                                ) }
+                                onClick={ () => setAttributes( { wrapVerticalAligment: 'flex-end' } ) }
+                            >
+                                { icons.wrapVerticalBottom }
+                            </Button>
+                        </Tooltip>
+                    </Toolbar>
+                    <Toolbar>
+                        <Tooltip text={ __( 'Inner Columns Full Height' ) }>
+                            <Button
+                                className={ classnames(
+                                    'components-icon-button',
+                                    'components-toolbar__control',
+                                    { 'is-active': wrapVerticalAligment === 'space-between' },
+                                ) }
+                                onClick={ () => setAttributes( { wrapVerticalAligment: 'space-between' } ) }
+                            >
+                                { icons.wrapVerticalFullHeight }
+                            </Button>
+                        </Tooltip>
+                    </Toolbar>
                 </BlockControls>
-                <div className='ub-section-overhad-wrap' style={{
+                <div className={`ub-section-overhad-wrap wrapVertical${wrapVerticalAligment}`} style={{
                     marginTop: `${marginTopWrap}${selectUnits}`,
                     marginLeft: `${marginLeftWrap}${selectUnits}`,
                     marginBottom: `${marginBottomWrap}${selectUnits}`,
@@ -282,15 +339,15 @@ export default class RowEditor extends Component {
                                  <style>
                                      { columns && columns === 2 && (
                                      <Fragment>
-                                         { ( !this.state.ResizeColWidthOne ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( ColWidthOne ) }%; margin-right: ${ gutter }; overflow: hidden; word-break: break-word }` :`#block-${clientId} .ub-section-column-wrap > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthOne ) }%; margin-right: ${ gutter }; overflow: hidden; word-break: break-word }` ) }
-                                         { ( !this.state.ResizeColWidthTwo ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( ColWidthTwo ) }%; overflow: hidden; word-break: break-word }` :`#block-${clientId} .ub-section-column-wrap  > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthTwo) }%; overflow: hidden; word-break: break-word }` ) }
+                                         { ( !this.state.ResizeColWidthOne ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( ColWidthOne ) }%; margin-right: ${ gutter }; display: flex; margin-top: -14px; margin-bottom: -14px; word-break: break-word; }` :`#block-${clientId} .ub-section-column-wrap > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthOne ) }%; margin-right: ${ gutter }; display: flex; margin-top: -14px; margin-bottom: -14px; word-break: break-word; }` ) }
+                                         { ( !this.state.ResizeColWidthTwo ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( ColWidthTwo ) }%; display: flex; margin-top: -14px; margin-bottom: -14px; word-break: break-word; }` :`#block-${clientId} .ub-section-column-wrap  > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthTwo) }%; display: flex; margin-top: -14px; margin-bottom: -14px; word-break: break-word; }` ) }
                                      </Fragment>
                                      )}
                                      { columns && columns === 3 && (
                                          <Fragment>
-                                             { ( !this.state.ResizeColWidthOne ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( ColWidthOne ) }%; margin-right: ${ gutter }; overflow: hidden; word-break: break-word }` :`#block-${clientId} .ub-section-column-wrap > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthOne ) }%; margin-right: ${ gutter }; overflow: hidden; word-break: break-word }` ) }
-                                             { ( !this.state.ResizeColWidthTwo ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( ColWidthTwo ) }%; margin-right: ${ gutter }; overflow: hidden; word-break: break-word }` :`#block-${clientId} .ub-section-column-wrap  > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthTwo ) }%; margin-right: ${ gutter }; overflow: hidden; word-break: break-word }` ) }
-                                             { ( !this.state.ResizeColWidthThree ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(3) { flex: 0 1 ${ parseFloat( ColWidthThree ) }%; overflow: hidden; word-break: break-word }` :`#block-${clientId} .ub-section-column-wrap  > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(3) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthThree ) }%; overflow: hidden; word-break: break-word }` ) }
+                                             { ( !this.state.ResizeColWidthOne ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( ColWidthOne ) }%; margin-right: ${ gutter }; display: flex; margin-top: -14px; margin-bottom: -14px; word-break: break-word }` :`#block-${clientId} .ub-section-column-wrap > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthOne ) }%; margin-right: ${ gutter }; display: flex; margin-top: -14px; margin-bottom: -14px; word-break: break-word; }` ) }
+                                             { ( !this.state.ResizeColWidthTwo ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( ColWidthTwo ) }%; margin-right: ${ gutter }; display: flex; margin-top: -14px; margin-bottom: -14px; word-break: break-word }` :`#block-${clientId} .ub-section-column-wrap  > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthTwo ) }%; margin-right: ${ gutter }; display: flex; margin-top: -14px; margin-bottom: -14px; word-break: break-word; }` ) }
+                                             { ( !this.state.ResizeColWidthThree ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(3) { flex: 0 1 ${ parseFloat( ColWidthThree ) }%; display: flex; margin-top: -14px; margin-bottom: -14px; word-break: break-word }` :`#block-${clientId} .ub-section-column-wrap  > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(3) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthThree ) }%; display: flex; margin-top: -14px; margin-bottom: -14px; word-break: break-word; }` ) }
                                          </Fragment>
                                      )}
                                  </style>
@@ -456,12 +513,12 @@ export default class RowEditor extends Component {
                                  }
                                 <style>
                                     <Fragment>
-                                        { `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( ColWidthOne ) }%; }` }
-                                        { `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( ColWidthTwo ) }%; }` }
-                                        { `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(3) { flex: 0 1 ${ parseFloat( ColWidthThree ) }%; }` }
-                                        { `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(4) { flex: 0 1 ${ parseFloat( ColWidthFour ) }%; }` }
-                                        { `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(5) { flex: 0 1 ${ parseFloat( ColWidthFive ) }%; }` }
-                                        { `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(6) { flex: 0 1 ${ parseFloat( ColWidthSix ) }%; }` }
+                                        { `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( ColWidthOne ) }%; display: flex; margin-top: -14px; margin-bottom: -14px; justify-content: center; word-break: break-word; }` }
+                                        { `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( ColWidthTwo ) }%; display: flex; margin-top: -14px; margin-bottom: -14px; justify-content: center; word-break: break-word; }` }
+                                        { `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(3) { flex: 0 1 ${ parseFloat( ColWidthThree ) }%; display: flex; margin-top: -14px; margin-bottom: -14px; justify-content: center; word-break: break-word; }` }
+                                        { `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(4) { flex: 0 1 ${ parseFloat( ColWidthFour ) }%; display: flex; margin-top: -14px; margin-bottom: -14px; justify-content: center; word-break: break-word; }` }
+                                        { `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(5) { flex: 0 1 ${ parseFloat( ColWidthFive ) }%; display: flex; margin-top: -14px; margin-bottom: -14px; justify-content: center; word-break: break-word; }` }
+                                        { `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(6) { flex: 0 1 ${ parseFloat( ColWidthSix ) }%; display: flex; margin-top: -14px; margin-bottom: -14px; justify-content: center; word-break: break-word; }` }
                                     </Fragment>
                                 </style>
                                 <InnerBlocks

@@ -19,6 +19,10 @@ const attributes = {
         type: 'string',
         default: '',
     },
+    wrapVerticalAligment: {
+        type: 'string',
+        default: '',
+    },
     ColWidthOne: {
         type: 'string',
         default: '',

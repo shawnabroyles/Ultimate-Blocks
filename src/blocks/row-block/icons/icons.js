@@ -140,5 +140,21 @@ icons.wrapVerticalFullHeight = <svg xmlns="http://www.w3.org/2000/svg" width="20
     <polygon points="8,20 8,26 12,26 6,32 0,26 4,26 4,20"></polygon>
     <polygon points="4,12 4,6 0,6 6,0 12,6 8,6 8,12"></polygon>
 </svg>;
+icons.collapserow = <svg viewBox="0 0 60 30" xmlns="http://www.w3.org/2000/svg" fillRule="evenodd"
+                         clipRule="evenodd" strokeLinejoin="round" strokeMiterlimit="1.414">
+    <rect x="0.000" y="0.000" width="60.000" height="14.000" fill="#d5dadf"
+    />
+    <rect x="0.000" y="16.000" width="60.000" height="14.000" fill="#d5dadf"
+    />
+</svg>;
+icons.collapserowthree = <svg viewBox="0 0 60 30" xmlns="http://www.w3.org/2000/svg" fillRule="evenodd"
+                              clipRule="evenodd" strokeLinejoin="round" strokeMiterlimit="1.414">
+    <rect x="0.000" y="0.000" width="60.000" height="9.000" fill="#d5dadf"
+    />
+    <rect x="0.000" y="10.500" width="60.000" height="9.000" fill="#d5dadf"
+    />
+    <rect x="0.000" y="21.000" width="60.000" height="9.000" fill="#d5dadf"
+    />
+</svg>;
 
 export default icons;

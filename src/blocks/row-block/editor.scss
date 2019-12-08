@@ -52,6 +52,10 @@
   border-width: 5px;
   border: dashed 2px #ddd;
 
+  .editor-block-contextual-toolbar.block-editor-block-contextual-toolbar{
+    position: absolute;
+    top: 0px;
+  }
   .ub-editor-row-column_left,
   .ub-editor-row-column_right{
     position: absolute !important;
@@ -213,6 +217,29 @@
   }
 }
 .ub-select-layout-grid{
+
+  .ub-inspect-tabs{
+    .components-tab-panel__tab-content{
+      margin-top: 15px;
+    }
+  }
+  .ub-inspect-tabs .components-tab-panel__tabs button{
+    justify-content: center;
+    background: transparent;
+    width: 50%;
+    border: 0;
+    padding: 6px 16px;
+    outline: 0;
+  }
+
+  .components-button.ub-tablet-tab.active-tab,
+  .components-button.ub-mobile-tab.active-tab,
+  .components-button.ub-tablet-tab.active-tab:focus:not(:disabled):not([aria-disabled=true]),
+  .components-button.ub-mobile-tab.active-tab:focus:not(:disabled):not([aria-disabled=true]),
+  .components-button.ub-tablet-tab.active-tab:active:not(:disabled):not([aria-disabled=true]),
+  .components-button.ub-mobile-tab.active-tab:active:not(:disabled):not([aria-disabled=true]){
+    background: #f53d3d;
+  }
 
   .components-base-control+p{
       margin: 0 0 10px;

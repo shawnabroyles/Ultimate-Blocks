@@ -1233,7 +1233,7 @@ $defaultValues = array(
             ),
             'textColor' => array(
                 'type' => 'string',
-                'default' => '#ffffff',
+                'default' => '#000000',
             ),
             'columnBgColor' => array(
                 'type' => 'string',

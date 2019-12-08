@@ -43,6 +43,9 @@ export default class Inspector extends Component {
                 startOptions,
                 colSection,
                 columns,
+                currentTab,
+                mobileSizeGrid,
+                tabletSizeGrid,
                 inspectorTypeColumn,
                 ColWidthOne,
                 ColWidthTwo,
@@ -83,6 +86,20 @@ export default class Inspector extends Component {
         } = this.props;
 
         console.log(this.props);
+
+        const onTabSelect = ( tabName ) => {
+            setAttributes( { currentTab: tabName } );
+        };
+
+        const mobileGrid = [
+            { key: 'equal-two', icon: icons.twocol },
+            { key: 'colapse-row', icon: icons.collapserow },
+        ];
+
+        const tabletGrid = [
+            { key: 'equal-two', icon: icons.twocol },
+            { key: 'colapse-row', icon: icons.collapserow },
+        ];
 
         const columnTypeTwo = [
             { key: 'equal-two', col: 2, One: '50%', Two: '50%', icon: icons.twocol },
@@ -151,6 +168,62 @@ export default class Inspector extends Component {
                             </Button>
                         ) ) }
                     </ButtonGroup>
+                    <TabPanel className="ub-inspect-tabs"
+                              activeClass="active-tab"
+                              initialTabName={ currentTab }
+                              onSelect={ onTabSelect }
+                              tabs={ [
+                                  {
+                                      name: 'tablet',
+                                      title: 'Tablet',
+                                      className: 'ub-tablet-tab',
+                                  },
+                                  {
+                                      name: 'mobile',
+                                      title: 'Mobile',
+                                      className: 'ub-mobile-tab',
+                                  },
+                              ] }>
+                        {
+                            ( tab ) => {
+                                let tabout;
+                                if ( tab.name ) {
+                                    if ( 'mobile' === tab.name ) {
+                                        tabout = <ButtonGroup aria-label={ __( 'Select Type Column' ) }>
+                                            { map( mobileGrid, ( { key, icon } ) => (
+                                                <Button
+                                                    key={ key }
+                                                    className="ub-section-btn-select"
+                                                    isSmall
+                                                    onClick={ (props) => setAttributes( {
+                                                        mobileSizeGrid: key,
+                                                    } ) }
+                                                >
+                                                    { icon }
+                                                </Button>
+                                            ) ) }
+                                        </ButtonGroup>
+                                    } else if( 'tablet' === tab.name ) {
+                                        tabout = <ButtonGroup aria-label={ __( 'Select Type Column' ) }>
+                                            { map( tabletGrid, ( { key, icon } ) => (
+                                                <Button
+                                                    key={ key }
+                                                    className="ub-section-btn-select"
+                                                    isSmall
+                                                    onClick={ (props) => setAttributes( {
+                                                        tabletSizeGrid: key,
+                                                    } ) }
+                                                >
+                                                    { icon }
+                                                </Button>
+                                            ) ) }
+                                        </ButtonGroup>
+                                    }
+                                }
+                                return <div>{ tabout }</div>;
+                            }
+                        }
+                    </TabPanel>
                     <SelectControl
                         label={ __( 'Size Gutter' ) }
                         value={ gutter }
@@ -166,7 +239,7 @@ export default class Inspector extends Component {
                     <p>Space between each column.</p>
                 </div>
             </Fragment>
-        )
+        );
 
         const startSetting = (
             <Fragment>

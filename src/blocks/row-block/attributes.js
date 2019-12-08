@@ -23,6 +23,18 @@ const attributes = {
         type: 'string',
         default: '',
     },
+    currentTab:{
+        type: 'string',
+        default: '',
+    },
+    mobileSizeGrid:{
+        type: 'string',
+        default: '',
+    },
+    tabletSizeGrid:{
+        type: 'string',
+        default: '',
+    },
     ColWidthOne: {
         type: 'string',
         default: '',

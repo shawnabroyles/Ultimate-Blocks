@@ -91,14 +91,60 @@ export default class Inspector extends Component {
             setAttributes( { currentTab: tabName } );
         };
 
-        const mobileGrid = [
+        const mobileGridTwo = [
             { key: 'equal-two', icon: icons.twocol },
-            { key: 'colapse-row', icon: icons.collapserow },
+            { key: 'collapse-row', icon: icons.collapserow },
         ];
 
-        const tabletGrid = [
+        const tabletGridTwo = [
             { key: 'equal-two', icon: icons.twocol },
-            { key: 'colapse-row', icon: icons.collapserow },
+            { key: 'collapse-row', icon: icons.collapserow },
+        ];
+
+        const mobileGridThree = [
+            { key: 'equal-three', icon: icons.threecol },
+            { key: 'first-row', icon: icons.firstrow },
+            { key: 'last-row', icon: icons.lastrow },
+            { key: 'collapse-row', icon: icons.collapserowthree },
+        ];
+
+        const tabletGridThree = [
+            { key: 'equal-three', icon: icons.threecol },
+            { key: 'first-row', icon: icons.firstrow },
+            { key: 'last-row', icon: icons.lastrow },
+            { key: 'collapse-row', icon: icons.collapserowthree },
+        ];
+
+        const mobileGridFour = [
+            { key: 'equal-four', icon: icons.fourcol },
+            { key: 'two-grid', icon: icons.grid },
+            { key: 'collapse-row', icon: icons.collapserowfour },
+        ];
+
+        const tabletGridFour = [
+            { key: 'equal-four', icon: icons.fourcol },
+            { key: 'two-grid', icon: icons.grid },
+            { key: 'collapse-row', icon: icons.collapserowfour },
+        ];
+
+        const mobileGridFive = [
+            { key: 'equal-two', icon: icons.fivecol },
+            { key: 'collapse-row', icon: icons.collapserowfive },
+        ];
+
+        const tabletGridFive = [
+            { key: 'equal-two', icon: icons.fivecol },
+            { key: 'collapse-row', icon: icons.collapserowfive },
+        ];
+
+        const mobileGridSix = [
+            { key: 'equal-two', icon: icons.sixcol },
+            { key: 'collapse-row', icon: icons.collapserowsix },
+        ];
+
+        const tabletGridSix = [
+            { key: 'equal-two', icon: icons.sixcol },
+            { key: 'collapse-row', icon: icons.collapserowsix },
         ];
 
         const columnTypeTwo = [
@@ -131,17 +177,29 @@ export default class Inspector extends Component {
         ];
 
         let selectTypeColumn;
+        let mobileGrid;
+        let tabletGrid;
 
         if( columns == 2 ){
             selectTypeColumn = columnTypeTwo;
+            mobileGrid = mobileGridTwo;
+            tabletGrid = tabletGridTwo;
         } else if ( columns == 3 ){
             selectTypeColumn = columnTypeThree;
+            mobileGrid = mobileGridThree;
+            tabletGrid = tabletGridThree;
         } else if ( columns == 4 ){
             selectTypeColumn = columnTypeFour;
+            mobileGrid = mobileGridFour;
+            tabletGrid = tabletGridFour;
         } else if ( columns == 5 ){
             selectTypeColumn = columnTypeFive;
+            mobileGrid = mobileGridFive;
+            tabletGrid = tabletGridFive;
         } else if ( columns == 6 ){
             selectTypeColumn = columnTypeSix;
+            mobileGrid = mobileGridSix;
+            tabletGrid = tabletGridSix;
         }
 
         const selectGrid = (props) => (
@@ -193,7 +251,7 @@ export default class Inspector extends Component {
                                             { map( mobileGrid, ( { key, icon } ) => (
                                                 <Button
                                                     key={ key }
-                                                    className="ub-section-btn-select"
+                                                    className={ mobileSizeGrid === key ? `ub-section-btn-select` : `ub-section-btn` }
                                                     isSmall
                                                     onClick={ (props) => setAttributes( {
                                                         mobileSizeGrid: key,
@@ -208,7 +266,7 @@ export default class Inspector extends Component {
                                             { map( tabletGrid, ( { key, icon } ) => (
                                                 <Button
                                                     key={ key }
-                                                    className="ub-section-btn-select"
+                                                    className={ tabletSizeGrid === key ? `ub-section-btn-select` : `ub-section-btn` }
                                                     isSmall
                                                     onClick={ (props) => setAttributes( {
                                                         tabletSizeGrid: key,

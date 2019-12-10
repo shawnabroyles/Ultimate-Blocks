@@ -49,7 +49,7 @@ function ub_render_row_block($attributes){
             $result .='<div class="ub-section-block-video-wrap"><video class="ub-block-video" autoplay '.(false == $attributes['videoLoop'] ? '' : 'loop' ).' '.(false == $attributes['videoMuted'] ? '' : 'muted' ).' src="'. $attributes['videoURL'].'"></video></div>';
             $result .='<div class="ub-section-block-overlay" style="background-size: cover; background-repeat: no-repeat; background-position: center center; background-attachment: scroll; opacity: '.($attributes['wrapBackgroundOverlay'] == 100 ? 1 : '0.'. $attributes['wrapBackgroundOverlay']).'; background-color: '. $attributes['wrapBackgroundOverlayCol'].'"></div>';
 
-            $result .= '<div class="ub-single-block" style="display: flex; background-image: url('.$backgroundImg.'); background-size:'.
+            $result .= '<div class="ub-single-block ub-tab-'.($attributes['tabletSizeGrid'] ? $attributes['tabletSizeGrid'] : 'inherit' ).' ub-mobile-'.($attributes['mobileSizeGrid'] ? $attributes['mobileSizeGrid'] : 'collapse-row' ).'" style="display: flex; background-image: url('.$backgroundImg.'); background-size:'.
                 $attributes['wrapBackgroundSize'].'; background-color:'.$attributes['wrapColor'].'; background-position:'.$attributes['wrapBackgroundPosition'].
                 '; background-repeat:'.$attributes['wrapBackgroundRepeat'].'; background-attachment:'.$attributes['wrapBackgroundAttachment'].'; color:'.$attributes['textColor'].'">';
             for ($i = 0; $i < count($columns); $i++) {

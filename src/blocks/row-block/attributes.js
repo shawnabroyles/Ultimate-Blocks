@@ -27,11 +27,11 @@ const attributes = {
         type: 'string',
         default: '',
     },
-    mobileSizeGrid:{
+    tabletSizeGrid:{
         type: 'string',
         default: '',
     },
-    tabletSizeGrid:{
+    mobileSizeGrid:{
         type: 'string',
         default: '',
     },

@@ -145,7 +145,7 @@ export default class RowEditor extends Component {
             { key: 'left-forty', col: 4, name: __( 'Size: 40%|20%|20%|20%' ), One: '40%', Two: '20%%', Three: '20%', Four: '20%', icon: icons.lfourforty },
             { key: 'right-forty', col: 4, name: __( 'Size: 20%|20%|20%|40%' ), One: '20%', Two: '20%', Three: '20%', Four: '20%', icon: icons.rfourforty },
             { key: 'equal-five', col: 5, name: __( 'Size: 5-|20%|' ), One: '20%', Two: '20%', Three: '20%', Four: '20%', Five: '20%', icon: icons.fivecol },
-            { key: 'equal-six', col: 6, name: __( 'Size: 6-|16%|' ), One: '16,3%', Two: '16,3%', Three: '16,3%', Four: '16,3%', Six: '16,3%', icon: icons.sixcol },
+            { key: 'equal-six', col: 6, name: __( 'Size: 6-|16%|' ), One: '16.3%', Two: '16.3%', Three: '16.3%', Four: '16.3%', Five: '16.3%', Six: '16.3%', icon: icons.sixcol },
         ];
 
         const style = {

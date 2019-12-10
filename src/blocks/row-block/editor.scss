@@ -225,7 +225,7 @@
   }
   .ub-inspect-tabs .components-tab-panel__tabs button{
     justify-content: center;
-    background: transparent;
+    background: #d5dadf;
     width: 50%;
     border: 0;
     padding: 6px 16px;
@@ -239,6 +239,7 @@
   .components-button.ub-tablet-tab.active-tab:active:not(:disabled):not([aria-disabled=true]),
   .components-button.ub-mobile-tab.active-tab:active:not(:disabled):not([aria-disabled=true]){
     background: #f53d3d;
+    color: #ffffff;
   }
 
   .components-base-control+p{
@@ -384,6 +385,9 @@
 .ub-start-panel{
   margin: 15px 0px;
 }
+.ub-image-inspector-panel{
+  margin-bottom: 10px;
+}
 
 .ub-margin-padding-panel{
 
@@ -422,7 +426,7 @@
 .ub-video-inspector-panel{
 
    .components-button{
-     margin: 20px 0px;
+     margin: 10px 0px;
    }
 }
 

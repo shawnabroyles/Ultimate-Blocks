@@ -1249,4 +1249,40 @@ $defaultValues = array(
             )
         )
     ),
+    'ub/row-column' => array(
+        'attributes' => array(
+            'columnMarginTop' => array(
+                'type' => 'number',
+                'default' => 0,
+             ),
+            'columnMarginRight' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'columnMarginLeft' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'columnMarginBottom' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'columnPaddingTop' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'columnPaddingRight' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'columnPaddingLeft' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'columnPaddingBottom' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+        )
+    ),
 );

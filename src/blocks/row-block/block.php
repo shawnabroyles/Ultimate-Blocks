@@ -1,7 +1,30 @@
 <?php
-function ub_render_row_block($attributes){
+$style_column = array();
+
+function ub_render_row_column($attributes){
+    extract($attributes);
     //var_dump($attributes);
+    global $style_column;
+    $style = 'margin:'.(isset($attributes['columnMarginTop']) ? $attributes['columnMarginTop'] : '').'px '.(isset($attributes['columnMarginRight']) ? $attributes['columnMarginRight'] : '').'px '.
+        (isset($attributes['columnMarginBottom']) ? $attributes['columnMarginBottom'] : '').'px '.(isset($attributes['columnMarginLeft']) ? $attributes['columnMarginLeft'] : '').'px; padding:'.
+        (isset($attributes['columnPaddingTop']) ? $attributes['columnPaddingTop'] : '').'px '.(isset($attributes['columnPaddingRight']) ? $attributes['columnPaddingRight'] : '').'px '.
+        (isset($attributes['columnPaddingBottom']) ? $attributes['columnPaddingBottom'] : '').'px '.(isset($attributes['columnPaddingLeft']) ? $attributes['columnPaddingLeft'] : '').'px;';
+    array_push($style_column, $style);
+    return $style_column;
+}
+
+function ub_register_row_column() {
+    if( function_exists( 'register_block_type' ) ) {
+        require dirname(dirname(__DIR__)) . '/defaults.php';
+        register_block_type( 'ub/row-column', array(
+            'attributes' => $defaultValues['ub/row-column']['attributes'],
+            'render_callback' => 'ub_render_row_column'));
+    }
+}
+
+function ub_render_row_block($attributes){
     global $post;
+    global $style_column;
     //var_dump($post);
     $blocks = parse_blocks( $post->post_content );
     $result = '';
@@ -207,14 +230,7 @@ function ub_render_row_block($attributes){
                     ($columns[$i]['attrs']['columnBgPosition'] ? 'background-position:'.$columns[$i]['attrs']['columnBgPosition'].'; ' : 'background-position: center center;').
                     ($columns[$i]['attrs']['columnBgRepeat'] ? 'background-repeat:'.$columns[$i]['attrs']['columnBgRepeat'].'; ' : 'background-repeat: no-repeat;' ).
                     ($columns[$i]['attrs']['columnBgAttachment'] ? 'background-attachment:'.$columns[$i]['attrs']['columnBgAttachment'].'; ' : 'background-attachment: scroll;' ).
-                    ($columns[$i]['attrs']['columnMarginTop'] ? 'margin-top:'.$columns[$i]['attrs']['columnMarginTop'].'px;': '').
-                    ($columns[$i]['attrs']['columnMarginRight'] ? 'margin-right:'.$columns[$i]['attrs']['columnMarginRight'].'px;': '').
-                    ($columns[$i]['attrs']['columnMarginBottom'] ? 'margin-bottom:'.$columns[$i]['attrs']['columnMarginBottom'].'px;': '').
-                    ($columns[$i]['attrs']['columnMarginLeft'] ? 'margin-left:'.$columns[$i]['attrs']['columnMarginLeft'].'px;': '') .
-                    ($columns[$i]['attrs']['columnPaddingTop'] ? 'padding-top:'.$columns[$i]['attrs']['columnPaddingTop'].'px;' : '').
-                    ($columns[$i]['attrs']['columnPaddingRight'] ? 'padding-right:'.$columns[$i]['attrs']['columnPaddingRight'].'px;' : '').
-                    ($columns[$i]['attrs']['columnPaddingBottom'] ? 'padding-bottom:'.$columns[$i]['attrs']['columnPaddingBottom'].'px;' : '').
-                    ($columns[$i]['attrs']['columnPaddingLeft'] ? 'padding-left:'.$columns[$i]['attrs']['columnPaddingLeft'].'px;': '').' z-index: 1">';
+                     $style_column[$i].' z-index: 1">';
                 foreach ($columns[$i]['innerBlocks'] as $content) {
                     //var_dump($content);
                     $blocrRender = render_block($content);
@@ -237,4 +253,5 @@ function ub_register_row_block() {
     }
 }
 
+add_action('init', 'ub_register_row_column');
 add_action('init', 'ub_register_row_block');

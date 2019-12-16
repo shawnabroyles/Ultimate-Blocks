@@ -8,7 +8,18 @@ function ub_render_row_column($attributes){
     $style = 'margin:'.(isset($attributes['columnMarginTop']) ? $attributes['columnMarginTop'] : '').'px '.(isset($attributes['columnMarginRight']) ? $attributes['columnMarginRight'] : '').'px '.
         (isset($attributes['columnMarginBottom']) ? $attributes['columnMarginBottom'] : '').'px '.(isset($attributes['columnMarginLeft']) ? $attributes['columnMarginLeft'] : '').'px; padding:'.
         (isset($attributes['columnPaddingTop']) ? $attributes['columnPaddingTop'] : '').'px '.(isset($attributes['columnPaddingRight']) ? $attributes['columnPaddingRight'] : '').'px '.
-        (isset($attributes['columnPaddingBottom']) ? $attributes['columnPaddingBottom'] : '').'px '.(isset($attributes['columnPaddingLeft']) ? $attributes['columnPaddingLeft'] : '').'px;';
+        (isset($attributes['columnPaddingBottom']) ? $attributes['columnPaddingBottom'] : '').'px '.(isset($attributes['columnPaddingLeft']) ? $attributes['columnPaddingLeft'] : '').'px;'.
+        (isset($attributes['columnBgColor']) ? 'background-color:'.$attributes['columnBgColor'].';' : '').
+        (isset($attributes['onControlBrSize']) ? ($attributes['onControlBrSize'] === false ? 'border-width:'.(isset($attributes['columnBorderTop']) ? $attributes['columnBorderTop'].'px ': '').(isset($attributes['columnBorderRight']) ? $attributes['columnBorderRight'].'px ': '').(isset($attributes['columnBorderBottom']) ? $attributes['columnBorderBottom'].'px ': '').(isset($attributes['columnBorderLeft']) ? $attributes['columnBorderLeft'].'px;': ''):'' ):'').
+        (isset($attributes['onControlBrRadius']) ? ($attributes['onControlBrRadius'] === false ? 'border-radius:'.(isset($attributes['columnBrTopRadius']) ? $attributes['columnBrTopRadius'].'px ': '').(isset($attributes['columnBrRightRadius']) ? $attributes['columnBorderRightRadius'].'px ': '').(isset($attributes['columnBrBottomRadius']) ? $attributes['columnBrBottomRadius'].'px ': '').(isset($attributes['columnBrLeftRadius']) ? $attributes['columnBrLeftRadius'].'px;': ''):'' ):'').
+        (isset($attributes['columnBorderStyle']) ? 'border-style:'.$attributes['columnBorderStyle'].';' : '').
+        (isset($attributes['columnBorderSize']) ? 'border-width:'.$attributes['columnBorderSize'].'px;' : '').
+        (isset($attributes['columnBorderColor']) ? 'border-color:'.$attributes['columnBorderColor'].';' : '').
+        (isset($attributes['columnImgURL']) ? 'background-image: url('.$attributes['columnImgURL'].')'.';' : '').
+        (isset($attributes['columnBgSize']) ? 'background-size:'.$attributes['columnBgSize'].';' : '' ).
+        (isset($attributes['columnBgPosition']) ? 'background-position:'.$attributes['columnBgPosition'].';' : '').
+        (isset($attributes['columnBgRepeat']) ? 'background-repeat:'.$attributes['columnBgRepeat'].';' : '').
+        (isset($attributes['columnBgAttachment']) ? 'background-attachment:'.$attributes['columnBgAttachment'].';' : '');
     array_push($style_column, $style);
     return $style_column;
 }
@@ -214,23 +225,7 @@ function ub_render_row_block($attributes){
                     }
                 }
                 $result .= '<div id="' . $columns[$i]['attrs']['id_column'] . '" class="ub-single-wrap" style="flex: 0 1 ' . $sizeCol[$i] . '; margin-left:' . ($mleft[$i] ? $mleft[$i].'px;' : '0px;') . 'margin-right:' . ($mright[$i] ? $mright[$i].'px;' : '0px;') .' display: flex; flex-direction: column; word-break: break-word; justify-content:'.$attributes['wrapVerticalAligment'].'">';
-                $result .= '<div class="ub-single-column" style="'. ($columns[$i]['attrs']['columnBgColor'] ? 'background-color:'.$columns[$i]['attrs']['columnBgColor'].'; ' : '' ).
-                    ($columns[$i]['attrs']['onControlBrSize']  === false && $columns[$i]['attrs']['columnBorderSize'] ? 'border-width:'.($columns[$i]['attrs']['columnBorderTop'] ? $columns[$i]['attrs']['columnBorderTop'].'px ' : '0px ').
-                    ($columns[$i]['attrs']['columnBorderRight'] ? $columns[$i]['attrs']['columnBorderRight'].'px ' : '0px ').
-                    ($columns[$i]['attrs']['columnBorderBottom'] ? $columns[$i]['attrs']['columnBorderBottom'].'px ' : '0px ').
-                    ($columns[$i]['attrs']['columnBorderLeft'] ? $columns[$i]['attrs']['columnBorderLeft'].'px;' : '0px;') : 'border-width:'.($columns[$i]['attrs']['columnBorderSize'] ? $columns[$i]['attrs']['columnBorderSize'].'px;': '0px;')).
-                    ($columns[$i]['attrs']['columnBorderColor'] ? 'border-color:'.$columns[$i]['attrs']['columnBorderColor'].'; ' : 'border-color: #ffffff;' ).
-                    ($columns[$i]['attrs']['onControlBrRadius']  === false && $columns[$i]['attrs']['columnBorderRadius'] ? 'border-radius:'.($columns[$i]['attrs']['columnBrTopRadius'] ? $columns[$i]['attrs']['columnBrTopRadius'].'px ' : '0px ').
-                    ($columns[$i]['attrs']['columnBrRightRadius'] ? $columns[$i]['attrs']['columnBrRightRadius'].'px ' : '0px ').
-                    ($columns[$i]['attrs']['columnBrBottomRadius'] ? $columns[$i]['attrs']['columnBrBottomRadius'].'px ' : '0px ').
-                    ($columns[$i]['attrs']['columnBrLeftRadius'] ? $columns[$i]['attrs']['columnBrLeftRadius'].'px;' : '0px;') : 'border-radius:'. $columns[$i]['attrs']['columnBorderRadius'].'px;').
-                    ($columns[$i]['attrs']['columnBorderStyle'] ? 'border-style:'.$columns[$i]['attrs']['columnBorderStyle'].'; ' : 'border-style: solid;' ).
-                    ($columns[$i]['attrs']['columnImgURL'] ? 'background-image: url('.$columns[$i]['attrs']['columnImgURL'].')'.'; ': '').
-                    ($columns[$i]['attrs']['columnBgSize'] ? 'background-size:'.$columns[$i]['attrs']['columnBgSize'].'; ' : 'background-size: cover;').
-                    ($columns[$i]['attrs']['columnBgPosition'] ? 'background-position:'.$columns[$i]['attrs']['columnBgPosition'].'; ' : 'background-position: center center;').
-                    ($columns[$i]['attrs']['columnBgRepeat'] ? 'background-repeat:'.$columns[$i]['attrs']['columnBgRepeat'].'; ' : 'background-repeat: no-repeat;' ).
-                    ($columns[$i]['attrs']['columnBgAttachment'] ? 'background-attachment:'.$columns[$i]['attrs']['columnBgAttachment'].'; ' : 'background-attachment: scroll;' ).
-                     $style_column[$i].' z-index: 1">';
+                $result .= '<div class="ub-single-column" style="'.$style_column[$i].' z-index: 1">';
                 foreach ($columns[$i]['innerBlocks'] as $content) {
                     //var_dump($content);
                     $blocrRender = render_block($content);

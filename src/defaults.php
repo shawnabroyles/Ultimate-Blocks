@@ -1283,6 +1283,86 @@ $defaultValues = array(
                 'type' => 'number',
                 'default' => 0,
             ),
+            'columnBgColor' => array(
+                'type' => 'string',
+                'default' => '',
+            ),
+            'columnBorderColor' => array(
+                'type' => 'string',
+                'default' => '#ffffff',
+            ),
+            'columnBorderStyle' => array(
+                'type' => 'string',
+                'default' => 'solid',
+            ),
+            'columnBorderSize' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'columnBorderColor' => array(
+                'type' => 'string',
+                'default' => '#ffffff',
+            ),
+            'columnBorderTop' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'columnBorderRight' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'columnBorderBottom' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'columnBorderLeft' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'columnBrTopRadius' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'columnBrLeftRadius' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'columnBrRightRadius' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'columnBrBottomRadius' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'columnImgURL' => array(
+                 'type' => 'string',
+                 'default' => '',
+            ),
+            'columnBgSize' => array(
+                 'type' => 'string',
+                 'default' => 'cover',
+            ),
+            'columnBgPosition' => array(
+                'type' => 'string',
+                'defaul' => 'center center',
+            ),
+            'columnBgRepeat' => array(
+                'type' => 'string',
+                'default' => 'no-repeat',
+            ),
+            'columnBgAttachment' => array(
+                'type' => 'string',
+                'default' => 'scroll',
+            ),
+            'onControlBrSize' => array(
+                'type' => 'bool',
+                'default' => true,
+            ),
+            'onControlBrRadius' => array(
+                'type' => 'bool',
+                'default' => true,
+            ),
         )
     ),
 );

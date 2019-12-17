@@ -1299,6 +1299,10 @@ $defaultValues = array(
                 'type' => 'number',
                 'default' => 0,
             ),
+            'columnBorderRadius' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
             'columnBorderColor' => array(
                 'type' => 'string',
                 'default' => '#ffffff',

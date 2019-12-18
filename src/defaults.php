@@ -1270,6 +1270,10 @@ $defaultValues = array(
     ),
     'ub/row-column' => array(
         'attributes' => array(
+            'id_column' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
             'columnMarginTop' => array(
                 'type' => 'number',
                 'default' => 0,

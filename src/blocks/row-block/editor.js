@@ -488,21 +488,6 @@ export default class RowEditor extends Component {
                         <Fragment>
                             <div className="ub-section-column-padding-top" style={ { height: paddingTopWrap } }></div>
                             <div className="ub-section-column-wrap">
-                                {<Fragment>
-                                        <div className="ub-section-editor-video-wrap">
-                                            <video className="ub-editor-video" playsinline src={videoURL}></video>
-                                        </div>
-                                        <div className="ub-section-editor-overlay" style={{
-                                            backgroundSize: 'cover',
-                                            backgroundPosition: 'center center',
-                                            backgroundRepeat: 'no-repeat',
-                                            backgroundAttachment: 'scroll',
-                                            backgroundColor: wrapBackgroundOverlayCol,
-                                            opacity: ( wrapBackgroundOverlay == 100 ? 1 : `0.${wrapBackgroundOverlay}`),
-                                        }}>
-                                        </div>
-                                    </Fragment>
-                                 }
                                 <style>
                                     <Fragment>
                                         { `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( ColWidthOne ) }%; display: flex; margin-top: -14px; margin-bottom: -14px; justify-content: center; word-break: break-word; }` }

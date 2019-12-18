@@ -1,9 +1,14 @@
 <?php
 $style_column = array();
+$style_col = array();
+$id_column = array();
 
 function ub_render_row_column($attributes){
     extract($attributes);
     global $style_column;
+    global $style_col;
+    global $id_column;
+    $id = $attributes['id_column'];
     $style = 'margin:'.(isset($attributes['columnMarginTop']) ? $attributes['columnMarginTop'] : '').'px '.(isset($attributes['columnMarginRight']) ? $attributes['columnMarginRight'] : '').'px '.
         (isset($attributes['columnMarginBottom']) ? $attributes['columnMarginBottom'] : '').'px '.(isset($attributes['columnMarginLeft']) ? $attributes['columnMarginLeft'] : '').'px; padding:'.
         (isset($attributes['columnPaddingTop']) ? $attributes['columnPaddingTop'] : '').'px '.(isset($attributes['columnPaddingRight']) ? $attributes['columnPaddingRight'] : '').'px '.
@@ -18,7 +23,12 @@ function ub_render_row_column($attributes){
         (isset($attributes['columnBgPosition']) ? 'background-position:'.$attributes['columnBgPosition'].';' : '').
         (isset($attributes['columnBgRepeat']) ? 'background-repeat:'.$attributes['columnBgRepeat'].';' : '').
         (isset($attributes['columnBgAttachment']) ? 'background-attachment:'.$attributes['columnBgAttachment'].';' : '');
-    array_push($style_column, $style);
+    array_push($style_col,$style);
+    array_push($id_column,$id);
+    $rs = array_fill_keys($id_column, $style_col);
+    array_push( $style_column,$rs);
+    $style_col = array();
+    $id_column = array();
 }
 
 function ub_register_row_column() {
@@ -32,7 +42,6 @@ function ub_register_row_column() {
 
 function ub_render_row_block($attributes){
     extract($attributes);
-    //var_dump($attributes);
     global $post;
     global $style_column;
     $blocks = parse_blocks( $post->post_content );
@@ -222,14 +231,16 @@ function ub_render_row_block($attributes){
                             break;
                     }
                 }
-                $result .= '<div id="' . $columns[$i]['attrs']['id_column'] . '" class="ub-single-wrap" style="flex: 0 1 ' . $sizeCol[$i] . '; margin-left:' . (isset($mleft[$i]) ? $mleft[$i].'px;' : '0px;') . 'margin-right:' . (isset($mright[$i]) ? $mright[$i].'px;' : '0px;') .' display: flex; flex-direction: column; word-break: break-word; justify-content:'.$attributes['wrapVerticalAligment'].'">';
-                $result .= '<div class="ub-single-column" style="'.$style_column[$i].' z-index: 1">';
+                $id = $columns[$i]['attrs']['id_column'];
+                $result .= '<div id="' . $id . '" class="ub-single-wrap" style="flex: 0 1 ' . $sizeCol[$i] . '; margin-left:' . (isset($mleft[$i]) ? $mleft[$i].'px;' : '0px;') . 'margin-right:' . (isset($mright[$i]) ? $mright[$i].'px;' : '0px;') .' display: flex; flex-direction: column; word-break: break-word; justify-content:'.$attributes['wrapVerticalAligment'].'">';
+                $result .= '<div class="ub-single-column" style="'.(isset($style_column[$i]) ? $style_column[$i][$id][0] : '').' z-index: 1">';
                 foreach ($columns[$i]['innerBlocks'] as $content) {
                     $blocrRender = render_block($content);
                     $result .= $blocrRender;
                 }
                 $result .= '</div></div>';
             }
+            $style_column = array();
             $result .= '</div></'.$attributes['wrapTag'].'>';
         }
     }

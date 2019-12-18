@@ -154,19 +154,6 @@ export default class RowEditor extends Component {
             justifyContent: "center",
         };
 
-        const BackgroundStyle = {
-            backgroundImage: ( imgURL ? `url( ${imgURL} )` : undefined ),
-            backgroundColor: ( wrapColor ? wrapColor : undefined ),
-            backgroundSize: wrapBackgroundSize,
-            backgroundPosition: wrapBackgroundPosition,
-            backgroundRepeat: wrapBackgroundRepeat,
-            backgroundAttachment: wrapBackgroundAttachment,
-            paddingTop: paddingTopWrap,
-            paddingBottom: paddingBottomWrap,
-            paddingLeft: paddingLeftWrap,
-            paddingRight: paddingRightWrap,
-        };
-
         return[
             <Fragment>
                 <BlockControls>
@@ -251,11 +238,31 @@ export default class RowEditor extends Component {
                         </Tooltip>
                     </Toolbar>
                 </BlockControls>
+                <div className="ub-section-editor-video-wrap">
+                    <video className="ub-editor-video" playsinline src={videoURL}></video>
+                </div>
+                <div className="ub-section-editor-overlay" style={{
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center center',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundAttachment: 'scroll',
+                    backgroundColor: wrapBackgroundOverlayCol,
+                    opacity: ( wrapBackgroundOverlay == 100 ? 1 : `0.${wrapBackgroundOverlay}`),
+                }}>
+                </div>
                 <div className={`ub-section-overhad-wrap wrapVertical${wrapVerticalAligment}`} style={{
+                    backgroundImage: ( imgURL ? `url( ${imgURL} )` : undefined ),
+                    backgroundColor: ( wrapColor ? wrapColor : undefined ),
+                    backgroundSize: wrapBackgroundSize,
+                    backgroundPosition: wrapBackgroundPosition,
+                    backgroundRepeat: wrapBackgroundRepeat,
+                    backgroundAttachment: wrapBackgroundAttachment,
                     marginTop: `${marginTopWrap}${selectUnits}`,
                     marginLeft: `${marginLeftWrap}${selectUnits}`,
                     marginBottom: `${marginBottomWrap}${selectUnits}`,
                     marginRight: `${marginRightWrap}${selectUnits}`,
+                    paddingLeft: paddingLeftWrap,
+                    paddingRight: paddingRightWrap,
                     border: `${wrapBorderSize}px ${wrapBorderStyle}${wrapBorderColor}`,
                     borderRadius: `${wrapBorderRadius}px`,
                     color: textColor,
@@ -292,48 +299,31 @@ export default class RowEditor extends Component {
                        </div>
                     </div>)}
                     { colSection && 1 === columns &&(
-                        <div className="ub-section-column-wrap" style={ {
-                        } }>
-                            <div style={{
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                width: "100%",
-                                backgroundImage: ( imgURL ? `url( ${imgURL} )` : undefined ),
-                                backgroundColor: ( wrapColor ? wrapColor : undefined ),
-                                backgroundSize: wrapBackgroundSize,
-                                backgroundPosition: wrapBackgroundPosition,
-                                backgroundRepeat: wrapBackgroundRepeat,
-                                backgroundAttachment: wrapBackgroundAttachment,
-                                paddingTop: paddingTopWrap,
-                                paddingBottom: paddingBottomWrap,
-                                paddingLeft: paddingLeftWrap,
-                                paddingRight: paddingRightWrap,
-                            }}>
-                                <InnerBlocks
-                                    template={createColumn( columns )}
-                                    templateLock={'all'}
-                                    renderAppender={ ()=> (null) }
-                                />
+                        <Fragment>
+                            <div className="ub-section-column-padding-top" style={ { height: paddingTopWrap } }></div>
+                            <div className="ub-section-column-wrap">
+                                <div style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    width: "100%",
+                                }}>
+                                    <InnerBlocks
+                                        template={createColumn( columns )}
+                                        templateLock={'all'}
+                                        renderAppender={ ()=> (null) }
+                                    />
+                                </div>
                             </div>
-                        </div>
+                            <div className="ub-section-column-padding-bottom" style={ { height: paddingBottomWrap } }></div>
+                        </Fragment>
                     )}
                     { colSection && columns && 1 !== columns && 4 !== columns && 5 !== columns && 6 !== columns &&(
                         <Fragment>
-                             <div className="ub-section-column-wrap" style={BackgroundStyle}>
+                             <div className="ub-section-column-padding-top" style={ { height: paddingTopWrap } }></div>
+                             <div className="ub-section-column-wrap">
                                  {<Fragment>
-                                         <div className="ub-section-editor-video-wrap">
-                                             <video className="ub-editor-video" playsinline src={videoURL}></video>
-                                         </div>
-                                         <div className="ub-section-editor-overlay" style={{
-                                             backgroundSize: 'cover',
-                                             backgroundPosition: 'center center',
-                                             backgroundRepeat: 'no-repeat',
-                                             backgroundAttachment: 'scroll',
-                                             backgroundColor: wrapBackgroundOverlayCol,
-                                             opacity: ( wrapBackgroundOverlay == 100 ? 1 : `0.${wrapBackgroundOverlay}`),
-                                         }}>
-                                         </div>
+
                                      </Fragment>
                                  }
                                  <style>
@@ -491,11 +481,13 @@ export default class RowEditor extends Component {
                                      renderAppender={ ()=> (null) }
                                  />
                              </div>
+                             <div className="ub-section-column-padding-bottom" style={ { height: paddingBottomWrap } }></div>
                         </Fragment>
                     )}
                     { colSection && columns && 1 !== columns && 2 !== columns && 3 !== columns &&(
                         <Fragment>
-                            <div className="ub-section-column-wrap" style={BackgroundStyle}>
+                            <div className="ub-section-column-padding-top" style={ { height: paddingTopWrap } }></div>
+                            <div className="ub-section-column-wrap">
                                 {<Fragment>
                                         <div className="ub-section-editor-video-wrap">
                                             <video className="ub-editor-video" playsinline src={videoURL}></video>
@@ -527,6 +519,7 @@ export default class RowEditor extends Component {
                                     renderAppender={ ()=> (null) }
                                 />
                             </div>
+                            <div className="ub-section-column-padding-bottom" style={ { height: paddingBottomWrap } }></div>
                         </Fragment>
                     )}
                 </div>

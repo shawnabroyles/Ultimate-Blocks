@@ -1152,6 +1152,22 @@ $defaultValues = array(
                 'type' => 'number',
                 'default' => 0
             ),
+            'paddingTopWrap' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'paddingRightWrap' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'paddingBottomWrap' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'paddingLeftWrap' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
             'selectUnits' => array(
                 'type' => 'string',
                 'default' => 'px',

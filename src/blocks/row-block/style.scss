@@ -31,6 +31,20 @@
 .ub-single-column {
   border: 0px solid transparent;
 }
+// css for Astra Theme
+.ast-post-format-{
+  .ub-section-block-wrap.alignwide{
+    left: calc(-3.33rem);
+    width: calc(100% + 6.67rem) !important;
+  }
+}
+
+.ast-post-format-{
+  .ub-section-block-wrap.alignfull{
+    left: calc(-6.67rem);
+    width: calc(100% + 13.3rem) !important;
+  }
+}
 
 // Tab grid
 @media (max-width: 1024px) and (min-width: 768px){

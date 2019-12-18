@@ -1044,9 +1044,11 @@ $defaultValues = array(
             ),
             'categories'          => array(
                 'type' => 'string',
+                'default' => ''
             ),
             'className'           => array(
                 'type' => 'string',
+                'default' => ''
             ),
             'amountPosts'         => array(
                 'type'    => 'number',
@@ -1130,11 +1132,11 @@ $defaultValues = array(
             ),
             'tabletSizeGrid' => array(
                 'type' => 'string',
-                'defaulr' => 'inherit',
+                'default' => 'inherit',
             ),
             'mobileSizeGrid' => array(
                 'type' => 'string',
-                'defaulr' => 'colapse-row',
+                'default' => 'colapse-row',
             ),
             'marginTopWrap' => array(
                 'type' => 'number',
@@ -1210,7 +1212,7 @@ $defaultValues = array(
             ),
             'wrapColor' => array(
                 'type' => 'string',
-                'background' => '',
+                'default' => '',
             ),
             'wrapBackgroundSize' => array(
                 'type' => 'string',
@@ -1234,6 +1236,7 @@ $defaultValues = array(
             ),
             'videoID' => array(
                 'type' => 'number',
+                'default' => -1
             ),
             'videoURL' => array(
                 'type' => 'string',
@@ -1365,7 +1368,7 @@ $defaultValues = array(
             ),
             'columnBgPosition' => array(
                 'type' => 'string',
-                'defaul' => 'center center',
+                'default' => 'center center',
             ),
             'columnBgRepeat' => array(
                 'type' => 'string',

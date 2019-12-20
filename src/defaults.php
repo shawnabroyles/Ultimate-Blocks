@@ -1132,11 +1132,11 @@ $defaultValues = array(
             ),
             'tabletSizeGrid' => array(
                 'type' => 'string',
-                'default' => 'inherit',
+                'default' => '',
             ),
             'mobileSizeGrid' => array(
                 'type' => 'string',
-                'default' => 'colapse-row',
+                'default' => '',
             ),
             'marginTopWrap' => array(
                 'type' => 'number',

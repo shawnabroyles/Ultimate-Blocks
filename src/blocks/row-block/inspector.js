@@ -92,59 +92,59 @@ export default class Inspector extends Component {
         };
 
         const mobileGridTwo = [
-            { key: 'equal-two', icon: icons.twocol },
-            { key: 'collapse-row', icon: icons.collapserow },
+            { key: '-equal-two', icon: icons.twocol },
+            { key: '-collapse-row', icon: icons.collapserow },
         ];
 
         const tabletGridTwo = [
-            { key: 'equal-two', icon: icons.twocol },
-            { key: 'collapse-row', icon: icons.collapserow },
+            { key: '-equal-two', icon: icons.twocol },
+            { key: '-collapse-row', icon: icons.collapserow },
         ];
 
         const mobileGridThree = [
-            { key: 'equal-three', icon: icons.threecol },
-            { key: 'first-row', icon: icons.firstrow },
-            { key: 'last-row', icon: icons.lastrow },
-            { key: 'collapse-row', icon: icons.collapserowthree },
+            { key: '-equal-three', icon: icons.threecol },
+            { key: '-first-row', icon: icons.firstrow },
+            { key: '-last-row', icon: icons.lastrow },
+            { key: '-collapse-row', icon: icons.collapserowthree },
         ];
 
         const tabletGridThree = [
-            { key: 'equal-three', icon: icons.threecol },
-            { key: 'first-row', icon: icons.firstrow },
-            { key: 'last-row', icon: icons.lastrow },
-            { key: 'collapse-row', icon: icons.collapserowthree },
+            { key: '-equal-three', icon: icons.threecol },
+            { key: '-first-row', icon: icons.firstrow },
+            { key: '-last-row', icon: icons.lastrow },
+            { key: '-collapse-row', icon: icons.collapserowthree },
         ];
 
         const mobileGridFour = [
-            { key: 'equal-four', icon: icons.fourcol },
-            { key: 'two-grid', icon: icons.grid },
-            { key: 'collapse-row', icon: icons.collapserowfour },
+            { key: '-equal-four', icon: icons.fourcol },
+            { key: '-two-grid', icon: icons.grid },
+            { key: '-collapse-row', icon: icons.collapserowfour },
         ];
 
         const tabletGridFour = [
-            { key: 'equal-four', icon: icons.fourcol },
-            { key: 'two-grid', icon: icons.grid },
-            { key: 'collapse-row', icon: icons.collapserowfour },
+            { key: '-equal-four', icon: icons.fourcol },
+            { key: '-two-grid', icon: icons.grid },
+            { key: '-collapse-row', icon: icons.collapserowfour },
         ];
 
         const mobileGridFive = [
-            { key: 'equal-two', icon: icons.fivecol },
-            { key: 'collapse-row', icon: icons.collapserowfive },
+            { key: '-equal-two', icon: icons.fivecol },
+            { key: '-collapse-row', icon: icons.collapserowfive },
         ];
 
         const tabletGridFive = [
-            { key: 'equal-two', icon: icons.fivecol },
-            { key: 'collapse-row', icon: icons.collapserowfive },
+            { key: '-equal-two', icon: icons.fivecol },
+            { key: '-collapse-row', icon: icons.collapserowfive },
         ];
 
         const mobileGridSix = [
-            { key: 'equal-two', icon: icons.sixcol },
-            { key: 'collapse-row', icon: icons.collapserowsix },
+            { key: '-equal-two', icon: icons.sixcol },
+            { key: '-collapse-row', icon: icons.collapserowsix },
         ];
 
         const tabletGridSix = [
-            { key: 'equal-two', icon: icons.sixcol },
-            { key: 'collapse-row', icon: icons.collapserowsix },
+            { key: '-equal-two', icon: icons.sixcol },
+            { key: '-collapse-row', icon: icons.collapserowsix },
         ];
 
         const columnTypeTwo = [

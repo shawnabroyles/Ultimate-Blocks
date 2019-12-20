@@ -50,10 +50,18 @@
 @media (max-width: 1024px) and (min-width: 768px){
   .ub-tab-collapse-row{
     flex-direction: column;
+    .ub-single-wrap{
+       margin-right: 0px !important;
+       margin-left: 0px !important;
+    }
   }
   .ub-tab-last-row {
     flex-direction: row;
     flex-wrap: wrap;
+    .ub-single-wrap{
+      margin-right: 0px !important;
+      margin-left: 0px !important;
+    }
     :nth-child(1),
     :nth-child(2) {
       flex: 0 0 50% !important;
@@ -67,6 +75,10 @@
   .ub-tab-first-row{
     flex-direction: row;
     flex-wrap: wrap;
+    .ub-single-wrap{
+      margin-right: 0px !important;
+      margin-left: 0px !important;
+    }
     :nth-child(2),
     :nth-child(3) {
       flex: 0 0 50% !important;
@@ -80,6 +92,10 @@
   .ub-tab-two-grid{
     flex-direction: row;
     flex-wrap: wrap;
+    .ub-single-wrap{
+      margin-right: 0px !important;
+      margin-left: 0px !important;
+    }
     :nth-child(1),
     :nth-child(2),
     :nth-child(3),
@@ -94,10 +110,18 @@
 @media (max-width: 767px) {
   .ub-mobile-collapse-row{
     flex-direction: column;
+    .ub-single-wrap{
+      margin-right: 0px !important;
+      margin-left: 0px !important;
+    }
   }
   .ub-mobile-last-row{
     flex-direction: row;
     flex-wrap: wrap;
+    .ub-single-wrap{
+      margin-right: 0px !important;
+      margin-left: 0px !important;
+    }
     :nth-child(1),
     :nth-child(2) {
       flex: 0 0 50% !important;
@@ -110,6 +134,10 @@
   .ub-mobile-first-row{
     flex-direction: row;
     flex-wrap: wrap;
+    .ub-single-wrap{
+      margin-right: 0px !important;
+      margin-left: 0px !important;
+    }
     :nth-child(2),
     :nth-child(3) {
       flex: 0 0 50% !important;
@@ -123,6 +151,10 @@
   .ub-mobile-two-grid{
     flex-direction: row;
     flex-wrap: wrap;
+    .ub-single-wrap{
+      margin-right: 0px !important;
+      margin-left: 0px !important;
+    }
     :nth-child(1),
     :nth-child(2),
     :nth-child(3),

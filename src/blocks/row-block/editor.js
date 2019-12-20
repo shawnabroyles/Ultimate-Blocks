@@ -145,7 +145,7 @@ export default class RowEditor extends Component {
             { key: 'left-forty', col: 4, name: __( 'Size: 40%|20%|20%|20%' ), One: '40%', Two: '20%%', Three: '20%', Four: '20%', icon: icons.lfourforty },
             { key: 'right-forty', col: 4, name: __( 'Size: 20%|20%|20%|40%' ), One: '20%', Two: '20%', Three: '20%', Four: '20%', icon: icons.rfourforty },
             { key: 'equal-five', col: 5, name: __( 'Size: 5-|20%|' ), One: '20%', Two: '20%', Three: '20%', Four: '20%', Five: '20%', icon: icons.fivecol },
-            { key: 'equal-six', col: 6, name: __( 'Size: 6-|16%|' ), One: '16.3%', Two: '16.3%', Three: '16.3%', Four: '16.3%', Five: '16.3%', Six: '16.3%', icon: icons.sixcol },
+            { key: 'equal-six', col: 6, name: __( 'Size: 6-|16%|' ), One: '16.66%', Two: '16.66%', Three: '16.66%', Four: '16.66%', Five: '16.66%', Six: '16.66%', icon: icons.sixcol },
         ];
 
         const style = {
@@ -322,10 +322,6 @@ export default class RowEditor extends Component {
                         <Fragment>
                              <div className="ub-section-column-padding-top" style={ { height: paddingTopWrap } }></div>
                              <div className="ub-section-column-wrap">
-                                 {<Fragment>
-
-                                     </Fragment>
-                                 }
                                  <style>
                                      { columns && columns === 2 && (
                                      <Fragment>
@@ -490,12 +486,12 @@ export default class RowEditor extends Component {
                             <div className="ub-section-column-wrap">
                                 <style>
                                     <Fragment>
-                                        { `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( ColWidthOne ) }%; display: flex; margin-top: -14px; margin-bottom: -14px; justify-content: center; word-break: break-word; }` }
-                                        { `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( ColWidthTwo ) }%; display: flex; margin-top: -14px; margin-bottom: -14px; justify-content: center; word-break: break-word; }` }
-                                        { `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(3) { flex: 0 1 ${ parseFloat( ColWidthThree ) }%; display: flex; margin-top: -14px; margin-bottom: -14px; justify-content: center; word-break: break-word; }` }
-                                        { `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(4) { flex: 0 1 ${ parseFloat( ColWidthFour ) }%; display: flex; margin-top: -14px; margin-bottom: -14px; justify-content: center; word-break: break-word; }` }
-                                        { `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(5) { flex: 0 1 ${ parseFloat( ColWidthFive ) }%; display: flex; margin-top: -14px; margin-bottom: -14px; justify-content: center; word-break: break-word; }` }
-                                        { `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(6) { flex: 0 1 ${ parseFloat( ColWidthSix ) }%; display: flex; margin-top: -14px; margin-bottom: -14px; justify-content: center; word-break: break-word; }` }
+                                        { `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(1) { flex: 1; margin-right: ${ gutter }; display: flex; margin-top: -14px; margin-bottom: -14px; justify-content: center; word-break: break-word; overflow-wrap: break-word; }` }
+                                        { `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(2) { flex: 1; margin-right: ${ gutter }; display: flex; margin-top: -14px; margin-bottom: -14px; justify-content: center; word-break: break-word; overflow-wrap: break-word; }` }
+                                        { `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(3) { flex: 1; margin-right: ${ gutter }; display: flex; margin-top: -14px; margin-bottom: -14px; justify-content: center; word-break: break-word; overflow-wrap: break-word; }` }
+                                        { `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(4) { flex: 1; margin-right: ${ gutter }; display: flex; margin-top: -14px; margin-bottom: -14px; justify-content: center; word-break: break-word; overflow-wrap: break-word; }` }
+                                        { `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(5) { flex: 1; margin-right: ${ gutter }; display: flex; margin-top: -14px; margin-bottom: -14px; justify-content: center; word-break: break-word; overflow-wrap: break-word; }` }
+                                        { `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(6) { flex: 1; display: flex; margin-top: -14px; margin-bottom: -14px; justify-content: center; word-break: break-word; overflow-wrap: break-word; }` }
                                     </Fragment>
                                 </style>
                                 <InnerBlocks

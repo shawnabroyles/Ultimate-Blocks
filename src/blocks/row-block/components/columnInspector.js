@@ -7,29 +7,21 @@ import map from 'lodash/map';
 // Setup the block
 const { __ } = wp.i18n;
 
-const {
-    Component,
-    Fragment,
-} = wp.element;
+const {Component, Fragment} = wp.element;
 
 const {
     MediaUpload,
-    InnerBlocks,
     InspectorControls,
-    ColorPalette,
+    ColorPalette
 } = wp.blockEditor || wp.editor;
 
 const {
     Button,
     ButtonGroup,
     Tooltip,
-    TabPanel,
-    IconButton,
-    Dashicon,
     PanelBody,
     RangeControl,
-    ToggleControl,
-    SelectControl,
+    SelectControl
 } = wp.components;
 
 export default class ColumnInspector extends Component {
@@ -220,10 +212,9 @@ export default class ColumnInspector extends Component {
                                        key={ key }
                                        className="ub-size-btn"
                                        isSmall
-                                       onClick={ () => setAttributes( {
-                                               onControlBrSize: true,
-                                           } )
-                                       }
+                                       onClick={ _ => setAttributes({
+                                               onControlBrSize: true
+                                           })}
                                    >
                                        { icon }
                                    </Button> :
@@ -231,10 +222,9 @@ export default class ColumnInspector extends Component {
                                        key={ key }
                                        className="ub-size-btn"
                                        isSmall
-                                       onClick={ () => setAttributes( {
+                                       onClick={ _ => setAttributes( {
                                            onControlBrSize: false,
-                                       } )
-                                       }
+                                       } ) }
                                    >
                                        { icon }
                                    </Button>
@@ -247,63 +237,58 @@ export default class ColumnInspector extends Component {
                                <RangeControl
                                    label = {__( 'Border Size' )}
                                    value={ columnBorderSize }
-                                   onChange={ value => {
+                                   onChange={ value =>
                                        setAttributes({
                                            columnBorderSize: value,
                                            columnBorderTop: value,
                                            columnBorderRight: value,
                                            columnBorderLeft: value,
                                            columnBorderBottom: value,
-                                       });
-                                   }}
+                                       })}
                                    min={ 0 }
                                    max={ 200 }
                                />
                            </div>
                    ) : (
-                       <div className='ub-border-control-idividual'>
+                       <div className='ub-border-control-individual'>
                            <p>{ __( 'Border Size' ) }</p>
                            <RangeControl
                                label={ icons.outlinetop }
                                value={ columnBorderTop }
-                               onChange={ value => {
+                               onChange={ value => 
                                    setAttributes({
                                        columnBorderTop: value
-                                   });
-                               }}
+                                   }) }
                                min={ 0 }
                                max={ 50 }
                            />
                            <RangeControl
                                label={ icons.outlineright }
                                value={ columnBorderRight }
-                               onChange={ value => {
+                               onChange={ value => 
                                   setAttributes({
                                       columnBorderRight: value
-                                  });
-                               }}
+                                  })}
                                min={ 0 }
                                max={ 50 }
                            />
                            <RangeControl
                                label={ icons.outlinebottom }
                                value={ columnBorderBottom }
-                               onChange={ value => {
+                               onChange={ value => 
                                    setAttributes({
                                        columnBorderBottom: value
-                                   });
-                               }}
+                                   })}
                                min={ 0 }
                                max={ 50 }
                            />
                            <RangeControl
                                label={ icons.outlineleft }
                                value={ columnBorderLeft }
-                               onChange={ value => {
+                               onChange={ value => 
                                    setAttributes({
                                        columnBorderLeft: value
-                                   });
-                               }}
+                                   })}
                                min={ 0 }
                                max={ 50 }
                            />
@@ -318,10 +303,9 @@ export default class ColumnInspector extends Component {
                                        className="ub-size-btn"
                                        isSmall
                                        aria-pressed={key}
-                                       onClick={(props) => setAttributes({
+                                       onClick={_ => setAttributes({
                                            onControlBrRadius: true,
-                                       })
-                                       }
+                                       })}
                                    >
                                        {icon}
                                    </Button> :
@@ -330,10 +314,9 @@ export default class ColumnInspector extends Component {
                                        className="ub-size-btn"
                                        isSmall
                                        aria-pressed={key}
-                                       onClick={(props) => setAttributes({
+                                       onClick={_ => setAttributes({
                                            onControlBrRadius: false,
-                                       })
-                                       }
+                                       })}
                                    >
                                        {icon}
                                    </Button>
@@ -346,15 +329,14 @@ export default class ColumnInspector extends Component {
                            <RangeControl
                            label = {__( 'Border Radius' )}
                            value = { columnBorderRadius }
-                           onChange={ value => {
+                           onChange={ value => 
                                setAttributes({
                                    columnBorderRadius: value,
                                    columnBrTopRadius: value,
                                    columnBrRightRadius: value,
                                    columnBrLeftRadius: value,
                                    columnBrBottomRadius: value,
-                               });
-                           }}
+                               })}
                            min={ 0 }
                            max={ 200 }
                            />
@@ -365,44 +347,40 @@ export default class ColumnInspector extends Component {
                            <RangeControl
                                label={ icons.outlinetop }
                                value={ columnBrTopRadius }
-                               onChange={ value => {
+                               onChange={ value => 
                                    setAttributes({
                                        columnBrTopRadius: value
-                                   });
-                               }}
+                                   }) }
                                min={ 0 }
                                max={ 200 }
                            />
                            <RangeControl
                                label={ icons.outlineright }
                                value={ columnBrRightRadius }
-                               onChange={ value => {
+                               onChange={ value => 
                                    setAttributes({
                                        columnBrRightRadius: value
-                                   });
-                               }}
+                                   })}
                                min={ 0 }
                                max={ 200 }
                            />
                            <RangeControl
                                label={ icons.outlinebottom }
                                value={ columnBrBottomRadius }
-                               onChange={ value => {
+                               onChange={ value => 
                                    setAttributes({
                                        columnBrBottomRadius: value
-                                   });
-                               }}
+                                   })}
                                min={ 0 }
                                max={ 200 }
                            />
                            <RangeControl
                                label={ icons.outlineleft }
                                value={ columnBrLeftRadius }
-                               onChange={ value => {
+                               onChange={ value => 
                                    setAttributes({
                                        columnBrLeftRadius: value
-                                   });
-                               }}
+                                   })}
                                min={ 0 }
                                max={ 200 }
                            />
@@ -417,11 +395,10 @@ export default class ColumnInspector extends Component {
                        <div className="margin-st_box1">
                            <RangeControl
                                value={ columnMarginTop }
-                               onChange={ value => {
+                               onChange={ value => 
                                    setAttributes({
                                        columnMarginTop: value
-                                   });
-                               }}
+                                   })}
                                min={ 0 }
                                max={ 100 }
                            />
@@ -430,11 +407,10 @@ export default class ColumnInspector extends Component {
                            <div className="margin-col-1">
                                <RangeControl
                                    value={ columnMarginLeft }
-                                   onChange={ value => {
+                                   onChange={ value =>
                                        setAttributes({
                                            columnMarginLeft: value
-                                       });
-                                   }}
+                                       })}
                                    min={ 0 }
                                    max={ 100 }
                                />
@@ -444,11 +420,10 @@ export default class ColumnInspector extends Component {
                                    <p>Padding</p>
                                    <RangeControl
                                        value={ columnPaddingTop }
-                                       onChange={ value => {
+                                       onChange={ value => 
                                            setAttributes({
                                                columnPaddingTop: value
-                                           });
-                                       }}
+                                           }) }
                                        min={ 0 }
                                        max={ 100 }
                                    />
@@ -457,11 +432,10 @@ export default class ColumnInspector extends Component {
                                    <div className="padding-col-1">
                                        <RangeControl
                                            value={ columnPaddingLeft }
-                                           onChange={ value => {
+                                           onChange={ value => 
                                                setAttributes({
                                                    columnPaddingLeft: value
-                                               });
-                                           }}
+                                               })}
                                            min={ 0 }
                                            max={ 100 }
                                        />
@@ -472,11 +446,10 @@ export default class ColumnInspector extends Component {
                                    <div className="padding-col-3">
                                        <RangeControl
                                            value={ columnPaddingRight }
-                                           onChange={ value => {
+                                           onChange={ value => 
                                                setAttributes({
                                                    columnPaddingRight: value
-                                               });
-                                           }}
+                                               })}
                                            min={ 0 }
                                            max={ 100 }
                                        />
@@ -485,11 +458,10 @@ export default class ColumnInspector extends Component {
                                <div className="padding-st_box3">
                                    <RangeControl
                                        value={ columnPaddingBottom }
-                                       onChange={ value => {
+                                       onChange={ value => 
                                            setAttributes({
                                                columnPaddingBottom: value
-                                           });
-                                       }}
+                                           })}
                                        min={ 0 }
                                        max={ 100 }
                                    />
@@ -498,11 +470,10 @@ export default class ColumnInspector extends Component {
                            <div className="margin-col-3">
                                <RangeControl
                                    value={ columnMarginRight }
-                                   onChange={ value => {
+                                   onChange={ value => 
                                        setAttributes({
                                            columnMarginRight: value
-                                       });
-                                   }}
+                                       }) }
                                    min={ 0 }
                                    max={ 100 }
                                />
@@ -511,11 +482,10 @@ export default class ColumnInspector extends Component {
                        <div className="margin-st_box3">
                            <RangeControl
                                value={ columnMarginBottom }
-                               onChange={ value => {
+                               onChange={ value => 
                                    setAttributes({
                                        columnMarginBottom: value
-                                   });
-                               }}
+                                   })}
                                min={ 0 }
                                max={ 100 }
                            />

@@ -13,7 +13,6 @@ const {
 
 const {
     MediaUpload,
-    InnerBlocks,
     InspectorControls,
     ColorPalette,
 } = wp.blockEditor || wp.editor;
@@ -21,11 +20,7 @@ const {
 const {
     Button,
     ButtonGroup,
-    Tooltip,
     TabPanel,
-    TextControl,
-    IconButton,
-    Dashicon,
     PanelBody,
     RangeControl,
     ToggleControl,
@@ -40,17 +35,11 @@ export default class Inspector extends Component {
     render(){
         const {
             attributes: {
-                startOptions,
                 colSection,
                 columns,
                 currentTab,
                 mobileSizeGrid,
                 tabletSizeGrid,
-                inspectorTypeColumn,
-                ColWidthOne,
-                ColWidthTwo,
-                ColWidthThree,
-                ColWidthFour,
                 selectUnits,
                 marginTopWrap,
                 marginBottomWrap,
@@ -84,8 +73,6 @@ export default class Inspector extends Component {
             },
             setAttributes,
         } = this.props;
-
-        console.log(this.props);
 
         const onTabSelect = ( tabName ) => {
             setAttributes( { currentTab: tabName } );
@@ -212,13 +199,13 @@ export default class Inspector extends Component {
                                 key={ key }
                                 className={ colSection === key ? `ub-section-btn-select` : `ub-section-btn` }
                                 isSmall
-                                onClick={ (props) => setAttributes( {
+                                onClick={ _ => setAttributes( {
                                     colSection: key,
                                     columns: col,
-                                    ColWidthOne: One,
-                                    ColWidthTwo: Two,
-                                    ColWidthThree: Three,
-                                    ColWidthFour: Four,
+                                    colWidthOne: One,
+                                    colWidthTwo: Two,
+                                    colWidthThree: Three,
+                                    colWidthFour: Four,
                                     inspectorTypeColumn: true,
                                 } ) }
                             >
@@ -325,38 +312,38 @@ export default class Inspector extends Component {
                                 px
                             </Button>
                             <Button
-                                onClick = { () =>{
+                                onClick = { _ =>
                                     setAttributes({
-                                        selectUnits: 'vh',
-                                    });
-                                }}
+                                        selectUnits: 'vh'
+                                    })
+                                }
                             >
                                 vh
                             </Button>
                             <Button
-                                onClick = { () =>{
+                                onClick = { _ =>
                                     setAttributes({
                                         selectUnits: '%',
-                                    });
-                                }}
+                                    })
+                                }
                             >
                                 %
                             </Button>
                             <Button
-                                onClick = { () =>{
+                                onClick = { _ =>
                                     setAttributes({
                                         selectUnits: 'rem',
-                                    });
-                                }}
+                                    })
+                                }
                             >
                                 rem
                             </Button>
                             <Button
-                                onClick = { () =>{
+                                onClick = { _ =>
                                     setAttributes({
                                         selectUnits: 'em',
-                                    });
-                                }}
+                                    })
+                                }
                             >
                                 em
                             </Button>
@@ -366,11 +353,11 @@ export default class Inspector extends Component {
                         <div className="margin-st_box1">
                             <RangeControl
                                value={ marginTopWrap }
-                               onChange={ value => {
+                               onChange={ value => 
                                    setAttributes({
                                        marginTopWrap: value
-                                   });
-                               }}
+                                   })
+                               }
                                min={ 0 }
                                max={ 100 }
                             />
@@ -379,11 +366,11 @@ export default class Inspector extends Component {
                             <div className="margin-col-1">
                                 <RangeControl
                                     value={ marginLeftWrap }
-                                    onChange={ value => {
+                                    onChange={ value => 
                                         setAttributes({
                                             marginLeftWrap: value
-                                        });
-                                    }}
+                                        })
+                                    }
                                     min={ 0 }
                                     max={ 100 }
                                 />
@@ -393,11 +380,11 @@ export default class Inspector extends Component {
                                     <p>Padding</p>
                                     <RangeControl
                                         value={ paddingTopWrap }
-                                        onChange={ value => {
+                                        onChange={ value => 
                                             setAttributes({
                                                 paddingTopWrap: value
-                                            });
-                                        }}
+                                            })
+                                        }
                                         min={ 0 }
                                         max={ 100 }
                                     />
@@ -406,11 +393,11 @@ export default class Inspector extends Component {
                                     <div className="padding-col-1">
                                         <RangeControl
                                             value={ paddingLeftWrap }
-                                            onChange={ value => {
+                                            onChange={ value => 
                                                 setAttributes({
                                                     paddingLeftWrap: value
-                                                });
-                                            }}
+                                                })
+                                            }
                                             min={ 0 }
                                             max={ 100 }
                                         />
@@ -421,11 +408,11 @@ export default class Inspector extends Component {
                                     <div className="padding-col-3">
                                         <RangeControl
                                             value={ paddingRightWrap }
-                                            onChange={ value => {
+                                            onChange={ value => 
                                                 setAttributes({
                                                     paddingRightWrap: value
-                                                });
-                                            }}
+                                                })
+                                            }
                                             min={ 0 }
                                             max={ 100 }
                                         />
@@ -434,11 +421,11 @@ export default class Inspector extends Component {
                                 <div className="padding-st_box3">
                                     <RangeControl
                                         value={ paddingBottomWrap }
-                                        onChange={ value => {
+                                        onChange={ value => 
                                             setAttributes({
                                                 paddingBottomWrap: value
-                                            });
-                                        }}
+                                            })
+                                        }
                                         min={ 0 }
                                         max={ 100 }
                                     />
@@ -447,11 +434,11 @@ export default class Inspector extends Component {
                             <div className="margin-col-3">
                                 <RangeControl
                                     value={ marginRightWrap }
-                                    onChange={ value => {
+                                    onChange={ value => 
                                         setAttributes({
                                             marginRightWrap: value
-                                        });
-                                    }}
+                                        })
+                                    }
                                     min={ 0 }
                                     max={ 100 }
                                 />
@@ -460,11 +447,11 @@ export default class Inspector extends Component {
                         <div className="margin-st_box3">
                             <RangeControl
                                value={ marginBottomWrap }
-                               onChange={ value => {
+                               onChange={ value => 
                                    setAttributes({
                                        marginBottomWrap: value
-                                   });
-                               }}
+                                   })
+                               }
                                min={ 0 }
                                max={ 100 }
                             />
@@ -499,22 +486,22 @@ export default class Inspector extends Component {
                     <RangeControl
                         label = {__( 'Border Size' )}
                         value={ wrapBorderSize }
-                        onChange={ value => {
+                        onChange={ value => 
                             setAttributes({
                                 wrapBorderSize: value
-                            });
-                        }}
+                            })
+                        }
                         min={ 0 }
                         max={ 50 }
                     />
                     <RangeControl
                         label = {__( 'Border Radius' )}
                         value={ wrapBorderRadius }
-                        onChange={ value => {
+                        onChange={ value => 
                             setAttributes({
                                 wrapBorderRadius: value
-                            });
-                        }}
+                            })
+                        }
                         min={ 0 }
                         max={ 50 }
                     />
@@ -538,13 +525,13 @@ export default class Inspector extends Component {
                             <img src={imgURL} id={imgID} alt={imgAlt}/>
                             <Button
                                 className="components-button button button-medium"
-                                onClick = {({props}) => {
+                                onClick = {_ => 
                                       setAttributes({
                                           imgURL: '',
                                           imgID: '',
                                           imgAlt: '',
                                       })
-                                }}
+                                }
                             >
                             Delete Image
                             </Button>
@@ -627,32 +614,32 @@ export default class Inspector extends Component {
                                 </video>
                                 <Button
                                     className="components-button button button-medium"
-                                    onClick = {({props}) => {
+                                    onClick = {_ => 
                                         setAttributes({
                                             videoURL: '',
                                             videoID: '',
                                         })
-                                    }}
+                                    }
                                 >
                                     Delete Video
                                 </Button>
                                 <ToggleControl
                                     label={ __( 'Mute Video' ) }
                                     checked={ videoMuted }
-                                    onChange={ ( videoMuted ) => {
+                                    onChange={ ( videoMuted ) => 
                                         setAttributes ({
                                             videoMuted,
                                         })
-                                    }}
+                                    }
                                 />
                                 <ToggleControl
                                      label={ __( 'Loop Video' ) }
                                      checked={ videoLoop }
-                                     onChange={ ( videoLoop ) => {
+                                     onChange={ ( videoLoop ) => 
                                          setAttributes ({
-                                             videoLoop,
+                                             videoLoop
                                          })
-                                     }}
+                                     }
                                 />
                             </Fragment>
                         ) : (

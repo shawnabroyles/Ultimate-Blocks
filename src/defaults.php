@@ -1128,7 +1128,7 @@ $defaultValues = array(
             ),
             'wrapVerticalAligment' => array(
                 'type' => 'string',
-                'default' => '',
+                'default' => 'flex-start',
             ),
             'tabletSizeGrid' => array(
                 'type' => 'string',
@@ -1243,11 +1243,11 @@ $defaultValues = array(
                 'default' => '',
             ),
             'videoMuted' => array(
-                'type' => 'bool',
+                'type' => 'boolean',
                 'default' => true,
             ),
             'videoLoop' => array(
-                'type' => 'bool',
+                'type' => 'boolean',
                 'default' => true,
             ),
             'wrapBackgroundOverlay' => array(
@@ -1270,7 +1270,7 @@ $defaultValues = array(
     ),
     'ub/row-column' => array(
         'attributes' => array(
-            'id_column' => array(
+            'blockID' => array(
                 'type' => 'string',
                 'default' => ''
             ),
@@ -1383,11 +1383,11 @@ $defaultValues = array(
                 'default' => 'scroll',
             ),
             'onControlBrSize' => array(
-                'type' => 'bool',
+                'type' => 'boolean',
                 'default' => true,
             ),
             'onControlBrRadius' => array(
-                'type' => 'bool',
+                'type' => 'boolean',
                 'default' => true,
             ),
         )

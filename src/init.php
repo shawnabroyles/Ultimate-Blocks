@@ -479,8 +479,76 @@ function ub_include_block_attribute_css() {
                 case 'ub/post-grid':
                     $prefix = '#ub_post-grid-block_' . $attributes['blockID'];
                     break;
+                case 'ub/row-column':
+                    $prefix = '#ub-row-column-' . $attributes['blockID'];
+                    $blockStylesheets .= $prefix . '>.ub-single-column{' .
+                        'margin:'.(isset($attributes['columnMarginTop']) ? $attributes['columnMarginTop'] : '').'px '.(isset($attributes['columnMarginRight']) ? $attributes['columnMarginRight'] : '').'px '.
+                        (isset($attributes['columnMarginBottom']) ? $attributes['columnMarginBottom'] : '').'px '.(isset($attributes['columnMarginLeft']) ? $attributes['columnMarginLeft'] : '').'px;
+                        padding:'. (isset($attributes['columnPaddingTop']) ? $attributes['columnPaddingTop'] : '').'px '.(isset($attributes['columnPaddingRight']) ? $attributes['columnPaddingRight'] : '').'px '.
+                        (isset($attributes['columnPaddingBottom']) ? $attributes['columnPaddingBottom'] : '').'px '.(isset($attributes['columnPaddingLeft']) ? $attributes['columnPaddingLeft'] : '').'px;'.
+                        (isset($attributes['columnBgColor']) ? 'background-color:'.$attributes['columnBgColor'].';' : '').
+                        (isset($attributes['onControlBrSize']) ? ($attributes['onControlBrSize'] === false ? 'border-width:'.(isset($attributes['columnBorderTop']) ? $attributes['columnBorderTop'].'px ': '').(isset($attributes['columnBorderRight']) ? $attributes['columnBorderRight'].'px ': '').(isset($attributes['columnBorderBottom']) ? $attributes['columnBorderBottom'].'px ': '').(isset($attributes['columnBorderLeft']) ? $attributes['columnBorderLeft'].'px;': '' ): (isset($attributes['columnBorderSize']) ? 'border-width:'.$attributes['columnBorderSize'].'px;' : '') ):'').
+                        (isset($attributes['onControlBrRadius']) ? ($attributes['onControlBrRadius'] === false ? 'border-radius:'.(isset($attributes['columnBrTopRadius']) ? $attributes['columnBrTopRadius'].'px ': '').(isset($attributes['columnBrRightRadius']) ? $attributes['columnBrRightRadius'].'px ': '').(isset($attributes['columnBrBottomRadius']) ? $attributes['columnBrBottomRadius'].'px ': '').(isset($attributes['columnBrLeftRadius']) ? $attributes['columnBrLeftRadius'].'px;': '' ): (isset($attributes['columnBorderRadius']) ? 'border-radius:'.$attributes['columnBorderRadius'].'px;' : '') ):'').
+                        (isset($attributes['columnBorderStyle']) ? 'border-style:'.$attributes['columnBorderStyle'].';' : '').
+                        (isset($attributes['columnBorderColor']) ? 'border-color:'.$attributes['columnBorderColor'].';' : '').
+                        (isset($attributes['columnImgURL']) ? 'background-image: url('.$attributes['columnImgURL'].')'.';' : '').
+                        (isset($attributes['columnBgSize']) ? 'background-size:'.$attributes['columnBgSize'].';' : '' ).
+                        (isset($attributes['columnBgPosition']) ? 'background-position:'.$attributes['columnBgPosition'].';' : '').
+                        (isset($attributes['columnBgRepeat']) ? 'background-repeat:'.$attributes['columnBgRepeat'].';' : '').
+                        (isset($attributes['columnBgAttachment']) ? 'background-attachment:'.$attributes['columnBgAttachment'].';' : '').
+                    '}';
+                    break;
                 case 'ub/row-block':
-                    $prefix = '#ub_row-block_' . $attributes['blockID'];
+                    $prefix = '#ub-section-' . $attributes['blockID'];
+                    $blockStylesheets .= $prefix . '{' . PHP_EOL .
+                        'margin: ' . $attributes['marginTopWrap'] . $attributes['selectUnits'] .' '. $attributes['marginRightWrap'] . $attributes['selectUnits'] . ' '
+                                . $attributes['marginBottomWrap'] . $attributes['selectUnits'] .' '. $attributes['marginLeftWrap'] . $attributes['selectUnits'] . ';' . PHP_EOL .
+                        'border:'. $attributes['wrapBorderSize'] .'px '. $attributes['wrapBorderStyle']. $attributes['wrapBorderColor'] . ';' . PHP_EOL .
+                        'border-radius:'. $attributes['wrapBorderRadius'].'px;' . PHP_EOL .
+                    '}' . PHP_EOL .
+                    $prefix .' .ub-section-block-overlay {'. PHP_EOL .
+                        'opacity: '.($attributes['wrapBackgroundOverlay'] == 100 ? 1 : '0.'. $attributes['wrapBackgroundOverlay']).';' . PHP_EOL .
+                        'background-color: '. $attributes['wrapBackgroundOverlayCol'].';' . PHP_EOL .
+                    '}' . PHP_EOL .
+                    $prefix . ' .ub-single-wrap{'. PHP_EOL .
+                        'justify-content: '.$attributes['wrapVerticalAligment'] . ';'.
+                    '}' .
+                    $prefix . '>.ub-single-block>.ub-single-wrap:not(:first-child){' .
+                        'margin-left:' . (((int)trim($attributes['gutter'], "px"))/2) . 'px;' .
+                    '}' .
+                    $prefix . '>.ub-single-block>.ub-single-wrap:not(:last-child){' .
+                        'margin-right:' . (((int)trim($attributes['gutter'], "px"))/2) . 'px;' .
+                    '}';
+                    if(isset($attributes['colWidthOne'])){
+                        $blockStylesheets .= $prefix . '>.ub-single-block>.ub-single-wrap:nth-child(1){' .
+                            'flex: 0 1 ' . $attributes['colWidthOne'] . ';' .
+                        '}';
+                    }
+                    if(isset($attributes['colWidthTwo'])){
+                        $blockStylesheets .= $prefix . '>.ub-single-block>.ub-single-wrap:nth-child(2){' .
+                            'flex: 0 1 ' . $attributes['colWidthTwo'] . ';' .
+                        '}';
+                    }
+                    if(isset($attributes['colWidthThree'])){
+                        $blockStylesheets .= $prefix . '>.ub-single-block>.ub-single-wrap:nth-child(3){' .
+                            'flex: 0 1 ' . $attributes['colWidthThree'] . ';' .
+                        '}';
+                    }
+                    if(isset($attributes['colWidthFour'])){
+                        $blockStylesheets .= $prefix . '>.ub-single-block>.ub-single-wrap:nth-child(4){' .
+                            'flex: 0 1 ' . $attributes['colWidthFour'] . ';' .
+                        '}';
+                    }
+                    if(isset($attributes['colWidthFive'])){
+                        $blockStylesheets .= $prefix . '>.ub-single-block>.ub-single-wrap:nth-child(5){' .
+                            'flex: 0 1 ' . $attributes['colWidthFive'] . ';' .
+                        '}';
+                    }
+                    if(isset($attributes['colWidthSix'])){
+                        $blockStylesheets .= $prefix . '>.ub-single-block>.ub-single-wrap:nth-child(6){' .
+                            'flex: 0 1 ' . $attributes['colWidthSix'] . ';' .
+                        '}';
+                    }
                     break;
             }
         }

@@ -233,9 +233,8 @@ export default class RowEditor extends Component {
                     <video className="ub-editor-video" playsinline src={videoURL}></video>
                 </div>
                 <div className="ub-section-editor-overlay" style={{
-
                     backgroundColor: wrapBackgroundOverlayCol,
-                    opacity: ( wrapBackgroundOverlay == 100 ? 1 : `0.${wrapBackgroundOverlay}`),
+                    opacity: ( wrapBackgroundOverlay == 100 ? 1 : `${wrapBackgroundOverlay/100}` ),
                 }}>
                 </div>
                 <div className={`ub-section-overhad-wrap wrapVertical${wrapVerticalAligment}`} style={{

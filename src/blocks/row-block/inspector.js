@@ -513,8 +513,8 @@ export default class Inspector extends Component {
                     <p>Background Color</p>
                     <ColorPalette
                         value={wrapColor}
-                        onChange={colorBackground =>
-                            setAttributes({ wrapColor: colorBackground })
+                        onChange={ value =>
+                            setAttributes({ wrapColor: value })
                         }
                         allowReset
                     />

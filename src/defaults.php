@@ -1234,6 +1234,10 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => 'div',
             ),
+            'imgURL' => array(
+                'type' => 'string',
+                'default' => '',
+            ),
             'videoID' => array(
                 'type' => 'number',
                 'default' => -1

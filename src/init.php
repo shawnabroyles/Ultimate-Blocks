@@ -509,7 +509,7 @@ function ub_include_block_attribute_css() {
                         'border-radius:'. $attributes['wrapBorderRadius'].'px;' . PHP_EOL . 'background-color:'. $attributes['wrapColor'] . ';'. PHP_EOL .
                         'background-image: url(' . $attributes['imgURL'] .')' . ';' . PHP_EOL . 'background-size:' . $attributes['wrapBackgroundSize'] . ';' . PHP_EOL .
                         'background-position:' . $attributes['wrapBackgroundPosition'] . ';' . PHP_EOL . 'background-repeat:' . $attributes['wrapBackgroundRepeat'] . ';' . PHP_EOL .
-                        'background-attachment:' . $attributes['wrapBackgroundAttachment']. PHP_EOL .
+                        'background-attachment:' . $attributes['wrapBackgroundAttachment']. ';' . PHP_EOL . 'color:' . $attributes['textColor'] . ';' . PHP_EOL .
                     '}' . PHP_EOL .
                     $prefix .' .ub-section-block-overlay {'. PHP_EOL .
                         'opacity: '.($attributes['wrapBackgroundOverlay'] == 100 ? 1 : '0.'. $attributes['wrapBackgroundOverlay']).';' . PHP_EOL .

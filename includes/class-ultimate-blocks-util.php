@@ -82,6 +82,11 @@ class Ultimate_Blocks_Util {
                 'active' => true,
             ),
             array(
+                'label'  => 'Row Block',
+                'name'   => 'ub/row-block',
+                'active' => true,
+            ),
+            array(
 				'label'  => 'Progress Bar',
 				'name'   => 'ub/progress-bar',
 				'active' => true,

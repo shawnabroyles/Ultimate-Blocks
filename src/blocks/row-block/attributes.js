@@ -27,6 +27,10 @@ const attributes = {
 		type: "string",
 		default: ""
 	},
+    currentTabOverlay: {
+	    type: "string",
+	    default: ""
+	},
 	tabletSizeGrid: {
 		type: "string",
 		default: ""
@@ -177,6 +181,42 @@ const attributes = {
 		type: "string",
 		default: "#ffffff"
 	},
+	selectTab: {
+	    type: "string",
+	    default: "Standart",
+	},
+    gradientType: {
+	    type: "string",
+	    default: "linear",
+	},
+    gradientAngle: {
+	   type: "number",
+	   default: 0,
+	},
+    gradientPosition: {
+	   type: "string",
+	   default: "",
+	},
+    wrapGradientOverlay: {
+        type: "number",
+        default: 0
+	},
+    wrapGradientOverlayCol:{
+        type: "string",
+        default: "rgb(255, 255, 255)"
+	},
+    wrapGradientLocation:{
+        type: "number",
+        default: 0
+	},
+    wrapGradientSecondCol:{
+        type: "string",
+        default: "rgb(255, 255, 255)"
+	},
+    wrapGradientSecondLocation:{
+	    type: "number",
+        default: 0
+    },
 	textColor: {
 		type: "string",
 		default: ""

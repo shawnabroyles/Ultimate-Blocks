@@ -285,6 +285,38 @@
 	}
 }
 
+.ub-overlay-setting{
+	.ub-inspect-tabs {
+		.components-tab-panel__tab-content {
+			margin-top: 15px;
+		}
+	}
+	.ub-inspect-tabs .components-tab-panel__tabs button {
+		justify-content: center;
+		background: #d5dadf;
+		width: 50%;
+		border: 0;
+		padding: 6px 16px;
+		outline: 0;
+	}
+	.components-button {
+		&.ub-standart-tab,
+		&.ub-gradient-tab {
+			&.active-tab {
+				background: #f53d3d;
+				color: #ffffff;
+				&:focus,
+				&:active {
+					&:not(:disabled):not([aria-disabled="true"]) {
+						background: #f53d3d;
+						color: #ffffff;
+					}
+				}
+			}
+		}
+	}
+}
+
 .ub-layout-wrap_margin_box {
 	display: flex;
 	flex-direction: column;

@@ -1262,6 +1262,38 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => '#ffffff',
             ),
+            'gradientType' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'gradientAngle' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'gradientPosition' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'wrapGradientOverlay' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'wrapGradientOverlayCol' => array(
+                'type' => 'string',
+                'default' => '#ffffff',
+            ),
+            'wrapGradientLocation' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'wrapGradientSecondCol' => array(
+                'type' => 'string',
+                'default' => '#ffffff',
+            ),
+            'wrapGradientSecondLocation' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
             'textColor' => array(
                 'type' => 'string',
                 'default' => '',

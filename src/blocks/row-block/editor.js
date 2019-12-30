@@ -107,6 +107,15 @@ export default class RowEditor extends Component {
                 imgAlt,
                 videoID,
                 videoURL,
+                selectTab,
+                gradientType,
+                gradientAngle,
+                gradientPosition,
+                wrapGradientOverlay,
+                wrapGradientOverlayCol,
+                wrapGradientSecondCol,
+                wrapGradientLocation,
+                wrapGradientSecondLocation,
                 wrapBackgroundOverlay,
                 wrapBackgroundOverlayCol,
                 wrapTag,
@@ -232,10 +241,18 @@ export default class RowEditor extends Component {
                 <div className="ub-section-editor-video-wrap">
                     <video className="ub-editor-video" playsinline src={videoURL}></video>
                 </div>
-                <div className="ub-section-editor-overlay" style={{
-                    backgroundColor: wrapBackgroundOverlayCol,
-                    opacity: ( wrapBackgroundOverlay == 100 ? 1 : `${wrapBackgroundOverlay/100}` ),
-                }}>
+                <div className={( selectTab === 'Standart' ? 'ub-section-editor-overlay' : 'ub-section-editor-gradient')} style={
+                    (selectTab === 'Standart' ? {
+                            backgroundColor: wrapBackgroundOverlayCol,
+                            opacity: (wrapBackgroundOverlay == 100 ? 1 : `${wrapBackgroundOverlay / 100}`)
+                        } :
+                        {
+                            background: `${gradientType}-gradient(${gradientAngle},
+                                                ${wrapGradientOverlayCol} ${wrapGradientLocation}%,
+                                                ${wrapGradientSecondCol} ${wrapGradientSecondLocation}%);`,
+                            opacity: (wrapGradientOverlay == 100 ? 1 : `${wrapGradientOverlay} / 100`),
+                        } )
+                }>
                 </div>
                 <div className={`ub-section-overhad-wrap wrapVertical${wrapVerticalAligment}`} style={{
                     backgroundImage: ( imgURL ? `url( ${imgURL} )` : undefined ),

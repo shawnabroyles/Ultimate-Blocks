@@ -38,6 +38,7 @@ export default class Inspector extends Component {
                 colSection,
                 columns,
                 currentTab,
+                currentTabOverlay,
                 mobileSizeGrid,
                 tabletSizeGrid,
                 selectUnits,
@@ -66,8 +67,17 @@ export default class Inspector extends Component {
                 videoURL,
                 videoMuted,
                 videoLoop,
+                selectTab,
+                gradientType,
+                gradientAngle,
+                gradientPosition,
                 wrapBackgroundOverlay,
                 wrapBackgroundOverlayCol,
+                wrapGradientOverlay,
+                wrapGradientOverlayCol,
+                wrapGradientLocation,
+                wrapGradientSecondCol,
+                wrapGradientSecondLocation,
                 wrapTag,
                 textColor,
             },
@@ -76,6 +86,10 @@ export default class Inspector extends Component {
 
         const onTabSelect = ( tabName ) => {
             setAttributes( { currentTab: tabName } );
+        };
+
+        const onTabSelectOverlay = ( tabName ) => {
+            setAttributes( { currentTabOverlay: tabName } );
         };
 
         const mobileGridTwo = [
@@ -665,29 +679,144 @@ export default class Inspector extends Component {
                         )}
                     </div>
                 </PanelBody>
-                <PanelBody
+                <PanelBody className="ub-overlay-setting"
                     title={ __( 'Background Overlay Setting' ) }
                     initialOpen={ false }
                 >
-                    <p>Overlay Opacity</p>
-                    <RangeControl
-                        value={ wrapBackgroundOverlay }
-                        onChange={ value => {
-                            setAttributes({
-                                wrapBackgroundOverlay: value
-                            });
-                        }}
-                        min={ 0 }
-                        max={ 100 }
-                    />
-                    <p>Overlay Color</p>
-                    <ColorPalette
-                        value={ wrapBackgroundOverlayCol }
-                        onChange={ value =>
-                            setAttributes({ wrapBackgroundOverlayCol: value })
+                    <TabPanel className="ub-inspect-tabs"
+                              activeClass="active-tab"
+                              initialTabName={ currentTabOverlay }
+                              onSelect={ onTabSelectOverlay }
+                              tabs={ [
+                                  {
+                                      name: 'Standart',
+                                      title: 'Standart',
+                                      className: 'ub-standart-tab',
+                                  },
+                                  {
+                                      name: 'Gradient',
+                                      title: 'Gradient',
+                                      className: 'ub-gradient-tab',
+                                  },
+                              ] }>
+                        {
+                            ( tab ) => {
+                                let tabres;
+                                if(tab.name) {
+                                    if ('Standart' == tab.name) {
+                                        tabres =
+                                            <Fragment>
+                                                <p>Overlay Opacity</p>
+                                                <RangeControl
+                                                   value = {wrapBackgroundOverlay}
+                                                   onChange = {value =>
+                                                   setAttributes({wrapBackgroundOverlay: value})
+                                                   }
+                                                   min = {0}
+                                                   max = {100}
+                                                />
+                                                <p>Overlay Color</p>
+                                                <ColorPalette
+                                                   value = {wrapBackgroundOverlayCol}
+                                                   onChange = {value =>
+                                                   setAttributes({wrapBackgroundOverlayCol: value})
+                                                   }
+                                                   allowReset
+                                                />
+                                                { setAttributes({ selectTab: tab.name})}
+                                            </Fragment>
+                                    } else if( 'Gradient' == tab.name){
+                                        tabres =
+                                            <Fragment>
+                                                <p>Overlay Opacity</p>
+                                                <RangeControl
+                                                    value = {wrapGradientOverlay}
+                                                    onChange = {value =>
+                                                        setAttributes({wrapGradientOverlay: value})
+                                                    }
+                                                    min = {0}
+                                                    max = {100}
+                                                />
+                                                <p>Color</p>
+                                                <ColorPalette
+                                                    value = {wrapGradientOverlayCol}
+                                                    onChange = {value =>
+                                                        setAttributes({wrapGradientOverlayCol: value})
+                                                    }
+                                                    allowReset
+                                                />
+                                                <p>Location</p>
+                                                <RangeControl
+                                                    value = {wrapGradientLocation}
+                                                    onChange = {value =>
+                                                        setAttributes({wrapGradientLocation: value})
+                                                    }
+                                                    min = {0}
+                                                    max = {100}
+                                                />
+                                                <p>Second Color</p>
+                                                <ColorPalette
+                                                    value = {wrapGradientSecondCol}
+                                                    onChange = {value =>
+                                                        setAttributes({wrapGradientSecondCol: value})
+                                                    }
+                                                    allowReset
+                                                />
+                                                <p>Location</p>
+                                                <RangeControl
+                                                    value = {wrapGradientSecondLocation}
+                                                    onChange = {value =>
+                                                        setAttributes({wrapGradientSecontLocation: value})
+                                                    }
+                                                    min = {0}
+                                                    max = {100}
+                                                />
+                                                <SelectControl
+                                                    label={ __( 'Gradient Type' ) }
+                                                    value={ gradientType }
+                                                    options={ [
+                                                        { value: 'linear', label: __( 'Linear' ) },
+                                                        { value: 'radial', label: __( 'Radial' ) },
+                                                    ] }
+                                                    onChange={ value => setAttributes( { gradientType: value } ) }
+                                                />
+                                                {( gradientType === 'linear' ?
+                                                    <Fragment>
+                                                        <p>Gradient Angle</p>
+                                                        <RangeControl
+                                                        value = { gradientAngle }
+                                                        onChange = {value =>
+                                                        setAttributes({gradientAngle: value})
+                                                        }
+                                                        min = {0}
+                                                        max = {100}
+                                                        />
+                                                    </Fragment> :
+                                                    <SelectControl
+                                                        label={ __( 'Gradient Position' ) }
+                                                        value={ gradientPosition }
+                                                        options={ [
+                                                            { value: 'center top', label: __( 'Center Top' ) },
+                                                            { value: 'center center', label: __( 'Center Center' ) },
+                                                            { value: 'center bottom', label: __( 'Center Bottom' ) },
+                                                            { value: 'left top', label: __( 'Left Top' ) },
+                                                            { value: 'left center', label: __( 'Left Center' ) },
+                                                            { value: 'left bottom', label: __( 'Left Bottom' ) },
+                                                            { value: 'right top', label: __( 'Right Top' ) },
+                                                            { value: 'right center', label: __( 'Right Center' ) },
+                                                            { value: 'right bottom', label: __( 'Right Bottom' ) },
+                                                        ] }
+                                                        onChange={ value => setAttributes( { gradientPosition: value } ) }
+                                                    />
+                                                )}
+                                            </Fragment>
+                                        { setAttributes({ selectTab: tab.name})}
+                                    }
+                                }
+                                return <div>{ tabres }</div>;
+                            }
                         }
-                        allowReset
-                    />
+                    </TabPanel>
                 </PanelBody>
                 <PanelBody
                     title={ __( 'Stucture Setting' ) }

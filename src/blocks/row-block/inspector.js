@@ -766,7 +766,7 @@ export default class Inspector extends Component {
                                                 <RangeControl
                                                     value = {wrapGradientSecondLocation}
                                                     onChange = {value =>
-                                                        setAttributes({wrapGradientSecontLocation: value})
+                                                        setAttributes({wrapGradientSecondLocation: value})
                                                     }
                                                     min = {0}
                                                     max = {100}
@@ -789,7 +789,7 @@ export default class Inspector extends Component {
                                                         setAttributes({gradientAngle: value})
                                                         }
                                                         min = {0}
-                                                        max = {100}
+                                                        max = {360}
                                                         />
                                                     </Fragment> :
                                                     <SelectControl

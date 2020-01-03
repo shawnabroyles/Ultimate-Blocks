@@ -449,6 +449,14 @@
 	background-repeat: no-repeat;
 	background-attachment: scroll;
 }
+.ub-section-editor-gradient{
+	top: 0px;
+	bottom: 0px;
+	left: 0;
+	position: absolute;
+	height: auto;
+	width: 100%;
+}
 
 .ub-image-inspector-panel .components-button,
 .ub-video-inspector-panel .components-button {

@@ -191,7 +191,7 @@ const attributes = {
 	},
     gradientAngle: {
 	   type: "number",
-	   default: 0,
+	   default: 180,
 	},
     gradientPosition: {
 	   type: "string",
@@ -203,7 +203,7 @@ const attributes = {
 	},
     wrapGradientOverlayCol:{
         type: "string",
-        default: "rgb(255, 255, 255)"
+        default: "#ffffff"
 	},
     wrapGradientLocation:{
         type: "number",
@@ -211,7 +211,7 @@ const attributes = {
 	},
     wrapGradientSecondCol:{
         type: "string",
-        default: "rgb(255, 255, 255)"
+        default: "#332bbf"
 	},
     wrapGradientSecondLocation:{
 	    type: "number",

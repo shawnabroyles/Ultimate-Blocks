@@ -1262,9 +1262,13 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => '#ffffff',
             ),
+            'selectTab' => array(
+                'type' => 'string',
+                'default' => 'Standart',
+            ),
             'gradientType' => array(
                 'type' => 'string',
-                'default' => ''
+                'default' => 'linear'
             ),
             'gradientAngle' => array(
                 'type' => 'number',
@@ -1288,7 +1292,7 @@ $defaultValues = array(
             ),
             'wrapGradientSecondCol' => array(
                 'type' => 'string',
-                'default' => '#ffffff',
+                'default' => '#332bbf',
             ),
             'wrapGradientSecondLocation' => array(
                 'type' => 'number',

@@ -511,10 +511,12 @@ function ub_include_block_attribute_css() {
                         'background-position:' . $attributes['wrapBackgroundPosition'] . ';' . PHP_EOL . 'background-repeat:' . $attributes['wrapBackgroundRepeat'] . ';' . PHP_EOL .
                         'background-attachment:' . $attributes['wrapBackgroundAttachment']. ';' . PHP_EOL . 'color:' . $attributes['textColor'] . ';' . PHP_EOL .
                     '}' . PHP_EOL .
-                    $prefix .' .ub-section-block-overlay {'. PHP_EOL .
+                    $prefix .( $attributes['selectTab'] === 'Standart' ? ' .ub-section-block-overlay {'. PHP_EOL .
                         'opacity: '.($attributes['wrapBackgroundOverlay'] == 100 ? 1 : '0.'. $attributes['wrapBackgroundOverlay']).';' . PHP_EOL .
                         'background-color: '. $attributes['wrapBackgroundOverlayCol'].';' . PHP_EOL .
-                    '}' . PHP_EOL .
+                    '}' : ' .ub-section-block-gradient {'. PHP_EOL . 'background-image: '. $attributes['gradientType'].'-gradient('.$attributes['gradientAngle'].
+                        'deg,'.$attributes['wrapGradientOverlayCol'].' '.$attributes['wrapGradientLocation'].'%,'.
+                        $attributes['wrapGradientSecondCol'].' '.$attributes['wrapGradientSecondLocation'].'%);' . PHP_EOL . '}') . PHP_EOL .
                     $prefix . ' .ub-single-wrap{'. PHP_EOL .
                         'justify-content: '.$attributes['wrapVerticalAligment'] . ';'.
                     '}' .

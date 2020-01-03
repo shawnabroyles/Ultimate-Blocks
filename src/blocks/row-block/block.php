@@ -21,10 +21,10 @@ function ub_render_row_block($attributes, $content){
                 '<div class="ub-section-block-video-wrap">
                     <video class="ub-block-video" autoplay '.($videoLoop ? 'loop' : '' ).' '.($videoMuted ? 'muted' : '' ).' src="'. $videoURL.'">
                     </video>
-                </div>
-                <div class="ub-section-block-overlay">
-                </div>
-                <div class="ub-single-block ub-tab'.$tabletSizeGrid.' ub-mobile'.$mobileSizeGrid.'">' . $content . '</div>'
+                </div>'.
+               ($selectTab === 'Standart' ? '<div class="ub-section-block-overlay"></div>' :
+                   '<div class="ub-section-block-gradient"></div>').
+               '<div class="ub-single-block ub-tab'.$tabletSizeGrid.' ub-mobile'.$mobileSizeGrid.'">' . $content . '</div>'
             . '</'.$wrapTag.'>';
 }
 

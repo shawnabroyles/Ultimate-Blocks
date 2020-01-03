@@ -250,6 +250,7 @@ export default class RowEditor extends Component {
                             backgroundImage: `${gradientType}-gradient(${gradientAngle}deg,
                                                 ${wrapGradientOverlayCol} ${wrapGradientLocation}%,
                                                 ${wrapGradientSecondCol} ${wrapGradientSecondLocation}%)`,
+                            opacity: (wrapGradientOverlay == 100 ? 1 : `${wrapGradientOverlay / 100}`)
                         } )
                 }>
                 </div>

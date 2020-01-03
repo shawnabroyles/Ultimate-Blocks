@@ -516,7 +516,8 @@ function ub_include_block_attribute_css() {
                         'background-color: '. $attributes['wrapBackgroundOverlayCol'].';' . PHP_EOL .
                     '}' : ' .ub-section-block-gradient {'. PHP_EOL . 'background-image: '. $attributes['gradientType'].'-gradient('.$attributes['gradientAngle'].
                         'deg,'.$attributes['wrapGradientOverlayCol'].' '.$attributes['wrapGradientLocation'].'%,'.
-                        $attributes['wrapGradientSecondCol'].' '.$attributes['wrapGradientSecondLocation'].'%);' . PHP_EOL . '}') . PHP_EOL .
+                        $attributes['wrapGradientSecondCol'].' '.$attributes['wrapGradientSecondLocation'].'%);' . PHP_EOL .
+                            'opacity:'.($attributes['wrapGradientOverlay'] == 100 ? 1 : '0.'. $attributes['wrapGradientOverlay']).'}') . PHP_EOL .
                     $prefix . ' .ub-single-wrap{'. PHP_EOL .
                         'justify-content: '.$attributes['wrapVerticalAligment'] . ';'.
                     '}' .

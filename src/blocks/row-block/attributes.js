@@ -195,7 +195,7 @@ const attributes = {
 	},
     gradientPosition: {
 	   type: "string",
-	   default: "",
+	   default: "center center",
 	},
     wrapGradientOverlay: {
         type: "number",

@@ -125,6 +125,8 @@ export default class RowEditor extends Component {
             setAttributes,
         } = this.props;
 
+        console.log(this.props);
+
         const createColumn = col => {
             createBlock('ub/row-column', {} );
             return times( col, col => [ 'ub/row-column', {} ] );
@@ -247,7 +249,7 @@ export default class RowEditor extends Component {
                             opacity: (wrapBackgroundOverlay == 100 ? 1 : `${wrapBackgroundOverlay / 100}`)
                         } :
                         {
-                            backgroundImage: `${gradientType}-gradient(${gradientAngle}deg,
+                            backgroundImage: `${gradientType}-gradient(${gradientType === 'radial' ? 'at ' : ''}${gradientType === 'linear' ? gradientAngle : gradientPosition }${gradientType === 'linear' ? 'deg' : ''},
                                                 ${wrapGradientOverlayCol} ${wrapGradientLocation}%,
                                                 ${wrapGradientSecondCol} ${wrapGradientSecondLocation}%)`,
                             opacity: (wrapGradientOverlay == 100 ? 1 : `${wrapGradientOverlay / 100}`)

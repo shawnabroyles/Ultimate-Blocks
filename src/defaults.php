@@ -1276,7 +1276,7 @@ $defaultValues = array(
             ),
             'gradientPosition' => array(
                 'type' => 'string',
-                'default' => ''
+                'default' => 'center center'
             ),
             'wrapGradientOverlay' => array(
                 'type' => 'number',

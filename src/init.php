@@ -514,8 +514,8 @@ function ub_include_block_attribute_css() {
                     $prefix .( $attributes['selectTab'] === 'Standart' ? ' .ub-section-block-overlay {'. PHP_EOL .
                         'opacity: '.($attributes['wrapBackgroundOverlay'] == 100 ? 1 : '0.'. $attributes['wrapBackgroundOverlay']).';' . PHP_EOL .
                         'background-color: '. $attributes['wrapBackgroundOverlayCol'].';' . PHP_EOL .
-                    '}' : ' .ub-section-block-gradient {'. PHP_EOL . 'background-image: '. $attributes['gradientType'].'-gradient('.$attributes['gradientAngle'].
-                        'deg,'.$attributes['wrapGradientOverlayCol'].' '.$attributes['wrapGradientLocation'].'%,'.
+                    '}' : ' .ub-section-block-gradient {'. PHP_EOL . 'background-image: '. $attributes['gradientType'].'-gradient('.($attributes['gradientType'] === 'radial' ? 'at ' : '').($attributes['gradientType'] === 'linear' ? $attributes['gradientAngle'] : $attributes['gradientPosition'].',').
+                            ( $attributes['gradientType'] === 'linear' ? 'deg,' : '').$attributes['wrapGradientOverlayCol'].' '.$attributes['wrapGradientLocation'].'%,'.
                         $attributes['wrapGradientSecondCol'].' '.$attributes['wrapGradientSecondLocation'].'%);' . PHP_EOL .
                             'opacity:'.($attributes['wrapGradientOverlay'] == 100 ? 1 : '0.'. $attributes['wrapGradientOverlay']).'}') . PHP_EOL .
                     $prefix . ' .ub-single-wrap{'. PHP_EOL .

@@ -479,8 +479,8 @@ function ub_include_block_attribute_css() {
                 case 'ub/post-grid':
                     $prefix = '#ub_post-grid-block_' . $attributes['blockID'];
                     break;
-                case 'ub/row-column':
-                    $prefix = '#ub-row-column-' . $attributes['blockID'];
+                case 'ub/section-column':
+                    $prefix = '#ub-section-column-' . $attributes['blockID'];
                     $blockStylesheets .= $prefix . '>.ub-single-column{' .
                         'margin:'.(isset($attributes['columnMarginTop']) ? $attributes['columnMarginTop'] : '').'px '.(isset($attributes['columnMarginRight']) ? $attributes['columnMarginRight'] : '').'px '.
                         (isset($attributes['columnMarginBottom']) ? $attributes['columnMarginBottom'] : '').'px '.(isset($attributes['columnMarginLeft']) ? $attributes['columnMarginLeft'] : '').'px;
@@ -498,7 +498,7 @@ function ub_include_block_attribute_css() {
                         (isset($attributes['columnBgAttachment']) ? 'background-attachment:'.$attributes['columnBgAttachment'].';' : '').
                     '}';
                     break;
-                case 'ub/row-block':
+                case 'ub/section':
                     $prefix = '#ub-section-' . $attributes['blockID'];
                     $blockStylesheets .= $prefix . '{' . PHP_EOL .
                         'margin: ' . $attributes['marginTopWrap'] . $attributes['selectUnits'] .' '. $attributes['marginRightWrap'] . $attributes['selectUnits'] . ' '
@@ -678,8 +678,8 @@ require_once plugin_dir_path( __FILE__ ) . 'blocks/divider/block.php';
 //Post-Grid
 require_once plugin_dir_path( __File__ ) . 'blocks/post-grid/block.php';
 
-// Row-block
-require_once plugin_dir_path( __FILE__ ) . 'blocks/row-block/block.php';
+// Section-block
+require_once plugin_dir_path( __FILE__ ) . 'blocks/section/block.php';
 
 //Styled Box
 require_once plugin_dir_path( __FILE__ ) . 'blocks/styled-box/block.php';

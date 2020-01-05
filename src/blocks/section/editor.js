@@ -27,7 +27,7 @@ const {
     BlockAlignmentToolbar,
 } = wp.blockEditor || wp.editor;
 
-export default class RowEditor extends Component {
+export default class SectionEditor extends Component {
 
     constructor() {
         super( ...arguments );
@@ -128,8 +128,8 @@ export default class RowEditor extends Component {
         console.log(this.props);
 
         const createColumn = col => {
-            createBlock('ub/row-column', {} );
-            return times( col, col => [ 'ub/row-column', {} ] );
+            createBlock('ub/section-column', {} );
+            return times( col, col => [ 'ub/section-column', {} ] );
         };
 
         const startSectionOptions = [
@@ -326,15 +326,15 @@ export default class RowEditor extends Component {
                                  <style>
                                      { columns && columns === 2 && (
                                      <Fragment>
-                                         { ( !this.state.ResizeColWidthOne ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( colWidthOne ) }%; margin-right: ${ gutter }; }` :`#block-${clientId} .ub-section-column-wrap > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthOne ) }%; margin-right: ${ gutter }; }` ) }
-                                         { ( !this.state.ResizeColWidthTwo ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( colWidthTwo ) }%; }` :`#block-${clientId} .ub-section-column-wrap  > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthTwo) }%; }` ) }
+                                         { ( !this.state.ResizeColWidthOne ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/section-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( colWidthOne ) }%; margin-right: ${ gutter }; }` :`#block-${clientId} .ub-section-column-wrap > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/section-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthOne ) }%; margin-right: ${ gutter }; }` ) }
+                                         { ( !this.state.ResizeColWidthTwo ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/section-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( colWidthTwo ) }%; }` :`#block-${clientId} .ub-section-column-wrap  > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/section-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthTwo) }%; }` ) }
                                      </Fragment>
                                      )}
                                      { columns && columns === 3 && (
                                          <Fragment>
-                                             { ( !this.state.ResizeColWidthOne ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( colWidthOne ) }%; margin-right: ${ gutter };  }` :`#block-${clientId} .ub-section-column-wrap > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthOne ) }%; margin-right: ${ gutter }; }` ) }
-                                             { ( !this.state.ResizeColWidthTwo ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( colWidthTwo ) }%; margin-right: ${ gutter };  }` :`#block-${clientId} .ub-section-column-wrap  > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthTwo ) }%; margin-right: ${ gutter }; }` ) }
-                                             { ( !this.state.ResizeColWidthThree ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(3) { flex: 0 1 ${ parseFloat( colWidthThree ) }%;  }` :`#block-${clientId} .ub-section-column-wrap  > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/row-column"]:nth-child(3) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthThree ) }%; }` ) }
+                                             { ( !this.state.ResizeColWidthOne ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/section-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( colWidthOne ) }%; margin-right: ${ gutter };  }` :`#block-${clientId} .ub-section-column-wrap > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/section-column"]:nth-child(1) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthOne ) }%; margin-right: ${ gutter }; }` ) }
+                                             { ( !this.state.ResizeColWidthTwo ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/section-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( colWidthTwo ) }%; margin-right: ${ gutter };  }` :`#block-${clientId} .ub-section-column-wrap  > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/section-column"]:nth-child(2) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthTwo ) }%; margin-right: ${ gutter }; }` ) }
+                                             { ( !this.state.ResizeColWidthThree ? `#block-${clientId} .ub-section-column-wrap [data-type="ub/section-column"]:nth-child(3) { flex: 0 1 ${ parseFloat( colWidthThree ) }%;  }` :`#block-${clientId} .ub-section-column-wrap  > .editor-inner-blocks > .editor-block-list__layout > [data-type="ub/section-column"]:nth-child(3) { flex: 0 1 ${ parseFloat( this.state.ResizeColWidthThree ) }%; }` ) }
                                          </Fragment>
                                      )}
                                  </style>
@@ -487,12 +487,12 @@ export default class RowEditor extends Component {
                             <div className="ub-section-column-wrap">
                                 <style>
                                     <Fragment>
-                                        { `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(1) { flex: 1; margin-right: ${ gutter }; justify-content: center; overflow-wrap: break-word; }` }
-                                        { `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(2) { flex: 1; margin-right: ${ gutter }; justify-content: center; overflow-wrap: break-word; }` }
-                                        { `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(3) { flex: 1; margin-right: ${ gutter }; justify-content: center; overflow-wrap: break-word; }` }
-                                        { `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(4) { flex: 1; margin-right: ${ gutter }; justify-content: center; overflow-wrap: break-word; }` }
-                                        { `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(5) { flex: 1; margin-right: ${ gutter }; justify-content: center; overflow-wrap: break-word; }` }
-                                        { `#block-${clientId} .ub-section-column-wrap [data-type="ub/row-column"]:nth-child(6) { flex: 1; justify-content: center; overflow-wrap: break-word; }` }
+                                        { `#block-${clientId} .ub-section-column-wrap [data-type="ub/section-column"]:nth-child(1) { flex: 1; margin-right: ${ gutter }; justify-content: center; overflow-wrap: break-word; }` }
+                                        { `#block-${clientId} .ub-section-column-wrap [data-type="ub/section-column"]:nth-child(2) { flex: 1; margin-right: ${ gutter }; justify-content: center; overflow-wrap: break-word; }` }
+                                        { `#block-${clientId} .ub-section-column-wrap [data-type="ub/section-column"]:nth-child(3) { flex: 1; margin-right: ${ gutter }; justify-content: center; overflow-wrap: break-word; }` }
+                                        { `#block-${clientId} .ub-section-column-wrap [data-type="ub/section-column"]:nth-child(4) { flex: 1; margin-right: ${ gutter }; justify-content: center; overflow-wrap: break-word; }` }
+                                        { `#block-${clientId} .ub-section-column-wrap [data-type="ub/section-column"]:nth-child(5) { flex: 1; margin-right: ${ gutter }; justify-content: center; overflow-wrap: break-word; }` }
+                                        { `#block-${clientId} .ub-section-column-wrap [data-type="ub/section-column"]:nth-child(6) { flex: 1; justify-content: center; overflow-wrap: break-word; }` }
                                     </Fragment>
                                 </style>
                                 <InnerBlocks

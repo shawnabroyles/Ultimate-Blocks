@@ -1,21 +1,21 @@
 <?php
 
-function ub_render_row_column($attributes, $content){
+function ub_render_section_column($attributes, $content){
     extract($attributes);
-    return '<div class="ub-single-wrap" id="ub-row-column-'.$blockID.'"><div class="ub-single-column">'
+    return '<div class="ub-single-wrap" id="ub-section-column-'.$blockID.'"><div class="ub-single-column">'
         . $content . '</div></div>';
 }
 
-function ub_register_row_column() {
+function ub_register_section_column() {
     if( function_exists( 'register_block_type' ) ) {
         require dirname(dirname(__DIR__)) . '/defaults.php';
-        register_block_type( 'ub/row-column', array(
-            'attributes' => $defaultValues['ub/row-column']['attributes'],
-            'render_callback' => 'ub_render_row_column'));
+        register_block_type( 'ub/section-column', array(
+            'attributes' => $defaultValues['ub/section-column']['attributes'],
+            'render_callback' => 'ub_render_section_column'));
     }
 }
 
-function ub_render_row_block($attributes, $content){
+function ub_render_section($attributes, $content){
     extract($attributes);
     return '<'.$wrapTag.' id="ub-section-'.$blockID.'" class="ub-section-block-wrap align'.$wrapAlignment.'">' . 
                 '<div class="ub-section-block-video-wrap">
@@ -28,14 +28,14 @@ function ub_render_row_block($attributes, $content){
             . '</'.$wrapTag.'>';
 }
 
-function ub_register_row_block() {
+function ub_register_section() {
     if( function_exists( 'register_block_type' ) ) {
         require dirname(dirname(__DIR__)) . '/defaults.php';
-        register_block_type( 'ub/row-block', array(
-            'attributes' => $defaultValues['ub/row-block']['attributes'],
-            'render_callback' => 'ub_render_row_block'));
+        register_block_type( 'ub/section', array(
+            'attributes' => $defaultValues['ub/section']['attributes'],
+            'render_callback' => 'ub_render_section'));
     }
 }
 
-add_action('init', 'ub_register_row_column');
-add_action('init', 'ub_register_row_block');
+add_action('init', 'ub_register_section_column');
+add_action('init', 'ub_register_section');

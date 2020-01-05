@@ -14,7 +14,7 @@ import attributes from "./attributes";
 
 // Import Inspector and Editor
 import Inspector from "./inspector";
-import RowEditor from "./editor";
+import SectionEditor from "./editor";
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
@@ -22,13 +22,13 @@ const { withSelect } = wp.data;
 const { Fragment } = wp.element;
 const { InnerBlocks } = wp.blockEditor || wp.editor;
 
-export default registerBlockType("ub/row-block", {
-	title: __("Row Block", "ultimate-blocks"),
-	description: __("Row Block", "ultimate-blocks"),
+export default registerBlockType("ub/section", {
+	title: __("Section", "ultimate-blocks"),
+	description: __("Section", "ultimate-blocks"),
 	icon: icons.menuIcon,
 	category: "ultimateblocks",
 	keywords: [
-		__("row-block", "ultimate-blocks"),
+		__("section", "ultimate-blocks"),
 		__("row", "ultimate-blocks"),
 		__("Ultimate Blocks", "ultimate-blocks")
 	],
@@ -55,7 +55,7 @@ export default registerBlockType("ub/row-block", {
 		return (
 			<Fragment>
 				<Inspector {...props} />
-				<RowEditor {...props} />
+				<SectionEditor {...props} />
 			</Fragment>
 		);
 	}),

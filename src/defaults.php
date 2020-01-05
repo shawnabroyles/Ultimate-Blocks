@@ -1116,7 +1116,7 @@ $defaultValues = array(
             ),
         )
     ),
-    'ub/row-block' => array(
+    'ub/section' => array(
         'attributes' => array(
             'blockID' => array(
                 'type' => 'string',
@@ -1308,7 +1308,7 @@ $defaultValues = array(
             )
         )
     ),
-    'ub/row-column' => array(
+    'ub/section-column' => array(
         'attributes' => array(
             'blockID' => array(
                 'type' => 'string',

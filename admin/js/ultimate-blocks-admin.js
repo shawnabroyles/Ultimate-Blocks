@@ -124,8 +124,8 @@
             active: true
         },
 		{
-			label: 'Row Block',
-			name: 'ub/row-block',
+			label: 'Section',
+			name: 'ub/section',
 			active: true
 		},
 	];

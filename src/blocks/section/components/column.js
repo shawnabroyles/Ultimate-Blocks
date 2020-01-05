@@ -13,9 +13,9 @@ const { InnerBlocks } = wp.blockEditor || wp.editor;
 const { registerBlockType } = wp.blocks;
 const { Fragment } = wp.element;
 
-registerBlockType("ub/row-column", {
+registerBlockType("ub/section-column", {
 	title: __("Column", "ultimate-blocks"),
-	parent: __("ub/row-block"),
+	parent: __("ub/section"),
 	icon: icons.menuIcon,
 	category: "ultimateblocks",
 	attributes: {

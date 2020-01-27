@@ -1170,6 +1170,70 @@ $defaultValues = array(
                 'type' => 'number',
                 'default' => 0,
             ),
+            'marginTopWrapTab' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'marginRightWrapTab' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'marginBottomWrapTab' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'marginLeftWrapTab' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'paddingTopWrapTab' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'paddingRightWrapTab' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'paddingBottomWrapTab' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'paddingLeftWrapTab' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'marginTopWrapMob' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'marginRightWrapMob' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'marginBottomWrapMob' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'marginLeftWrapMob' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'paddingTopWrapMob' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'paddingRightWrapMob' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'paddingBottomWrapMob' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'paddingLeftWrapMob' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
             'selectUnits' => array(
                 'type' => 'string',
                 'default' => 'px',

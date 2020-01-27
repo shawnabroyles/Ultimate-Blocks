@@ -103,6 +103,70 @@ const attributes = {
 		type: "number",
 		default: 0
 	},
+    marginTopWrapTab: {
+        type: "number",
+        default: 0
+    },
+    marginBottomWrapTab: {
+        type: "number",
+        default: 0
+    },
+    marginRightWrapTab: {
+        type: "number",
+        default: 0
+    },
+    marginLeftWrapTab: {
+        type: "number",
+        default: 0
+    },
+    paddingTopWrapTab: {
+        type: "number",
+        default: 0
+    },
+    paddingBottomWrapTab: {
+        type: "number",
+        default: 0
+    },
+    paddingRightWrapTab: {
+        type: "number",
+        default: 0
+    },
+    paddingLeftWrapTab: {
+        type: "number",
+        default: 0
+    },
+    marginTopWrapMob: {
+        type: "number",
+        default: 0
+    },
+    marginBottomWrapMob: {
+        type: "number",
+        default: 0
+    },
+    marginRightWrapMob: {
+        type: "number",
+        default: 0
+    },
+    marginLeftWrapMob: {
+        type: "number",
+        default: 0
+    },
+    paddingTopWrapMob: {
+        type: "number",
+        default: 0
+    },
+    paddingBottomWrapMob: {
+        type: "number",
+        default: 0
+    },
+    paddingRightWrapMob: {
+        type: "number",
+        default: 0
+    },
+    paddingLeftWrapMob: {
+        type: "number",
+        default: 0
+    },
 	gutter: {
 		type: "string",
 		default: "0px"

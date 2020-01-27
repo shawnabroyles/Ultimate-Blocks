@@ -50,6 +50,22 @@ export default class Inspector extends Component {
                 paddingBottomWrap,
                 paddingLeftWrap,
                 paddingRightWrap,
+                marginTopWrapTab,
+                marginLeftWrapTab,
+                marginRightWrapTab,
+                marginBottomWrapTab,
+                marginTopWrapMob,
+                marginLeftWrapMob,
+                marginRightWrapMob,
+                marginBottomWrapMob,
+                paddingTopWrapTab,
+                paddingLeftWrapTab,
+                paddingRightWrapTab,
+                paddingBottomWrapTab,
+                paddingTopWrapMob,
+                paddingLeftWrapMob,
+                paddingRightWrapMob,
+                paddingBottomWrapMob,
                 gutter,
                 wrapColor,
                 wrapBorderColor,
@@ -248,7 +264,7 @@ export default class Inspector extends Component {
                                 let tabout;
                                 if ( tab.name ) {
                                     if ( 'mobile' === tab.name ) {
-                                        tabout = <ButtonGroup aria-label={ __( 'Select Type Column' ) }>
+                                        tabout = <div><ButtonGroup aria-label={ __( 'Select Type Column' ) }>
                                             { map( mobileGrid, ( { key, icon } ) => (
                                                 <Button
                                                     key={ key }
@@ -262,8 +278,179 @@ export default class Inspector extends Component {
                                                 </Button>
                                             ) ) }
                                         </ButtonGroup>
+                                        <PanelBody
+                                            title={ __( 'Mobile Margin | Padding' ) }
+                                            initialOpen={ false }
+                                        >
+                                            <div className="ub-layout-wrap-select-units">
+                                                <style>
+                                                    { selectUnits == 'px' ? `.ub-layout-wrap-select-units .components-button-group .components-button:nth-child(1) { background: #f53d3d; border: 1px solid #f53d3d; border-radius: 5px; }` : '' }
+                                                    { selectUnits == 'vh' ? `.ub-layout-wrap-select-units .components-button-group .components-button:nth-child(2) { background: #f53d3d; border: 1px solid #f53d3d; border-radius: 5px; }` : '' }
+                                                    { selectUnits == '%' ? `.ub-layout-wrap-select-units .components-button-group .components-button:nth-child(3) { background: #f53d3d; border: 1px solid #f53d3d; border-radius: 5px; }` : '' }
+                                                    { selectUnits == 'rem' ? `.ub-layout-wrap-select-units .components-button-group .components-button:nth-child(4) { background: #f53d3d; border: 1px solid #f53d3d; border-radius: 5px; }` : '' }
+                                                    { selectUnits == 'em' ? `.ub-layout-wrap-select-units .components-button-group .components-button:nth-child(5) { background: #f53d3d; border: 1px solid #f53d3d; border-radius: 5px; }` : '' }
+                                                </style>
+                                                <p>Select units</p>
+                                                <ButtonGroup>
+                                                    <Button
+                                                        onClick = {(props) =>{
+                                                            setAttributes({
+                                                                selectUnits: 'px',
+                                                            });
+                                                        }}
+                                                    >
+                                                        px
+                                                    </Button>
+                                                    <Button
+                                                        onClick = { _ =>
+                                                            setAttributes({
+                                                                selectUnits: 'vh'
+                                                            })
+                                                        }
+                                                    >
+                                                        vh
+                                                    </Button>
+                                                    <Button
+                                                        onClick = { _ =>
+                                                            setAttributes({
+                                                                selectUnits: '%',
+                                                            })
+                                                        }
+                                                    >
+                                                        %
+                                                    </Button>
+                                                    <Button
+                                                        onClick = { _ =>
+                                                            setAttributes({
+                                                                selectUnits: 'rem',
+                                                            })
+                                                        }
+                                                    >
+                                                        rem
+                                                    </Button>
+                                                    <Button
+                                                        onClick = { _ =>
+                                                            setAttributes({
+                                                                selectUnits: 'em',
+                                                            })
+                                                        }
+                                                    >
+                                                        em
+                                                    </Button>
+                                                </ButtonGroup>
+                                            </div>
+                                            <div className="ub-layout-wrap_margin_box">
+                                                <div className="margin-st_box1">
+                                                    <RangeControl
+                                                        value={ marginTopWrapMob }
+                                                        onChange={ value =>
+                                                            setAttributes({
+                                                                marginTopWrapMob: value
+                                                            })
+                                                        }
+                                                        min={ 0 }
+                                                        max={ 100 }
+                                                    />
+                                                </div>
+                                                <div className="margin-st_box2">
+                                                    <div className="margin-col-1">
+                                                        <RangeControl
+                                                            value={ marginLeftWrapMob }
+                                                            onChange={ value =>
+                                                                setAttributes({
+                                                                    marginLeftWrapMob: value
+                                                                })
+                                                            }
+                                                            min={ 0 }
+                                                            max={ 100 }
+                                                        />
+                                                    </div>
+                                                    <div className="margin-col-2">
+                                                        <div className="padding-st_box1">
+                                                            <p>Padding</p>
+                                                            <RangeControl
+                                                                value={ paddingTopWrapMob }
+                                                                onChange={ value =>
+                                                                    setAttributes({
+                                                                        paddingTopWrapMob: value
+                                                                    })
+                                                                }
+                                                                min={ 0 }
+                                                                max={ 100 }
+                                                            />
+                                                        </div>
+                                                        <div className="padding-st_box2">
+                                                            <div className="padding-col-1">
+                                                                <RangeControl
+                                                                    value={ paddingLeftWrapMob }
+                                                                    onChange={ value =>
+                                                                        setAttributes({
+                                                                            paddingLeftWrapMob: value
+                                                                        })
+                                                                    }
+                                                                    min={ 0 }
+                                                                    max={ 100 }
+                                                                />
+                                                            </div>
+                                                            <div className="padding-col-2">
+                                                                <p>Content</p>
+                                                            </div>
+                                                            <div className="padding-col-3">
+                                                                <RangeControl
+                                                                    value={ paddingRightWrapMob }
+                                                                    onChange={ value =>
+                                                                        setAttributes({
+                                                                            paddingRightWrapMob: value
+                                                                        })
+                                                                    }
+                                                                    min={ 0 }
+                                                                    max={ 100 }
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                        <div className="padding-st_box3">
+                                                            <RangeControl
+                                                                value={ paddingBottomWrapMob }
+                                                                onChange={ value =>
+                                                                    setAttributes({
+                                                                        paddingBottomWrapMob: value
+                                                                    })
+                                                                }
+                                                                min={ 0 }
+                                                                max={ 100 }
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                    <div className="margin-col-3">
+                                                        <RangeControl
+                                                            value={ marginRightWrapMob }
+                                                            onChange={ value =>
+                                                                setAttributes({
+                                                                    marginRightWrapMob: value
+                                                                })
+                                                            }
+                                                            min={ 0 }
+                                                            max={ 100 }
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div className="margin-st_box3">
+                                                    <RangeControl
+                                                        value={ marginBottomWrapMob }
+                                                        onChange={ value =>
+                                                            setAttributes({
+                                                                marginBottomWrapMob: value
+                                                            })
+                                                        }
+                                                        min={ 0 }
+                                                        max={ 100 }
+                                                    />
+                                                </div>
+                                            </div>
+                                        </PanelBody>
+                                        </div>
                                     } else if( 'tablet' === tab.name ) {
-                                        tabout = <ButtonGroup aria-label={ __( 'Select Type Column' ) }>
+                                        tabout = <div><ButtonGroup aria-label={ __( 'Select Type Column' ) }>
                                             { map( tabletGrid, ( { key, icon } ) => (
                                                 <Button
                                                     key={ key }
@@ -277,6 +464,177 @@ export default class Inspector extends Component {
                                                 </Button>
                                             ) ) }
                                         </ButtonGroup>
+                                            <PanelBody
+                                                title={ __( 'Tablet Margin | Padding' ) }
+                                                initialOpen={ false }
+                                            >
+                                                <div className="ub-layout-wrap-select-units">
+                                                    <style>
+                                                        { selectUnits == 'px' ? `.ub-layout-wrap-select-units .components-button-group .components-button:nth-child(1) { background: #f53d3d; border: 1px solid #f53d3d; border-radius: 5px; }` : '' }
+                                                        { selectUnits == 'vh' ? `.ub-layout-wrap-select-units .components-button-group .components-button:nth-child(2) { background: #f53d3d; border: 1px solid #f53d3d; border-radius: 5px; }` : '' }
+                                                        { selectUnits == '%' ? `.ub-layout-wrap-select-units .components-button-group .components-button:nth-child(3) { background: #f53d3d; border: 1px solid #f53d3d; border-radius: 5px; }` : '' }
+                                                        { selectUnits == 'rem' ? `.ub-layout-wrap-select-units .components-button-group .components-button:nth-child(4) { background: #f53d3d; border: 1px solid #f53d3d; border-radius: 5px; }` : '' }
+                                                        { selectUnits == 'em' ? `.ub-layout-wrap-select-units .components-button-group .components-button:nth-child(5) { background: #f53d3d; border: 1px solid #f53d3d; border-radius: 5px; }` : '' }
+                                                    </style>
+                                                    <p>Select units</p>
+                                                    <ButtonGroup>
+                                                        <Button
+                                                            onClick = {(props) =>{
+                                                                setAttributes({
+                                                                    selectUnits: 'px',
+                                                                });
+                                                            }}
+                                                        >
+                                                            px
+                                                        </Button>
+                                                        <Button
+                                                            onClick = { _ =>
+                                                                setAttributes({
+                                                                    selectUnits: 'vh'
+                                                                })
+                                                            }
+                                                        >
+                                                            vh
+                                                        </Button>
+                                                        <Button
+                                                            onClick = { _ =>
+                                                                setAttributes({
+                                                                    selectUnits: '%',
+                                                                })
+                                                            }
+                                                        >
+                                                            %
+                                                        </Button>
+                                                        <Button
+                                                            onClick = { _ =>
+                                                                setAttributes({
+                                                                    selectUnits: 'rem',
+                                                                })
+                                                            }
+                                                        >
+                                                            rem
+                                                        </Button>
+                                                        <Button
+                                                            onClick = { _ =>
+                                                                setAttributes({
+                                                                    selectUnits: 'em',
+                                                                })
+                                                            }
+                                                        >
+                                                            em
+                                                        </Button>
+                                                    </ButtonGroup>
+                                                </div>
+                                                <div className="ub-layout-wrap_margin_box">
+                                                    <div className="margin-st_box1">
+                                                        <RangeControl
+                                                            value={ marginTopWrapTab }
+                                                            onChange={ value =>
+                                                                setAttributes({
+                                                                    marginTopWrapTab: value
+                                                                })
+                                                            }
+                                                            min={ 0 }
+                                                            max={ 100 }
+                                                        />
+                                                    </div>
+                                                    <div className="margin-st_box2">
+                                                        <div className="margin-col-1">
+                                                            <RangeControl
+                                                                value={ marginLeftWrapTab }
+                                                                onChange={ value =>
+                                                                    setAttributes({
+                                                                        marginLeftWrapTab: value
+                                                                    })
+                                                                }
+                                                                min={ 0 }
+                                                                max={ 100 }
+                                                            />
+                                                        </div>
+                                                        <div className="margin-col-2">
+                                                            <div className="padding-st_box1">
+                                                                <p>Padding</p>
+                                                                <RangeControl
+                                                                    value={ paddingTopWrapTab }
+                                                                    onChange={ value =>
+                                                                        setAttributes({
+                                                                            paddingTopWrapTab: value
+                                                                        })
+                                                                    }
+                                                                    min={ 0 }
+                                                                    max={ 100 }
+                                                                />
+                                                            </div>
+                                                            <div className="padding-st_box2">
+                                                                <div className="padding-col-1">
+                                                                    <RangeControl
+                                                                        value={ paddingLeftWrapTab }
+                                                                        onChange={ value =>
+                                                                            setAttributes({
+                                                                                paddingLeftWrapTab: value
+                                                                            })
+                                                                        }
+                                                                        min={ 0 }
+                                                                        max={ 100 }
+                                                                    />
+                                                                </div>
+                                                                <div className="padding-col-2">
+                                                                    <p>Content</p>
+                                                                </div>
+                                                                <div className="padding-col-3">
+                                                                    <RangeControl
+                                                                        value={ paddingRightWrapTab }
+                                                                        onChange={ value =>
+                                                                            setAttributes({
+                                                                                paddingRightWrapTab: value
+                                                                            })
+                                                                        }
+                                                                        min={ 0 }
+                                                                        max={ 100 }
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                            <div className="padding-st_box3">
+                                                                <RangeControl
+                                                                    value={ paddingBottomWrapTab }
+                                                                    onChange={ value =>
+                                                                        setAttributes({
+                                                                            paddingBottomWrapTab: value
+                                                                        })
+                                                                    }
+                                                                    min={ 0 }
+                                                                    max={ 100 }
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                        <div className="margin-col-3">
+                                                            <RangeControl
+                                                                value={ marginRightWrapTab }
+                                                                onChange={ value =>
+                                                                    setAttributes({
+                                                                        marginRightWrapTab: value
+                                                                    })
+                                                                }
+                                                                min={ 0 }
+                                                                max={ 100 }
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                    <div className="margin-st_box3">
+                                                        <RangeControl
+                                                            value={ marginBottomWrapTab }
+                                                            onChange={ value =>
+                                                                setAttributes({
+                                                                    marginBottomWrapTab: value
+                                                                })
+                                                            }
+                                                            min={ 0 }
+                                                            max={ 100 }
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </PanelBody>
+                                        </div>
                                     }
                                 }
                                 return <div>{ tabout }</div>;

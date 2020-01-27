@@ -74,7 +74,8 @@
 
 // Tab grid
 @media (max-width: 1024px) and (min-width: 768px) {
-	.ub-tab-collapse-row {
+	.ub-tab-collapse-row,
+	.ub-tab-collapse-four-row{
 		flex-direction: column;
 	}
 	.ub-tab-last-row {
@@ -106,18 +107,17 @@
 			flex: 0 0 50% !important;
 		}
 	}
-	.ub-tab-collapse-row,
-	.ub-tab-last-row,
-	.ub-tab-first-row,
-	.ub-tab-two-grid {
-		.ub-single-wrap {
-			margin-right: 0px !important;
-			margin-left: 0px !important;
+	.ub-tab-collapse-four-row {
+		:nth-child(1),
+		:nth-child(2),
+		:nth-child(3),
+		:nth-child(4) {
+			flex: 0 0 50% !important;
 		}
 	}
 	.ub-tab-last-row,
 	.ub-tab-first-row,
-	.ub-tab-two-grid {
+	.ub-tab-two-grid{
 		flex-direction: row;
 		flex-wrap: wrap;
 	}
@@ -126,7 +126,8 @@
 // Mobile grid
 
 @media (max-width: 767px) {
-	.ub-mobile-collapse-row {
+	.ub-mobile-collapse-row,
+	.ub-mobile-collapse-four-row{
 		flex-direction: column;
 	}
 	.ub-mobile-last-row {
@@ -157,18 +158,17 @@
 			flex: 0 0 50% !important;
 		}
 	}
-	.ub-mobile-collapse-row,
-	.ub-mobile-last-row,
-	.ub-mobile-first-row,
-	.ub-mobile-two-grid {
-		.ub-single-wrap {
-			margin-right: 0px !important;
-			margin-left: 0px !important;
+	.ub-mobile-collapse-four-row {
+		:nth-child(1),
+		:nth-child(2),
+		:nth-child(3),
+		:nth-child(4) {
+			flex: 0 0 50% !important;
 		}
 	}
 	.ub-mobile-last-row,
 	.ub-mobile-first-row,
-	.ub-mobile-two-grid {
+	.ub-mobile-two-grid{
 		flex-direction: row;
 		flex-wrap: wrap;
 	}

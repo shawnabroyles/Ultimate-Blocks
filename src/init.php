@@ -557,6 +557,126 @@ function ub_include_block_attribute_css() {
                             'flex: 0 1 ' . $attributes['colWidthSix'] . ';' .
                         '}';
                     }
+                    if(isset($attributes['tabletSizeGrid'])){
+                        $blockStylesheets .= '@media (max-width: 1024px) and (min-width: 768px) {
+                           '. $prefix .'>.ub-tab-first-row>.ub-single-wrap:nth-child(1){
+                               padding-bottom: '. $attributes['gutter'] .';'.'
+                               margin: 0px;
+                           }'. $prefix .'>.ub-tab-first-row>.ub-single-wrap:nth-child(2){
+                               padding-right:'. (((int)trim($attributes['gutter'], "px"))/2) . 'px;
+                               margin: 0px;
+                           }'. $prefix .'>.ub-tab-first-row>.ub-single-wrap:nth-child(3){
+                               padding-left:'. (((int)trim($attributes['gutter'], "px"))/2) . 'px;
+                               margin: 0px;
+                           }'. $prefix .'>.ub-tab-last-row>.ub-single-wrap:nth-child(1){
+                               padding-right:'. (((int)trim($attributes['gutter'], "px"))/2) . 'px;
+                               margin: 0px;
+                           }'. $prefix .'>.ub-tab-last-row>.ub-single-wrap:nth-child(2){
+                               padding-left:'. (((int)trim($attributes['gutter'], "px"))/2) . 'px;
+                               margin: 0px;
+                           }'. $prefix .'>.ub-tab-last-row>.ub-single-wrap:nth-child(3){
+                               padding-top: '. $attributes['gutter'] .';'.'
+                               margin: 0px;
+                           }'. $prefix .'>.ub-tab-collapse-row>.ub-single-wrap:nth-child(1){
+                               padding-bottom: '. $attributes['gutter'] .';'.'
+                               margin: 0px;
+                           }'. $prefix .'>.ub-tab-collapse-row>.ub-single-wrap:nth-child(2){
+                               padding-bottom: '. $attributes['gutter'] .';'.'
+                               margin: 0px;
+                           }'. $prefix .'>.ub-tab-collapse-row>.ub-single-wrap:nth-child(3){
+                               padding-bottom: 0px;
+                               margin: 0px;
+                           }'. $prefix .'>.ub-tab-two-grid>.ub-single-wrap:nth-child(1){
+                               padding-right:'. (((int)trim($attributes['gutter'], "px"))/2) . 'px;
+                               padding-bottom:'. (((int)trim($attributes['gutter'], "px"))/2) . 'px;
+                               margin: 0px;
+                           }'. $prefix .'>.ub-tab-two-grid>.ub-single-wrap:nth-child(2){
+                               padding-left:'. (((int)trim($attributes['gutter'], "px"))/2) . 'px;
+                               padding-bottom:'. (((int)trim($attributes['gutter'], "px"))/2) . 'px;
+                               margin: 0px;
+                           }'. $prefix .'>.ub-tab-two-grid>.ub-single-wrap:nth-child(3){
+                               padding-right:'. (((int)trim($attributes['gutter'], "px"))/2) . 'px;
+                               padding-top:'. (((int)trim($attributes['gutter'], "px"))/2) . 'px;
+                               margin: 0px;
+                           }'. $prefix .'>.ub-tab-two-grid>.ub-single-wrap:nth-child(4){
+                               padding-left:'. (((int)trim($attributes['gutter'], "px"))/2) . 'px;
+                               padding-top:'. (((int)trim($attributes['gutter'], "px"))/2) . 'px;
+                               margin: 0px;
+                           }'. $prefix .'>.ub-tab-collapse-four-row>.ub-single-wrap:nth-child(1){                             
+                               padding-bottom:'. $attributes['gutter'] .';'.'
+                               margin: 0px;
+                           }'. $prefix .'>.ub-tab-collapse-four-row>.ub-single-wrap:nth-child(2){
+                               padding-bottom:'. $attributes['gutter'] .';'.'
+                               margin: 0px;
+                           }'. $prefix .'>.ub-tab-collapse-four-row>.ub-single-wrap:nth-child(3){
+                               padding-bottom:'. $attributes['gutter'] .';'.'
+                               margin: 0px;
+                           }'. $prefix .'>.ub-tab-collapse-four-row>.ub-single-wrap:nth-child(4){
+                               padding-bottom: 0px;
+                               margin: 0px;
+                           }
+                        }';
+                    }
+                    if(isset($attributes['mobileSizeGrid'])){
+                        $blockStylesheets .= '@media (max-width: 767px) {
+                           '. $prefix .'>.ub-mobile-first-row>.ub-single-wrap:nth-child(1){
+                               padding-bottom: '. $attributes['gutter'] .';'.'
+                               margin: 0px;
+                           }'. $prefix .'>.ub-mobile-first-row>.ub-single-wrap:nth-child(2){
+                               padding-right:'. (((int)trim($attributes['gutter'], "px"))/2) . 'px;
+                               margin: 0px;
+                           }'. $prefix .'>.ub-mobile-first-row>.ub-single-wrap:nth-child(3){
+                               padding-left:'. (((int)trim($attributes['gutter'], "px"))/2) . 'px;
+                               margin: 0px;
+                           }'. $prefix .'>.ub-mobile-last-row>.ub-single-wrap:nth-child(1){
+                               padding-right:'. (((int)trim($attributes['gutter'], "px"))/2) . 'px;
+                               margin: 0px;
+                           }'. $prefix .'>.ub-mobile-last-row>.ub-single-wrap:nth-child(2){
+                               padding-left:'. (((int)trim($attributes['gutter'], "px"))/2) . 'px;
+                               margin: 0px;
+                           }'. $prefix .'>.ub-mobile-last-row>.ub-single-wrap:nth-child(3){
+                               padding-top: '. $attributes['gutter'] .';'.'
+                               margin: 0px;
+                           }'. $prefix .'>.ub-mobile-collapse-row>.ub-single-wrap:nth-child(1){
+                               padding-bottom: '. $attributes['gutter'] .';'.'
+                               margin: 0px;
+                           }'. $prefix .'>.ub-mobile-collapse-row>.ub-single-wrap:nth-child(2){
+                               padding-bottom: '. $attributes['gutter'] .';'.'
+                               margin: 0px;
+                           }'. $prefix .'>.ub-mobile-collapse-row>.ub-single-wrap:nth-child(3){
+                               padding-bottom: 0px;
+                               margin: 0px;
+                           }'. $prefix .'>.ub-mobile-two-grid>.ub-single-wrap:nth-child(1){
+                               padding-right:'. (((int)trim($attributes['gutter'], "px"))/2) . 'px;
+                               padding-bottom:'. (((int)trim($attributes['gutter'], "px"))/2) . 'px;
+                               margin: 0px;
+                           }'. $prefix .'>.ub-mobile-two-grid>.ub-single-wrap:nth-child(2){
+                               padding-left:'. (((int)trim($attributes['gutter'], "px"))/2) . 'px;
+                               padding-bottom:'. (((int)trim($attributes['gutter'], "px"))/2) . 'px;
+                               margin: 0px;
+                           }'. $prefix .'>.ub-mobile-two-grid>.ub-single-wrap:nth-child(3){
+                               padding-right:'. (((int)trim($attributes['gutter'], "px"))/2) . 'px;
+                               padding-top:'. (((int)trim($attributes['gutter'], "px"))/2) . 'px;
+                               margin: 0px;
+                           }'. $prefix .'>.ub-mobile-two-grid>.ub-single-wrap:nth-child(4){
+                               padding-left:'. (((int)trim($attributes['gutter'], "px"))/2) . 'px;
+                               padding-top:'. (((int)trim($attributes['gutter'], "px"))/2) . 'px;
+                               margin: 0px;
+                           }'. $prefix .'>.ub-mobile-collapse-four-row>.ub-single-wrap:nth-child(1){                             
+                               padding-bottom:'. $attributes['gutter'] .';'.'
+                               margin: 0px;
+                           }'. $prefix .'>.ub-mobile-collapse-four-row>.ub-single-wrap:nth-child(2){
+                               padding-bottom:'. $attributes['gutter'] .';'.'
+                               margin: 0px;
+                           }'. $prefix .'>.ub-mobile-collapse-four-row>.ub-single-wrap:nth-child(3){
+                               padding-bottom:'. $attributes['gutter'] .';'.'
+                               margin: 0px;
+                           }'. $prefix .'>.ub-mobile-collapse-four-row>.ub-single-wrap:nth-child(4){
+                               padding-bottom: 0px;
+                               margin: 0px;
+                           }
+                        }';
+                    }
                     break;
             }
         }

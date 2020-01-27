@@ -119,13 +119,13 @@ export default class Inspector extends Component {
         const mobileGridFour = [
             { key: '-equal-four', icon: icons.fourcol },
             { key: '-two-grid', icon: icons.grid },
-            { key: '-collapse-row', icon: icons.collapserowfour },
+            { key: '-collapse-four-row', icon: icons.collapserowfour },
         ];
 
         const tabletGridFour = [
             { key: '-equal-four', icon: icons.fourcol },
             { key: '-two-grid', icon: icons.grid },
-            { key: '-collapse-row', icon: icons.collapserowfour },
+            { key: '-collapse-four-row', icon: icons.collapserowfour },
         ];
 
         const mobileGridFive = [

@@ -1238,6 +1238,14 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => 'px',
             ),
+            'selectUnitsTab' => array(
+                'type' => 'string',
+                'default' => 'px',
+            ),
+            'selectUnitsMob' => array(
+                'type' => 'string',
+                'default' => 'px',
+            ),
             'gutter' => array(
                 'type' => 'string',
                 'default' => 'none',

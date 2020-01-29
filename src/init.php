@@ -618,10 +618,10 @@ function ub_include_block_attribute_css() {
                         }';
                         $blockStylesheets .= '@media (max-width: 1024px) and (min-width: 768px) {
                         '. $prefix .'{' .
-                            'margin: ' . $attributes['marginTopWrapTab'] . $attributes['selectUnits'] .' '. $attributes['marginRightWrapTab'] . $attributes['selectUnits'] . ' '
-                            . $attributes['marginBottomWrapTab'] . $attributes['selectUnits'] .' '. $attributes['marginLeftWrapTab'] . $attributes['selectUnits'] . ';' .
-                            'padding: ' . $attributes['paddingTopWrapTab'] .$attributes['selectUnits'] .' '. $attributes['paddingRightWrapTab']. $attributes['selectUnits'] . ' '
-                            . $attributes['paddingBottomWrapTab'] . $attributes['selectUnits'] .' '. $attributes['paddingRightWrapTab']. $attributes['selectUnits'] . ';' .
+                            'margin: ' . $attributes['marginTopWrapTab'] . $attributes['selectUnitsTab'] .' '. $attributes['marginRightWrapTab'] . $attributes['selectUnitsTab'] . ' '
+                            . $attributes['marginBottomWrapTab'] . $attributes['selectUnitsTab'] .' '. $attributes['marginLeftWrapTab'] . $attributes['selectUnitsTab'] . ';' .
+                            'padding: ' . $attributes['paddingTopWrapTab'] .$attributes['selectUnitsTab'] .' '. $attributes['paddingRightWrapTab']. $attributes['selectUnitsTab'] . ' '
+                            . $attributes['paddingBottomWrapTab'] . $attributes['selectUnitsTab'] .' '. $attributes['paddingRightWrapTab']. $attributes['selectUnitsTab'] . ';' .
                             '}}';
                     }
                     if(isset($attributes['mobileSizeGrid'])){
@@ -685,10 +685,10 @@ function ub_include_block_attribute_css() {
                         }';
                         $blockStylesheets .= '@media (max-width: 767px) {
                         '. $prefix .'{' .
-                            'margin: ' . $attributes['marginTopWrapMob'] . $attributes['selectUnits'] .' '. $attributes['marginRightWrapMob'] . $attributes['selectUnits'] . ' '
-                            . $attributes['marginBottomWrapMob'] . $attributes['selectUnits'] .' '. $attributes['marginLeftWrapMob'] . $attributes['selectUnits'] . ';' .
-                            'padding: ' . $attributes['paddingTopWrapMob'] .$attributes['selectUnits'] .' '. $attributes['paddingRightWrapMob']. $attributes['selectUnits'] . ' '
-                            . $attributes['paddingBottomWrapMob'] . $attributes['selectUnits'] .' '. $attributes['paddingRightWrapMob']. $attributes['selectUnits'] . ';' .
+                            'margin: ' . $attributes['marginTopWrapMob'] . $attributes['selectUnitsMob'] .' '. $attributes['marginRightWrapMob'] . $attributes['selectUnitsMob'] . ' '
+                            . $attributes['marginBottomWrapMob'] . $attributes['selectUnitsMob'] .' '. $attributes['marginLeftWrapMob'] . $attributes['selectUnitsMob'] . ';' .
+                            'padding: ' . $attributes['paddingTopWrapMob'] .$attributes['selectUnitsMob'] .' '. $attributes['paddingRightWrapMob']. $attributes['selectUnitsMob'] . ' '
+                            . $attributes['paddingBottomWrapMob'] . $attributes['selectUnitsMob'] .' '. $attributes['paddingRightWrapMob']. $attributes['selectUnitsMob'] . ';' .
                             '}}';
                     }
                     break;

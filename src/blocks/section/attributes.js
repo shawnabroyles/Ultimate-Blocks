@@ -71,6 +71,14 @@ const attributes = {
 		type: "string",
 		default: "px"
 	},
+    selectUnitsTab: {
+        type: "string",
+        default: "px"
+    },
+    selectUnitsMob: {
+        type: "string",
+        default: "px"
+    },
 	marginTopWrap: {
 		type: "number",
 		default: 0

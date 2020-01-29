@@ -196,7 +196,14 @@
 }
 
 //Inspector wrap style
-.ub-layout-wrap-select-units {
+.selectUnitsTab,
+.selectUnitsMob{
+	margin-top: 1% !important;
+}
+.ub-layout-wrap-select-units,
+.ub-layout-wrap-select-units-tab,
+.ub-layout-wrap-select-units-mob,
+{
 	display: flex;
 	margin-top: 4%;
 	p {

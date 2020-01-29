@@ -42,6 +42,8 @@ export default class Inspector extends Component {
                 mobileSizeGrid,
                 tabletSizeGrid,
                 selectUnits,
+                selectUnitsTab,
+                selectUnitsMob,
                 marginTopWrap,
                 marginBottomWrap,
                 marginLeftWrap,
@@ -282,20 +284,20 @@ export default class Inspector extends Component {
                                             title={ __( 'Mobile Margin | Padding' ) }
                                             initialOpen={ false }
                                         >
-                                            <div className="ub-layout-wrap-select-units">
+                                            <div className="ub-layout-wrap-select-units-mob">
                                                 <style>
-                                                    { selectUnits == 'px' ? `.ub-layout-wrap-select-units .components-button-group .components-button:nth-child(1) { background: #f53d3d; border: 1px solid #f53d3d; border-radius: 5px; }` : '' }
-                                                    { selectUnits == 'vh' ? `.ub-layout-wrap-select-units .components-button-group .components-button:nth-child(2) { background: #f53d3d; border: 1px solid #f53d3d; border-radius: 5px; }` : '' }
-                                                    { selectUnits == '%' ? `.ub-layout-wrap-select-units .components-button-group .components-button:nth-child(3) { background: #f53d3d; border: 1px solid #f53d3d; border-radius: 5px; }` : '' }
-                                                    { selectUnits == 'rem' ? `.ub-layout-wrap-select-units .components-button-group .components-button:nth-child(4) { background: #f53d3d; border: 1px solid #f53d3d; border-radius: 5px; }` : '' }
-                                                    { selectUnits == 'em' ? `.ub-layout-wrap-select-units .components-button-group .components-button:nth-child(5) { background: #f53d3d; border: 1px solid #f53d3d; border-radius: 5px; }` : '' }
+                                                    { selectUnitsMob == 'px' ? `.ub-layout-wrap-select-units-mob .components-button-group .components-button:nth-child(1) { background: #f53d3d; border: 1px solid #f53d3d; border-radius: 5px; }` : '' }
+                                                    { selectUnitsMob == 'vh' ? `.ub-layout-wrap-select-units-mob .components-button-group .components-button:nth-child(2) { background: #f53d3d; border: 1px solid #f53d3d; border-radius: 5px; }` : '' }
+                                                    { selectUnitsMob == '%' ? `.ub-layout-wrap-select-units-mob .components-button-group .components-button:nth-child(3) { background: #f53d3d; border: 1px solid #f53d3d; border-radius: 5px; }` : '' }
+                                                    { selectUnitsMob == 'rem' ? `.ub-layout-wrap-select-units-mob .components-button-group .components-button:nth-child(4) { background: #f53d3d; border: 1px solid #f53d3d; border-radius: 5px; }` : '' }
+                                                    { selectUnitsMob == 'em' ? `.ub-layout-wrap-select-units-mob .components-button-group .components-button:nth-child(5) { background: #f53d3d; border: 1px solid #f53d3d; border-radius: 5px; }` : '' }
                                                 </style>
-                                                <p>Select units</p>
+                                                <p className="selectUnitsMob">Select units</p>
                                                 <ButtonGroup>
                                                     <Button
                                                         onClick = {(props) =>{
                                                             setAttributes({
-                                                                selectUnits: 'px',
+                                                                selectUnitsMob: 'px',
                                                             });
                                                         }}
                                                     >
@@ -304,7 +306,7 @@ export default class Inspector extends Component {
                                                     <Button
                                                         onClick = { _ =>
                                                             setAttributes({
-                                                                selectUnits: 'vh'
+                                                                selectUnitsMob: 'vh',
                                                             })
                                                         }
                                                     >
@@ -313,7 +315,7 @@ export default class Inspector extends Component {
                                                     <Button
                                                         onClick = { _ =>
                                                             setAttributes({
-                                                                selectUnits: '%',
+                                                                selectUnitsMob: '%',
                                                             })
                                                         }
                                                     >
@@ -322,7 +324,7 @@ export default class Inspector extends Component {
                                                     <Button
                                                         onClick = { _ =>
                                                             setAttributes({
-                                                                selectUnits: 'rem',
+                                                                selectUnitsMob: 'rem',
                                                             })
                                                         }
                                                     >
@@ -331,7 +333,7 @@ export default class Inspector extends Component {
                                                     <Button
                                                         onClick = { _ =>
                                                             setAttributes({
-                                                                selectUnits: 'em',
+                                                                selectUnitsMob: 'em',
                                                             })
                                                         }
                                                     >
@@ -468,20 +470,20 @@ export default class Inspector extends Component {
                                                 title={ __( 'Tablet Margin | Padding' ) }
                                                 initialOpen={ false }
                                             >
-                                                <div className="ub-layout-wrap-select-units">
+                                                <div className="ub-layout-wrap-select-units-tab">
                                                     <style>
-                                                        { selectUnits == 'px' ? `.ub-layout-wrap-select-units .components-button-group .components-button:nth-child(1) { background: #f53d3d; border: 1px solid #f53d3d; border-radius: 5px; }` : '' }
-                                                        { selectUnits == 'vh' ? `.ub-layout-wrap-select-units .components-button-group .components-button:nth-child(2) { background: #f53d3d; border: 1px solid #f53d3d; border-radius: 5px; }` : '' }
-                                                        { selectUnits == '%' ? `.ub-layout-wrap-select-units .components-button-group .components-button:nth-child(3) { background: #f53d3d; border: 1px solid #f53d3d; border-radius: 5px; }` : '' }
-                                                        { selectUnits == 'rem' ? `.ub-layout-wrap-select-units .components-button-group .components-button:nth-child(4) { background: #f53d3d; border: 1px solid #f53d3d; border-radius: 5px; }` : '' }
-                                                        { selectUnits == 'em' ? `.ub-layout-wrap-select-units .components-button-group .components-button:nth-child(5) { background: #f53d3d; border: 1px solid #f53d3d; border-radius: 5px; }` : '' }
+                                                        { selectUnitsTab == 'px' ? `.ub-layout-wrap-select-units-tab .components-button-group .components-button:nth-child(1) { background: #f53d3d; border: 1px solid #f53d3d; border-radius: 5px; }` : '' }
+                                                        { selectUnitsTab == 'vh' ? `.ub-layout-wrap-select-units-tab .components-button-group .components-button:nth-child(2) { background: #f53d3d; border: 1px solid #f53d3d; border-radius: 5px; }` : '' }
+                                                        { selectUnitsTab == '%' ? `.ub-layout-wrap-select-units-tab .components-button-group .components-button:nth-child(3) { background: #f53d3d; border: 1px solid #f53d3d; border-radius: 5px; }` : '' }
+                                                        { selectUnitsTab == 'rem' ? `.ub-layout-wrap-select-units-tab .components-button-group .components-button:nth-child(4) { background: #f53d3d; border: 1px solid #f53d3d; border-radius: 5px; }` : '' }
+                                                        { selectUnitsTab == 'em' ? `.ub-layout-wrap-select-units-tab .components-button-group .components-button:nth-child(5) { background: #f53d3d; border: 1px solid #f53d3d; border-radius: 5px; }` : '' }
                                                     </style>
-                                                    <p>Select units</p>
+                                                    <p className="selectUnitsTab">Select units</p>
                                                     <ButtonGroup>
                                                         <Button
                                                             onClick = {(props) =>{
                                                                 setAttributes({
-                                                                    selectUnits: 'px',
+                                                                    selectUnitsTab: 'px',
                                                                 });
                                                             }}
                                                         >
@@ -490,7 +492,7 @@ export default class Inspector extends Component {
                                                         <Button
                                                             onClick = { _ =>
                                                                 setAttributes({
-                                                                    selectUnits: 'vh'
+                                                                    selectUnitsTab: 'vh'
                                                                 })
                                                             }
                                                         >
@@ -499,7 +501,7 @@ export default class Inspector extends Component {
                                                         <Button
                                                             onClick = { _ =>
                                                                 setAttributes({
-                                                                    selectUnits: '%',
+                                                                    selectUnitsTab: '%',
                                                                 })
                                                             }
                                                         >
@@ -508,7 +510,7 @@ export default class Inspector extends Component {
                                                         <Button
                                                             onClick = { _ =>
                                                                 setAttributes({
-                                                                    selectUnits: 'rem',
+                                                                    selectUnitsTab: 'rem',
                                                                 })
                                                             }
                                                         >
@@ -517,7 +519,7 @@ export default class Inspector extends Component {
                                                         <Button
                                                             onClick = { _ =>
                                                                 setAttributes({
-                                                                    selectUnits: 'em',
+                                                                    selectUnitsTab: 'em',
                                                                 })
                                                             }
                                                         >

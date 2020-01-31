@@ -622,7 +622,10 @@ function ub_include_block_attribute_css() {
                             . $attributes['marginBottomWrapTab'] . $attributes['selectUnitsTab'] .' '. $attributes['marginLeftWrapTab'] . $attributes['selectUnitsTab'] . ';' .
                             'padding: ' . $attributes['paddingTopWrapTab'] .$attributes['selectUnitsTab'] .' '. $attributes['paddingRightWrapTab']. $attributes['selectUnitsTab'] . ' '
                             . $attributes['paddingBottomWrapTab'] . $attributes['selectUnitsTab'] .' '. $attributes['paddingRightWrapTab']. $attributes['selectUnitsTab'] . ';' .
-                            '}}';
+                            'background-image: url(' . $attributes['imgURLtab'] .')' . ';' . 'background-size:' . $attributes['wrapBackgroundSize'] . ';' .
+                            'background-position:' . $attributes['wrapBackgroundPosition'] . ';' . 'background-repeat:' . $attributes['wrapBackgroundRepeat'] . ';' .
+                            'background-attachment:' . $attributes['wrapBackgroundAttachment']. ';' . 'color:' . $attributes['textColor'] . ';' .
+                        '}}';
                     }
                     if(isset($attributes['mobileSizeGrid'])){
                         $blockStylesheets .= '@media (max-width: 767px) {

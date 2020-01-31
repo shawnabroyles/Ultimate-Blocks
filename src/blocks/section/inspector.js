@@ -25,6 +25,7 @@ const {
     RangeControl,
     ToggleControl,
     SelectControl,
+    PanelRow,
 } = wp.components;
 
 export default class Inspector extends Component {
@@ -68,8 +69,12 @@ export default class Inspector extends Component {
                 paddingLeftWrapMob,
                 paddingRightWrapMob,
                 paddingBottomWrapMob,
+                set_tab_bg,
+                set_mob_bg,
                 gutter,
                 wrapColor,
+                wrapColorTab,
+                wrapColorMob,
                 wrapBorderColor,
                 wrapBorderStyle,
                 wrapBorderSize,
@@ -81,6 +86,12 @@ export default class Inspector extends Component {
                 imgID,
                 imgURL,
                 imgAlt,
+                imgIDtab,
+                imgURLtab,
+                imgAltTab,
+                imgIDmob,
+                imgURLmob,
+                imgAltMob,
                 videoID,
                 videoURL,
                 videoMuted,
@@ -284,7 +295,7 @@ export default class Inspector extends Component {
                                             title={ __( 'Mobile Margin | Padding' ) }
                                             initialOpen={ false }
                                         >
-                                            <div className="ub-layout-wrap-select-units-mob">
+                                            <div className="ub-layout-wrap-select-units-mob ">
                                                 <style>
                                                     { selectUnitsMob == 'px' ? `.ub-layout-wrap-select-units-mob .components-button-group .components-button:nth-child(1) { background: #f53d3d; border: 1px solid #f53d3d; border-radius: 5px; }` : '' }
                                                     { selectUnitsMob == 'vh' ? `.ub-layout-wrap-select-units-mob .components-button-group .components-button:nth-child(2) { background: #f53d3d; border: 1px solid #f53d3d; border-radius: 5px; }` : '' }
@@ -449,6 +460,119 @@ export default class Inspector extends Component {
                                                     />
                                                 </div>
                                             </div>
+                                        </PanelBody>
+                                        <PanelBody
+                                            title={ __( 'Mobile Background' ) }
+                                            initialOpen={ false }
+                                        >
+                                            <PanelRow
+                                                className="ub-set-bg-mob"
+                                            >
+                                                <ToggleControl
+                                                    className="ub-set-toggle-control"
+                                                    label={__('Set custom background for mobile?')}
+                                                    checked={ set_mob_bg }
+                                                    onChange={ set_mob_bg => {setAttributes({ set_mob_bg })}}
+                                                />
+                                                { set_mob_bg && (
+                                                    <Fragment>
+                                                        <p>Background Color</p>
+                                                        <ColorPalette
+                                                            value={wrapColorMob}
+                                                            onChange={ value =>
+                                                                setAttributes({ wrapColorTab: value })
+                                                            }
+                                                            allowReset
+                                                        />
+                                                        <p>Background Image</p>
+                                                        <div className="ub-image-inspector-panel">
+                                                            { imgURLmob ? (
+                                                                <Fragment>
+                                                                    <img src={imgURLmob} id={imgIDmob} alt={imgAltMob}/>
+                                                                    <Button
+                                                                        className="components-button button button-medium"
+                                                                        onClick = {_ =>
+                                                                            setAttributes({
+                                                                                imgURLmob: '',
+                                                                                imgIDmob: '',
+                                                                                imgAltMob: '',
+                                                                            })
+                                                                        }
+                                                                    >
+                                                                        Delete Image
+                                                                    </Button>
+                                                                    <SelectControl
+                                                                        label={ __( 'Background Image Size' ) }
+                                                                        value={ wrapBackgroundSize }
+                                                                        options={ [
+                                                                            { value: 'cover', label: __( 'Cover' ) },
+                                                                            { value: 'contain', label: __( 'Contain' ) },
+                                                                            { value: 'auto', label: __( 'Auto' ) },
+                                                                        ] }
+                                                                        onChange={ value => setAttributes( { wrapBackgroundSize: value } ) }
+                                                                    />
+                                                                    <SelectControl
+                                                                        label={ __( 'Background Image Position' ) }
+                                                                        value={ wrapBackgroundPosition }
+                                                                        options={ [
+                                                                            { value: 'center top', label: __( 'Center Top' ) },
+                                                                            { value: 'center center', label: __( 'Center Center' ) },
+                                                                            { value: 'center bottom', label: __( 'Center Bottom' ) },
+                                                                            { value: 'left top', label: __( 'Left Top' ) },
+                                                                            { value: 'left center', label: __( 'Left Center' ) },
+                                                                            { value: 'left bottom', label: __( 'Left Bottom' ) },
+                                                                            { value: 'right top', label: __( 'Right Top' ) },
+                                                                            { value: 'right center', label: __( 'Right Center' ) },
+                                                                            { value: 'right bottom', label: __( 'Right Bottom' ) },
+                                                                        ] }
+                                                                        onChange={ value => setAttributes( { wrapBackgroundPosition: value } ) }
+                                                                    />
+                                                                    <SelectControl
+                                                                        label={ __( 'Background Image Repeat' ) }
+                                                                        value={ wrapBackgroundRepeat }
+                                                                        options={ [
+                                                                            { value: 'no-repeat', label: __( 'No Repeat' ) },
+                                                                            { value: 'repeat', label: __( 'Repeat' ) },
+                                                                            { value: 'repeat-x', label: __( 'Repeat-x' ) },
+                                                                            { value: 'repeat-y', label: __( 'Repeat-y' ) },
+                                                                        ] }
+                                                                        onChange={ value => setAttributes( { wrapBackgroundRepeat: value } ) }
+                                                                    />
+                                                                    <SelectControl
+                                                                        label={ __( 'Background Image Attachment' ) }
+                                                                        value={ wrapBackgroundAttachment }
+                                                                        options={ [
+                                                                            { value: 'scroll', label: __( 'Scroll' ) },
+                                                                            { value: 'fixed', label: __( 'Fixed' ) },
+                                                                        ] }
+                                                                        onChange={ value => setAttributes( { wrapBackgroundAttachment: value } ) }
+                                                                    />
+                                                                </Fragment>
+                                                            ) : (
+                                                                <MediaUpload
+                                                                    onSelect={img =>
+                                                                        setAttributes({
+                                                                            imgIDmob: img.id,
+                                                                            imgURLmob: img.url,
+                                                                            imgAltMob: img.alt
+                                                                        })
+                                                                    }
+                                                                    type="image"
+                                                                    value={imgIDmob}
+                                                                    render={({open}) => (
+                                                                        <Button
+                                                                            className="components-button button button-medium"
+                                                                            onClick={open}
+                                                                        >
+                                                                            {__('Upload Image')}
+                                                                        </Button>
+                                                                    )}
+                                                                />
+                                                            )}
+                                                        </div>
+                                                    </Fragment>
+                                                )}
+                                            </PanelRow>
                                         </PanelBody>
                                         </div>
                                     } else if( 'tablet' === tab.name ) {
@@ -635,6 +759,119 @@ export default class Inspector extends Component {
                                                         />
                                                     </div>
                                                 </div>
+                                            </PanelBody>
+                                            <PanelBody
+                                                title={ __( 'Tablet Background' ) }
+                                                initialOpen={ false }
+                                            >
+                                                <PanelRow
+                                                    className="ub-set-bg-tab"
+                                                >
+                                                    <ToggleControl
+                                                        className="ub-set-toggle-control"
+                                                        label={__('Set custom background for tablet?')}
+                                                        checked={set_tab_bg}
+                                                        onChange={ set_tab_bg => {setAttributes({ set_tab_bg })}}
+                                                    />
+                                                    { set_tab_bg && (
+                                                        <Fragment>
+                                                        <p>Background Color</p>
+                                                        <ColorPalette
+                                                            value={wrapColorTab}
+                                                            onChange={ value =>
+                                                            setAttributes({ wrapColorTab: value })
+                                                            }
+                                                            allowReset
+                                                        />
+                                                        <p>Background Image</p>
+                                                        <div className="ub-image-inspector-panel">
+                                                        { imgURLtab ? (
+                                                            <Fragment>
+                                                                <img src={imgURLtab} id={imgIDtab} alt={imgAltTab}/>
+                                                                <Button
+                                                                    className="components-button button button-medium"
+                                                                    onClick = {_ =>
+                                                                        setAttributes({
+                                                                            imgURLtab: '',
+                                                                            imgIDtab: '',
+                                                                            imgAltTab: '',
+                                                                        })
+                                                                    }
+                                                                >
+                                                                    Delete Image
+                                                                </Button>
+                                                                <SelectControl
+                                                                    label={ __( 'Background Image Size' ) }
+                                                                    value={ wrapBackgroundSize }
+                                                                    options={ [
+                                                                        { value: 'cover', label: __( 'Cover' ) },
+                                                                        { value: 'contain', label: __( 'Contain' ) },
+                                                                        { value: 'auto', label: __( 'Auto' ) },
+                                                                    ] }
+                                                                    onChange={ value => setAttributes( { wrapBackgroundSize: value } ) }
+                                                                />
+                                                                <SelectControl
+                                                                    label={ __( 'Background Image Position' ) }
+                                                                    value={ wrapBackgroundPosition }
+                                                                    options={ [
+                                                                        { value: 'center top', label: __( 'Center Top' ) },
+                                                                        { value: 'center center', label: __( 'Center Center' ) },
+                                                                        { value: 'center bottom', label: __( 'Center Bottom' ) },
+                                                                        { value: 'left top', label: __( 'Left Top' ) },
+                                                                        { value: 'left center', label: __( 'Left Center' ) },
+                                                                        { value: 'left bottom', label: __( 'Left Bottom' ) },
+                                                                        { value: 'right top', label: __( 'Right Top' ) },
+                                                                        { value: 'right center', label: __( 'Right Center' ) },
+                                                                        { value: 'right bottom', label: __( 'Right Bottom' ) },
+                                                                    ] }
+                                                                    onChange={ value => setAttributes( { wrapBackgroundPosition: value } ) }
+                                                                />
+                                                                <SelectControl
+                                                                    label={ __( 'Background Image Repeat' ) }
+                                                                    value={ wrapBackgroundRepeat }
+                                                                    options={ [
+                                                                        { value: 'no-repeat', label: __( 'No Repeat' ) },
+                                                                        { value: 'repeat', label: __( 'Repeat' ) },
+                                                                        { value: 'repeat-x', label: __( 'Repeat-x' ) },
+                                                                        { value: 'repeat-y', label: __( 'Repeat-y' ) },
+                                                                    ] }
+                                                                    onChange={ value => setAttributes( { wrapBackgroundRepeat: value } ) }
+                                                                />
+                                                                <SelectControl
+                                                                    label={ __( 'Background Image Attachment' ) }
+                                                                    value={ wrapBackgroundAttachment }
+                                                                    options={ [
+                                                                        { value: 'scroll', label: __( 'Scroll' ) },
+                                                                        { value: 'fixed', label: __( 'Fixed' ) },
+                                                                    ] }
+                                                                    onChange={ value => setAttributes( { wrapBackgroundAttachment: value } ) }
+                                                                />
+                                                            </Fragment>
+                                                        ) : (
+                                                            <MediaUpload
+                                                                onSelect={img =>
+                                                                    setAttributes({
+                                                                        imgIDtab: img.id,
+                                                                        imgURLtab: img.url,
+                                                                        imgAltTab: img.alt
+                                                                    })
+                                                                }
+                                                                type="image"
+                                                                value={imgIDtab}
+                                                                render={({open}) => (
+                                                                    <Button
+                                                                        className="components-button button button-medium"
+                                                                        onClick={open}
+                                                                    >
+                                                                        {__('Upload Image')}
+                                                                    </Button>
+                                                                )}
+                                                            />
+                                                        )}
+                                                        </div>
+                                                        </Fragment>
+                                                    )}
+                                                </PanelRow>
                                             </PanelBody>
                                         </div>
                                     }

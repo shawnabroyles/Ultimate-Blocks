@@ -37,16 +37,16 @@ export default class Inspector extends Component {
 				/>
 				<PanelBody title={__('Initial State')} initialOpen={true}>
 					<PanelRow>
-						<label htmlFor="ub-content-toggle-state">
-							{__('Collapsed')}
-						</label>
-						<FormToggle
-							id="ub-content-toggle-state"
-							label={__('Collapsed')}
-							checked={collapsed}
-							onChange={onCollapseChange}
-						/>
-					</PanelRow>
+                    <label htmlFor="ub-content-toggle-state">
+                        {__('Collapsed')}
+                    </label>
+                    <FormToggle
+                        id="ub-content-toggle-state"
+                        label={__('Collapsed')}
+                        checked={collapsed}
+                        onChange={onCollapseChange}
+                    />
+                </PanelRow>
 				</PanelBody>
 			</InspectorControls>
 		);

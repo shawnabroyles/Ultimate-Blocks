@@ -1286,6 +1286,14 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => '',
             ),
+            'wrapColorTab' => array(
+                'type' => 'string',
+                'default' => '',
+            ),
+            'wrapColorMob' => array(
+                'type' => 'string',
+                'default' => '',
+            ),
             'wrapBackgroundSize' => array(
                 'type' => 'string',
                 'default' => 'cover',
@@ -1307,6 +1315,14 @@ $defaultValues = array(
                 'default' => 'div',
             ),
             'imgURL' => array(
+                'type' => 'string',
+                'default' => '',
+            ),
+            'imgURLtab' => array(
+                'type' => 'string',
+                'default' => '',
+            ),
+            'imgURLmob' => array(
                 'type' => 'string',
                 'default' => '',
             ),

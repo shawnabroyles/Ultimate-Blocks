@@ -179,6 +179,14 @@ const attributes = {
 		type: "string",
 		default: "0px"
 	},
+    set_tab_bg: {
+        type: 'boolean',
+        default: false
+    },
+    set_mob_bg: {
+        type: 'boolean',
+        default: false
+    },
 	wrapTag: {
 		type: "string",
 		default: "div"
@@ -200,9 +208,17 @@ const attributes = {
 		default: "#ffffff"
 	},
 	wrapColor: {
-		type: "string",
-		background: "#ffffff"
-	},
+        type: "string",
+        background: "#ffffff"
+    },
+    wrapColorTab: {
+        type: "string",
+        background: "#ffffff"
+    },
+    wrapColorMob: {
+        type: "string",
+        background: "#ffffff"
+    },
 	wrapBackgroundSize: {
 		type: "string",
 		default: "cover"
@@ -230,6 +246,28 @@ const attributes = {
 		type: "string",
 		default: ""
 	},
+    imgURLtab: {
+        type: "string",
+        default: ""
+    },
+    imgIDtab: {
+        type: "number"
+    },
+    imgAltTab: {
+        type: "string",
+        default: ""
+    },
+    imgURLmob: {
+        type: "string",
+        default: ""
+    },
+    imgIDmob: {
+        type: "number"
+    },
+    imgAltMob: {
+        type: "string",
+        default: ""
+    },
 	videoURL: {
 		type: "string",
 		default: ""

@@ -622,9 +622,10 @@ function ub_include_block_attribute_css() {
                             . $attributes['marginBottomWrapTab'] . $attributes['selectUnitsTab'] .' '. $attributes['marginLeftWrapTab'] . $attributes['selectUnitsTab'] . ';' .
                             'padding: ' . $attributes['paddingTopWrapTab'] .$attributes['selectUnitsTab'] .' '. $attributes['paddingRightWrapTab']. $attributes['selectUnitsTab'] . ' '
                             . $attributes['paddingBottomWrapTab'] . $attributes['selectUnitsTab'] .' '. $attributes['paddingRightWrapTab']. $attributes['selectUnitsTab'] . ';' .
-                            'background-image: url(' . $attributes['imgURLtab'] .')' . ';' . 'background-size:' . $attributes['wrapBackgroundSize'] . ';' .
-                            'background-position:' . $attributes['wrapBackgroundPosition'] . ';' . 'background-repeat:' . $attributes['wrapBackgroundRepeat'] . ';' .
-                            'background-attachment:' . $attributes['wrapBackgroundAttachment']. ';' . 'color:' . $attributes['textColor'] . ';' .
+                            'background-image: url(' . $attributes['imgURLtab'] .')' . ';' . 'background-size:' . $attributes['wrapBackgroundSizeTab'] . ';' .
+                            'background-position:' . $attributes['wrapBackgroundPositionTab'] . ';' . 'background-repeat:' . $attributes['wrapBackgroundRepeatTab'] . ';' .
+                            'background-attachment:' . $attributes['wrapBackgroundAttachmentTab']. ';' .
+                            'background-color:'. $attributes['wrapColorTab'] . ';'.
                         '}}';
                     }
                     if(isset($attributes['mobileSizeGrid'])){
@@ -692,6 +693,10 @@ function ub_include_block_attribute_css() {
                             . $attributes['marginBottomWrapMob'] . $attributes['selectUnitsMob'] .' '. $attributes['marginLeftWrapMob'] . $attributes['selectUnitsMob'] . ';' .
                             'padding: ' . $attributes['paddingTopWrapMob'] .$attributes['selectUnitsMob'] .' '. $attributes['paddingRightWrapMob']. $attributes['selectUnitsMob'] . ' '
                             . $attributes['paddingBottomWrapMob'] . $attributes['selectUnitsMob'] .' '. $attributes['paddingRightWrapMob']. $attributes['selectUnitsMob'] . ';' .
+                            'background-image: url(' . $attributes['imgURLmob'] .')' . ';' . 'background-size:' . $attributes['wrapBackgroundSizeMob'] . ';' .
+                            'background-position:' . $attributes['wrapBackgroundPositionMob'] . ';' . 'background-repeat:' . $attributes['wrapBackgroundRepeatMob'] . ';' .
+                            'background-attachment:' . $attributes['wrapBackgroundAttachmentMob']. ';' .
+                            'background-color:'. $attributes['wrapColorMob'] . ';'.
                             '}}';
                     }
                     break;

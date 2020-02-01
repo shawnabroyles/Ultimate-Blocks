@@ -235,6 +235,38 @@ const attributes = {
 		type: "string",
 		default: "scroll"
 	},
+    wrapBackgroundSizeTab: {
+        type: "string",
+        default: "cover"
+    },
+    wrapBackgroundPositionTab: {
+        type: "string",
+        default: "center center"
+    },
+    wrapBackgroundRepeatTab: {
+        type: "string",
+        default: "no-repeat"
+    },
+    wrapBackgroundAttachmentTab: {
+        type: "string",
+        default: "scroll"
+    },
+    wrapBackgroundSizeMob: {
+        type: "string",
+        default: "cover"
+    },
+    wrapBackgroundPositionMob: {
+        type: "string",
+        default: "center center"
+    },
+    wrapBackgroundRepeatMob: {
+        type: "string",
+        default: "no-repeat"
+    },
+    wrapBackgroundAttachmentMob: {
+        type: "string",
+        default: "scroll"
+    },
 	imgURL: {
 		type: "string",
 		default: ""

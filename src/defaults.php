@@ -1310,6 +1310,38 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => 'scroll',
             ),
+            'wrapBackgroundSizeTab' => array(
+                'type' => 'string',
+                'default' => 'cover',
+            ),
+            'wrapBackgroundPositionTab' => array(
+                'type' => 'string',
+                'default' => 'center center',
+            ),
+            'wrapBackgroundRepeatTab' => array(
+                'type' => 'string',
+                'default' => 'no-repeat',
+            ),
+            'wrapBackgroundAttachmentTab' => array(
+                'type' => 'string',
+                'default' => 'scroll',
+            ),
+            'wrapBackgroundSizeMob' => array(
+                'type' => 'string',
+                'default' => 'cover',
+            ),
+            'wrapBackgroundPositionMob' => array(
+                'type' => 'string',
+                'default' => 'center center',
+            ),
+            'wrapBackgroundRepeatMob' => array(
+                'type' => 'string',
+                'default' => 'no-repeat',
+            ),
+            'wrapBackgroundAttachmentMob' => array(
+                'type' => 'string',
+                'default' => 'scroll',
+            ),
             'wrapTag' => array(
                 'type' => 'string',
                 'default' => 'div',

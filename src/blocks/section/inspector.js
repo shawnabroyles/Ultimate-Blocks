@@ -83,6 +83,14 @@ export default class Inspector extends Component {
                 wrapBackgroundPosition,
                 wrapBackgroundRepeat,
                 wrapBackgroundAttachment,
+                wrapBackgroundSizeTab,
+                wrapBackgroundPositionTab,
+                wrapBackgroundRepeatTab,
+                wrapBackgroundAttachmentTab,
+                wrapBackgroundSizeMob,
+                wrapBackgroundPositionMob,
+                wrapBackgroundRepeatMob,
+                wrapBackgroundAttachmentMob,
                 imgID,
                 imgURL,
                 imgAlt,
@@ -480,7 +488,7 @@ export default class Inspector extends Component {
                                                         <ColorPalette
                                                             value={wrapColorMob}
                                                             onChange={ value =>
-                                                                setAttributes({ wrapColorTab: value })
+                                                                setAttributes({ wrapColorMob: value })
                                                             }
                                                             allowReset
                                                         />
@@ -503,17 +511,17 @@ export default class Inspector extends Component {
                                                                     </Button>
                                                                     <SelectControl
                                                                         label={ __( 'Background Image Size' ) }
-                                                                        value={ wrapBackgroundSize }
+                                                                        value={ wrapBackgroundSizeMob }
                                                                         options={ [
                                                                             { value: 'cover', label: __( 'Cover' ) },
                                                                             { value: 'contain', label: __( 'Contain' ) },
                                                                             { value: 'auto', label: __( 'Auto' ) },
                                                                         ] }
-                                                                        onChange={ value => setAttributes( { wrapBackgroundSize: value } ) }
+                                                                        onChange={ value => setAttributes( { wrapBackgroundSizeMob: value } ) }
                                                                     />
                                                                     <SelectControl
                                                                         label={ __( 'Background Image Position' ) }
-                                                                        value={ wrapBackgroundPosition }
+                                                                        value={ wrapBackgroundPositionMob }
                                                                         options={ [
                                                                             { value: 'center top', label: __( 'Center Top' ) },
                                                                             { value: 'center center', label: __( 'Center Center' ) },
@@ -525,27 +533,27 @@ export default class Inspector extends Component {
                                                                             { value: 'right center', label: __( 'Right Center' ) },
                                                                             { value: 'right bottom', label: __( 'Right Bottom' ) },
                                                                         ] }
-                                                                        onChange={ value => setAttributes( { wrapBackgroundPosition: value } ) }
+                                                                        onChange={ value => setAttributes( { wrapBackgroundPositionMob: value } ) }
                                                                     />
                                                                     <SelectControl
                                                                         label={ __( 'Background Image Repeat' ) }
-                                                                        value={ wrapBackgroundRepeat }
+                                                                        value={ wrapBackgroundRepeatMob }
                                                                         options={ [
                                                                             { value: 'no-repeat', label: __( 'No Repeat' ) },
                                                                             { value: 'repeat', label: __( 'Repeat' ) },
                                                                             { value: 'repeat-x', label: __( 'Repeat-x' ) },
                                                                             { value: 'repeat-y', label: __( 'Repeat-y' ) },
                                                                         ] }
-                                                                        onChange={ value => setAttributes( { wrapBackgroundRepeat: value } ) }
+                                                                        onChange={ value => setAttributes( { wrapBackgroundRepeatMob: value } ) }
                                                                     />
                                                                     <SelectControl
                                                                         label={ __( 'Background Image Attachment' ) }
-                                                                        value={ wrapBackgroundAttachment }
+                                                                        value={ wrapBackgroundAttachmentMob }
                                                                         options={ [
                                                                             { value: 'scroll', label: __( 'Scroll' ) },
                                                                             { value: 'fixed', label: __( 'Fixed' ) },
                                                                         ] }
-                                                                        onChange={ value => setAttributes( { wrapBackgroundAttachment: value } ) }
+                                                                        onChange={ value => setAttributes( { wrapBackgroundAttachmentMob: value } ) }
                                                                     />
                                                                 </Fragment>
                                                             ) : (
@@ -802,17 +810,17 @@ export default class Inspector extends Component {
                                                                 </Button>
                                                                 <SelectControl
                                                                     label={ __( 'Background Image Size' ) }
-                                                                    value={ wrapBackgroundSize }
+                                                                    value={ wrapBackgroundSizeTab }
                                                                     options={ [
                                                                         { value: 'cover', label: __( 'Cover' ) },
                                                                         { value: 'contain', label: __( 'Contain' ) },
                                                                         { value: 'auto', label: __( 'Auto' ) },
                                                                     ] }
-                                                                    onChange={ value => setAttributes( { wrapBackgroundSize: value } ) }
+                                                                    onChange={ value => setAttributes( { wrapBackgroundSizeTab: value } ) }
                                                                 />
                                                                 <SelectControl
                                                                     label={ __( 'Background Image Position' ) }
-                                                                    value={ wrapBackgroundPosition }
+                                                                    value={ wrapBackgroundPositionTab }
                                                                     options={ [
                                                                         { value: 'center top', label: __( 'Center Top' ) },
                                                                         { value: 'center center', label: __( 'Center Center' ) },
@@ -824,27 +832,27 @@ export default class Inspector extends Component {
                                                                         { value: 'right center', label: __( 'Right Center' ) },
                                                                         { value: 'right bottom', label: __( 'Right Bottom' ) },
                                                                     ] }
-                                                                    onChange={ value => setAttributes( { wrapBackgroundPosition: value } ) }
+                                                                    onChange={ value => setAttributes( { wrapBackgroundPositionTab: value } ) }
                                                                 />
                                                                 <SelectControl
                                                                     label={ __( 'Background Image Repeat' ) }
-                                                                    value={ wrapBackgroundRepeat }
+                                                                    value={ wrapBackgroundRepeatTab }
                                                                     options={ [
                                                                         { value: 'no-repeat', label: __( 'No Repeat' ) },
                                                                         { value: 'repeat', label: __( 'Repeat' ) },
                                                                         { value: 'repeat-x', label: __( 'Repeat-x' ) },
                                                                         { value: 'repeat-y', label: __( 'Repeat-y' ) },
                                                                     ] }
-                                                                    onChange={ value => setAttributes( { wrapBackgroundRepeat: value } ) }
+                                                                    onChange={ value => setAttributes( { wrapBackgroundRepeatTab: value } ) }
                                                                 />
                                                                 <SelectControl
                                                                     label={ __( 'Background Image Attachment' ) }
-                                                                    value={ wrapBackgroundAttachment }
+                                                                    value={ wrapBackgroundAttachmentTab }
                                                                     options={ [
                                                                         { value: 'scroll', label: __( 'Scroll' ) },
                                                                         { value: 'fixed', label: __( 'Fixed' ) },
                                                                     ] }
-                                                                    onChange={ value => setAttributes( { wrapBackgroundAttachment: value } ) }
+                                                                    onChange={ value => setAttributes( { wrapBackgroundAttachmentTab: value } ) }
                                                                 />
                                                             </Fragment>
                                                         ) : (

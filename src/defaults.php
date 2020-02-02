@@ -1382,7 +1382,31 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => '#ffffff',
             ),
+            'wrapBackgroundOverlayTab' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'wrapBackgroundOverlayColTab' => array(
+                'type' => 'string',
+                'default' => '#ffffff',
+            ),
+            'wrapBackgroundOverlayMob' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'wrapBackgroundOverlayColMob' => array(
+                'type' => 'string',
+                'default' => '#ffffff',
+            ),
             'selectTab' => array(
+                'type' => 'string',
+                'default' => 'Standart',
+            ),
+            'selectTabTablet' => array(
+                'type' => 'string',
+                'default' => 'Standart',
+            ),
+            'selectTabMob' => array(
                 'type' => 'string',
                 'default' => 'Standart',
             ),
@@ -1415,6 +1439,70 @@ $defaultValues = array(
                 'default' => '#332bbf',
             ),
             'wrapGradientSecondLocation' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'gradientTypeTab' => array(
+                'type' => 'string',
+                'default' => 'linear'
+            ),
+            'gradientAngleTab' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'gradientPositionTab' => array(
+                'type' => 'string',
+                'default' => 'center center'
+            ),
+            'wrapGradientOverlayTab' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'wrapGradientOverlayColTab' => array(
+                'type' => 'string',
+                'default' => '#ffffff',
+            ),
+            'wrapGradientLocationTab' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'wrapGradientSecondColTab' => array(
+                'type' => 'string',
+                'default' => '#332bbf',
+            ),
+            'wrapGradientSecondLocationTab' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'gradientTypeMob' => array(
+                'type' => 'string',
+                'default' => 'linear'
+            ),
+            'gradientAngleMob' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'gradientPositionMob' => array(
+                'type' => 'string',
+                'default' => 'center center'
+            ),
+            'wrapGradientOverlayMob' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'wrapGradientOverlayColMob' => array(
+                'type' => 'string',
+                'default' => '#ffffff',
+            ),
+            'wrapGradientLocationMob' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'wrapGradientSecondColMob' => array(
+                'type' => 'string',
+                'default' => '#332bbf',
+            ),
+            'wrapGradientSecondLocationMob' => array(
                 'type' => 'number',
                 'default' => 0
             ),

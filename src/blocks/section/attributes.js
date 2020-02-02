@@ -323,40 +323,96 @@ const attributes = {
 		type: "string",
 		default: "#ffffff"
 	},
+    wrapBackgroundOverlayTab: {
+        type: "number",
+        default: 0
+    },
+    wrapBackgroundOverlayColTab: {
+        type: "string",
+        default: "#ffffff"
+    },
+    wrapBackgroundOverlayMob: {
+        type: "number",
+        default: 0
+    },
+    wrapBackgroundOverlayColMob: {
+        type: "string",
+        default: "#ffffff"
+    },
 	selectTab: {
 	    type: "string",
 	    default: "Standart",
 	},
+    selectTabTablet: {
+        type: "string",
+        default: "Standart",
+    },
+    selectTabMob: {
+        type: "string",
+        default: "Standart",
+    },
     gradientType: {
-	    type: "string",
-	    default: "linear",
-	},
+        type: "string",
+        default: "linear",
+    },
     gradientAngle: {
-	   type: "number",
-	   default: 180,
-	},
+        type: "number",
+        default: 180,
+    },
     gradientPosition: {
-	   type: "string",
-	   default: "center center",
-	},
+        type: "string",
+        default: "center center",
+    },
     wrapGradientOverlay: {
         type: "number",
         default: 0
-	},
+    },
     wrapGradientOverlayCol:{
         type: "string",
         default: "#ffffff"
-	},
+    },
     wrapGradientLocation:{
         type: "number",
         default: 0
-	},
+    },
     wrapGradientSecondCol:{
         type: "string",
         default: "#332bbf"
-	},
+    },
     wrapGradientSecondLocation:{
-	    type: "number",
+        type: "number",
+        default: 0
+    },
+    gradientTypeTab: {
+        type: "string",
+        default: "linear",
+    },
+    gradientAngleTab: {
+        type: "number",
+        default: 180,
+    },
+    gradientPositionTab: {
+        type: "string",
+        default: "center center",
+    },
+    wrapGradientOverlayTab: {
+        type: "number",
+        default: 0
+    },
+    wrapGradientOverlayColTab:{
+        type: "string",
+        default: "#ffffff"
+    },
+    wrapGradientLocationTab:{
+        type: "number",
+        default: 0
+    },
+    wrapGradientSecondColTab:{
+        type: "string",
+        default: "#332bbf"
+    },
+    wrapGradientSecondLocationTab:{
+        type: "number",
         default: 0
     },
 	textColor: {

@@ -18,7 +18,9 @@
 	}
 }
 
-.ub-section-block-overlay {
+.ub-section-block-overlay,
+.ub-section-block-overlay-tab,
+.ub-section-block-overlay-mob{
 	top: 0px;
 	bottom: 0px;
 	left: 0;
@@ -30,7 +32,9 @@
 	background-position: center center;
 	background-attachment: scroll;
 }
-.ub-section-block-gradient{
+.ub-section-block-gradient,
+.ub-section-block-gradient-tab,
+.ub-section-block-gradient-mob{
 	top: 0px;
 	bottom: 0px;
 	left: 0;

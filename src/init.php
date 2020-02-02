@@ -557,75 +557,90 @@ function ub_include_block_attribute_css() {
                             'flex: 0 1 ' . $attributes['colWidthSix'] . ';' .
                         '}';
                     }
-                    if(isset($attributes['tabletSizeGrid'])){
+                    if(isset($attributes['tabletSizeGrid'])) {
                         $blockStylesheets .= '@media (max-width: 1024px) and (min-width: 768px) {
-                           '. $prefix .'>.ub-tab-first-row>.ub-single-wrap:nth-child(1){
-                               padding-bottom: '. $attributes['gutter'] .';'.'
+                           ' . $prefix . '>.ub-tab-first-row>.ub-single-wrap:nth-child(1){
+                               padding-bottom: ' . $attributes['gutter'] . ';' . '
                                margin: 0px;
-                           }'. $prefix .'>.ub-tab-first-row>.ub-single-wrap:nth-child(2){
-                               padding-right:'. (((int)trim($attributes['gutter'], "px"))/2) . 'px;
+                           }' . $prefix . '>.ub-tab-first-row>.ub-single-wrap:nth-child(2){
+                               padding-right:' . (((int)trim($attributes['gutter'], "px")) / 2) . 'px;
                                margin: 0px;
-                           }'. $prefix .'>.ub-tab-first-row>.ub-single-wrap:nth-child(3){
-                               padding-left:'. (((int)trim($attributes['gutter'], "px"))/2) . 'px;
+                           }' . $prefix . '>.ub-tab-first-row>.ub-single-wrap:nth-child(3){
+                               padding-left:' . (((int)trim($attributes['gutter'], "px")) / 2) . 'px;
                                margin: 0px;
-                           }'. $prefix .'>.ub-tab-last-row>.ub-single-wrap:nth-child(1){
-                               padding-right:'. (((int)trim($attributes['gutter'], "px"))/2) . 'px;
+                           }' . $prefix . '>.ub-tab-last-row>.ub-single-wrap:nth-child(1){
+                               padding-right:' . (((int)trim($attributes['gutter'], "px")) / 2) . 'px;
                                margin: 0px;
-                           }'. $prefix .'>.ub-tab-last-row>.ub-single-wrap:nth-child(2){
-                               padding-left:'. (((int)trim($attributes['gutter'], "px"))/2) . 'px;
+                           }' . $prefix . '>.ub-tab-last-row>.ub-single-wrap:nth-child(2){
+                               padding-left:' . (((int)trim($attributes['gutter'], "px")) / 2) . 'px;
                                margin: 0px;
-                           }'. $prefix .'>.ub-tab-last-row>.ub-single-wrap:nth-child(3){
-                               padding-top: '. $attributes['gutter'] .';'.'
+                           }' . $prefix . '>.ub-tab-last-row>.ub-single-wrap:nth-child(3){
+                               padding-top: ' . $attributes['gutter'] . ';' . '
                                margin: 0px;
-                           }'. $prefix .'>.ub-tab-collapse-row>.ub-single-wrap:nth-child(1){
-                               padding-bottom: '. $attributes['gutter'] .';'.'
+                           }' . $prefix . '>.ub-tab-collapse-row>.ub-single-wrap:nth-child(1){
+                               padding-bottom: ' . $attributes['gutter'] . ';' . '
                                margin: 0px;
-                           }'. $prefix .'>.ub-tab-collapse-row>.ub-single-wrap:nth-child(2){
-                               padding-bottom: '. $attributes['gutter'] .';'.'
+                           }' . $prefix . '>.ub-tab-collapse-row>.ub-single-wrap:nth-child(2){
+                               padding-bottom: ' . $attributes['gutter'] . ';' . '
                                margin: 0px;
-                           }'. $prefix .'>.ub-tab-collapse-row>.ub-single-wrap:nth-child(3){
+                           }' . $prefix . '>.ub-tab-collapse-row>.ub-single-wrap:nth-child(3){
                                padding-bottom: 0px;
                                margin: 0px;
-                           }'. $prefix .'>.ub-tab-two-grid>.ub-single-wrap:nth-child(1){
-                               padding-right:'. (((int)trim($attributes['gutter'], "px"))/2) . 'px;
-                               padding-bottom:'. (((int)trim($attributes['gutter'], "px"))/2) . 'px;
+                           }' . $prefix . '>.ub-tab-two-grid>.ub-single-wrap:nth-child(1){
+                               padding-right:' . (((int)trim($attributes['gutter'], "px")) / 2) . 'px;
+                               padding-bottom:' . (((int)trim($attributes['gutter'], "px")) / 2) . 'px;
                                margin: 0px;
-                           }'. $prefix .'>.ub-tab-two-grid>.ub-single-wrap:nth-child(2){
-                               padding-left:'. (((int)trim($attributes['gutter'], "px"))/2) . 'px;
-                               padding-bottom:'. (((int)trim($attributes['gutter'], "px"))/2) . 'px;
+                           }' . $prefix . '>.ub-tab-two-grid>.ub-single-wrap:nth-child(2){
+                               padding-left:' . (((int)trim($attributes['gutter'], "px")) / 2) . 'px;
+                               padding-bottom:' . (((int)trim($attributes['gutter'], "px")) / 2) . 'px;
                                margin: 0px;
-                           }'. $prefix .'>.ub-tab-two-grid>.ub-single-wrap:nth-child(3){
-                               padding-right:'. (((int)trim($attributes['gutter'], "px"))/2) . 'px;
-                               padding-top:'. (((int)trim($attributes['gutter'], "px"))/2) . 'px;
+                           }' . $prefix . '>.ub-tab-two-grid>.ub-single-wrap:nth-child(3){
+                               padding-right:' . (((int)trim($attributes['gutter'], "px")) / 2) . 'px;
+                               padding-top:' . (((int)trim($attributes['gutter'], "px")) / 2) . 'px;
                                margin: 0px;
-                           }'. $prefix .'>.ub-tab-two-grid>.ub-single-wrap:nth-child(4){
-                               padding-left:'. (((int)trim($attributes['gutter'], "px"))/2) . 'px;
-                               padding-top:'. (((int)trim($attributes['gutter'], "px"))/2) . 'px;
+                           }' . $prefix . '>.ub-tab-two-grid>.ub-single-wrap:nth-child(4){
+                               padding-left:' . (((int)trim($attributes['gutter'], "px")) / 2) . 'px;
+                               padding-top:' . (((int)trim($attributes['gutter'], "px")) / 2) . 'px;
                                margin: 0px;
-                           }'. $prefix .'>.ub-tab-collapse-four-row>.ub-single-wrap:nth-child(1){                             
-                               padding-bottom:'. $attributes['gutter'] .';'.'
+                           }' . $prefix . '>.ub-tab-collapse-four-row>.ub-single-wrap:nth-child(1){                             
+                               padding-bottom:' . $attributes['gutter'] . ';' . '
                                margin: 0px;
-                           }'. $prefix .'>.ub-tab-collapse-four-row>.ub-single-wrap:nth-child(2){
-                               padding-bottom:'. $attributes['gutter'] .';'.'
+                           }' . $prefix . '>.ub-tab-collapse-four-row>.ub-single-wrap:nth-child(2){
+                               padding-bottom:' . $attributes['gutter'] . ';' . '
                                margin: 0px;
-                           }'. $prefix .'>.ub-tab-collapse-four-row>.ub-single-wrap:nth-child(3){
-                               padding-bottom:'. $attributes['gutter'] .';'.'
+                           }' . $prefix . '>.ub-tab-collapse-four-row>.ub-single-wrap:nth-child(3){
+                               padding-bottom:' . $attributes['gutter'] . ';' . '
                                margin: 0px;
-                           }'. $prefix .'>.ub-tab-collapse-four-row>.ub-single-wrap:nth-child(4){
+                           }' . $prefix . '>.ub-tab-collapse-four-row>.ub-single-wrap:nth-child(4){
                                padding-bottom: 0px;
                                margin: 0px;
                            }
                         }';
                         $blockStylesheets .= '@media (max-width: 1024px) and (min-width: 768px) {
-                        '. $prefix .'{' .
-                            'margin: ' . $attributes['marginTopWrapTab'] . $attributes['selectUnitsTab'] .' '. $attributes['marginRightWrapTab'] . $attributes['selectUnitsTab'] . ' '
-                            . $attributes['marginBottomWrapTab'] . $attributes['selectUnitsTab'] .' '. $attributes['marginLeftWrapTab'] . $attributes['selectUnitsTab'] . ';' .
-                            'padding: ' . $attributes['paddingTopWrapTab'] .$attributes['selectUnitsTab'] .' '. $attributes['paddingRightWrapTab']. $attributes['selectUnitsTab'] . ' '
-                            . $attributes['paddingBottomWrapTab'] . $attributes['selectUnitsTab'] .' '. $attributes['paddingRightWrapTab']. $attributes['selectUnitsTab'] . ';' .
-                            'background-image: url(' . $attributes['imgURLtab'] .')' . ';' . 'background-size:' . $attributes['wrapBackgroundSizeTab'] . ';' .
+                        ' . $prefix . '{' .
+                            'margin: ' . $attributes['marginTopWrapTab'] . $attributes['selectUnitsTab'] . ' ' . $attributes['marginRightWrapTab'] . $attributes['selectUnitsTab'] . ' '
+                            . $attributes['marginBottomWrapTab'] . $attributes['selectUnitsTab'] . ' ' . $attributes['marginLeftWrapTab'] . $attributes['selectUnitsTab'] . ';' .
+                            'padding: ' . $attributes['paddingTopWrapTab'] . $attributes['selectUnitsTab'] . ' ' . $attributes['paddingRightWrapTab'] . $attributes['selectUnitsTab'] . ' '
+                            . $attributes['paddingBottomWrapTab'] . $attributes['selectUnitsTab'] . ' ' . $attributes['paddingRightWrapTab'] . $attributes['selectUnitsTab'] . ';' .
+                            'background-image: url(' . $attributes['imgURLtab'] . ')' . ';' . 'background-size:' . $attributes['wrapBackgroundSizeTab'] . ';' .
                             'background-position:' . $attributes['wrapBackgroundPositionTab'] . ';' . 'background-repeat:' . $attributes['wrapBackgroundRepeatTab'] . ';' .
-                            'background-attachment:' . $attributes['wrapBackgroundAttachmentTab']. ';' .
-                            'background-color:'. $attributes['wrapColorTab'] . ';'.
+                            'background-attachment:' . $attributes['wrapBackgroundAttachmentTab'] . ';' .
+                            'background-color:' . $attributes['wrapColorTab'] . ';' .
+                            '}}';
+                        $blockStylesheets .= '@media (max-width: 1024px) and (min-width: 768px) {
+                        ' . $prefix . ' .ub-section-block-overlay {' . '
+                            display: none;
+                        }
+                        '. $prefix . ' .ub-section-block-gradient {'.'
+                            display: none;
+                        }
+                        '. $prefix .( $attributes['selectTabTablet'] === 'Standart' ? ' .ub-section-block-overlay-tab {'.
+                                'opacity: '.($attributes['wrapBackgroundOverlayTab'] == 100 ? 1 : '0.'. $attributes['wrapBackgroundOverlayTab']).';' .
+                                'background-color: '. $attributes['wrapBackgroundOverlayColTab'].';' .
+                                '}' : ' .ub-section-block-gradient-tab {' . 'background-image: '. $attributes['gradientTypeTab'].'-gradient('.($attributes['gradientTypeTab'] === 'radial' ? 'at ' : '').($attributes['gradientTypeTab'] === 'linear' ? $attributes['gradientAngleTab'] : $attributes['gradientPositionTab'].',').
+                                ( $attributes['gradientTypeTab'] === 'linear' ? 'deg,' : '').$attributes['wrapGradientOverlayColTab'].' '.$attributes['wrapGradientLocationTab'].'%,'.
+                                $attributes['wrapGradientSecondColTab'].' '.$attributes['wrapGradientSecondLocationTab'].'%);' .
+                                'opacity:'.($attributes['wrapGradientOverlayTab'] == 100 ? 1 : '0.'. $attributes['wrapGradientOverlayTab']).'}') .
                         '}}';
                     }
                     if(isset($attributes['mobileSizeGrid'])){
@@ -697,6 +712,21 @@ function ub_include_block_attribute_css() {
                             'background-position:' . $attributes['wrapBackgroundPositionMob'] . ';' . 'background-repeat:' . $attributes['wrapBackgroundRepeatMob'] . ';' .
                             'background-attachment:' . $attributes['wrapBackgroundAttachmentMob']. ';' .
                             'background-color:'. $attributes['wrapColorMob'] . ';'.
+                            '}}';
+                        $blockStylesheets .= '@media (max-width: 768px) {
+                        ' . $prefix . ' .ub-section-block-overlay {' . '
+                            display: none;
+                        }
+                        '. $prefix . ' .ub-section-block-gradient {'.'
+                            display: none;
+                        }
+                        '. $prefix .( $attributes['selectTabMob'] === 'Standart' ? ' .ub-section-block-overlay-mob {'.
+                                'opacity: '.($attributes['wrapBackgroundOverlayMob'] == 100 ? 1 : '0.'. $attributes['wrapBackgroundOverlayMob']).';' .
+                                'background-color: '. $attributes['wrapBackgroundOverlayColMob'].';' .
+                                '}' : ' .ub-section-block-gradient-mob {' . 'background-image: '. $attributes['gradientTypeMob'].'-gradient('.($attributes['gradientTypeMob'] === 'radial' ? 'at ' : '').($attributes['gradientTypeMob'] === 'linear' ? $attributes['gradientAngleMob'] : $attributes['gradientPositionMob'].',').
+                                ( $attributes['gradientTypeMob'] === 'linear' ? 'deg,' : '').$attributes['wrapGradientOverlayColMob'].' '.$attributes['wrapGradientLocationMob'].'%,'.
+                                $attributes['wrapGradientSecondColMob'].' '.$attributes['wrapGradientSecondLocationMob'].'%);' .
+                                'opacity:'.($attributes['wrapGradientOverlayMob'] == 100 ? 1 : '0.'. $attributes['wrapGradientOverlayMob']).'}') .
                             '}}';
                     }
                     break;

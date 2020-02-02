@@ -1506,6 +1506,22 @@ $defaultValues = array(
                 'type' => 'number',
                 'default' => 0
             ),
+            'set_tab_bg' => array(
+                'type' => 'boolean',
+                'default' => false,
+            ),
+            'set_mob_bg' => array(
+                'type' => 'boolean',
+                'default' => false,
+            ),
+            'set_tab_bgOv' => array(
+                'type' => 'boolean',
+                'default' => false,
+            ),
+            'set_mob_bgOv' => array(
+                'type' => 'boolean',
+                'default' => false,
+            ),
             'textColor' => array(
                 'type' => 'string',
                 'default' => '',

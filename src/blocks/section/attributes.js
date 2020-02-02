@@ -187,6 +187,14 @@ const attributes = {
         type: 'boolean',
         default: false
     },
+    set_tab_bgOv: {
+        type: 'boolean',
+        default: false
+    },
+    set_mob_bgOv: {
+        type: 'boolean',
+        default: false
+    },
 	wrapTag: {
 		type: "string",
 		default: "div"

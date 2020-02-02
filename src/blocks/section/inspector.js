@@ -40,6 +40,8 @@ export default class Inspector extends Component {
                 columns,
                 currentTab,
                 currentTabOverlay,
+                currentTabOverlayTab,
+                currentTabOverlayMob,
                 mobileSizeGrid,
                 tabletSizeGrid,
                 selectUnits,
@@ -71,6 +73,8 @@ export default class Inspector extends Component {
                 paddingBottomWrapMob,
                 set_tab_bg,
                 set_mob_bg,
+                set_tab_bgOv,
+                set_mob_bgOv,
                 gutter,
                 wrapColor,
                 wrapColorTab,
@@ -143,12 +147,22 @@ export default class Inspector extends Component {
             setAttributes,
         } = this.props;
 
+        console.log(this.props);
+
         const onTabSelect = ( tabName ) => {
             setAttributes( { currentTab: tabName } );
         };
 
         const onTabSelectOverlay = ( tabName ) => {
             setAttributes( { currentTabOverlay: tabName } );
+        };
+
+        const onTabSelectOverlayTab = ( tabName ) => {
+            setAttributes( { currentTabOverlayTab: tabName } );
+        };
+
+        const onTabSelectOverlayMob = ( tabName ) => {
+            setAttributes( { currentTabOverlayMob: tabName } );
         };
 
         const mobileGridTwo = [
@@ -608,10 +622,20 @@ export default class Inspector extends Component {
                                                        title={ __( 'Mobile Background Overlay' ) }
                                                        initialOpen={ false }
                                             >
-                                                <TabPanel className="ub-inspect-tabs"
+                                                <PanelRow
+                                                    className="ub-set-bg-mob"
+                                                >
+                                                    <ToggleControl
+                                                        className="ub-set-toggle-control"
+                                                        label={__('Set custom background overlay for mobile?')}
+                                                        checked={ set_mob_bgOv }
+                                                        onChange={ set_mob_bgOv => {setAttributes({ set_mob_bgOv })}}
+                                                    />
+                                                    { set_mob_bgOv && (
+                                                        <TabPanel className="ub-inspect-tabs"
                                                           activeClass="active-tab"
-                                                          initialTabName={ currentTabOverlay }
-                                                          onSelect={ onTabSelectOverlay }
+                                                          initialTabName={ currentTabOverlayMob }
+                                                          onSelect={ onTabSelectOverlayMob }
                                                           tabs={ [
                                                               {
                                                                   name: 'Standart',
@@ -741,7 +765,8 @@ export default class Inspector extends Component {
                                                             return <div>{ tabres }</div>;
                                                         }
                                                     }
-                                                </TabPanel>
+                                                </TabPanel>)}
+                                                </PanelRow>
                                             </PanelBody>
                                         </div>
                                     } else if( 'tablet' === tab.name ) {
@@ -1046,10 +1071,19 @@ export default class Inspector extends Component {
                                                        title={ __( 'Tablet Background Overlay' ) }
                                                        initialOpen={ false }
                                             >
-                                                <TabPanel className="ub-inspect-tabs"
+                                                <PanelRow
+                                                    className="ub-set-bg-tab"
+                                                >
+                                                    <ToggleControl
+                                                        className="ub-set-toggle-control"
+                                                        label={__('Set custom background overlay for tablet?')}
+                                                        checked={set_tab_bgOv}
+                                                        onChange={ set_tab_bgOv => {setAttributes({ set_tab_bgOv })}}
+                                                    />
+                                                    { set_tab_bgOv && (  <TabPanel className="ub-inspect-tabs"
                                                           activeClass="active-tab"
-                                                          initialTabName={ currentTabOverlay }
-                                                          onSelect={ onTabSelectOverlay }
+                                                          initialTabName={ currentTabOverlayTab }
+                                                          onSelect={ onTabSelectOverlayTab }
                                                           tabs={ [
                                                               {
                                                                   name: 'Standart',
@@ -1179,7 +1213,8 @@ export default class Inspector extends Component {
                                                             return <div>{ tabres }</div>;
                                                         }
                                                     }
-                                                </TabPanel>
+                                                </TabPanel>)}
+                                                </PanelRow>
                                             </PanelBody>
                                         </div>
                                     }

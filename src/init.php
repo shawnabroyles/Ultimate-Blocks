@@ -616,6 +616,8 @@ function ub_include_block_attribute_css() {
                                margin: 0px;
                            }
                         }';
+                    }
+                    if($attributes['set_tab_bg']) {
                         $blockStylesheets .= '@media (max-width: 1024px) and (min-width: 768px) {
                         ' . $prefix . '{' .
                             'margin: ' . $attributes['marginTopWrapTab'] . $attributes['selectUnitsTab'] . ' ' . $attributes['marginRightWrapTab'] . $attributes['selectUnitsTab'] . ' '
@@ -627,21 +629,23 @@ function ub_include_block_attribute_css() {
                             'background-attachment:' . $attributes['wrapBackgroundAttachmentTab'] . ';' .
                             'background-color:' . $attributes['wrapColorTab'] . ';' .
                             '}}';
+                    }
+                    if($attributes['set_tab_bgOv']) {
                         $blockStylesheets .= '@media (max-width: 1024px) and (min-width: 768px) {
                         ' . $prefix . ' .ub-section-block-overlay {' . '
                             display: none;
                         }
-                        '. $prefix . ' .ub-section-block-gradient {'.'
+                        ' . $prefix . ' .ub-section-block-gradient {' . '
                             display: none;
                         }
-                        '. $prefix .( $attributes['selectTabTablet'] === 'Standart' ? ' .ub-section-block-overlay-tab {'.
-                                'opacity: '.($attributes['wrapBackgroundOverlayTab'] == 100 ? 1 : '0.'. $attributes['wrapBackgroundOverlayTab']).';' .
-                                'background-color: '. $attributes['wrapBackgroundOverlayColTab'].';' .
-                                '}' : ' .ub-section-block-gradient-tab {' . 'background-image: '. $attributes['gradientTypeTab'].'-gradient('.($attributes['gradientTypeTab'] === 'radial' ? 'at ' : '').($attributes['gradientTypeTab'] === 'linear' ? $attributes['gradientAngleTab'] : $attributes['gradientPositionTab'].',').
-                                ( $attributes['gradientTypeTab'] === 'linear' ? 'deg,' : '').$attributes['wrapGradientOverlayColTab'].' '.$attributes['wrapGradientLocationTab'].'%,'.
-                                $attributes['wrapGradientSecondColTab'].' '.$attributes['wrapGradientSecondLocationTab'].'%);' .
-                                'opacity:'.($attributes['wrapGradientOverlayTab'] == 100 ? 1 : '0.'. $attributes['wrapGradientOverlayTab']).'}') .
-                        '}}';
+                        ' . $prefix . ($attributes['selectTabTablet'] === 'Standart' ? ' .ub-section-block-overlay-tab {' .
+                                'opacity: ' . ($attributes['wrapBackgroundOverlayTab'] == 100 ? 1 : '0.' . $attributes['wrapBackgroundOverlayTab']) . ';' .
+                                'background-color: ' . $attributes['wrapBackgroundOverlayColTab'] . ';' .
+                                '}' : ' .ub-section-block-gradient-tab {' . 'background-image: ' . $attributes['gradientTypeTab'] . '-gradient(' . ($attributes['gradientTypeTab'] === 'radial' ? 'at ' : '') . ($attributes['gradientTypeTab'] === 'linear' ? $attributes['gradientAngleTab'] : $attributes['gradientPositionTab'] . ',') .
+                                ($attributes['gradientTypeTab'] === 'linear' ? 'deg,' : '') . $attributes['wrapGradientOverlayColTab'] . ' ' . $attributes['wrapGradientLocationTab'] . '%,' .
+                                $attributes['wrapGradientSecondColTab'] . ' ' . $attributes['wrapGradientSecondLocationTab'] . '%);' .
+                                'opacity:' . ($attributes['wrapGradientOverlayTab'] == 100 ? 1 : '0.' . $attributes['wrapGradientOverlayTab']) . '}') .
+                            '}}';
                     }
                     if(isset($attributes['mobileSizeGrid'])){
                         $blockStylesheets .= '@media (max-width: 767px) {
@@ -702,31 +706,35 @@ function ub_include_block_attribute_css() {
                                margin: 0px;
                            }
                         }';
+                    }
+                    if($attributes['set_mob_bg']) {
                         $blockStylesheets .= '@media (max-width: 767px) {
-                        '. $prefix .'{' .
-                            'margin: ' . $attributes['marginTopWrapMob'] . $attributes['selectUnitsMob'] .' '. $attributes['marginRightWrapMob'] . $attributes['selectUnitsMob'] . ' '
-                            . $attributes['marginBottomWrapMob'] . $attributes['selectUnitsMob'] .' '. $attributes['marginLeftWrapMob'] . $attributes['selectUnitsMob'] . ';' .
-                            'padding: ' . $attributes['paddingTopWrapMob'] .$attributes['selectUnitsMob'] .' '. $attributes['paddingRightWrapMob']. $attributes['selectUnitsMob'] . ' '
-                            . $attributes['paddingBottomWrapMob'] . $attributes['selectUnitsMob'] .' '. $attributes['paddingRightWrapMob']. $attributes['selectUnitsMob'] . ';' .
-                            'background-image: url(' . $attributes['imgURLmob'] .')' . ';' . 'background-size:' . $attributes['wrapBackgroundSizeMob'] . ';' .
+                        ' . $prefix . '{' .
+                            'margin: ' . $attributes['marginTopWrapMob'] . $attributes['selectUnitsMob'] . ' ' . $attributes['marginRightWrapMob'] . $attributes['selectUnitsMob'] . ' '
+                            . $attributes['marginBottomWrapMob'] . $attributes['selectUnitsMob'] . ' ' . $attributes['marginLeftWrapMob'] . $attributes['selectUnitsMob'] . ';' .
+                            'padding: ' . $attributes['paddingTopWrapMob'] . $attributes['selectUnitsMob'] . ' ' . $attributes['paddingRightWrapMob'] . $attributes['selectUnitsMob'] . ' '
+                            . $attributes['paddingBottomWrapMob'] . $attributes['selectUnitsMob'] . ' ' . $attributes['paddingRightWrapMob'] . $attributes['selectUnitsMob'] . ';' .
+                            'background-image: url(' . $attributes['imgURLmob'] . ')' . ';' . 'background-size:' . $attributes['wrapBackgroundSizeMob'] . ';' .
                             'background-position:' . $attributes['wrapBackgroundPositionMob'] . ';' . 'background-repeat:' . $attributes['wrapBackgroundRepeatMob'] . ';' .
-                            'background-attachment:' . $attributes['wrapBackgroundAttachmentMob']. ';' .
-                            'background-color:'. $attributes['wrapColorMob'] . ';'.
+                            'background-attachment:' . $attributes['wrapBackgroundAttachmentMob'] . ';' .
+                            'background-color:' . $attributes['wrapColorMob'] . ';' .
                             '}}';
-                        $blockStylesheets .= '@media (max-width: 768px) {
+                    }
+                    if($attributes['set_mob_bgOv']) {
+                        $blockStylesheets .= '@media (max-width: 767px) {
                         ' . $prefix . ' .ub-section-block-overlay {' . '
                             display: none;
                         }
-                        '. $prefix . ' .ub-section-block-gradient {'.'
+                        ' . $prefix . ' .ub-section-block-gradient {' . '
                             display: none;
                         }
-                        '. $prefix .( $attributes['selectTabMob'] === 'Standart' ? ' .ub-section-block-overlay-mob {'.
-                                'opacity: '.($attributes['wrapBackgroundOverlayMob'] == 100 ? 1 : '0.'. $attributes['wrapBackgroundOverlayMob']).';' .
-                                'background-color: '. $attributes['wrapBackgroundOverlayColMob'].';' .
-                                '}' : ' .ub-section-block-gradient-mob {' . 'background-image: '. $attributes['gradientTypeMob'].'-gradient('.($attributes['gradientTypeMob'] === 'radial' ? 'at ' : '').($attributes['gradientTypeMob'] === 'linear' ? $attributes['gradientAngleMob'] : $attributes['gradientPositionMob'].',').
-                                ( $attributes['gradientTypeMob'] === 'linear' ? 'deg,' : '').$attributes['wrapGradientOverlayColMob'].' '.$attributes['wrapGradientLocationMob'].'%,'.
-                                $attributes['wrapGradientSecondColMob'].' '.$attributes['wrapGradientSecondLocationMob'].'%);' .
-                                'opacity:'.($attributes['wrapGradientOverlayMob'] == 100 ? 1 : '0.'. $attributes['wrapGradientOverlayMob']).'}') .
+                        ' . $prefix . ($attributes['selectTabMob'] === 'Standart' ? ' .ub-section-block-overlay-mob {' .
+                                'opacity: ' . ($attributes['wrapBackgroundOverlayMob'] == 100 ? 1 : '0.' . $attributes['wrapBackgroundOverlayMob']) . ';' .
+                                'background-color: ' . $attributes['wrapBackgroundOverlayColMob'] . ';' .
+                                '}' : ' .ub-section-block-gradient-mob {' . 'background-image: ' . $attributes['gradientTypeMob'] . '-gradient(' . ($attributes['gradientTypeMob'] === 'radial' ? 'at ' : '') . ($attributes['gradientTypeMob'] === 'linear' ? $attributes['gradientAngleMob'] : $attributes['gradientPositionMob'] . ',') .
+                                ($attributes['gradientTypeMob'] === 'linear' ? 'deg,' : '') . $attributes['wrapGradientOverlayColMob'] . ' ' . $attributes['wrapGradientLocationMob'] . '%,' .
+                                $attributes['wrapGradientSecondColMob'] . ' ' . $attributes['wrapGradientSecondLocationMob'] . '%);' .
+                                'opacity:' . ($attributes['wrapGradientOverlayMob'] == 100 ? 1 : '0.' . $attributes['wrapGradientOverlayMob']) . '}') .
                             '}}';
                     }
                     break;

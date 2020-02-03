@@ -423,6 +423,38 @@ const attributes = {
         type: "number",
         default: 0
     },
+    gradientTypeMob: {
+        type: "string",
+        default: "linear",
+    },
+    gradientAngleMob: {
+        type: "number",
+        default: 180,
+    },
+    gradientPositionMob: {
+        type: "string",
+        default: "center center",
+    },
+    wrapGradientOverlayMob: {
+        type: "number",
+        default: 0
+    },
+    wrapGradientOverlayColMob:{
+        type: "string",
+        default: "#ffffff"
+    },
+    wrapGradientLocationMob:{
+        type: "number",
+        default: 0
+    },
+    wrapGradientSecondColMob:{
+        type: "string",
+        default: "#332bbf"
+    },
+    wrapGradientSecondLocationMob:{
+        type: "number",
+        default: 0
+    },
 	textColor: {
 		type: "string",
 		default: ""

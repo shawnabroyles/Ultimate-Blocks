@@ -619,6 +619,15 @@ function ub_include_block_attribute_css() {
                     }
                     if($attributes['set_tab_bg']) {
                         $blockStylesheets .= '@media (max-width: 1024px) and (min-width: 768px) {
+                        ' . $prefix . ' .ub-section-block-video-wrap {' . '
+                            display: none;
+                        } 
+                        ' . $prefix . ' .ub-section-block-overlay {' . '
+                            display: none;
+                        }
+                        ' . $prefix . ' .ub-section-block-gradient {' . '
+                            display: none;
+                        }
                         ' . $prefix . '{' .
                             'margin: ' . $attributes['marginTopWrapTab'] . $attributes['selectUnitsTab'] . ' ' . $attributes['marginRightWrapTab'] . $attributes['selectUnitsTab'] . ' '
                             . $attributes['marginBottomWrapTab'] . $attributes['selectUnitsTab'] . ' ' . $attributes['marginLeftWrapTab'] . $attributes['selectUnitsTab'] . ';' .
@@ -632,6 +641,9 @@ function ub_include_block_attribute_css() {
                     }
                     if($attributes['set_tab_bgOv']) {
                         $blockStylesheets .= '@media (max-width: 1024px) and (min-width: 768px) {
+                        ' . $prefix . ' .ub-section-block-video-wrap {' . '
+                            display: none;
+                        } 
                         ' . $prefix . ' .ub-section-block-overlay {' . '
                             display: none;
                         }
@@ -709,6 +721,15 @@ function ub_include_block_attribute_css() {
                     }
                     if($attributes['set_mob_bg']) {
                         $blockStylesheets .= '@media (max-width: 767px) {
+                        ' . $prefix . ' .ub-section-block-video-wrap {' . '
+                            display: none;
+                        } 
+                        ' . $prefix . ' .ub-section-block-overlay {' . '
+                            display: none;
+                        }
+                        ' . $prefix . ' .ub-section-block-gradient {' . '
+                            display: none;
+                        }
                         ' . $prefix . '{' .
                             'margin: ' . $attributes['marginTopWrapMob'] . $attributes['selectUnitsMob'] . ' ' . $attributes['marginRightWrapMob'] . $attributes['selectUnitsMob'] . ' '
                             . $attributes['marginBottomWrapMob'] . $attributes['selectUnitsMob'] . ' ' . $attributes['marginLeftWrapMob'] . $attributes['selectUnitsMob'] . ';' .
@@ -722,6 +743,9 @@ function ub_include_block_attribute_css() {
                     }
                     if($attributes['set_mob_bgOv']) {
                         $blockStylesheets .= '@media (max-width: 767px) {
+                        ' . $prefix . ' .ub-section-block-video-wrap {' . '
+                            display: none;
+                        }    
                         ' . $prefix . ' .ub-section-block-overlay {' . '
                             display: none;
                         }

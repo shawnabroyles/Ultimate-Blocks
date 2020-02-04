@@ -22,11 +22,11 @@ function ub_render_section($attributes, $content){
                     <video class="ub-block-video" autoplay '.($videoLoop ? 'loop' : '' ).' '.($videoMuted ? 'muted' : '' ).' src="'. $videoURL.'">
                     </video>
                 </div>'.
-               ($selectTab === 'Standart' ? '<div class="ub-section-block-overlay"></div>' :
+               ($selectTab === 'Standard' ? '<div class="ub-section-block-overlay"></div>' :
                    '<div class="ub-section-block-gradient"></div>').
-               ($selectTabTablet === 'Standart' ? '<div class="ub-section-block-overlay-tab"></div>' :
+               ($selectTabTablet === 'Standard' ? '<div class="ub-section-block-overlay-tab"></div>' :
                    '<div class="ub-section-block-gradient-tab"></div>').
-               ($selectTabMob === 'Standart' ? '<div class="ub-section-block-overlay-mob"></div>' :
+               ($selectTabMob === 'Standard' ? '<div class="ub-section-block-overlay-mob"></div>' :
                    '<div class="ub-section-block-gradient-mob"></div>').
                '<div class="ub-single-block ub-tab'.$tabletSizeGrid.' ub-mobile'.$mobileSizeGrid.'">' . $content . '</div>'
             . '</'.$wrapTag.'>';

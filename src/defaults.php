@@ -1400,15 +1400,15 @@ $defaultValues = array(
             ),
             'selectTab' => array(
                 'type' => 'string',
-                'default' => 'Standart',
+                'default' => 'Standard',
             ),
             'selectTabTablet' => array(
                 'type' => 'string',
-                'default' => 'Standart',
+                'default' => 'Standard',
             ),
             'selectTabMob' => array(
                 'type' => 'string',
-                'default' => 'Standart',
+                'default' => 'Standard',
             ),
             'gradientType' => array(
                 'type' => 'string',

@@ -15,7 +15,7 @@ import Inspector from './inspector';
 
 const { Fragment } = wp.element;
 const { withSelect } = wp.data;
-const { BlockControls } = wp.blockEditor || wp.editor;
+const { BlockControls, BlockAlignmentToolbar } = wp.blockEditor || wp.editor;
 const { Placeholder, Spinner, Toolbar } = wp.components;
 
 export default registerBlockType('ub/post-grid', {
@@ -32,6 +32,15 @@ export default registerBlockType('ub/post-grid', {
 		__('Ultimate Blocks', 'ultimate-blocks')
 	],
 	attributes,
+    getEditWrapperProps({ wrapAlignment }) {
+        if (
+            "full" === wrapAlignment ||
+            "wide" === wrapAlignment ||
+            "center" === wrapAlignment
+        ) {
+            return { "data-align": wrapAlignment };
+        }
+    },
 	/**
 	 * The edit function describes the structure of your block in the context of the editor.
 	 * This represents what the editor will render when the block is used.
@@ -72,7 +81,7 @@ export default registerBlockType('ub/post-grid', {
 			posts: getEntityRecords('postType', postType, getPosts)
 		};
 	})(props => {
-		const { postLayout } = props.attributes;
+		const { postLayout, wrapAlignment } = props.attributes;
 		const { setAttributes } = props;
 		const emptyPosts = Array.isArray(props.posts) && props.posts.length;
 
@@ -115,6 +124,11 @@ export default registerBlockType('ub/post-grid', {
 			<Fragment>
 				<Inspector {...{ ...props }} />
 				<BlockControls>
+                    <BlockAlignmentToolbar
+                        value={ wrapAlignment }
+                        controls={ [ 'center', 'wide', 'full' ] }
+                        onChange={ value => setAttributes( { wrapAlignment: value } ) }
+                    />
 					<Toolbar controls={toolBarButton} />
 				</BlockControls>
 				<PostGridBlock {...{ ...props }} />

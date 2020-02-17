@@ -1042,6 +1042,10 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => ''
             ),
+            'wrapAlignment' => array(
+                'type' => 'string',
+                'default' => '',
+            ),
             'categories'          => array(
                 'type' => 'string',
                 'default' => ''

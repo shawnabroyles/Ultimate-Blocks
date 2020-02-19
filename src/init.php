@@ -459,11 +459,7 @@ function ub_include_block_attribute_css() {
                         'border-color: lightgrey;' . PHP_EOL .
                         'color: #000000;' . PHP_EOL .
                     '}' . PHP_EOL . 
-                    $prefix . ' .wp-block-ub-tabbed-content-tab-title-wrap.active{' . PHP_EOL .
-                        'background-color: ' . $attributes['theme'] . ';' . PHP_EOL .
-                        'border-color: ' . $attributes['theme'] . ';' . PHP_EOL .
-                        'color: ' . $attributes['titleColor'] . ';' . PHP_EOL .
-                    '}' . PHP_EOL .
+                    $prefix . ' .wp-block-ub-tabbed-content-tab-title-wrap.active, ' .
                     $prefix . ' .wp-block-ub-tabbed-content-tab-title-vertical-wrap.active{' . PHP_EOL .
                         'background-color: ' . $attributes['theme'] . ';' . PHP_EOL .
                         'border-color: ' . $attributes['theme'] . ';' . PHP_EOL .
@@ -549,7 +545,7 @@ function ub_include_block_attribute_css() {
                         'background-position:' . $attributes['wrapBackgroundPosition'] . ';' . PHP_EOL . 'background-repeat:' . $attributes['wrapBackgroundRepeat'] . ';' . PHP_EOL .
                         'background-attachment:' . $attributes['wrapBackgroundAttachment']. ';' . PHP_EOL . 'color:' . $attributes['textColor'] . ';' . PHP_EOL .
                     '}' . PHP_EOL .
-                    $prefix .( $attributes['selectTab'] === 'Standart' ? ' .ub-section-block-overlay {'. PHP_EOL .
+                    $prefix .( $attributes['selectTab'] === 'Standard' ? ' .ub-section-block-overlay {'. PHP_EOL .
                         'opacity: '.($attributes['wrapBackgroundOverlay'] == 100 ? 1 : '0.'. $attributes['wrapBackgroundOverlay']).';' . PHP_EOL .
                         'background-color: '. $attributes['wrapBackgroundOverlayCol'].';' . PHP_EOL .
                     '}' : ' .ub-section-block-gradient {'. PHP_EOL . 'background-image: '. $attributes['gradientType'].'-gradient('.($attributes['gradientType'] === 'radial' ? 'at ' : '').($attributes['gradientType'] === 'linear' ? $attributes['gradientAngle'] : $attributes['gradientPosition'].',').
@@ -600,25 +596,16 @@ function ub_include_block_attribute_css() {
                            ' . $prefix . '>.ub-tab-first-row>.ub-single-wrap:nth-child(1){
                                padding-bottom: ' . $attributes['gutter'] . ';' . '
                                margin: 0px;
-                           }' . $prefix . '>.ub-tab-first-row>.ub-single-wrap:nth-child(2){
+                           }' . $prefix . '>.ub-tab-first-row>.ub-single-wrap:not(:nth-child(1)){
                                padding-right:' . (((int)trim($attributes['gutter'], "px")) / 2) . 'px;
                                margin: 0px;
-                           }' . $prefix . '>.ub-tab-first-row>.ub-single-wrap:nth-child(3){
-                               padding-left:' . (((int)trim($attributes['gutter'], "px")) / 2) . 'px;
-                               margin: 0px;
-                           }' . $prefix . '>.ub-tab-last-row>.ub-single-wrap:nth-child(1){
+                           }' . $prefix . '>.ub-tab-last-row>.ub-single-wrap:not(:nth-child(3)){
                                padding-right:' . (((int)trim($attributes['gutter'], "px")) / 2) . 'px;
-                               margin: 0px;
-                           }' . $prefix . '>.ub-tab-last-row>.ub-single-wrap:nth-child(2){
-                               padding-left:' . (((int)trim($attributes['gutter'], "px")) / 2) . 'px;
                                margin: 0px;
                            }' . $prefix . '>.ub-tab-last-row>.ub-single-wrap:nth-child(3){
                                padding-top: ' . $attributes['gutter'] . ';' . '
                                margin: 0px;
-                           }' . $prefix . '>.ub-tab-collapse-row>.ub-single-wrap:nth-child(1){
-                               padding-bottom: ' . $attributes['gutter'] . ';' . '
-                               margin: 0px;
-                           }' . $prefix . '>.ub-tab-collapse-row>.ub-single-wrap:nth-child(2){
+                           }' . $prefix . '>.ub-tab-collapse-row>.ub-single-wrap:not(:nth-child(3)){
                                padding-bottom: ' . $attributes['gutter'] . ';' . '
                                margin: 0px;
                            }' . $prefix . '>.ub-tab-collapse-row>.ub-single-wrap:nth-child(3){
@@ -640,15 +627,9 @@ function ub_include_block_attribute_css() {
                                padding-left:' . (((int)trim($attributes['gutter'], "px")) / 2) . 'px;
                                padding-top:' . (((int)trim($attributes['gutter'], "px")) / 2) . 'px;
                                margin: 0px;
-                           }' . $prefix . '>.ub-tab-collapse-four-row>.ub-single-wrap:nth-child(1){                             
-                               padding-bottom:' . $attributes['gutter'] . ';' . '
-                               margin: 0px;
-                           }' . $prefix . '>.ub-tab-collapse-four-row>.ub-single-wrap:nth-child(2){
-                               padding-bottom:' . $attributes['gutter'] . ';' . '
-                               margin: 0px;
-                           }' . $prefix . '>.ub-tab-collapse-four-row>.ub-single-wrap:nth-child(3){
-                               padding-bottom:' . $attributes['gutter'] . ';' . '
-                               margin: 0px;
+                           }' . $prefix . '>.ub-tab-collapse-four-row>.ub-single-wrap:not(:nth-child(4)){                             
+                               padding-bottom:' . $attributes['gutter'] . ';' .
+                               'margin: 0px;
                            }' . $prefix . '>.ub-tab-collapse-four-row>.ub-single-wrap:nth-child(4){
                                padding-bottom: 0px;
                                margin: 0px;
@@ -657,14 +638,10 @@ function ub_include_block_attribute_css() {
                     }
                     if($attributes['set_tab_bg']) {
                         $blockStylesheets .= '@media (max-width: 1024px) and (min-width: 768px) {
-                        ' . $prefix . ' .ub-section-block-video-wrap {' . '
-                            display: none;
-                        } 
-                        ' . $prefix . ' .ub-section-block-overlay {' . '
-                            display: none;
-                        }
-                        ' . $prefix . ' .ub-section-block-gradient {' . '
-                            display: none;
+                        ' . $prefix . ' .ub-section-block-video-wrap, ' 
+                        . $prefix . ' .ub-section-block-overlay ,'
+                        . $prefix . ' .ub-section-block-gradient {' .
+                            'display: none;
                         }
                         ' . $prefix . '{' .
                             'margin: ' . $attributes['marginTopWrapTab'] . $attributes['selectUnitsTab'] . ' ' . $attributes['marginRightWrapTab'] . $attributes['selectUnitsTab'] . ' '
@@ -679,16 +656,12 @@ function ub_include_block_attribute_css() {
                     }
                     if($attributes['set_tab_bgOv']) {
                         $blockStylesheets .= '@media (max-width: 1024px) and (min-width: 768px) {
-                        ' . $prefix . ' .ub-section-block-video-wrap {' . '
-                            display: none;
-                        } 
-                        ' . $prefix . ' .ub-section-block-overlay {' . '
-                            display: none;
-                        }
-                        ' . $prefix . ' .ub-section-block-gradient {' . '
-                            display: none;
-                        }
-                        ' . $prefix . ($attributes['selectTabTablet'] === 'Standart' ? ' .ub-section-block-overlay-tab {' .
+                        ' . $prefix . ' .ub-section-block-video-wrap, ' 
+                        . $prefix . ' .ub-section-block-overlay ,'
+                        . $prefix . ' .ub-section-block-gradient {' .
+                            'display: none;
+                        }'
+                        . $prefix . ($attributes['selectTabTablet'] === 'Standard' ? ' .ub-section-block-overlay-tab {' .
                                 'opacity: ' . ($attributes['wrapBackgroundOverlayTab'] == 100 ? 1 : '0.' . $attributes['wrapBackgroundOverlayTab']) . ';' .
                                 'background-color: ' . $attributes['wrapBackgroundOverlayColTab'] . ';' .
                                 '}' : ' .ub-section-block-gradient-tab {' . 'background-image: ' . $attributes['gradientTypeTab'] . '-gradient(' . ($attributes['gradientTypeTab'] === 'radial' ? 'at ' : '') . ($attributes['gradientTypeTab'] === 'linear' ? $attributes['gradientAngleTab'] : $attributes['gradientPositionTab'] . ',') .
@@ -742,13 +715,7 @@ function ub_include_block_attribute_css() {
                                padding-left:'. (((int)trim($attributes['gutter'], "px"))/2) . 'px;
                                padding-top:'. (((int)trim($attributes['gutter'], "px"))/2) . 'px;
                                margin: 0px;
-                           }'. $prefix .'>.ub-mobile-collapse-four-row>.ub-single-wrap:nth-child(1){                             
-                               padding-bottom:'. $attributes['gutter'] .';'.'
-                               margin: 0px;
-                           }'. $prefix .'>.ub-mobile-collapse-four-row>.ub-single-wrap:nth-child(2){
-                               padding-bottom:'. $attributes['gutter'] .';'.'
-                               margin: 0px;
-                           }'. $prefix .'>.ub-mobile-collapse-four-row>.ub-single-wrap:nth-child(3){
+                           }'. $prefix .'>.ub-mobile-collapse-four-row>.ub-single-wrap:not(:nth-child(4)){                             
                                padding-bottom:'. $attributes['gutter'] .';'.'
                                margin: 0px;
                            }'. $prefix .'>.ub-mobile-collapse-four-row>.ub-single-wrap:nth-child(4){
@@ -759,13 +726,9 @@ function ub_include_block_attribute_css() {
                     }
                     if($attributes['set_mob_bg']) {
                         $blockStylesheets .= '@media (max-width: 767px) {
-                        ' . $prefix . ' .ub-section-block-video-wrap {' . '
-                            display: none;
-                        } 
-                        ' . $prefix . ' .ub-section-block-overlay {' . '
-                            display: none;
-                        }
-                        ' . $prefix . ' .ub-section-block-gradient {' . '
+                        ' . $prefix . ' .ub-section-block-video-wrap, ' 
+                        . $prefix . ' .ub-section-block-overlay ,'
+                        . $prefix . ' .ub-section-block-gradient {' . '
                             display: none;
                         }
                         ' . $prefix . '{' .
@@ -781,16 +744,12 @@ function ub_include_block_attribute_css() {
                     }
                     if($attributes['set_mob_bgOv']) {
                         $blockStylesheets .= '@media (max-width: 767px) {
-                        ' . $prefix . ' .ub-section-block-video-wrap {' . '
-                            display: none;
-                        }    
-                        ' . $prefix . ' .ub-section-block-overlay {' . '
-                            display: none;
-                        }
-                        ' . $prefix . ' .ub-section-block-gradient {' . '
-                            display: none;
-                        }
-                        ' . $prefix . ($attributes['selectTabMob'] === 'Standart' ? ' .ub-section-block-overlay-mob {' .
+                            ' . $prefix . ' .ub-section-block-video-wrap, ' 
+                            . $prefix . ' .ub-section-block-overlay ,'
+                            . $prefix . ' .ub-section-block-gradient {' . '
+                                display: none;
+                            }'
+                        . $prefix . ($attributes['selectTabMob'] === 'Standard' ? ' .ub-section-block-overlay-mob {' .
                                 'opacity: ' . ($attributes['wrapBackgroundOverlayMob'] == 100 ? 1 : '0.' . $attributes['wrapBackgroundOverlayMob']) . ';' .
                                 'background-color: ' . $attributes['wrapBackgroundOverlayColMob'] . ';' .
                                 '}' : ' .ub-section-block-gradient-mob {' . 'background-image: ' . $attributes['gradientTypeMob'] . '-gradient(' . ($attributes['gradientTypeMob'] === 'radial' ? 'at ' : '') . ($attributes['gradientTypeMob'] === 'linear' ? $attributes['gradientAngleMob'] : $attributes['gradientPositionMob'] . ',') .

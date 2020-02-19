@@ -226,10 +226,6 @@ $defaultValues = array(
             'hasFAQSchema' => array(
                 'type' => 'boolean',
                 'default' => false
-            ),
-            'preventCollapse' => array(
-                'type' => 'boolean',
-                'default' => false
             )
         )
     ),
@@ -254,14 +250,6 @@ $defaultValues = array(
             'panelTitle' => array(
                 'type' => 'string',
                 'default' => ''
-            ),
-            'titleTag' => array(
-                'type' => 'string',
-                'default' => 'p'
-            ),
-            'preventCollapse' => array(
-                'type' => 'boolean',
-                'default' => false
             )
         )
     ),
@@ -645,34 +633,6 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => ''
             ),
-            'description' => array(
-                'type' => 'string',
-                'default' => ''
-            ),
-            'enableDescription' => array(
-                'type' => 'boolean',
-                'default' => false,
-            ),
-            'descriptionAlign' => array(
-                'type' => 'string',
-                'default' => 'left'
-            ),
-            'imgURL' => array(
-                'type' => 'string',
-                'default' => ''
-            ),
-            'imgID' => array(
-                'type' => 'number',
-                'default' => -1
-            ),
-            'imgAlt' => array(
-                'type' => 'string',
-                'default' => ''
-            ),
-            'enableImage' => array(
-                'type' => 'boolean',
-                'default' => false
-            ),
             'items' => array(
                 'type' => 'string',
                 'default' => '[{"label": "", "value": 0}]'
@@ -745,58 +705,6 @@ $defaultValues = array(
             'starOutlineColor' => array(
                 'type' => 'string',
                 'default' => '#000000'
-            ),
-            'imageSize' => array(
-                'type' => 'number',
-                'default' => 100
-            ),
-            'brand' => array(
-                'type' => 'string',
-                'default' => ''
-            ),
-            'sku' => array(
-                'type' => 'string',
-                'default' => ''
-            ),
-            'identifier' => array(
-                'type' => 'string',
-                'default' => ''
-            ),
-            'identifierType' => array(
-                'type' => 'string',
-                'default' => 'gtin'
-            ),
-            'offerType' => array(
-                'type' => 'string',
-                'default' => 'Offer'
-            ),
-            'offerStatus' => array(
-                'type' => 'string',
-                'default' => 'InStock'
-            ),
-            'offerHighPrice' => array(
-                'type' => 'number',
-                'default' => 0
-            ),
-            'offerLowPrice' => array(
-                'type' => 'number',
-                'default' => 0
-            ),
-            'offerCount' => array(
-                'type' => 'number',
-                'default' => 1
-            ),
-            'offerPrice' => array(
-                'type' => 'number',
-                'default' => 0
-            ),
-            'offerCurrency' => array(
-                'type' => 'string',
-                'default' => 'USD'
-            ),
-            'offerExpiry' => array(
-                'type' => 'number',
-                'default' => time() + 10800
             )
         )
     ),
@@ -955,10 +863,6 @@ $defaultValues = array(
     ),
     'ub/styled-list' => array(
         'attributes' => array(
-            'alignment' => array(
-                'type' => 'string',
-                'default' => 'left'
-            ),
             'blockID' => array(
                 'type' => 'string',
                 'default' => ''
@@ -1073,17 +977,6 @@ $defaultValues = array(
             'enableSmoothScroll' => array(
                 'type' => 'boolean',
                 'default' => false
-            ),
-            'titleAlignment' => array(
-                'type' => 'string',
-                'default' => 'left'
-            ),
-            'gaps' => array(
-                'type' => 'array',
-                'default' => array(),
-                'items' => array(
-                    'type' => 'number'
-                )
             )
         )
     ),
@@ -1149,25 +1042,27 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => ''
             ),
-            'categories' => array(
+            'categories'          => array(
                 'type' => 'string',
+                'default' => ''
             ),
-            'className' => array(
+            'className'           => array(
                 'type' => 'string',
+                'default' => ''
             ),
-            'amountPosts' => array(
+            'amountPosts'         => array(
                 'type'    => 'number',
                 'default' => 6,
             ),
-            'checkPostDate' => array(
+            'checkPostDate'     => array(
                 'type'    => 'boolean',
                 'default' => true,
             ),
-            'checkPostExcerpt' => array(
+            'checkPostExcerpt'  => array(
                 'type'    => 'boolean',
                 'default' => true,
             ),
-            'checkPostAuthor' => array(
+            'checkPostAuthor'   => array(
                 'type'    => 'boolean',
                 'default' => true,
             ),
@@ -1175,50 +1070,590 @@ $defaultValues = array(
                 'type'    => 'boolean',
                 'default' => true,
             ),
-            'checkPostLink' => array(
+            'checkPostLink'     => array(
                 'type'    => 'boolean',
                 'default' => true,
             ),
-            'checkPostTitle' => array(
+            'checkPostTitle'    => array(
                 'type'    => 'boolean',
                 'default' => true,
             ),
-            'postLayout' => array(
+            'postLayout'          => array(
                 'type'    => 'string',
                 'default' => 'grid',
             ),
-            'columns' => array(
+            'columns'             => array(
                 'type'    => 'number',
                 'default' => 2,
             ),
-            'width' => array(
+            'width'               => array(
                 'type'    => 'string',
                 'default' => 'wide',
             ),
-            'order' => array(
+            'order'               => array(
                 'type'    => 'string',
                 'default' => 'desc',
             ),
-            'orderBy' => array(
+            'orderBy'             => array(
                 'type'    => 'string',
                 'default' => 'date',
             ),
-            'readMoreText' => array(
+            'readMoreText'        => array(
                 'type'    => 'string',
                 'default' => 'Continue Reading',
             ),
-            'offset' => array(
+            'offset'              => array(
                 'type'    => 'number',
                 'default' => 0,
             ),
-            'excerptLength' => array(
+            'excerptLength'       => array(
                 'type'    => 'number',
                 'default' => 55,
             ),
-            'postType' => array(
+            'postType'            => array(
                 'type'    => 'string',
                 'default' => 'post',
             ),
         )
-    )
+    ),
+    'ub/section' => array(
+        'attributes' => array(
+            'blockID' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'wrapAlignment' => array(
+                'type' => 'string',
+                'default' => '',
+            ),
+            'wrapVerticalAligment' => array(
+                'type' => 'string',
+                'default' => 'flex-start',
+            ),
+            'tabletSizeGrid' => array(
+                'type' => 'string',
+                'default' => '',
+            ),
+            'mobileSizeGrid' => array(
+                'type' => 'string',
+                'default' => '',
+            ),
+            'marginTopWrap' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'marginRightWrap' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'marginBottomWrap' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'marginLeftWrap' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'paddingTopWrap' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'paddingRightWrap' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'paddingBottomWrap' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'paddingLeftWrap' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'marginTopWrapTab' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'marginRightWrapTab' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'marginBottomWrapTab' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'marginLeftWrapTab' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'paddingTopWrapTab' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'paddingRightWrapTab' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'paddingBottomWrapTab' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'paddingLeftWrapTab' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'marginTopWrapMob' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'marginRightWrapMob' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'marginBottomWrapMob' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'marginLeftWrapMob' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'paddingTopWrapMob' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'paddingRightWrapMob' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'paddingBottomWrapMob' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'paddingLeftWrapMob' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'selectUnits' => array(
+                'type' => 'string',
+                'default' => 'px',
+            ),
+            'selectUnitsTab' => array(
+                'type' => 'string',
+                'default' => 'px',
+            ),
+            'selectUnitsMob' => array(
+                'type' => 'string',
+                'default' => 'px',
+            ),
+            'gutter' => array(
+                'type' => 'string',
+                'default' => 'none',
+            ),
+            'wrapBorderStyle' => array(
+                 'type' => 'string',
+                 'default' => 'solid',
+            ),
+            'wrapBorderSize' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'wrapBorderRadius' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'wrapBorderColor' => array(
+                'type' => 'string',
+                'default' => '#ffffff',
+            ),
+            'wrapBorderTop' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'wrapBorderLeft' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'wrapBorderRight' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'wrapBorderBottom' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'wrapColor' => array(
+                'type' => 'string',
+                'default' => '',
+            ),
+            'wrapColorTab' => array(
+                'type' => 'string',
+                'default' => '',
+            ),
+            'wrapColorMob' => array(
+                'type' => 'string',
+                'default' => '',
+            ),
+            'wrapBackgroundSize' => array(
+                'type' => 'string',
+                'default' => 'cover',
+            ),
+            'wrapBackgroundPosition' => array(
+                'type' => 'string',
+                'default' => 'center center',
+            ),
+            'wrapBackgroundRepeat' => array(
+                'type' => 'string',
+                'default' => 'no-repeat',
+            ),
+            'wrapBackgroundAttachment' => array(
+                'type' => 'string',
+                'default' => 'scroll',
+            ),
+            'wrapBackgroundSizeTab' => array(
+                'type' => 'string',
+                'default' => 'cover',
+            ),
+            'wrapBackgroundPositionTab' => array(
+                'type' => 'string',
+                'default' => 'center center',
+            ),
+            'wrapBackgroundRepeatTab' => array(
+                'type' => 'string',
+                'default' => 'no-repeat',
+            ),
+            'wrapBackgroundAttachmentTab' => array(
+                'type' => 'string',
+                'default' => 'scroll',
+            ),
+            'wrapBackgroundSizeMob' => array(
+                'type' => 'string',
+                'default' => 'cover',
+            ),
+            'wrapBackgroundPositionMob' => array(
+                'type' => 'string',
+                'default' => 'center center',
+            ),
+            'wrapBackgroundRepeatMob' => array(
+                'type' => 'string',
+                'default' => 'no-repeat',
+            ),
+            'wrapBackgroundAttachmentMob' => array(
+                'type' => 'string',
+                'default' => 'scroll',
+            ),
+            'wrapTag' => array(
+                'type' => 'string',
+                'default' => 'div',
+            ),
+            'imgURL' => array(
+                'type' => 'string',
+                'default' => '',
+            ),
+            'imgURLtab' => array(
+                'type' => 'string',
+                'default' => '',
+            ),
+            'imgURLmob' => array(
+                'type' => 'string',
+                'default' => '',
+            ),
+            'videoID' => array(
+                'type' => 'number',
+                'default' => -1
+            ),
+            'videoURL' => array(
+                'type' => 'string',
+                'default' => '',
+            ),
+            'videoMuted' => array(
+                'type' => 'boolean',
+                'default' => true,
+            ),
+            'videoLoop' => array(
+                'type' => 'boolean',
+                'default' => true,
+            ),
+            'wrapBackgroundOverlay' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'wrapBackgroundOverlayCol' => array(
+                'type' => 'string',
+                'default' => '#ffffff',
+            ),
+            'wrapBackgroundOverlayTab' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'wrapBackgroundOverlayColTab' => array(
+                'type' => 'string',
+                'default' => '#ffffff',
+            ),
+            'wrapBackgroundOverlayMob' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'wrapBackgroundOverlayColMob' => array(
+                'type' => 'string',
+                'default' => '#ffffff',
+            ),
+            'selectTab' => array(
+                'type' => 'string',
+                'default' => 'Standard',
+            ),
+            'selectTabTablet' => array(
+                'type' => 'string',
+                'default' => 'Standard',
+            ),
+            'selectTabMob' => array(
+                'type' => 'string',
+                'default' => 'Standard',
+            ),
+            'gradientType' => array(
+                'type' => 'string',
+                'default' => 'linear'
+            ),
+            'gradientAngle' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'gradientPosition' => array(
+                'type' => 'string',
+                'default' => 'center center'
+            ),
+            'wrapGradientOverlay' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'wrapGradientOverlayCol' => array(
+                'type' => 'string',
+                'default' => '#ffffff',
+            ),
+            'wrapGradientLocation' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'wrapGradientSecondCol' => array(
+                'type' => 'string',
+                'default' => '#332bbf',
+            ),
+            'wrapGradientSecondLocation' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'gradientTypeTab' => array(
+                'type' => 'string',
+                'default' => 'linear'
+            ),
+            'gradientAngleTab' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'gradientPositionTab' => array(
+                'type' => 'string',
+                'default' => 'center center'
+            ),
+            'wrapGradientOverlayTab' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'wrapGradientOverlayColTab' => array(
+                'type' => 'string',
+                'default' => '#ffffff',
+            ),
+            'wrapGradientLocationTab' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'wrapGradientSecondColTab' => array(
+                'type' => 'string',
+                'default' => '#332bbf',
+            ),
+            'wrapGradientSecondLocationTab' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'gradientTypeMob' => array(
+                'type' => 'string',
+                'default' => 'linear'
+            ),
+            'gradientAngleMob' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'gradientPositionMob' => array(
+                'type' => 'string',
+                'default' => 'center center'
+            ),
+            'wrapGradientOverlayMob' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'wrapGradientOverlayColMob' => array(
+                'type' => 'string',
+                'default' => '#ffffff',
+            ),
+            'wrapGradientLocationMob' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'wrapGradientSecondColMob' => array(
+                'type' => 'string',
+                'default' => '#332bbf',
+            ),
+            'wrapGradientSecondLocationMob' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'set_tab_bg' => array(
+                'type' => 'boolean',
+                'default' => false,
+            ),
+            'set_mob_bg' => array(
+                'type' => 'boolean',
+                'default' => false,
+            ),
+            'set_tab_bgOv' => array(
+                'type' => 'boolean',
+                'default' => false,
+            ),
+            'set_mob_bgOv' => array(
+                'type' => 'boolean',
+                'default' => false,
+            ),
+            'textColor' => array(
+                'type' => 'string',
+                'default' => '',
+            ),
+            'columnBgColor' => array(
+                'type' => 'string',
+                'default' => '',
+            )
+        )
+    ),
+    'ub/section-column' => array(
+        'attributes' => array(
+            'blockID' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'columnMarginTop' => array(
+                'type' => 'number',
+                'default' => 0,
+             ),
+            'columnMarginRight' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'columnMarginLeft' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'columnMarginBottom' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'columnPaddingTop' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'columnPaddingRight' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'columnPaddingLeft' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'columnPaddingBottom' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'columnBgColor' => array(
+                'type' => 'string',
+                'default' => '',
+            ),
+            'columnBorderColor' => array(
+                'type' => 'string',
+                'default' => '#ffffff',
+            ),
+            'columnBorderStyle' => array(
+                'type' => 'string',
+                'default' => 'solid',
+            ),
+            'columnBorderSize' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'columnBorderRadius' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'columnBorderColor' => array(
+                'type' => 'string',
+                'default' => '#ffffff',
+            ),
+            'columnBorderTop' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'columnBorderRight' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'columnBorderBottom' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'columnBorderLeft' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'columnBrTopRadius' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'columnBrLeftRadius' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'columnBrRightRadius' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'columnBrBottomRadius' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'columnImgURL' => array(
+                 'type' => 'string',
+                 'default' => '',
+            ),
+            'columnBgSize' => array(
+                 'type' => 'string',
+                 'default' => 'cover',
+            ),
+            'columnBgPosition' => array(
+                'type' => 'string',
+                'default' => 'center center',
+            ),
+            'columnBgRepeat' => array(
+                'type' => 'string',
+                'default' => 'no-repeat',
+            ),
+            'columnBgAttachment' => array(
+                'type' => 'string',
+                'default' => 'scroll',
+            ),
+            'onControlBrSize' => array(
+                'type' => 'boolean',
+                'default' => true,
+            ),
+            'onControlBrRadius' => array(
+                'type' => 'boolean',
+                'default' => true,
+            ),
+        )
+    ),
 );

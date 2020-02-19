@@ -198,10 +198,10 @@
 //Inspector wrap style
 
 .ub-set-bg-tab,
-.ub-set-bg-mob{
+.ub-set-bg-mob {
 	flex-direction: column;
 }
-.ub-set-toggle-control{
+.ub-set-toggle-control {
 	div {
 		span {
 			margin-top: 1%;
@@ -212,13 +212,12 @@
 	}
 }
 .selectUnitsTab,
-.selectUnitsMob{
+.selectUnitsMob {
 	margin-top: 1% !important;
 }
 .ub-layout-wrap-select-units,
 .ub-layout-wrap-select-units-tab,
-.ub-layout-wrap-select-units-mob
-{
+.ub-layout-wrap-select-units-mob {
 	display: flex;
 	margin-top: 4%;
 	p {
@@ -307,7 +306,7 @@
 	}
 }
 
-.ub-overlay-setting{
+.ub-overlay-setting {
 	.ub-inspect-tabs {
 		.components-tab-panel__tab-content {
 			margin-top: 15px;
@@ -322,7 +321,7 @@
 		outline: 0;
 	}
 	.components-button {
-		&.ub-standart-tab,
+		&.ub-standard-tab,
 		&.ub-gradient-tab {
 			&.active-tab {
 				background: #f53d3d;
@@ -471,7 +470,7 @@
 	background-repeat: no-repeat;
 	background-attachment: scroll;
 }
-.ub-section-editor-gradient{
+.ub-section-editor-gradient {
 	top: 0px;
 	bottom: 0px;
 	left: 0;

@@ -171,14 +171,14 @@ export default class SectionEditor extends Component {
                                 }) }
                             type="image"
                             value={ null }
-                            render={ ( { open } ) => (
+                            render={ ( { open } ) => 
                                 <IconButton
                                     className="components-toolbar__control"
                                     label={ __( 'Background Image' ) }
                                     icon="format-image"
                                     onClick={ open }
                                 />
-                            ) }
+                            }
                         />
                     </Toolbar>
                     <Toolbar>
@@ -241,8 +241,8 @@ export default class SectionEditor extends Component {
                 <div className="ub-section-editor-video-wrap">
                     <video className="ub-editor-video" playsinline src={videoURL}></video>
                 </div>
-                <div className={( selectTab === 'Standart' ? 'ub-section-editor-overlay' : 'ub-section-editor-gradient')} style={
-                    (selectTab === 'Standart' ? {
+                <div className={( selectTab === 'Standard' ? 'ub-section-editor-overlay' : 'ub-section-editor-gradient')} style={
+                    (selectTab === 'Standard' ? {
                             backgroundColor: wrapBackgroundOverlayCol,
                             opacity: (wrapBackgroundOverlay == 100 ? 1 : `${wrapBackgroundOverlay / 100}`)
                         } :
@@ -344,9 +344,7 @@ export default class SectionEditor extends Component {
                                          maxWidth={ columns === 2 ? "90%" : !this.state.ResizeColWidthThree ? ( ( Math.round ( parseFloat ( colWidthOne ) ) ) + ( Math.round ( parseFloat ( colWidthTwo ) ) ) ) - 15 + '%' : ( ( Math.round( parseFloat( this.state.ResizeColWidthOne ) ) ) + ( Math.round( parseFloat( this.state.ResizeColWidthTwo ) ) ) ) - 15 + '%' }
                                          size={{ width:  ( !this.state.ResizeColWidthOne ? colWidthOne : this.state.ResizeColWidthOne + '%' )}}
                                          enable={{right:true, bottom:true}}
-                                         handleClasses={ {
-                                             right: 'ub_handle-right',
-                                         } }
+                                         handleClasses={ { right: 'ub_handle-right'} }
                                          grid={ [ width / 1000, 1 ] }
                                          onResize = {( event, direction, elt ) => {
                                              let firstCol;
@@ -402,7 +400,7 @@ export default class SectionEditor extends Component {
                                          <span className="right-column-width-size-bottom" style={{ display: this.state.display }}>{!this.state.ResizeColWidthTwo ? colWidthTwo : this.state.secondWidth + '%'}</span>
                                      </Resizable>
                                      }</ContainerDimensions>
-                                 { 3 === columns &&(
+                                 { 3 === columns &&
                                      <ContainerDimensions>
                                          {({width}) =>
                                              <Resizable
@@ -411,10 +409,8 @@ export default class SectionEditor extends Component {
                                                  minWidth= { !this.state.ResizeColWidthOne ? ( ( ( Math.round ( parseFloat ( colWidthOne ) ) ) + ( Math.round ( parseFloat ( colWidthTwo ) ) ) ) - ( Math.round ( parseFloat ( colWidthOne ) ) ) + 10  ) + '%' : ( ( ( Math.round ( parseFloat ( this.state.ResizeColWidthOne ) ) ) + ( Math.round ( parseFloat ( this.state.ResizeColWidthTwo ) ) ) ) - ( Math.round ( parseFloat ( this.state.ResizeColWidthTwo ) ) ) + 15  ) + '%' }
                                                  maxWidth= "90%"
                                                  size={{ width:  ( !this.state.ResizeColWidthThree ? ( parseFloat ( colWidthOne ) ) + ( parseFloat ( colWidthTwo ) ) + '%' : ( (! this.state.ResizeColWidthOne ? ( parseFloat ( colWidthOne ) ) : this.state.ResizeColWidthOne ) + this.state.ResizeColWidthTwo ) + '%' )}}
-                                                 enable={{right:true}}
-                                                 handleClasses={ {
-                                                     right: 'ub_handle-left',
-                                                 } }
+                                                 enable={{right: true}}
+                                                 handleClasses={ {right: 'ub_handle-left'} }
                                                  grid={ [ width / 1000, 1 ] }
                                                  onResize = {(event, direction, elt) => {
                                                      let secondColStart;
@@ -469,7 +465,7 @@ export default class SectionEditor extends Component {
                                                  <span className="right-column-width-size-bottom" style={{ display: this.state.displaythree }}>{!this.state.ResizeColWidthThree ? colWidthTwo : this.state.threeWidth + '%'}</span>
                                              </Resizable>
                                          }</ContainerDimensions>
-                                 )}
+                                 }
                                  <InnerBlocks
                                      template= {createColumn( columns )}
                                      templateLock={'all'}
@@ -485,11 +481,7 @@ export default class SectionEditor extends Component {
                             <div className="ub-section-column-wrap">
                                 <style>
                                     <Fragment>
-                                        { `#block-${clientId} .ub-section-column-wrap [data-type="ub/section-column"]:nth-child(1) { flex: 1; margin-right: ${ gutter }; justify-content: center; overflow-wrap: break-word; }` }
-                                        { `#block-${clientId} .ub-section-column-wrap [data-type="ub/section-column"]:nth-child(2) { flex: 1; margin-right: ${ gutter }; justify-content: center; overflow-wrap: break-word; }` }
-                                        { `#block-${clientId} .ub-section-column-wrap [data-type="ub/section-column"]:nth-child(3) { flex: 1; margin-right: ${ gutter }; justify-content: center; overflow-wrap: break-word; }` }
-                                        { `#block-${clientId} .ub-section-column-wrap [data-type="ub/section-column"]:nth-child(4) { flex: 1; margin-right: ${ gutter }; justify-content: center; overflow-wrap: break-word; }` }
-                                        { `#block-${clientId} .ub-section-column-wrap [data-type="ub/section-column"]:nth-child(5) { flex: 1; margin-right: ${ gutter }; justify-content: center; overflow-wrap: break-word; }` }
+                                        { `#block-${clientId} .ub-section-column-wrap [data-type="ub/section-column"]:not(nth-child(6)) { flex: 1; margin-right: ${ gutter }; justify-content: center; overflow-wrap: break-word; }` }
                                         { `#block-${clientId} .ub-section-column-wrap [data-type="ub/section-column"]:nth-child(6) { flex: 1; justify-content: center; overflow-wrap: break-word; }` }
                                     </Fragment>
                                 </style>

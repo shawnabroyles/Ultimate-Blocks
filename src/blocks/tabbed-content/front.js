@@ -30,66 +30,74 @@ function ub_getNodeindex(elm) {
 }
 
 function ub_handleTabEvent(tab) {
-	const parent = tab.closest('.wp-block-ub-tabbed-content-holder');
+	const parent = tab.closest(".wp-block-ub-tabbed-content-holder");
 
-	const isVertical = parent.classList.contains('vertical-holder');
+	const isVertical = parent.classList.contains("vertical-holder");
 
 	const activeStyle = parent
 		.querySelector(
 			`.wp-block-ub-tabbed-content-tab-title-${
-				isVertical ? 'vertical-' : ''
+				isVertical ? "vertical-" : ""
 			}wrap.active`
 		)
-		.getAttribute('style');
+		.getAttribute("style");
 	const defaultStyle = parent
 		.querySelector(
 			`.wp-block-ub-tabbed-content-tab-title-${
-				isVertical ? 'vertical-' : ''
+				isVertical ? "vertical-" : ""
 			}wrap:not(.active)`
 		)
-		.getAttribute('style');
+		.getAttribute("style");
 
 	ub_getSiblings(tab, elem =>
 		elem.classList.contains(
 			`wp-block-ub-tabbed-content-tab-title-${
-				isVertical ? 'vertical-' : ''
+				isVertical ? "vertical-" : ""
 			}wrap`
 		)
 	).forEach(sibling => {
-		sibling.classList.remove('active');
+		sibling.classList.remove("active");
 		if (defaultStyle) {
-			sibling.setAttribute('style', defaultStyle);
+			sibling.setAttribute("style", defaultStyle);
 		}
 	});
 
-	tab.classList.add('active');
-	if (activeStyle) tab.setAttribute('style', activeStyle);
+	tab.classList.add("active");
+	if (activeStyle) tab.setAttribute("style", activeStyle);
 
-	const activeTab = parent.querySelector(
-		`.wp-block-ub-tabbed-content-tab-content-wrap:nth-of-type(${ub_getNodeindex(
-			tab
-		) + 1})`
-	);
+	const tabContentContainer = Array.prototype.slice
+		.call(parent.children)
+		.filter(elem =>
+			elem.classList.contains("wp-block-ub-tabbed-content-tabs-content")
+		)[0];
 
-	ub_getSiblings(activeTab, elem =>
-		elem.classList.contains('wp-block-ub-tabbed-content-tab-content-wrap')
-	).forEach(inactiveTab => {
-		inactiveTab.classList.remove('active');
-		inactiveTab.classList.add('ub-hide');
-	});
+	Array.prototype.slice
+		.call(tabContentContainer.children)
+		.forEach((tabContent, i) => {
+			if (ub_getNodeindex(tab) === i) {
+				tabContent.classList.add("active");
+				tabContent.classList.remove("ub-hide");
+				let flickityInstances = Array.prototype.slice.call(
+					tabContent.querySelectorAll(".ub_image_slider")
+				);
 
-	activeTab.classList.add('active');
-	activeTab.classList.remove('ub-hide');
+				flickityInstances.forEach(instance => {
+					let slider = Flickity.data(instance.querySelector("[data-flickity]"));
+					slider.resize();
+				});
+			} else {
+				tabContent.classList.remove("active");
+				tabContent.classList.add("ub-hide");
+			}
+		});
 }
 
 Array.prototype.slice
 	.call(
-		document.getElementsByClassName(
-			'wp-block-ub-tabbed-content-tab-title-wrap'
-		)
+		document.getElementsByClassName("wp-block-ub-tabbed-content-tab-title-wrap")
 	)
 	.forEach(instance => {
-		instance.addEventListener('click', function() {
+		instance.addEventListener("click", function() {
 			ub_handleTabEvent(instance);
 		});
 	});
@@ -97,11 +105,11 @@ Array.prototype.slice
 Array.prototype.slice
 	.call(
 		document.getElementsByClassName(
-			'wp-block-ub-tabbed-content-tab-title-vertical-wrap'
+			"wp-block-ub-tabbed-content-tab-title-vertical-wrap"
 		)
 	)
 	.forEach(instance => {
-		instance.addEventListener('click', function() {
+		instance.addEventListener("click", function() {
 			ub_handleTabEvent(instance);
 		});
 	});
@@ -109,16 +117,16 @@ Array.prototype.slice
 Array.prototype.slice
 	.call(
 		document.getElementsByClassName(
-			'wp-block-ub-tabbed-content-scroll-button-container'
+			"wp-block-ub-tabbed-content-scroll-button-container"
 		)
 	)
 	.forEach(scrollButtonContainer => {
 		const tabBar = scrollButtonContainer.previousElementSibling;
 		const leftScroll = scrollButtonContainer.querySelector(
-			'.wp-block-ub-tabbed-content-scroll-button-left'
+			".wp-block-ub-tabbed-content-scroll-button-left"
 		);
 		const rightScroll = scrollButtonContainer.querySelector(
-			'.wp-block-ub-tabbed-content-scroll-button-right'
+			".wp-block-ub-tabbed-content-scroll-button-right"
 		);
 		let scrollInterval;
 		let scrollCountdown;
@@ -128,9 +136,9 @@ Array.prototype.slice
 
 		const checkWidth = _ => {
 			if (tabBar.scrollWidth > tabBar.clientWidth) {
-				scrollButtonContainer.classList.remove('ub-hide');
+				scrollButtonContainer.classList.remove("ub-hide");
 			} else {
-				scrollButtonContainer.classList.add('ub-hide');
+				scrollButtonContainer.classList.add("ub-hide");
 			}
 		};
 
@@ -139,23 +147,23 @@ Array.prototype.slice
 			clearTimeout(scrollInterval);
 		};
 
-		window.addEventListener('resize', checkWidth);
+		window.addEventListener("resize", checkWidth);
 
-		leftScroll.addEventListener('mousedown', _ => {
+		leftScroll.addEventListener("mousedown", _ => {
 			moveLeft();
 			scrollCountdown = setTimeout(_ => {
 				scrollInterval = setInterval(moveLeft, 50);
 			}, 500);
 		});
-		leftScroll.addEventListener('mouseup', resetTimers);
+		leftScroll.addEventListener("mouseup", resetTimers);
 
-		rightScroll.addEventListener('mousedown', _ => {
+		rightScroll.addEventListener("mousedown", _ => {
 			moveRight();
 			scrollCountdown = setTimeout(_ => {
 				scrollInterval = setInterval(moveRight, 50);
 			}, 500);
 		});
-		rightScroll.addEventListener('mouseup', resetTimers);
+		rightScroll.addEventListener("mouseup", resetTimers);
 
 		checkWidth();
 	});

@@ -47,9 +47,37 @@ function ub_check_is_gutenberg_page() {
  */
 
 function ub_load_assets() {
+    if (file_exists(wp_upload_dir()['basedir'] . '/ultimate-blocks/blocks.style.build.css') &&
+        filemtime(wp_upload_dir()['basedir'] . '/ultimate-blocks/blocks.style.build.css') <
+        filemtime(dirname(__DIR__) . '/dist/blocks.style.build.css')){
+        $frontStyleFile = fopen(wp_upload_dir()['basedir'] . '/ultimate-blocks/blocks.style.build.css', 'w');
+        $blockDir = dirname(__DIR__) . '/src/blocks/';
+        $blockList = get_option( 'ultimate_blocks', false );
+
+        foreach ( $blockList as $key => $block ) {
+            $blockDirName = strtolower(str_replace(' ', '-', 
+            trim(preg_replace('/\(.+\)/', '', $blockList[ $key ]['label']))
+                ));
+            $frontStyleLocation = $blockDir . $blockDirName . '/style.css';
+
+            if(file_exists($frontStyleLocation) && $blockList[ $key ]['active']){ //also detect if block is enabled
+                fwrite($frontStyleFile, file_get_contents($frontStyleLocation));
+            }
+            if($block['name'] === 'ub/styled-box' && $blockList[$key]['active']){
+                //add css for blocks phased out by styled box
+                fwrite($frontStyleFile, file_get_contents($blockDir . 'feature-box' . '/style.css'));
+                fwrite($frontStyleFile, file_get_contents($blockDir . 'notification-box' . '/style.css'));
+                fwrite($frontStyleFile, file_get_contents($blockDir . 'number-box' . '/style.css'));
+            }
+        }
+        fclose($frontStyleFile);
+    }
+
     wp_enqueue_style(
         'ultimate_blocks-cgb-style-css', // Handle.
-        plugins_url( 'dist/blocks.style.build.css', dirname( __FILE__ ) ), // Block style CSS.
+        file_exists(dirname(dirname(dirname(__DIR__))) . '/uploads/ultimate-blocks') ?
+            content_url('/uploads/ultimate-blocks/blocks.style.build.css') :
+            plugins_url( 'dist/blocks.style.build.css', dirname( __FILE__ ) ), // Block style CSS.
         array(), // Dependency to include the CSS after it.
         Ultimate_Blocks_Constants::plugin_version()  // Version: latest version number.
     );
@@ -233,10 +261,7 @@ function ub_include_block_attribute_css() {
                     break;
                 case 'ub/image-slider':
                     $prefix = '#ub_image_slider_' . $attributes['blockID'];
-                    $blockStylesheets .= $prefix . '{' . PHP_EOL .
-                        'min-height: ' . (25+ (count(json_decode($attributes['images'], true)) > 0) ? $attributes['sliderHeight'] : 200 ) . 'px;' . PHP_EOL .
-                    '}' . PHP_EOL . 
-                    $prefix . ' .flickity-slider img{' . PHP_EOL .
+                    $blockStylesheets .= $prefix . ' .flickity-slider img{' . PHP_EOL .
                         'max-height: ' . $attributes['sliderHeight'] . 'px;' . PHP_EOL .
                     '}' . PHP_EOL;
                     break;
@@ -327,11 +352,11 @@ function ub_include_block_attribute_css() {
                     $blockStylesheets .=  $prefix . ' .ub_review_item_name{' . PHP_EOL . 
                         'text-align: ' . $attributes['titleAlign'] . ';' . PHP_EOL .
                     '}' . PHP_EOL .
-                    $prefix . $attributes['blockID'] . ' .ub_review_author_name{' . PHP_EOL . 
+                    $prefix . ' .ub_review_author_name{' . PHP_EOL . 
                         'text-align: ' . $attributes['authorAlign'] . ';' . PHP_EOL .
                     '}' . PHP_EOL .
-                    $prefix. $attributes['blockID'] . ' .ub_review_cta_main>a{' . PHP_EOL . 
-                        'color: ' . $attributes['callToActionForeColor'] . ';' . PHP_EOL .
+                    $prefix . ' .ub_review_description{' . PHP_EOL . 
+                        'text-align: ' . $attributes['descriptionAlign'] . ';' . PHP_EOL .
                     '}' . PHP_EOL .
                     $prefix . ' .ub_review_cta_main>a{' . PHP_EOL . 
                         'color: ' . $attributes['callToActionForeColor'] . ';' . PHP_EOL .
@@ -340,6 +365,10 @@ function ub_include_block_attribute_css() {
                         'color: ' . $attributes['callToActionForeColor'] . ';' . PHP_EOL .
                         'border-color: ' . $attributes['callToActionForeColor'] . ';' . PHP_EOL .
                         'background-color: ' . $attributes['callToActionBackColor'] . ';' . PHP_EOL .
+                    '}' . PHP_EOL .
+                    $prefix . ' .ub_review_image{' . PHP_EOL .
+                        'max-height: ' . $attributes['imageSize'] . 'px;' . PHP_EOL .
+                        'max-width: ' . $attributes['imageSize'] . 'px;' . PHP_EOL .
                     '}' . PHP_EOL;
                     break;
                 case 'ub/social-share':
@@ -418,6 +447,10 @@ function ub_include_block_attribute_css() {
                             'top: 3px;' . PHP_EOL .
                         '}' . PHP_EOL;
                     }
+                    $blockStylesheets .= $prefix . '{' . PHP_EOL .
+                        'justify-content: ' . ($attributes['alignment'] == 'center' ? 'center' :
+                            'flex-' . ($attributes['alignment'] == 'left' ? 'start' : 'end')) . ';' . PHP_EOL .
+                    '}' . PHP_EOL;
                     break;
                 case 'ub/tabbed-content-block':
                     $prefix = '#ub-tabbed-content-' . $attributes['blockID'];
@@ -447,8 +480,9 @@ function ub_include_block_attribute_css() {
                     }
                     break;
                 case 'ub/table-of-contents-block':
+                    $prefix = '#ub_table-of-contents-' . $attributes['blockID'];
                     if($attributes['listStyle']=='plain'){
-                        $blockStylesheets .= '#ub_table-of-contents-' . $attributes['blockID'] . ' ul{' . PHP_EOL .
+                        $blockStylesheets .= $prefix . ' ul{' . PHP_EOL .
                             'list-style: none;' . PHP_EOL .
                         '}' . PHP_EOL;
                     }
@@ -458,6 +492,10 @@ function ub_include_block_attribute_css() {
                         '}' . PHP_EOL;
                         $hasNoSmoothScroll = false;
                     }
+                    $blockStylesheets .= $prefix . ' .ub_table-of-contents-header{' . PHP_EOL .
+                        'justify-self: ' . ($attributes['titleAlignment'] == 'center' ? 'center' :
+                            'flex-' . ($attributes['titleAlignment'] == 'left' ? 'start' : 'end')) . ';' . PHP_EOL .
+                    '}' . PHP_EOL;
                     break;
                 case 'ub/testimonial':
                     $prefix = '#ub_testimonial_' . $attributes['blockID'];
@@ -790,7 +828,7 @@ function ultimate_blocks_cgb_editor_assets() {
 		'ultimate_blocks-cgb-block-js', // Handle.
 		plugins_url( '/dist/blocks.build.js', dirname( __FILE__ ) ), // Block.build.js: We register the block here. Built with Webpack.
 		array( 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor'), // Dependencies, defined above.
-		Ultimate_Blocks_Constants::plugin_version()  // Version: latest version number.
+		Ultimate_Blocks_Constants::plugin_version(), true  // Version: latest version number.
 	);
 
 	wp_enqueue_script(
@@ -801,10 +839,38 @@ function ultimate_blocks_cgb_editor_assets() {
 		true
 	);
 
-	// Styles.
+    // Styles.
+
+    if (file_exists(wp_upload_dir()['basedir'] . '/ultimate-blocks/blocks.editor.build.css') && 
+        filemtime(wp_upload_dir()['basedir'] . '/ultimate-blocks/blocks.editor.build.css') <
+        filemtime(dirname(__DIR__) . '/dist/blocks.editor.build.css')){
+        $adminStyleFile = fopen(wp_upload_dir()['basedir'] . '/ultimate-blocks/blocks.editor.build.css', 'w');
+        $blockDir = dirname(__DIR__) . '/src/blocks/';
+        $blockList = get_option( 'ultimate_blocks', false );
+
+        foreach ( $blockList as $key => $block ) {
+            $blockDirName = strtolower(str_replace(' ', '-', 
+            trim(preg_replace('/\(.+\)/', '', $blockList[ $key ]['label']))
+                ));
+            $adminStyleLocation = $blockDir . $blockDirName . '/editor.css';
+
+            if(file_exists($adminStyleLocation) && $blockList[ $key ]['active']){ //also detect if block is enabled
+                fwrite($adminStyleFile, file_get_contents($adminStyleLocation));
+            }
+            if($block['name'] === 'ub/styled-box' && $blockList[$key]['active']){
+                //add css for blocks phased out by styled box
+                fwrite($adminStyleFile, file_get_contents($blockDir . 'feature-box' . '/style.css'));
+                fwrite($adminStyleFile, file_get_contents($blockDir . 'number-box' . '/style.css'));
+            }
+        }
+        fclose($adminStyleFile);
+    }
+
 	wp_enqueue_style(
 		'ultimate_blocks-cgb-block-editor-css', // Handle.
-		plugins_url( 'dist/blocks.editor.build.css', dirname( __FILE__ ) ), // Block editor CSS.
+        file_exists(dirname(dirname(dirname(__DIR__))) . '/uploads/ultimate-blocks') ?
+            content_url('/uploads/ultimate-blocks/blocks.editor.build.css') :
+            plugins_url( 'dist/blocks.editor.build.css', dirname( __FILE__ ) ), // Block editor CSS.
 		array( 'wp-edit-blocks' ), // Dependency to include the CSS after it.
 		Ultimate_Blocks_Constants::plugin_version() // Version: latest version number
 	);
@@ -822,8 +888,6 @@ add_filter( 'rank_math/researches/toc_plugins', function( $toc_plugins ) {
 	$toc_plugins['ultimate-blocks/ultimate-blocks.php'] = 'Ultimate Blocks';
  	return $toc_plugins;
 });
-
-
 
 // Click to Tweet Block.
 require_once plugin_dir_path( __FILE__ ) . 'blocks/click-to-tweet/block.php';

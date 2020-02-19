@@ -47,33 +47,80 @@ function ub_render_review_block($attributes){
                 '" id="ub_review_'.$blockID.'">
                 <!--'.$items.'-->
         <p class="ub_review_item_name"'.($blockID==''?' style="text-align: '.$titleAlign.';"':'').'>'.
-            $itemName.'</p>
-        <p class="ub_review_author_name"'.($blockID==''?' style="text-align: '.$authorAlign.';"':'').'>'.$authorName.'</p>'.
+            $itemName.'</p><p class="ub_review_author_name"'.
+            ($blockID==''?' style="text-align: '.$authorAlign.';"':'').'>'.$authorName.'</p>'.
+        ( ($enableImage || $enableDescription) && ($imgURL != '' || $description != '') ?
+        '<div class="ub_review_description_container">'.
+            (!$enableDescription || $description == '' ? '' : '<div class="ub_review_description">'.$description.'</div>').
+            (!$enableImage || $imgURL == '' ? '' : '<img class="ub_review_image" src="'.$imgURL.'" alt = "'.$imgAlt.'">').
+        '</div>' : '').
             $starRatings
     .'<div class="ub_review_summary">
         <p class="ub_review_summary_title">'.$summaryTitle.'</p>
-        <div class="ub_review_overall_value">   
+        <div class="ub_review_overall_value">
             <p>'.$summaryDescription.'</p>
-            <span class="ub_review_rating">'.$average.'</span>
+            <div class="ub_review_average"><span class="ub_review_rating">'.$average.'</span>'.
+            ub_generateStarDisplay($average,$starCount, $blockID.'-average',
+            $inactiveStarColor, $activeStarColor, $starOutlineColor, "ub_review_average_stars").
+            '</div>
         </div>
         <div class="ub_review_cta_panel">'.
         ($enableCTA && $callToActionURL != '' ? '<div class="ub_review_cta_main">
             <a href="'. esc_url($callToActionURL).
-                '" '.($ctaOpenInNewTab ? 'target="_blank" ':'').'rel="'.($ctaNoFollow?'nofollow':'').'noopener noreferrer"'.
+                '" '.($ctaOpenInNewTab ? 'target="_blank" ':'').'rel="'.($ctaNoFollow?'nofollow ':'').'noopener noreferrer"'.
                     ($blockID==''?'  style="color: '.$callToActionForeColor.';"':'').'>
                 <button class="ub_review_cta_btn"'.($blockID==''?' style="background-color: '.$callToActionBackColor
                 .'; border-color: '.$callToActionForeColor.'; color: '.$callToActionForeColor.';"':'').'>'.
                     ($callToActionText==''?'Click here':$callToActionText).'</button></a></div>':'').
-                ub_generateStarDisplay($average,$starCount, $blockID.'-average',
-                $inactiveStarColor, $activeStarColor, $starOutlineColor, "ub_review_average_stars").'
-            </div></div>' . ($enableReviewSchema ?
-    '<script type="application/ld+json">
-    {"@context":"http://schema.org/","@type":"Review","reviewBody":"'.
-        $summaryDescription.'","itemReviewed":{"@type":"Product","name":"'.$itemName.
-        '","aggregateRating":{"@type": "AggregateRating","ratingValue":'.$average.
-            ',"ratingCount":'.count($parsedItems).'}},"reviewRating":{"@type":"Rating","ratingValue":'.$average
-        .',"bestRating":'.$starCount.'},"author":{"@type":"Person","name":"'.$authorName.'"}}</script>' : '')
-        . '</div>';
+                '</div></div>' . ($enableReviewSchema ? preg_replace( '/\s+/', ' ', ('<script type="application/ld+json">{
+        "@context":"http://schema.org/",
+        "@type":"Review",
+        "reviewBody":"' . preg_replace('/(<.+?>)/', '',$summaryDescription).'",
+        "itemReviewed":{
+            "@type":"Product",
+            "brand": {
+                "@type": "Brand",
+                "name": "'.$brand.'"
+            },
+            "name":"'.preg_replace('/(<.+?>)/', '',$itemName).'",
+            "image": "'.$imgURL.'",
+            "description": "'.preg_replace('/(<.+?>)/', '',$description).'",
+            "sku": "'.$sku.'",
+            "'.$identifierType.'": "'.$identifier.'",
+            "review":{
+                "author":{
+                    "@type":"Person",
+                    "name":"'.preg_replace('/(<.+?>)/', '',$authorName).'"
+                }
+            },
+            "aggregateRating":  {
+                "@type": "AggregateRating",
+                "ratingValue": "'.$average.'",
+                "reviewCount": "1"
+            },
+            "offers":{
+                "@type": "'.$offerType.'",
+                "priceCurrency": "'.$offerCurrency.'",'.
+                    ($offerType == 'AggregateOffer' ? 
+                        '"lowPrice": "'.$offerLowPrice.'",
+                        "highPrice": "'.$offerHighPrice.'",
+                        "offerCount": "'.$offerCount.'"' 
+                    : '"price": "'.$offerPrice.'",
+                        "url": "'.$callToActionURL.'", 
+                        "priceValidUntil": "'.date("Y-m-d", $offerExpiry).'"').
+            '}
+        },
+        "reviewRating":{
+            "@type":"Rating",
+            "ratingValue":'.$average.',
+            "bestRating":'.$starCount.
+        '},
+        "author":{
+            "@type":"Person",
+            "name":"'.preg_replace('/(<.+?>)/', '',$authorName).'"
+        }
+    }</script>')) : '')
+    . '</div>';
 }
 
 function ub_register_review_block() {

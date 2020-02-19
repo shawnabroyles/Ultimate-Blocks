@@ -6,16 +6,12 @@
  */
 
 //Import Icon
-import icon from './icons/icon';
+import icon from "./icons/icon";
 
-//  Import CSS.
-import './style.scss';
-import './editor.scss';
+import { richTextToHTML, mergeRichTextArray } from "../../common";
+import { OldPanelContent, PanelContent } from "./components/editorDisplay";
 
-import { richTextToHTML, mergeRichTextArray } from '../../common';
-import { OldPanelContent, PanelContent } from './components/editorDisplay';
-
-import { version_1_1_2 } from './oldVersions';
+import { version_1_1_2 } from "./oldVersions";
 
 const { __ } = wp.i18n;
 const { registerBlockType, createBlock } = wp.blocks;
@@ -25,41 +21,49 @@ const { InnerBlocks } = wp.blockEditor || wp.editor;
 
 const attributes = {
 	blockID: {
-		type: 'string',
-		default: ''
+		type: "string",
+		default: ""
 	},
 	theme: {
-		type: 'string',
-		default: '#f63d3d'
+		type: "string",
+		default: "#f63d3d"
 	},
 	collapsed: {
-		type: 'boolean',
+		type: "boolean",
 		default: false
 	},
 	titleColor: {
-		type: 'string',
-		default: '#ffffff'
+		type: "string",
+		default: "#ffffff"
 	},
 	hasFAQSchema: {
-		type: 'boolean',
+		type: "boolean",
+		default: false
+	},
+	titleTag: {
+		type: "string",
+		default: "p"
+	},
+	preventCollapse: {
+		type: "boolean",
 		default: false
 	}
 };
 
 const oldAttributes = Object.assign(Object.assign({}, attributes), {
 	accordions: {
-		source: 'query',
-		selector: '.wp-block-ub-content-toggle-accordion',
+		source: "query",
+		selector: ".wp-block-ub-content-toggle-accordion",
 		query: {
 			title: {
-				type: 'array',
-				source: 'children',
-				selector: '.wp-block-ub-content-toggle-accordion-title'
+				type: "array",
+				source: "children",
+				selector: ".wp-block-ub-content-toggle-accordion-title"
 			},
 			content: {
-				type: 'array',
-				source: 'children',
-				selector: '.wp-block-ub-content-toggle-accordion-content'
+				type: "array",
+				source: "children",
+				selector: ".wp-block-ub-content-toggle-accordion-content"
 			}
 		}
 	}
@@ -79,14 +83,14 @@ const oldAttributes = Object.assign(Object.assign({}, attributes), {
  *                             registered; otherwise `undefined`.
  */
 
-registerBlockType('ub/content-toggle', {
-	title: __('Content Toggle'),
+registerBlockType("ub/content-toggle", {
+	title: __("Content Toggle"),
 	icon: icon,
-	category: 'ultimateblocks',
+	category: "ultimateblocks",
 	keywords: [
-		__('Content Accordion'),
-		__('Toggle Collapse'),
-		__('Ultimate Blocks')
+		__("Content Accordion"),
+		__("Toggle Collapse"),
+		__("Ultimate Blocks")
 	],
 
 	supports: {
@@ -97,16 +101,12 @@ registerBlockType('ub/content-toggle', {
 	edit: compose([
 		withSelect((select, ownProps) => {
 			const { getBlock, getSelectedBlockClientId, getBlockRootClientId } =
-				select('core/block-editor') || select('core/editor');
-
-			const { clientId } = ownProps;
+				select("core/block-editor") || select("core/editor");
 
 			return {
-				block: getBlock(clientId),
+				block: getBlock(ownProps.clientId),
 				selectedBlock: getSelectedBlockClientId(),
-				parentOfSelectedBlock: getBlockRootClientId(
-					getSelectedBlockClientId()
-				)
+				parentOfSelectedBlock: getBlockRootClientId(getSelectedBlockClientId())
 			};
 		}),
 		withDispatch(dispatch => {
@@ -116,7 +116,7 @@ registerBlockType('ub/content-toggle', {
 				removeBlock,
 				selectBlock,
 				replaceBlock
-			} = dispatch('core/block-editor') || dispatch('core/editor');
+			} = dispatch("core/block-editor") || dispatch("core/editor");
 
 			return {
 				updateBlockAttributes,
@@ -126,7 +126,7 @@ registerBlockType('ub/content-toggle', {
 				replaceBlock
 			};
 		}),
-		withState({ oldArrangement: '', mainBlockSelected: true })
+		withState({ oldArrangement: "", mainBlockSelected: true })
 	])(OldPanelContent),
 
 	save() {
@@ -146,21 +146,19 @@ registerBlockType('ub/content-toggle', {
 					accordions.map(a => {
 						let panelContent = [];
 						a.content.forEach((paragraph, i) => {
-							if (typeof paragraph === 'string') {
+							if (typeof paragraph === "string") {
 								panelContent.push(
-									createBlock('core/paragraph', {
+									createBlock("core/paragraph", {
 										content: paragraph
 									})
 								);
-							} else if (paragraph.type === 'br') {
-								if (a.content[i - 1].type === 'br') {
-									panelContent.push(
-										createBlock('core/paragraph')
-									);
+							} else if (paragraph.type === "br") {
+								if (a.content[i - 1].type === "br") {
+									panelContent.push(createBlock("core/paragraph"));
 								}
 							} else {
 								panelContent.push(
-									createBlock('core/paragraph', {
+									createBlock("core/paragraph", {
 										content: richTextToHTML(paragraph)
 									})
 								);
@@ -168,7 +166,7 @@ registerBlockType('ub/content-toggle', {
 						});
 
 						return createBlock(
-							'ub/content-toggle-panel',
+							"ub/content-toggle-panel",
 							{
 								theme: attributes.theme,
 								titleColor: attributes.titleColor,
@@ -185,14 +183,14 @@ registerBlockType('ub/content-toggle', {
 	]
 });
 
-registerBlockType('ub/content-toggle-block', {
-	title: __('Content Toggle'),
+registerBlockType("ub/content-toggle-block", {
+	title: __("Content Toggle"),
 	icon: icon,
-	category: 'ultimateblocks',
+	category: "ultimateblocks",
 	keywords: [
-		__('Content Accordion'),
-		__('Toggle Collapse'),
-		__('Ultimate Blocks')
+		__("Content Accordion"),
+		__("Toggle Collapse"),
+		__("Ultimate Blocks")
 	],
 
 	attributes,
@@ -200,22 +198,16 @@ registerBlockType('ub/content-toggle-block', {
 	edit: compose([
 		withSelect((select, ownProps) => {
 			const { getBlock, getSelectedBlockClientId } =
-				select('core/block-editor') || select('core/editor');
-
-			const { clientId } = ownProps;
+				select("core/block-editor") || select("core/editor");
 
 			return {
-				block: getBlock(clientId),
+				block: getBlock(ownProps.clientId),
 				selectedBlock: getSelectedBlockClientId()
 			};
 		}),
 		withDispatch(dispatch => {
-			const {
-				updateBlockAttributes,
-				insertBlock,
-				removeBlock,
-				selectBlock
-			} = dispatch('core/block-editor') || dispatch('core/editor');
+			const { updateBlockAttributes, insertBlock, removeBlock, selectBlock } =
+				dispatch("core/block-editor") || dispatch("core/editor");
 
 			return {
 				updateBlockAttributes,
@@ -224,7 +216,11 @@ registerBlockType('ub/content-toggle-block', {
 				selectBlock
 			};
 		}),
-		withState({ oldArrangement: '', mainBlockSelected: true })
+		withState({
+			oldArrangement: [],
+			oldAttributeValues: [],
+			mainBlockSelected: true
+		})
 	])(PanelContent),
 
 	save: () => <InnerBlocks.Content />

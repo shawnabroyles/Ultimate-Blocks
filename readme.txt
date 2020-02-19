@@ -3,7 +3,7 @@ Contributors: ultimateblocks, imtiazrayhan, istiakrayhan, alexius08, wpleaders1,
 Tags: blocks, gutenberg blocks, gutenberg, editor
 Requires at least: 5.0
 Tested up to: 5.3
-Stable tag: 2.1.7
+Stable tag: 2.2.1
 Requires PHP: 5.6
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -126,6 +126,69 @@ That's it. You're done!
 3. Tabbed Content Block.
 
 == Changelog ==
+
+= 2.2.1 =
+
+Release Date: February 12th, 2020
+
+* ADD: Option to add schema-exclusive attributes in Review block.
+* ADD: Table of Contentns anchor links work when page breaks are included in post.
+* FIX: Bottom margin issue in Image Slider.
+* FIX: Frontend script issues when Image Slider is nested within other blocks.
+* FIX: Image display issue when they are inside picture tags in Image Slider.
+* FIX: Frontend script error during panel height calculation in Content Toggle.
+* FIX: Average review rating display in editor in Review Block.
+* FIX: Post Grid error that comes up when PHP 7.4 is used.
+* REMOVE: Font size specification for Content Toggle title.
+* UPDATE: Translation .pot file.
+
+= 2.2.0 =
+
+Release Date: January 14th, 2020
+
+* ADD: Prevent Filter selection reset when only one filter is selected in Content Filter Block.
+* ADD: Allow customizing tag used for toggle title in Content Toggle (Accordion) Block.
+* ADD: Option for preventing panels from being toggled in Content Toggle Block.
+* ADD: Allow resizing of review image in Review Block.
+* FIX: Display issue when image slider is inside content filter, content toggle, expand, tabbed content.
+* FIX: Display issue when selecting inline images in Review Block.
+* FIX: Move image and description in review JSONLD to under itemReviewed for Review Block.
+* FIX: Alignment bug in Styled List Block.
+* FIX: Default Alignment in Editor for Table of Contents Block.
+* FIX: Frontend script bug when nested Tabbed Content Blocks are present.
+* FIX: Default frontend alignment for Table of Contents block.
+* FIX: Block Manager bug.
+* FIX: PHP errors when CSS files are absent in uploads folder.
+* REMOVE: Unused FontAwesome CSS in Styled List Block.
+
+= 2.1.9 =
+
+Release Date: December 12th, 2019
+
+* ADD: CSS File generation for only active only blocks.
+* ADD: Option to Change List Alignment in Styled List block.
+* FIX: Content Toggle Block issue - line breaks not preserving on the frontend.
+* FIX: Ensure boolean values for boolean Post Grid attributes.
+* UPDATE: FontAwesome to version 5.11.
+
+= 2.1.8 =
+
+Release Date: November 25th, 2019
+
+* ADD: Custom class name option in Expand block.
+* ADD: Image and Description inputs for Review block. Adding these will minimize warnings in Console for the Schema.
+* ADD: Filtering HTML tags from summary, author name and item name in generated Schema to prevent errors.
+* ADD: Editing of Content Toggle panel attributes from any of the child panels.
+* FIX: Content filter frontend script not loading correctly.
+* FIX: Compatibility issues with CodeMirror block in Content Toggle Block.
+* FIX: Double quotes from interfering with generated schema in Content Toggle Block.
+* FIX: Minimum height issue in smaller screen for Image Slider.
+* FIX: Average star value display in Review block.
+* FIX: Issue in Tabbed Content title editing. Now you can edit them easily.
+* FIX: PHP error in 404 pages.
+* FIX: URL input box from automatically getting focus when a block containing one is selected.
+* CHANGE: Removed aggregateRating and added review author property to Review Schema.
+* CHANGE: Display pointer when mouse hovers on button in Review block.
 
 = 2.1.7 = 
 

@@ -5,10 +5,6 @@
 // Import icon.
 import icons from "./icons/icons";
 
-// Import style
-import "./style.scss";
-import "./editor.scss";
-
 // Import attributes
 import attributes from "./attributes";
 

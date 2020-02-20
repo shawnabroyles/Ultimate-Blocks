@@ -1,5 +1,3 @@
-// import CSS.
-import "./editor.scss";
 import icons from "./icons/icons";
 import map from "lodash/map";
 

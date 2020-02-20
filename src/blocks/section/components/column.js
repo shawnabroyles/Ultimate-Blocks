@@ -2,8 +2,6 @@
  * BLOCK: Column
  */
 
-// Import style
-import "../editor.scss";
 import icons from "../icons/icons";
 import ColumnInspector from "./columnInspector";
 

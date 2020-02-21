@@ -253,6 +253,10 @@
 		}
 	}
 
+	.components-panel__body .components-base-control{
+		margin-bottom: 4px;
+	}
+
 	.components-base-control + p {
 		margin: 0 0 10px;
 	}
@@ -298,7 +302,11 @@
 	.components-base-control__field {
 		margin-bottom: 1px;
 	}
-	p {
+	.ub-bg-color,
+	.ub-bg-image {
+		margin-left: -120px !important;
+	}
+	p{
 		margin: 5% 1%;
 	}
 }

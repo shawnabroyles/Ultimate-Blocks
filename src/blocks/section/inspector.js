@@ -591,7 +591,7 @@ export default class Inspector extends Component {
 													/>
 													{set_mob_bg && (
 														<Fragment>
-															<p>{__("Background Color")}</p>
+															<p class="ub-bg-color">{__("Background Color")}</p>
 															<ColorPalette
 																value={wrapColorMob}
 																onChange={value =>
@@ -599,7 +599,7 @@ export default class Inspector extends Component {
 																}
 																allowReset
 															/>
-															<p>{__("Background Image")}</p>
+															<p class="ub-bg-image">{__("Background Image")}</p>
 															<div className="ub-image-inspector-panel">
 																{imgURLmob ? (
 																	<Fragment>
@@ -1147,7 +1147,7 @@ export default class Inspector extends Component {
 													/>
 													{set_tab_bg && (
 														<Fragment>
-															<p>{__("Background Color")}</p>
+															<p class="ub-bg-color">{__("Background Color")}</p>
 															<ColorPalette
 																value={wrapColorTab}
 																onChange={value =>
@@ -1155,7 +1155,7 @@ export default class Inspector extends Component {
 																}
 																allowReset
 															/>
-															<p>{__("Background Image")}</p>
+															<p class="ub-bg-image">{__("Background Image")}</p>
 															<div className="ub-image-inspector-panel">
 																{imgURLtab ? (
 																	<Fragment>

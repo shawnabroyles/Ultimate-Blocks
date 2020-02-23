@@ -38,6 +38,12 @@
 	display: flex;
 	border-width: 5px;
 	border: dashed 2px #ddd;
+	[data-type="ub/section-column"] {
+		max-width: none !important;
+		min-width: 0;
+		word-break: break-word;
+		overflow-wrap: break-word;
+	}
 	[data-type="ub/row-column"] {
 		//flex: 1;
 		display: flex;

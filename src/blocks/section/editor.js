@@ -125,8 +125,6 @@ export default class SectionEditor extends Component {
             setAttributes,
         } = this.props;
 
-        console.log(this.props);
-
         const createColumn = col => {
             createBlock('ub/section-column', {} );
             return times( col, col => [ 'ub/section-column', {} ] );

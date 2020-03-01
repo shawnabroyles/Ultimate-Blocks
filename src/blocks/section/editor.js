@@ -125,6 +125,8 @@ export default class SectionEditor extends Component {
             setAttributes,
         } = this.props;
 
+        console.log(this.props);
+
         const createColumn = col => {
             createBlock('ub/section-column', {} );
             return times( col, col => [ 'ub/section-column', {} ] );
@@ -189,7 +191,7 @@ export default class SectionEditor extends Component {
                                     'components-toolbar__control',
                                     { 'is-active': wrapVerticalAlignment === 'flex-start' },
                                 ) }
-                                onClick={ _ => setAttributes( { wrapVerticalAlignment: 'flex-start' } ) }
+                                onClick={ () => setAttributes( { wrapVerticalAlignment: 'flex-start' } ) }
                             >
                                 { icons.wrapVerticalTop }
                             </Button>
@@ -203,7 +205,7 @@ export default class SectionEditor extends Component {
                                     'components-toolbar__control',
                                     { 'is-active': wrapVerticalAlignment === 'center' },
                                 ) }
-                                onClick={ _ => setAttributes( { wrapVerticalAlignment: 'center' } ) }
+                                onClick={ () => setAttributes( { wrapVerticalAlignment: 'center' } ) }
                             >
                                 { icons.wrapVerticalMiddle }
                             </Button>
@@ -217,7 +219,7 @@ export default class SectionEditor extends Component {
                                     'components-toolbar__control',
                                     { 'is-active': wrapVerticalAlignment === 'flex-end' },
                                 ) }
-                                onClick={ _ => setAttributes( { wrapVerticalAlignment: 'flex-end' } ) }
+                                onClick={ () => setAttributes( { wrapVerticalAlignment: 'flex-end' } ) }
                             >
                                 { icons.wrapVerticalBottom }
                             </Button>

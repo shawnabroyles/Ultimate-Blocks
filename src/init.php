@@ -553,7 +553,7 @@ function ub_include_block_attribute_css() {
                         $attributes['wrapGradientSecondCol'].' '.$attributes['wrapGradientSecondLocation'].'%);' . PHP_EOL .
                             'opacity:'.($attributes['wrapGradientOverlay'] == 100 ? 1 : '0.'. $attributes['wrapGradientOverlay']).'}') . PHP_EOL .
                     $prefix . ' .ub-single-wrap{'. PHP_EOL .
-                        'justify-content: '.$attributes['wrapVerticalAligment'] . ';'.
+                        'justify-content: '.$attributes['wrapVerticalAlignment'] . ';'.
                     '}' .
                     $prefix . '>.ub-single-block>.ub-single-wrap:not(:first-child){' .
                         'margin-left:' . (((int)trim($attributes['gutter'], "px"))/2) . 'px;' .

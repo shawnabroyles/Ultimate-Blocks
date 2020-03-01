@@ -1128,7 +1128,7 @@ $defaultValues = array(
             ),
             'wrapVerticalAlignment' => array(
                 'type' => 'string',
-                'default' => 'flex-start',
+                'default' => '',
             ),
             'tabletSizeGrid' => array(
                 'type' => 'string',

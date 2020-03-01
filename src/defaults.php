@@ -1126,7 +1126,7 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => '',
             ),
-            'wrapVerticalAligment' => array(
+            'wrapVerticalAlignment' => array(
                 'type' => 'string',
                 'default' => 'flex-start',
             ),

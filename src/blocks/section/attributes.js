@@ -19,7 +19,7 @@ const attributes = {
 		type: "string",
 		default: ""
 	},
-	wrapVerticalAligment: {
+	wrapVerticalAlignment: {
 		type: "string",
 		default: ""
 	},

@@ -76,7 +76,7 @@ export default class SectionEditor extends Component {
                 columns,
                 startOptions,
                 wrapAlignment,
-                wrapVerticalAligment,
+                wrapVerticalAlignment,
                 colWidthOne,
                 colWidthTwo,
                 colWidthThree,
@@ -187,9 +187,9 @@ export default class SectionEditor extends Component {
                                 className={ classnames(
                                     'components-icon-button',
                                     'components-toolbar__control',
-                                    { 'is-active': wrapVerticalAligment === 'flex-start' },
+                                    { 'is-active': wrapVerticalAlignment === 'flex-start' },
                                 ) }
-                                onClick={ _ => setAttributes( { wrapVerticalAligment: 'flex-start' } ) }
+                                onClick={ _ => setAttributes( { wrapVerticalAlignment: 'flex-start' } ) }
                             >
                                 { icons.wrapVerticalTop }
                             </Button>
@@ -201,9 +201,9 @@ export default class SectionEditor extends Component {
                                 className={ classnames(
                                     'components-icon-button',
                                     'components-toolbar__control',
-                                    { 'is-active': wrapVerticalAligment === 'center' },
+                                    { 'is-active': wrapVerticalAlignment === 'center' },
                                 ) }
-                                onClick={ _ => setAttributes( { wrapVerticalAligment: 'center' } ) }
+                                onClick={ _ => setAttributes( { wrapVerticalAlignment: 'center' } ) }
                             >
                                 { icons.wrapVerticalMiddle }
                             </Button>
@@ -215,9 +215,9 @@ export default class SectionEditor extends Component {
                                 className={ classnames(
                                     'components-icon-button',
                                     'components-toolbar__control',
-                                    { 'is-active': wrapVerticalAligment === 'flex-end' },
+                                    { 'is-active': wrapVerticalAlignment === 'flex-end' },
                                 ) }
-                                onClick={ _ => setAttributes( { wrapVerticalAligment: 'flex-end' } ) }
+                                onClick={ _ => setAttributes( { wrapVerticalAlignment: 'flex-end' } ) }
                             >
                                 { icons.wrapVerticalBottom }
                             </Button>
@@ -229,9 +229,9 @@ export default class SectionEditor extends Component {
                                 className={ classnames(
                                     'components-icon-button',
                                     'components-toolbar__control',
-                                    { 'is-active': wrapVerticalAligment === 'space-between' },
+                                    { 'is-active': wrapVerticalAlignment === 'space-between' },
                                 ) }
-                                onClick={ () => setAttributes( { wrapVerticalAligment: 'space-between' } ) }
+                                onClick={ () => setAttributes( { wrapVerticalAlignment: 'space-between' } ) }
                             >
                                 { icons.wrapVerticalFullHeight }
                             </Button>
@@ -254,7 +254,7 @@ export default class SectionEditor extends Component {
                         } )
                 }>
                 </div>
-                <div className={`ub-section-overhad-wrap wrapVertical${wrapVerticalAligment}`} style={{
+                <div className={`ub-section-overhad-wrap wrapVertical${wrapVerticalAlignment}`} style={{
                     backgroundImage: ( imgURL ? `url( ${imgURL} )` : undefined ),
                     backgroundColor: ( wrapColor ? wrapColor : undefined ),
                     backgroundSize: wrapBackgroundSize,

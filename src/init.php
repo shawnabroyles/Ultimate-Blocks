@@ -440,6 +440,21 @@ function ub_include_block_attribute_css() {
                         'max-width: ' . $attributes['imageSize'] . 'px;' . PHP_EOL .
                     '}' . PHP_EOL;
                     break;
+                case 'ub/section':
+                    $prefix = '#ub-section-' . $attributes['blockID'];
+                    $blockStylesheets .= $prefix . '.ub-section-container{' . PHP_EOL .
+                        'grid-template-columns: '.
+                            array_reduce($attributes['columnWidths'], function($output, $current){
+                                                                        return $output . $current . '% ';
+                                                                    }, '') .';'. PHP_EOL .
+                    '}' . PHP_EOL;
+                    break;
+                case 'ub/section-column':
+                    $prefix = '#ub-section-column-' . $attributes['blockID'];
+                    $blockStylesheets .= $prefix . ' {' . PHP_EOL .
+                        'background-color: ' . $attributes['backgroundColor'] . ';' . PHP_EOL .
+                     '}' . PHP_EOL;
+                    break;
                 case 'ub/social-share':
                     $icon_sizes = array(
                         'normal' => 20,
@@ -746,3 +761,6 @@ require_once plugin_dir_path( __FILE__ ) . 'blocks/styled-list/block.php';
 
 // How To
 require_once plugin_dir_path( __FILE__ ) . 'blocks/how-to/block.php';
+
+//Section
+require_once plugin_dir_path( __FILE__ ) . 'blocks/section/block.php';

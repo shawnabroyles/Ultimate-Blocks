@@ -1,0 +1,38 @@
+.ub-section-selector {
+	display: flex;
+	flex-wrap: wrap;
+	> div {
+		min-width: 140px;
+		min-height: 70px;
+		margin: 10px;
+	}
+}
+
+.ub-section-container {
+	display: initial; //override style.css
+	> .block-editor-inner-blocks > .block-editor-block-list__layout {
+		display: grid;
+	}
+}
+
+.ub-section-resize {
+	position: absolute;
+	background-color: #888;
+	width: 1px;
+	height: 100%;
+	z-index: 10;
+	cursor: col-resize;
+}
+.ub-section-resize-container,
+.ub-section-column-backgrounds {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	border: 2px dashed grey;
+}
+.ub-section-column-backgrounds {
+	display: grid;
+}
+.ub-section-resize-container {
+	display: flex;
+}

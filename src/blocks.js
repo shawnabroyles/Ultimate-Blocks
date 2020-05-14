@@ -36,3 +36,5 @@ import "./blocks/expand/block";
 import "./blocks/styled-list/block";
 import "./blocks/post-grid/block";
 import "./blocks/how-to/block";
+import "./blocks/section/block";
+import "./blocks/section/components/column";

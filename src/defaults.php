@@ -1087,6 +1087,33 @@ $defaultValues = array(
             )
         )
     ),
+    'ub/section' => array(
+        'attributes' => array(
+            'columnCount' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'columnWidths' => array(
+                'type' => 'array',
+                'default' => array(),
+                'items' => array(
+                    'type' => 'number'
+                )
+            )
+        )
+    ),
+    'ub/section-column' => array(
+        'attributes' => array(
+            'backgroundColor' => array(
+                'type' => 'string',
+                'default' => 'transparent'
+            ),
+            'blockID' => array(
+                'type' => 'string',
+                'default' => ''
+            )
+        )
+    ),
     'ub/social-share' => array(
         'attributes'      => array(
             'blockID'=>array(

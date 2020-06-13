@@ -1,38 +1,56 @@
-.ub-section-selector {
-	display: flex;
-	flex-wrap: wrap;
-	> div {
-		min-width: 140px;
-		min-height: 70px;
-		margin: 10px;
+.ub-section {
+	&-selector {
+		display: flex;
+		flex-wrap: wrap;
+		> div {
+			min-width: 140px;
+			min-height: 70px;
+			margin: 10px;
+		}
 	}
-}
-
-.ub-section-container {
-	display: initial; //override style.css
-	> .block-editor-inner-blocks > .block-editor-block-list__layout {
+	&-container {
+		display: initial; //override style.css
+		> .block-editor-inner-blocks > .block-editor-block-list__layout {
+			display: grid;
+		}
+	}
+	&-resize {
+		&-handle {
+			position: absolute;
+			display: initial;
+			background-color: #888;
+			width: 1px;
+			height: 100%;
+			z-index: 10;
+			cursor: col-resize;
+		}
+		&-container {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			border: 2px dashed grey;
+		}
+		&-label {
+			display: block;
+			pointer-events: none;
+			&s {
+				display: flex;
+				justify-content: space-between;
+			}
+			&-container {
+				display: flex;
+				width: 30%;
+				height: 100%;
+				justify-content: space-between;
+				position: absolute;
+				font-size: 15px;
+				pointer-events: none;
+				flex-direction: column;
+			}
+		}
+	}
+	&-column-backgrounds {
+		@extend .ub-section-resize-container;
 		display: grid;
 	}
-}
-
-.ub-section-resize {
-	position: absolute;
-	background-color: #888;
-	width: 1px;
-	height: 100%;
-	z-index: 10;
-	cursor: col-resize;
-}
-.ub-section-resize-container,
-.ub-section-column-backgrounds {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	border: 2px dashed grey;
-}
-.ub-section-column-backgrounds {
-	display: grid;
-}
-.ub-section-resize-container {
-	display: flex;
 }

@@ -137,7 +137,7 @@ export class Container extends Component {
 		const columnLocs = columnWidths.map((_, i) =>
 			columnWidths.reduce((sum, curr, index) => sum + (index <= i ? curr : 0))
 		);
-		const minimumWidth = 10;
+		const minimumWidth = 15;
 
 		if (activeHandle > -1) {
 			const minVal =
@@ -181,8 +181,17 @@ export class Container extends Component {
 			block,
 		} = this.props;
 
+		const { activeHandle } = this.state;
+
 		return (
 			<div className="ub-section-container">
+				<div className="ub-section-column-backgrounds">
+					{block.innerBlocks.map((innerblock) => (
+						<div
+							style={{ backgroundColor: innerblock.attributes.backgroundColor }}
+						></div>
+					))}
+				</div>
 				<div
 					className="ub-section-resize-container"
 					ref={(container) => {
@@ -190,26 +199,72 @@ export class Container extends Component {
 					}}
 				>
 					{columnWidths.map(
-						(_, i) =>
+						(c, i) =>
 							i < columnWidths.length - 1 && (
-								<div
-									className="ub-section-resize"
-									style={{
-										left: `${columnWidths.reduce(
-											(sum, curr, index) => sum + (index <= i ? curr : 0)
-										)}%`,
-									}}
-									onMouseDown={(_) => this.setState({ activeHandle: i })}
-								></div>
+								<div>
+									<div
+										className="ub-section-resize-label-container"
+										style={{
+											left: `${
+												columnWidths.reduce(
+													(sum, curr, index) => sum + (index <= i ? curr : 0)
+												) - 15
+											}%`,
+										}}
+									>
+										<div className="ub-section-resize-labels">
+											<div
+												className={`ub-section-resize-label ${
+													activeHandle === i ? "" : "ub-hide"
+												}`}
+											>
+												{`${Math.round((c + Number.EPSILON) * 100) / 100}%`}
+											</div>
+											<div
+												className={`ub-section-resize-label ${
+													activeHandle === i ? "" : "ub-hide"
+												}`}
+											>
+												{`${
+													Math.round(
+														(columnWidths[i + 1] + Number.EPSILON) * 100
+													) / 100
+												}%`}
+											</div>
+										</div>
+										<div className="ub-section-resize-labels">
+											<div
+												className={`ub-section-resize-label ${
+													activeHandle === i ? "" : "ub-hide"
+												}`}
+											>
+												{`${Math.round((c + Number.EPSILON) * 100) / 100}%`}
+											</div>
+											<div
+												className={`ub-section-resize-label ${
+													activeHandle === i ? "" : "ub-hide"
+												}`}
+											>
+												{`${
+													Math.round(
+														(columnWidths[i + 1] + Number.EPSILON) * 100
+													) / 100
+												}%`}
+											</div>
+										</div>
+									</div>
+									<div
+										className="ub-section-resize-handle"
+										style={{
+											left: `${columnWidths.reduce(
+												(sum, curr, index) => sum + (index <= i ? curr : 0)
+											)}%`,
+										}}
+										onMouseDown={(_) => this.setState({ activeHandle: i })}
+									/>
+								</div>
 							)
 					)}
-				</div>
-				<div className="ub-section-column-backgrounds">
-					{block.innerBlocks.map((innerblock) => (
-						<div
-							style={{ backgroundColor: innerblock.attributes.backgroundColor }}
-						></div>
-					))}
 				</div>
 				<InnerBlocks
 					template={[]} //initially empty

@@ -162,7 +162,7 @@ export class Container extends Component {
 					change = maxVal - columnLocs[activeHandle];
 				}
 			} else {
-				change = columnLocs[activeHandle] - minVal;
+				change = minVal - columnLocs[activeHandle];
 			}
 			setAttributes({
 				columnWidths: [
@@ -202,6 +202,15 @@ export class Container extends Component {
 						(c, i) =>
 							i < columnWidths.length - 1 && (
 								<div>
+									<div
+										className="ub-section-resize-handle"
+										style={{
+											left: `${columnWidths.reduce(
+												(sum, curr, index) => sum + (index <= i ? curr : 0)
+											)}%`,
+										}}
+										onMouseDown={(_) => this.setState({ activeHandle: i })}
+									/>
 									<div
 										className="ub-section-resize-label-container"
 										style={{
@@ -253,15 +262,6 @@ export class Container extends Component {
 											</div>
 										</div>
 									</div>
-									<div
-										className="ub-section-resize-handle"
-										style={{
-											left: `${columnWidths.reduce(
-												(sum, curr, index) => sum + (index <= i ? curr : 0)
-											)}%`,
-										}}
-										onMouseDown={(_) => this.setState({ activeHandle: i })}
-									/>
 								</div>
 							)
 					)}

@@ -1099,6 +1099,14 @@ $defaultValues = array(
                 'items' => array(
                     'type' => 'number'
                 )
+            ),
+            'tabletLayout' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'mobileLayout' => array(
+                'type' => 'string',
+                'default' => ''
             )
         )
     ),

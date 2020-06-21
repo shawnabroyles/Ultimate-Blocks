@@ -14,11 +14,11 @@ import {
 	centerHalf,
 	wideCenter,
 	exWideCenter,
-	fourCol,
+	fourCols,
 	lFourForty,
 	rFourForty,
-	fiveCol,
-	sixCol,
+	fiveCols,
+	sixCols,
 } from "../icons";
 
 export class SelectionScreen extends Component {
@@ -73,7 +73,7 @@ export class SelectionScreen extends Component {
 					]}
 					{columnCount === 4 && [
 						<div onClick={(_) => setColumnWidths([25, 25, 25, 25])}>
-							{fourCol}
+							{fourCols}
 						</div>,
 						<div onClick={(_) => setColumnWidths([40, 20, 20, 20])}>
 							{lFourForty}
@@ -84,7 +84,7 @@ export class SelectionScreen extends Component {
 					]}
 					{columnCount === 5 && (
 						<div onClick={(_) => setColumnWidths(Array(5).fill(20))}>
-							{fiveCol}
+							{fiveCols}
 						</div>
 					)}
 					{columnCount === 6 && (
@@ -93,7 +93,7 @@ export class SelectionScreen extends Component {
 								setColumnWidths([...Array(4).fill(16.67), 16.66, 16.66])
 							}
 						>
-							{sixCol}
+							{sixCols}
 						</div>
 					)}
 				</div>

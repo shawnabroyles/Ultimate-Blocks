@@ -7,7 +7,7 @@ const icon = (
 	</svg>
 );
 
-const SvgWrapper = props => (
+const SvgWrapper = (props) => (
 	<svg
 		viewBox="0 0 60 30"
 		xmlns="http://www.w3.org/2000/svg"
@@ -22,104 +22,104 @@ const SvgWrapper = props => (
 
 export const oneCol = (
 	<SvgWrapper>
-		<rect x="0" y="0" width="60" height="30" fill="#F63D3D" />
+		<rect x="0" y="0" width="60" height="30" />
 	</SvgWrapper>
 );
 export const twoCols = (
 	<SvgWrapper>
-		{[...Array(2).keys()].map(i => (
-			<rect x={i * 31} y="0" width="29" height="30" fill="#F63D3D" />
+		{[...Array(2).keys()].map((i) => (
+			<rect x={i * 31} y="0" width="29" height="30" />
 		))}
 	</SvgWrapper>
 );
 export const twoLeftGolden = (
 	<SvgWrapper>
-		<rect x="41" y="0" width="19" height="30" fill="#F63D3D" />
-		<rect x="0" y="0" width="39" height="30" fill="#F63D3D" />
+		<rect x="41" y="0" width="19" height="30" />
+		<rect x="0" y="0" width="39" height="30" />
 	</SvgWrapper>
 );
 export const twoRightGolden = (
 	<SvgWrapper>
-		<rect x="21" y="0" width="39" height="30" fill="#F63D3D" />
-		<rect x="0" y="0" width="19" height="30" fill="#F63D3D" />
+		<rect x="21" y="0" width="39" height="30" />
+		<rect x="0" y="0" width="19" height="30" />
 	</SvgWrapper>
 );
 export const threeCols = (
 	<SvgWrapper>
-		<rect x="0" y="0" width="18.5" height="30" fill="#F63D3D" />
-		<rect x="20.5" y="0" width="19" height="30" fill="#F63D3D" />
-		<rect x="41.5" y="0" width="18.5" height="30" fill="#F63D3D" />
+		<rect x="0" y="0" width="18.5" height="30" />
+		<rect x="20.5" y="0" width="19" height="30" />
+		<rect x="41.5" y="0" width="18.5" height="30" />
 	</SvgWrapper>
 );
 export const leftHalf = (
 	<SvgWrapper>
-		<rect x="0" y="0" width="29" height="30" fill="#F63D3D" />
-		<rect x="31" y="0" width="13.500" height="30" fill="#F63D3D" />
-		<rect x="46.500" y="0" width="13.500" height="30" fill="#F63D3D" />
+		<rect x="0" y="0" width="29" height="30" />
+		<rect x="31" y="0" width="13.500" height="30" />
+		<rect x="46.500" y="0" width="13.500" height="30" />
 	</SvgWrapper>
 );
 export const rightHalf = (
 	<SvgWrapper>
-		<rect x="0" y="0" width="13.5" height="30" fill="#F63D3D" />
-		<rect x="15.5" y="0" width="13.5" height="30" fill="#F63D3D" />
-		<rect x="31" y="0" width="29" height="30" fill="#F63D3D" />
+		<rect x="0" y="0" width="13.5" height="30" />
+		<rect x="15.5" y="0" width="13.5" height="30" />
+		<rect x="31" y="0" width="29" height="30" />
 	</SvgWrapper>
 );
 export const centerHalf = (
 	<SvgWrapper>
-		<rect x="0" y="0" width="13.5" height="30" fill="#F63D3D" />
-		<rect x="15.5" y="0" width="29" height="30" fill="#F63D3D" />
-		<rect x="46.5" y="0" width="13.5" height="30" fill="#F63D3D" />
+		<rect x="0" y="0" width="13.5" height="30" />
+		<rect x="15.5" y="0" width="29" height="30" />
+		<rect x="46.5" y="0" width="13.5" height="30" />
 	</SvgWrapper>
 );
 export const wideCenter = (
 	<SvgWrapper>
-		<rect x="0" y="0" width="11" height="30" fill="#F63D3D" />
-		<rect x="13" y="0" width="34" height="30" fill="#F63D3D" />
-		<rect x="49" y="0" width="11" height="30" fill="#F63D3D" />
+		<rect x="0" y="0" width="11" height="30" />
+		<rect x="13" y="0" width="34" height="30" />
+		<rect x="49" y="0" width="11" height="30" />
 	</SvgWrapper>
 );
 export const exWideCenter = (
 	<SvgWrapper>
-		<rect x="0" y="0" width="7.2" height="30" fill="#F63D3D" />
-		<rect x="9.2" y="0" width="41.6" height="30" fill="#F63D3D" />
-		<rect x="52.8" y="0" width="7.2" height="30" fill="#F63D3D" />
+		<rect x="0" y="0" width="7.2" height="30" />
+		<rect x="9.2" y="0" width="41.6" height="30" />
+		<rect x="52.8" y="0" width="7.2" height="30" />
 	</SvgWrapper>
 );
-export const fourCol = (
+export const fourCols = (
 	<SvgWrapper>
-		{[...Array(4).keys()].map(i => (
-			<rect x={i * 15.5} y="0" width="13.5" height="30" fill="#F63D3D" />
+		{[...Array(4).keys()].map((i) => (
+			<rect x={i * 15.5} y="0" width="13.5" height="30" />
 		))}
 	</SvgWrapper>
 );
 export const lFourForty = (
 	<SvgWrapper>
-		<rect x="0" y="0" width="21.6" height="30" fill="#F63D3D" />
-		{[...Array(3).keys()].map(i => (
-			<rect x={23.6 + i * 12.8} y="0" width="10.8" height="30" fill="#F63D3D" />
+		<rect x="0" y="0" width="21.6" height="30" />
+		{[...Array(3).keys()].map((i) => (
+			<rect x={23.6 + i * 12.8} y="0" width="10.8" height="30" />
 		))}
 	</SvgWrapper>
 );
 export const rFourForty = (
 	<SvgWrapper>
-		{[...Array(3).keys()].map(i => (
-			<rect x={i * 12.8} y="0" width="10.8" height="30" fill="#F63D3D" />
+		{[...Array(3).keys()].map((i) => (
+			<rect x={i * 12.8} y="0" width="10.8" height="30" />
 		))}
-		<rect x="38.4" y="0" width="21.6" height="30" fill="#F63D3D" />
+		<rect x="38.4" y="0" width="21.6" height="30" />
 	</SvgWrapper>
 );
-export const fiveCol = (
+export const fiveCols = (
 	<SvgWrapper>
-		{[...Array(5).keys()].map(i => (
-			<rect x={i * 12.4} y="0" width="10.4" height="30" fill="#F63D3D" />
+		{[...Array(5).keys()].map((i) => (
+			<rect x={i * 12.4} y="0" width="10.4" height="30" />
 		))}
 	</SvgWrapper>
 );
-export const sixCol = (
+export const sixCols = (
 	<SvgWrapper>
-		{[...Array(6).keys()].map(i => (
-			<rect x={i * 10.33} y="0" width="8.35" height="30" fill="#F63D3D" />
+		{[...Array(6).keys()].map((i) => (
+			<rect x={i * 10.33} y="0" width="8.35" height="30" />
 		))}
 	</SvgWrapper>
 );
@@ -135,4 +135,61 @@ export const resizeIcon = (
 	</svg>
 );
 
+export const twoRows = (
+	<SvgWrapper>
+		{[...Array(2).keys()].map((i) => (
+			<rect x="0" y={i * 15} width="60" height="13" />
+		))}
+	</SvgWrapper>
+);
+export const threeRows = (
+	<SvgWrapper>
+		{[...Array(3).keys()].map((i) => (
+			<rect x="0" y={i * 10} width="60" height="8" />
+		))}
+	</SvgWrapper>
+);
+export const wideFirstRow = (
+	<SvgWrapper>
+		<rect x="0" y="0" width="60" height="13" />
+		<rect x="0" y="15" width="29" height="13" />
+		<rect x="31" y="15" width="29" height="13" />
+	</SvgWrapper>
+);
+export const wideLastRow = (
+	<SvgWrapper>
+		<rect x="0" y="0" width="29" height="13" />
+		<rect x="31" y="0" width="29" height="13" />
+		<rect x="0" y="15" width="60" height="13" />
+	</SvgWrapper>
+);
+export const fourRows = (
+	<SvgWrapper>
+		{[...Array(4).keys()].map((i) => (
+			<rect x="0" y={i * 7.5} width="60" height="5.5" />
+		))}
+	</SvgWrapper>
+);
+export const quadrants = (
+	<SvgWrapper>
+		<rect x="0" y="0" width="29" height="13" />
+		<rect x="31" y="0" width="29" height="13" />
+		<rect x="0" y="15" width="29" height="13" />
+		<rect x="31" y="15" width="29" height="13" />
+	</SvgWrapper>
+);
+export const fiveRows = (
+	<SvgWrapper>
+		{[...Array(5).keys()].map((i) => (
+			<rect x="0" y={i * 6} width="60" height="4" />
+		))}
+	</SvgWrapper>
+);
+export const sixRows = (
+	<SvgWrapper>
+		{[...Array(6).keys()].map((i) => (
+			<rect x="0" y={i * 5} width="60" height="3" />
+		))}
+	</SvgWrapper>
+);
 export default icon;

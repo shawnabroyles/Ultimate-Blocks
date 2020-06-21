@@ -442,12 +442,24 @@ function ub_include_block_attribute_css() {
                     break;
                 case 'ub/section':
                     $prefix = '#ub-section-' . $attributes['blockID'];
-                    $blockStylesheets .= $prefix . '.ub-section-container{' . PHP_EOL .
+                    $usesMediaQuery = $attributes['mobileLayout'] != '' || $attributes['tabletLayout'] != '';
+                    $mediaQuery = '';
+                    if($attributes['mobileLayout'] != ''){
+                        if ($attributes['tabletLayout'] != ''){
+                            $mediaQuery = '@media (min-width:1024px){';
+                        }
+                        else{
+                            $mediaQuery = '@media (min-width:768px){';
+                        }
+                    } else if ($attributes['tabletLayout'] != ''){
+                        $mediaQuery = '@media (min-width:1024px), (max-width: 767px){';
+                    }
+                    $blockStylesheets .= $mediaQuery . $prefix . '{' . PHP_EOL .
                         'grid-template-columns: '.
                             array_reduce($attributes['columnWidths'], function($output, $current){
                                                                         return $output . $current . '% ';
                                                                     }, '') .';'. PHP_EOL .
-                    '}' . PHP_EOL;
+                    '}' . ($usesMediaQuery ? '}' : '') . PHP_EOL;
                     break;
                 case 'ub/section-column':
                     $prefix = '#ub-section-column-' . $attributes['blockID'];

@@ -7,6 +7,9 @@
 			min-height: 70px;
 			margin: 10px;
 		}
+		svg {
+			fill: #f63d3d;
+		}
 	}
 	&-container {
 		display: initial; //override style.css
@@ -51,5 +54,12 @@
 	&-column-backgrounds {
 		@extend .ub-section-resize-container;
 		display: grid;
+	}
+	&-display-modes svg {
+		width: 100px;
+		fill: #999999;
+	}
+	&-selected-layout svg {
+		fill: #f63d3d;
 	}
 }

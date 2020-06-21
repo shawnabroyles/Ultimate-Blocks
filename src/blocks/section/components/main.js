@@ -188,7 +188,15 @@ export class Container extends Component {
 				<div className="ub-section-column-backgrounds">
 					{block.innerBlocks.map((innerblock) => (
 						<div
-							style={{ backgroundColor: innerblock.attributes.backgroundColor }}
+							style={{
+								backgroundColor: innerblock.attributes.backgroundColor,
+								border:
+									innerblock.attributes.borderStyle === "none" ||
+									innerblock.attributes.borderSize === 0
+										? "none"
+										: `${innerblock.attributes.borderSize}px ${innerblock.attributes.borderStyle} ${innerblock.attributes.borderColor}`,
+								borderRadius: `${innerblock.attributes.borderRadius}px`,
+							}}
 						></div>
 					))}
 				</div>

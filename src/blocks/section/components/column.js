@@ -2,7 +2,7 @@ const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.blocks
 const { InnerBlocks, BlockControls, InspectorControls, ColorPalette } =
 	wp.blockEditor || wp.editor;
-const { PanelBody } = wp.components;
+const { PanelBody, SelectControl, RangeControl } = wp.components;
 const { withSelect, withDispatch } = wp.data;
 const { compose } = wp.compose;
 
@@ -30,6 +30,22 @@ registerBlockType("ub/section-column", {
 			type: "string",
 			default: "",
 		},
+		borderColor: {
+			type: "string",
+			default: "#000000",
+		},
+		borderStyle: {
+			type: "string",
+			default: "solid",
+		},
+		borderSize: {
+			type: "number",
+			default: 0,
+		},
+		borderRadius: {
+			type: "number",
+			default: 0,
+		},
 	},
 	edit: compose([
 		withSelect((select, ownProps) => {
@@ -49,7 +65,14 @@ registerBlockType("ub/section-column", {
 		}),
 	])(function (props) {
 		const {
-			attributes: { backgroundColor, blockID },
+			attributes: {
+				backgroundColor,
+				blockID,
+				borderSize,
+				borderColor,
+				borderStyle,
+				borderRadius,
+			},
 			setAttributes,
 			block,
 		} = props;
@@ -65,6 +88,44 @@ registerBlockType("ub/section-column", {
 					<ColorPalette
 						value={backgroundColor}
 						onChange={(backgroundColor) => setAttributes({ backgroundColor })}
+					/>
+				</PanelBody>
+				<PanelBody title={__("Column Border")}>
+					<p>{__("Border Color")}</p>
+					<ColorPalette
+						value={borderColor}
+						onChange={(borderColor) => setAttributes({ borderColor })}
+					/>
+					<p>{__("Border Style")}</p>
+					<SelectControl
+						className="ub-button-grid-selector"
+						value={borderStyle}
+						options={[
+							"none",
+							"solid",
+							"dotted",
+							"dashed",
+							"double",
+							"groove",
+							"ridge",
+							"inset",
+							"outset",
+						].map((a) => ({ label: __(a), value: a }))}
+						onChange={(borderStyle) => setAttributes({ borderStyle })}
+					/>
+					<RangeControl
+						label={__("Border Size")}
+						value={borderSize}
+						onChange={(borderSize) => setAttributes({ borderSize })}
+						min={0}
+						max={100}
+					/>
+					<RangeControl
+						label={__("Border Radius")}
+						value={borderRadius}
+						onChange={(borderRadius) => setAttributes({ borderRadius })}
+						min={0}
+						max={200}
 					/>
 				</PanelBody>
 			</InspectorControls>,

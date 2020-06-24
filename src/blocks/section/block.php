@@ -59,10 +59,10 @@ function ub_render_section_block($attributes, $content){
             $mobileLayoutClassName = 'ub-section-mobile-quadrants';
         break;
     }
-    return '<div class="ub-section-container' . 
+    return '<'.$wrapper.' class="ub-section-container' . 
         ($tabletLayoutClassName == '' ? '' : ' ' . $tabletLayoutClassName) .
         ($mobileLayoutClassName == '' ? '' : ' ' . $mobileLayoutClassName) .
-        '" id="ub-section-'.$blockID.'">'.$content.'</div>';
+        '" id="ub-section-'.$blockID.'">'.$content.'</'.$wrapper.'>';
 }
 
 function ub_register_section_block() {

@@ -1107,6 +1107,10 @@ $defaultValues = array(
             'mobileLayout' => array(
                 'type' => 'string',
                 'default' => ''
+            ),
+            'wrapper' => array(
+                'type' => 'string',
+                'default' => 'div'
             )
         )
     ),

@@ -1,8 +1,16 @@
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType, createBlock } = wp.blocks; // Import registerBlockType() from wp.blocks
-const { InnerBlocks, InspectorControls } = wp.blockEditor || wp.editor;
+const { InnerBlocks, InspectorControls, ColorPalette } =
+	wp.blockEditor || wp.editor;
 const { withSelect, withDispatch } = wp.data;
-const { ButtonGroup, Button, Tooltip, Icon, PanelBody } = wp.components;
+const {
+	ButtonGroup,
+	Button,
+	Tooltip,
+	Icon,
+	PanelBody,
+	SelectControl,
+} = wp.components;
 const { compose, withState } = wp.compose;
 
 import icon, {
@@ -49,6 +57,10 @@ registerBlockType("ub/section", {
 			type: "string",
 			default: "",
 		},
+		wrapper: {
+			type: "string",
+			default: "div",
+		},
 	},
 	edit: compose([
 		withSelect((select, ownProps) => {
@@ -79,6 +91,7 @@ registerBlockType("ub/section", {
 				blockID,
 				tabletLayout,
 				mobileLayout,
+				wrapper,
 			},
 			block,
 			insertBlock,
@@ -181,6 +194,20 @@ registerBlockType("ub/section", {
 							))}
 						</div>
 					</PanelBody>
+					<p>{__("Block Wrapper Element")}</p>
+					<SelectControl
+						value={wrapper}
+						options={[
+							"div",
+							"header",
+							"section",
+							"article",
+							"main",
+							"aside",
+							"footer",
+						].map((a) => ({ label: a, value: a }))}
+						onChange={(wrapper) => setAttributes({ wrapper })}
+					/>
 				</InspectorControls>
 			),
 			<div id={`ub-section-${block.clientId}`}>

@@ -283,15 +283,14 @@ export class Container extends Component {
 					{/**get background color attribute of each child block and use them here */}
 					{`#ub-section-${
 						block.clientId
-					} .ub-section-container > .block-editor-inner-blocks > .block-editor-block-list__layout, #ub-section-${
+					} > .ub-section-container > .block-editor-inner-blocks > .block-editor-block-list__layout, #ub-section-${
 						block.clientId
 					} .ub-section-column-backgrounds{
 					grid-template-columns: ${columnWidths.reduce(
 						(output, currentNum) => output + `${currentNum}% `,
 						""
 					)};
-					}
-				`}
+					}`}
 				</style>
 			</div>
 		);

@@ -197,7 +197,7 @@ export class Container extends Component {
 										: `${innerblock.attributes.borderSize}px ${innerblock.attributes.borderStyle} ${innerblock.attributes.borderColor}`,
 								borderRadius: `${innerblock.attributes.borderRadius}px`,
 							}}
-						></div>
+						/>
 					))}
 				</div>
 				<div

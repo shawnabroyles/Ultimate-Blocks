@@ -465,6 +465,9 @@ function ub_include_block_attribute_css() {
                     $prefix = '#ub-section-column-' . $attributes['blockID'];
                     $blockStylesheets .= $prefix . ' {' . PHP_EOL .
                         'background-color: ' . $attributes['backgroundColor'] . ';' . PHP_EOL .
+                        'border: ' . ($attributes['borderStyle'] === 'none'
+                            || $attributes['borderSize'] === 0 ? 'none' :
+                            ($attributes['borderSize'] . 'px ' . $attributes['borderStyle'] . ' ' . $attributes['borderColor'] )) . ';' .
                      '}' . PHP_EOL;
                     break;
                 case 'ub/social-share':

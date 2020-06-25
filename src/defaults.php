@@ -1123,6 +1123,22 @@ $defaultValues = array(
             'blockID' => array(
                 'type' => 'string',
                 'default' => ''
+            ),
+            'borderColor' => array(
+                'type' => 'string',
+                'default' => '#000000'
+            ),
+            'borderStyle' => array(
+                'type' => 'string',
+                'default' => 'solid'
+            ),
+            'borderSize' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'borderRadius' => array(
+                'type' => 'number',
+                'default' => 0
             )
         )
     ),

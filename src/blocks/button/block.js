@@ -116,6 +116,10 @@ const attributes = {
 		type: "string",
 		default: "fixed",
 	},
+	buttons: {
+		type: "array",
+		default: [],
+	},
 };
 
 registerBlockType("ub/button-block", {
@@ -287,27 +291,47 @@ registerBlockType("ub/button", {
 			isMouseHovered: false,
 			availableIcons: [],
 			iconSearchTerm: "",
+			enableLinkInput: false,
+			activeButtonIndex: 0,
 		}),
 		withSelect((select, ownProps) => {
-			const { getBlock, getClientIdsWithDescendants } =
+			const { getBlock, getBlockRootClientId, getClientIdsWithDescendants } =
 				select("core/block-editor") || select("core/editor");
 
 			return {
-				block: getBlock(ownProps.clientId),
 				getBlock,
+				block: getBlock(ownProps.clientId),
+				parentID: getBlockRootClientId(ownProps.clientId),
 				getClientIdsWithDescendants,
 			};
 		}),
 	])(function (props) {
 		const {
-			attributes: { blockID },
+			availableIcons,
 			isSelected,
 			setState,
-			availableIcons,
 			block,
+			setAttributes,
+			attributes: {
+				blockID,
+				buttons,
+				buttonText,
+				url,
+				size,
+				buttonColor,
+				buttonHoverColor,
+				buttonTextColor,
+				buttonTextHoverColor,
+				buttonIsTransparent,
+				buttonRounded,
+				buttonWidth,
+				chosenIcon,
+				iconPosition,
+				addNofollow,
+				openInNewTab,
+			},
 			getBlock,
 			getClientIdsWithDescendants,
-			setAttributes,
 		} = props;
 
 		if (availableIcons.length === 0) {
@@ -324,6 +348,50 @@ registerBlockType("ub/button", {
 			)
 		) {
 			setAttributes({ blockID: block.clientId });
+		}
+
+		if (!isSelected && props.enableLinkInput) {
+			setState({ enableLinkInput: false });
+		}
+
+		const defaultButtonProps = {
+			buttonText: "Button Text",
+			url: "",
+			size: "medium",
+			buttonColor: "#313131",
+			buttonHoverColor: "#313131",
+			buttonTextColor: "#ffffff",
+			buttonTextHoverColor: "#ffffff",
+			buttonRounded: false,
+			chosenIcon: "",
+			iconPosition: "left",
+			buttonIsTransparent: false,
+			addNofollow: true,
+			openInNewTab: true,
+			buttonWidth: "fixed",
+		};
+
+		if (buttons.length === 0) {
+			setAttributes({
+				buttons: [
+					Object.assign({}, defaultButtonProps, {
+						buttonText,
+						url,
+						size,
+						buttonColor,
+						buttonHoverColor,
+						buttonTextColor,
+						buttonTextHoverColor,
+						buttonRounded,
+						chosenIcon,
+						iconPosition,
+						buttonIsTransparent,
+						addNofollow,
+						openInNewTab,
+						buttonWidth,
+					}),
+				],
+			});
 		}
 
 		return [

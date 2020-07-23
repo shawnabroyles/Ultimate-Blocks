@@ -20,6 +20,9 @@ const {
 	PanelBody,
 	Toolbar,
 	IconButton,
+	SelectControl,
+	RangeControl,
+	TextControl,
 } = wp.components;
 const { InspectorControls, BlockControls, RichText, AlignmentToolbar } =
 	wp.blockEditor || wp.editor;
@@ -175,6 +178,9 @@ class TableOfContents extends Component {
 				? this.state.headers.map((header) => header.clientId)
 				: [];
 
+			const hasHeadings =
+				Array.isArray(this.state.headers) && this.state.headers.length > 0;
+
 			const newHeaders = headers.map((header, i) => ({
 				clientId: header.clientId,
 				content: header.content,
@@ -182,16 +188,22 @@ class TableOfContents extends Component {
 				anchor: header.anchor,
 				index: i,
 				disabled:
-					currentIDs.indexOf(header.clientId) > -1 &&
-					"disabled" in this.state.headers[currentIDs.indexOf(header.clientId)]
-						? this.state.headers[currentIDs.indexOf(header.clientId)].disabled
+					hasHeadings && "disabled" in this.state.headers[i]
+						? checkIDs
+							? currentIDs.indexOf(header.clientId) > -1
+								? this.state.headers[currentIDs.indexOf(header.clientId)]
+										.disabled
+								: null
+							: this.state.headers[i].disabled
 						: null,
 				customContent:
-					currentIDs.indexOf(header.clientId) > -1 &&
-					"customContent" in
-						this.state.headers[currentIDs.indexOf(header.clientId)]
-						? this.state.headers[currentIDs.indexOf(header.clientId)]
-								.customContent
+					hasHeadings && "customContent" in this.state.headers[i]
+						? checkIDs
+							? currentIDs.indexOf(header.clientId) > -1
+								? this.state.headers[currentIDs.indexOf(header.clientId)]
+										.customContent
+								: null
+							: this.state.headers[i].customContent
 						: null,
 			}));
 
@@ -387,7 +399,7 @@ class TableOfContents extends Component {
 							<div className="ub_toc_button_container">
 								{!item.disabled && (
 									<button
-										onClick={(_) =>
+										onClick={() =>
 											this.setState({ currentlyEditedItem: item.clientId })
 										}
 									>
@@ -395,7 +407,7 @@ class TableOfContents extends Component {
 									</button>
 								)}
 								<button
-									onClick={(_) => {
+									onClick={() => {
 										const revisedHeaders = JSON.parse(
 											JSON.stringify(this.state.headers)
 										);
@@ -451,7 +463,7 @@ class TableOfContents extends Component {
 			return (
 				blockProp && (
 					<p className="ub_table-of-contents-placeholder">
-						{__("Add a header to begin generating the table of contents")}
+						{__("Add a heading to begin generating the table of contents")}
 					</p>
 				)
 			);
@@ -468,6 +480,10 @@ export const inspectorControls = (props) => {
 		enableSmoothScroll,
 		allowToLatin,
 		removeDiacritics,
+		smoothScrollOption,
+		smoothScrollOffset,
+		smoothScrollTarget,
+		smoothScrollTargetType,
 	} = attributes;
 
 	const { updateBlockAttributes } =
@@ -483,7 +499,7 @@ export const inspectorControls = (props) => {
 						<ToggleControl
 							id={`ub_toggle_h${i + 1}`}
 							checked={a}
-							onChange={(_) =>
+							onChange={() =>
 								setAttributes({
 									allowedHeaders: [
 										...allowedHeaders.slice(0, i),
@@ -495,6 +511,64 @@ export const inspectorControls = (props) => {
 						/>
 					</PanelRow>
 				))}
+			</PanelBody>
+			<PanelBody title={__("Smooth Scroll Offset Settings")} initialOpen={true}>
+				{/*<label>{__("Smooth scroll options")}</label>*/}
+				<SelectControl
+					label={__("Smooth scroll adjustment options")}
+					value={smoothScrollOption}
+					options={[
+						{
+							label: __(
+								"Adjust according to first available fixed/sticky element"
+							),
+							value: "auto",
+						},
+						{
+							label: __("Adjust with respect to a specific element"),
+							value: "namedelement",
+						},
+						{ label: __("Adjust by fixed amount"), value: "fixedamount" },
+						{ label: __("Make no adjustments"), value: "off" },
+					]}
+					onChange={(smoothScrollOption) =>
+						setAttributes({ smoothScrollOption })
+					}
+				/>
+				{smoothScrollOption === "namedelement" && (
+					<Fragment>
+						<SelectControl
+							label={__("Smooth scroll reference name type")}
+							value={smoothScrollTargetType}
+							options={["id", "class", "element"].map((a) => ({
+								label: __(a),
+								value: a,
+							}))}
+							onChange={(smoothScrollTargetType) =>
+								setAttributes({ smoothScrollTargetType })
+							}
+						/>
+						<TextControl
+							label={__("Reference element for smooth scroll")}
+							value={smoothScrollTarget}
+							onChange={(smoothScrollTarget) =>
+								setAttributes({ smoothScrollTarget })
+							}
+						/>
+					</Fragment>
+				)}
+				{smoothScrollOption === "fixedamount" && (
+					<RangeControl
+						label={__("Smooth scroll offset (pixels)")}
+						value={smoothScrollOffset}
+						onChange={(smoothScrollOffset) =>
+							setAttributes({ smoothScrollOffset })
+						}
+						min={0}
+						max={200}
+						allowReset
+					/>
+				)}
 			</PanelBody>
 			<PanelBody title={__("Additional Settings")} initialOpen={true}>
 				<PanelRow>
@@ -522,7 +596,7 @@ export const inspectorControls = (props) => {
 						<ToggleControl
 							id="ub_show_toc"
 							checked={showList}
-							onChange={(_) =>
+							onChange={() =>
 								setAttributes({
 									showList: !showList,
 								})
@@ -537,7 +611,7 @@ export const inspectorControls = (props) => {
 					<ToggleControl
 						id="ub_toc_smoothscroll"
 						checked={enableSmoothScroll}
-						onChange={(_) => {
+						onChange={() => {
 							const tocInstances = getBlocks().filter(
 								(block) => block.name === "ub/table-of-contents-block"
 							);

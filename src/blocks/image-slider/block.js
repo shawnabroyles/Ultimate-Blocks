@@ -3,6 +3,7 @@ import icon, { editGallery } from "./icon";
 import { Slider } from "./components";
 
 import { version_1_1_4 } from "./oldVersions";
+import { Fragment } from "react";
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
@@ -24,6 +25,7 @@ const {
 	FormFileUpload,
 	RangeControl,
 	PanelBody,
+	SelectControl,
 } = wp.components;
 
 const { withState, compose } = wp.compose;
@@ -72,8 +74,61 @@ const attributes = {
 		default: 250,
 	},
 	showPageDots: {
+		//phase out this property
 		type: "boolean",
 		default: true,
+	},
+	usePagination: {
+		type: "boolean",
+		default: true,
+	},
+	paginationType: {
+		type: "string",
+		default: "", //available types: bullets, progressbar and fraction
+	},
+	transition: {
+		type: "string",
+		default: "slide", //other available options: fade, cube, coverflow, flip
+	},
+	//for cube, coverflow and flip
+	slideShadows: {
+		type: "boolean",
+		default: true,
+	},
+	//exclusive for coverflow
+	rotate: {
+		type: "number",
+		default: 50, //degrees
+	},
+	stretch: {
+		type: "number",
+		default: 0, //pixels
+	},
+	depth: {
+		type: "number",
+		default: 100, //pixels, z-axis
+	},
+	modifier: {
+		type: "number",
+		default: 1, //effect multiplier
+	},
+	//exclusive for flip
+	limitRotation: {
+		type: "boolean",
+		default: true,
+	},
+	//exclusive for cube
+	shadow: {
+		type: "boolean",
+		default: true,
+	},
+	shadowOffset: {
+		type: "number",
+		defaut: 20,
+	},
+	shadowScale: {
+		type: "number",
+		default: 0.94,
 	},
 };
 
@@ -109,7 +164,19 @@ registerBlockType("ub/image-slider", {
 				autoplayDuration,
 				sliderHeight,
 				showPageDots,
+				usePagination,
+				paginationType,
 				blockID,
+				transition,
+				slideShadows,
+				rotate,
+				stretch,
+				depth,
+				modifier,
+				limitRotation,
+				shadow,
+				shadowOffset,
+				shadowScale,
 			},
 			setAttributes,
 			isSelected,
@@ -141,6 +208,13 @@ registerBlockType("ub/image-slider", {
 			)
 		) {
 			setAttributes({ blockID: block.clientId });
+		} else if (!showPageDots && usePagination) {
+			setAttributes({ usePagination: false });
+		}
+
+		if (paginationType === "") {
+			setAttributes({ paginationType: "bullets" });
+			setState({ componentKey: componentKey + 1 });
 		}
 
 		return [
@@ -201,13 +275,151 @@ registerBlockType("ub/image-slider", {
 							}}
 						/>
 						<ToggleControl
-							label={__("Show page dots")}
-							checked={showPageDots}
+							label={__("Use pagination")}
+							checked={usePagination}
 							onChange={() => {
-								setAttributes({ showPageDots: !showPageDots });
+								setAttributes({ usePagination: !usePagination });
 								setState({ componentKey: componentKey + 1 });
 							}}
 						/>
+						{usePagination && (
+							<SelectControl
+								label={__("Pagination type")}
+								value={paginationType}
+								options={["bullets", "fraction", "progressbar"].map((o) => ({
+									label: __(o),
+									value: o,
+								}))}
+								onChange={(paginationType) => {
+									setAttributes({ paginationType });
+									setState({ componentKey: componentKey + 1 });
+								}}
+							/>
+						)}
+						<SelectControl
+							label={__("Transition")}
+							value={transition}
+							options={["slide", "fade", "cube", "coverflow", "flip"].map(
+								(o) => ({
+									label: __(o),
+									value: o,
+								})
+							)}
+							onChange={(transition) => {
+								setAttributes({ transition });
+								setState({ componentKey: componentKey + 1 });
+							}}
+						/>
+						{["cube", "coverflow", "flip"].includes(transition) && (
+							<ToggleControl
+								label={__("Enable slide shadows")}
+								checked={slideShadows}
+								onChange={() => {
+									setAttributes({ slideShadows: !slideShadows });
+									setState({ componentKey: componentKey + 1 });
+								}}
+							/>
+						)}
+						{transition === "coverflow" && (
+							<Fragment>
+								<RangeControl
+									label={__("Slide rotation")}
+									value={rotate}
+									onChange={(rotate) => {
+										setAttributes({ rotate });
+										setState({
+											componentKey: componentKey + 1,
+										});
+									}}
+									min={0}
+									max={180} //change if this proves to be excessive
+								/>
+								<RangeControl
+									label={__("Stretch space")}
+									value={stretch}
+									onChange={(stretch) => {
+										setAttributes({ stretch });
+										setState({
+											componentKey: componentKey + 1,
+										});
+									}}
+									min={0}
+									max={180} //change if this proves to be excessive
+								/>
+								<RangeControl
+									label={__("Depth offset")}
+									value={depth}
+									onChange={(depth) => {
+										setAttributes({ depth });
+										setState({
+											componentKey: componentKey + 1,
+										});
+									}}
+									min={0}
+									max={200}
+								/>
+								<RangeControl
+									label={__("Effect multiplier")}
+									value={modifier}
+									onChange={(modifier) => {
+										setAttributes({ modifier });
+										setState({
+											componentKey: componentKey + 1,
+										});
+									}}
+									min={0}
+									max={3} //change if this proves to be excessive
+									step={0.05}
+								/>
+							</Fragment>
+						)}
+						{transition === "cube" && (
+							<Fragment>
+								<ToggleControl
+									label={__("Enable main slider shadow")}
+									checked={shadow}
+									onChange={() => {
+										setAttributes({ shadow: !shadow });
+										setState({ componentKey: componentKey + 1 });
+									}}
+								/>
+								<RangeControl
+									label={__("Shadow offset")}
+									value={shadowOffset}
+									onChange={(shadowOffset) => {
+										setAttributes({ shadowOffset });
+										setState({
+											componentKey: componentKey + 1,
+										});
+									}}
+									min={1}
+									max={100}
+								/>
+								<RangeControl
+									label={__("Shadow scale")}
+									value={shadowScale}
+									onChange={(shadowScale) => {
+										setAttributes({ shadowScale });
+										setState({
+											componentKey: componentKey + 1,
+										});
+									}}
+									min={0}
+									max={2}
+									scale={0.01}
+								/>
+							</Fragment>
+						)}
+						{transition === "flip" && (
+							<ToggleControl
+								label={__("Limit rotation")}
+								checked={limitRotation}
+								onChange={() => {
+									setAttributes({ limitRotation: !limitRotation });
+									setState({ componentKey: componentKey + 1 });
+								}}
+							/>
+						)}
 						<ToggleControl
 							label={__("Enable autoplay")}
 							checked={autoplays}
@@ -273,33 +485,34 @@ registerBlockType("ub/image-slider", {
 							key={componentKey}
 							setActiveSlide={(val) => {
 								if (val !== activeSlide)
-									//needed to prevent instance of React error #185
+									//needed to prevent infinite loop
 									setState({ activeSlide: val });
 							}}
-							options={{
-								//exclude autoplay, it doesn't work properly
-								imagesLoaded: true,
-								wrapAround: wrapsAround,
-								draggable: isDraggable,
-								pageDots: showPageDots,
-								initialIndex: activeSlide,
-							}}
+							initialSlide={activeSlide}
+							draggable={isDraggable}
+							wrapAround={wrapsAround}
+							pageDots={showPageDots}
+							paginationType={usePagination ? paginationType : "none"}
+							autoplay={autoplays ? autoplayDuration : 0}
+							transition={transition}
 							slides={[
-								...[
-									imageArray.map((c, i) => (
-										<figure>
-											<img
-												key={i}
-												src={c.url}
-												style={{
-													height: `${sliderHeight}px`,
-												}}
-											/>
-										</figure>
-									)),
-								],
+								...imageArray.map((c, i) => (
+									<figure>
+										<img
+											key={i}
+											src={c.url}
+											style={{
+												height: `${sliderHeight}px`,
+											}}
+										/>
+										{/* CAPTION INPUT DOESN'T WORK IF PLACED HERE */}
+									</figure>
+								)),
 								isSelected && (
-									<div className="ub_image_slider_extra">
+									<div
+										className="ub_image_slider_extra"
+										style={{ height: `${sliderHeight + 30}px` }}
+									>
 										<FormFileUpload
 											multiple
 											isLarge

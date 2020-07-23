@@ -103,3 +103,21 @@
 .ub-button-full-width {
 	width: 100%;
 }
+
+.ub-buttons {
+	&.align-button- {
+		&center {
+			text-align: center;
+		}
+		&left {
+			text-align: left;
+		}
+		&right {
+			text-align: right;
+		}
+	}
+	> .ub-button-container {
+		display: inline-block;
+		margin: 0 10px;
+	}
+}

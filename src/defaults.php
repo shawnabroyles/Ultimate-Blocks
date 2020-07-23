@@ -693,6 +693,58 @@ $defaultValues = array(
             'showPageDots' => array(
                 'type' => 'boolean',
                 'default' => true
+            ),
+            'usePagination' => array(
+                'type' => 'boolean',
+                'default' => true
+            ),
+            'paginationType' => array(
+                'type' => 'string',
+                'default' => 'bullets'
+            ),
+            'transition' => array(
+                'type' => 'string',
+                'default' => 'slide'
+            ),
+            //for cube, coverflow and flip
+	        'slideShadows' => array(
+                'type' =>'boolean',
+                'default' => true
+            ),
+            //exclusive for coverflow
+            'rotate' => array(
+                'type' => 'number',
+                'default' => 50 //degrees
+            ),
+            'stretch' => array(
+                'type' => 'number',
+                'default' => 0 //pixels
+            ),
+            'depth' => array(
+                'type' => 'number',
+                'default' => 100 //pixels, z-axis
+            ),
+            'modifier' => array(
+                'type' => 'number',
+                'default' => 1 //effect multiplier
+            ),
+            //exclusive for flip
+            'limitRotation' => array(
+                'type' => 'boolean',
+                'default' => true
+            ),
+            //exclusive for cube
+            'shadow' => array(
+                'type' => 'boolean',
+                'default' => true
+            ),
+            'shadowOffset' => array(
+                'type' => 'number',
+                'default' => 20
+            ),
+            'shadowScale' => array(
+                'type' => 'number',
+                'default' => 0.94
             )
         )
     ),
@@ -1410,6 +1462,26 @@ $defaultValues = array(
                 'items' => array(
                     'type' => 'number'
                 )
+            ),
+            'removeDiacritics' => array (
+                'type' => 'boolean',
+                'default' => false,
+            ),
+            'smoothScrollOption' => array(
+                'type' => 'string',
+                'default' => 'auto' //other options: namedelement, fixedamount, off
+            ),
+            'smoothScrollOffset' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'smoothScrollTarget' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'smoothScrollTargetType' => array(
+                'type' => 'string',
+                'default' => 'id' //other types: class, element
             )
         )
     ),

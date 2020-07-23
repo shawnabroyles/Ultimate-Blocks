@@ -153,34 +153,68 @@ function ub_include_block_attribute_css() {
                     break;
                 case 'ub/button':
                     $prefix = '#ub-button-' . $attributes['blockID'];
-                    $blockStylesheets .= $prefix . ' a{' . PHP_EOL;
-                    if($attributes['buttonIsTransparent']){
-                        $blockStylesheets .= 'background-color: transparent;' . PHP_EOL . 
-                        'color: '.$attributes['buttonColor'].';' . PHP_EOL .
-                        'border: 3px solid '.$attributes['buttonColor'].';';
+                    if( !array_key_exists('buttons', $attributes) || count($attributes['buttons'])==0 ){
+                        $blockStylesheets .= $prefix . ' a{' . PHP_EOL;
+                        if($attributes['buttonIsTransparent']){
+                            $blockStylesheets .= 'background-color: transparent;' . PHP_EOL . 
+                            'color: '.$attributes['buttonColor'].';' . PHP_EOL .
+                            'border: 3px solid '.$attributes['buttonColor'].';';
+                        }
+                        else{
+                            $blockStylesheets .= 'background-color: '.$attributes['buttonColor'].';' . PHP_EOL . 
+                            'color: '.$attributes['buttonTextColor'].';' . PHP_EOL .
+                            'border: none;';
+                        }
+                        $blockStylesheets .= 'border-radius: '.($attributes['buttonRounded'] ? '60' : '0').'px;' . PHP_EOL .
+                        '}' . PHP_EOL . 
+    
+                        $prefix . ' a:hover{' . PHP_EOL;
+                        if($attributes['buttonIsTransparent']){
+                            $blockStylesheets .= 'color: '.$attributes['buttonHoverColor'].';' . PHP_EOL .
+                            'border: 3px solid '.$attributes['buttonHoverColor'].';';
+                        }
+                        else{
+                            $blockStylesheets .= 'background-color: '.$attributes['buttonHoverColor'].';' . PHP_EOL . 
+                            'color: '.$attributes['buttonTextHoverColor'].';' . PHP_EOL .
+                            'border: none;';
+                        }
+                        $blockStylesheets .= '}' . PHP_EOL . 
+                        $prefix. ' ub-button-content-holder{' . PHP_EOL .
+                            'flex-direction: '.($attributes['iconPosition']=='left'?'row':'row-reverse').';' . PHP_EOL .
+                        '}' . PHP_EOL;
                     }
                     else{
-                        $blockStylesheets .= 'background-color: '.$attributes['buttonColor'].';' . PHP_EOL . 
-                        'color: '.$attributes['buttonTextColor'].';' . PHP_EOL .
-                        'border: none;';
+                        foreach($attributes['buttons'] as $key => $button){
+                            $blockStylesheets .= $prefix . ' .ub-button-container:nth-child('.($key+1).') a{' . PHP_EOL;
+                            if($attributes['buttons'][$key]['buttonIsTransparent']){
+                                $blockStylesheets .= 'background-color: transparent;' . PHP_EOL . 
+                                'color: '.$attributes['buttons'][$key]['buttonColor'].';' . PHP_EOL .
+                                'border: 3px solid '.$attributes['buttons'][$key]['buttonColor'].';';
+                            }
+                            else{
+                                $blockStylesheets .= 'background-color: '.$attributes['buttons'][$key]['buttonColor'].';' . PHP_EOL . 
+                                'color: '.$attributes['buttons'][$key]['buttonTextColor'].';' . PHP_EOL .
+                                'border: none;';
+                            }
+                            $blockStylesheets .= 'border-radius: '.($attributes['buttons'][$key]['buttonRounded'] ? '60' : '0').'px;' . PHP_EOL .
+                            '}' . PHP_EOL .
+                            $prefix . ' .ub-button-container:nth-child('.($key+1).') a:hover{' . PHP_EOL;
+                            if($attributes['buttons'][$key]['buttonIsTransparent']){
+                                $blockStylesheets .= 'color: '.$attributes['buttons'][$key]['buttonHoverColor'].';' . PHP_EOL .
+                                'border: 3px solid '.$attributes['buttons'][$key]['buttonHoverColor'].';';
+                            }
+                            else{
+                                $blockStylesheets .= 'background-color: '.$attributes['buttons'][$key]['buttonHoverColor'].';' . PHP_EOL . 
+                                'color: '.$attributes['buttons'][$key]['buttonTextHoverColor'].';' . PHP_EOL .
+                                'border: none;';
+                            }
+                            $blockStylesheets .= '}' . PHP_EOL . 
+                            $prefix. ' .ub-button-container:nth-child('.($key+1).') ub-button-content-holder{' . PHP_EOL .
+                                'flex-direction: '.($attributes['buttons'][$key]['iconPosition']=='left'?'row':'row-reverse').';' . PHP_EOL .
+                            '}' . PHP_EOL;
+                        }
                     }
-                    $blockStylesheets .= 'border-radius: '.($attributes['buttonRounded'] ? '60' : '0').'px;' . PHP_EOL .
-                    '}' . PHP_EOL . 
 
-                    $prefix . ' a:hover{' . PHP_EOL;
-                    if($attributes['buttonIsTransparent']){
-                        $blockStylesheets .= 'color: '.$attributes['buttonHoverColor'].';' . PHP_EOL .
-                        'border: 3px solid '.$attributes['buttonHoverColor'].';';
-                    }
-                    else{
-                        $blockStylesheets .= 'background-color: '.$attributes['buttonHoverColor'].';' . PHP_EOL . 
-                        'color: '.$attributes['buttonTextHoverColor'].';' . PHP_EOL .
-                        'border: none;';
-                    }
-                    $blockStylesheets .= '}' . PHP_EOL . 
-                    $prefix. ' ub-button-content-holder{' . PHP_EOL .
-                        'flex-direction: '.($attributes['iconPosition']=='left'?'row':'row-reverse').';' . PHP_EOL .
-                    '}' . PHP_EOL;
                     break;
                 case 'ub/call-to-action-block':
                     $prefix = '#ub_call_to_action_' . $attributes['blockID'];
@@ -330,7 +364,7 @@ function ub_include_block_attribute_css() {
                     break;
                 case 'ub/image-slider':
                     $prefix = '#ub_image_slider_' . $attributes['blockID'];
-                    $blockStylesheets .= $prefix . ' .flickity-slider img{' . PHP_EOL .
+                    $blockStylesheets .= $prefix . ' .swiper-slide img{' . PHP_EOL .
                         'max-height: ' . $attributes['sliderHeight'] . 'px;' . PHP_EOL .
                     '}' . PHP_EOL;
                     break;
@@ -447,16 +481,23 @@ function ub_include_block_attribute_css() {
                         'large'  => 40,
                     );
                     $icon_size  = $icon_sizes[$attributes['iconSize']];
-                    $blockStylesheets .= '#ub-social-share-' . $attributes['blockID'] . ' .social-share-icon{' . PHP_EOL .
+                    $prefix = '#ub-social-share-' . $attributes['blockID'];
+                    $blockStylesheets .= $prefix . ' .social-share-icon{' . PHP_EOL .
                         'width:' . ( $icon_size * 1.5 ) . 'px;' . PHP_EOL .
                         'height:' . ( $icon_size * 1.5 ) . 'px;' . PHP_EOL .
                     '}' . PHP_EOL;
+                    if($attributes['buttonColor'] != ''){
+                        $blockStylesheets .= $prefix . ' a{' . PHP_EOL .
+                            'background-color: ' . $attributes['buttonColor'] . ';' .
+                        '}' ;
+                    }
+
                     break;
                 case 'ub/star-rating-block':
                     $prefix = '#ub-star-rating-' . $attributes['blockID'];
                     $blockStylesheets .= $prefix . ' .ub-star-outer-container{' . PHP_EOL .
                         'justify-content: '. ($attributes['starAlign'] == 'center' ? 'center' :
-                            ('flex-'.$attributes['starAlign'] == 'left' ? 'start' : 'end')).';' . PHP_EOL .
+                            ('flex-'.($attributes['starAlign'] == 'left' ? 'start' : 'end'))).';' . PHP_EOL .
                     '}' . PHP_EOL .
                     $prefix . ' .ub-review-text{' . PHP_EOL .
                         'text-align: '. $attributes['reviewTextAlign'] . ';' . PHP_EOL .
@@ -468,11 +509,11 @@ function ub_include_block_attribute_css() {
                 case 'ub/styled-box':
                     $prefix = '#ub-styled-box-' . $attributes['blockID'];
                     if($attributes['mode'] == 'notification'){
-                        $blockStylesheets .= $prefix . ' .ub-notification-text{'. PHP_EOL .
+                        $blockStylesheets .= $prefix . '.ub-notification-box{'. PHP_EOL .
                             'background-color: ' . $attributes['backColor'] . ';' . PHP_EOL .
                             'color: ' . $attributes['foreColor'] . ';' . PHP_EOL .
                             'border-left-color: ' . $attributes['outlineColor'] . ';' . PHP_EOL .
-                            'text-align: ' . $attributes['textAlign'][0] . ';' . PHP_EOL .
+                            ($attributes['text'][0] == '' ? '' : 'text-align: ' . $attributes['textAlign'][0] . ';' . PHP_EOL) .
                         '}' . PHP_EOL;
                     }
                     else if($attributes['mode'] == 'feature'){
@@ -505,7 +546,7 @@ function ub_include_block_attribute_css() {
                         }
                     }
                     else if($attributes['mode'] == 'bordered'){
-                        $blockStylesheets .= ' .ub-bordered-box{' . PHP_EOL .
+                        $blockStylesheets .= $prefix .  '.ub-bordered-box{' . PHP_EOL .
                             'border: ' . $attributes['outlineThickness'] . 'px ' .
                                         $attributes['outlineStyle'] . ' ' .
                                         $attributes['outlineColor'] . ';' . PHP_EOL .
@@ -526,15 +567,16 @@ function ub_include_block_attribute_css() {
                     $blockStylesheets .= $prefix . '{' . PHP_EOL .
                         'justify-content: ' . ($attributes['alignment'] == 'center' ? 'center' :
                             'flex-' . ($attributes['alignment'] == 'left' ? 'start' : 'end')) . ';' . PHP_EOL .
-                    '}' . PHP_EOL;
+                        '}' . PHP_EOL .
+                        $prefix . ' li{' . PHP_EOL .
+                            'text-indent: -' . (0.4 + $attributes['iconSize'] * 0.1) . 'em;' . PHP_EOL;
                     if($attributes['itemSpacing'] > 0){
-                        $blockStylesheets .= $prefix . ' li{
-                            margin-bottom: '. $attributes['itemSpacing'] . 'px;
-                        }' .
-                         $prefix . ' li>ul{
-                            margin-top: '. $attributes['itemSpacing'] . 'px;
-                        }';
+                            $blockStylesheets .= 'margin-bottom: '. $attributes['itemSpacing'] . 'px;
+                        }' . PHP_EOL .
+                        $prefix . ' li>ul{' . PHP_EOL .
+                            'margin-top: '. $attributes['itemSpacing'] . 'px;';
                     }
+                    $blockStylesheets .= '}';
                     break;
                 case 'ub/tabbed-content-block':
                     $prefix = '#ub-tabbed-content-' . $attributes['blockID'];

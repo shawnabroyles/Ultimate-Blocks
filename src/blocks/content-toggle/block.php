@@ -112,7 +112,7 @@ function ub_faq_questions($qna = ''){
             $current = json_decode('[' . $parsed_qna . ']');
             $newItems = json_decode('[' . $qna . ']');
             foreach($newItems as $item){
-                if(in_array($item, $current)){
+                if(is_array($current) && in_array($item, $current)){
                     $current_qna = str_replace(json_encode($item, JSON_UNESCAPED_SLASHES), 'false', $current_qna);
                 }
             }
@@ -238,10 +238,12 @@ function ub_content_toggle_filter( $block_content, $block ) {
 }
 
 function ub_merge_faqpages(){
-    ?><?php echo '<script type="application/ld+json">{
-            "@context":"http://schema.org/",
-            "@type":"FAQPage",
-            "mainEntity": [' . ub_faq_questions() . ']}</script>';  ?>
+    $schema = str_replace(("},".PHP_EOL."]}</script"), "}]}</script" , '<script type="application/ld+json">{
+        "@context":"http://schema.org/",
+        "@type":"FAQPage",
+        "mainEntity": [' . ub_faq_questions() . ']}</script>');
+    
+    ?><?php echo $schema;  ?>
 <?php
 }
 

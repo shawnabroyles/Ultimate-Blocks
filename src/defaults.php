@@ -864,9 +864,11 @@ $defaultValues = array(
             ),
             'categories' => array(
                 'type' => 'string',
+                'default' => ''
             ),
             'className' => array(
                 'type' => 'string',
+                'default' => ''
             ),
             'amountPosts' => array(
                 'type'    => 'number',
@@ -927,10 +929,6 @@ $defaultValues = array(
             'excerptLength' => array(
                 'type'    => 'number',
                 'default' => 55,
-            ),
-            'postType' => array(
-                'type'    => 'string',
-                'default' => 'post',
             ),
             'postTitleTag' => array(
                 'type' => 'string',

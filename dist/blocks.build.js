@@ -34217,7 +34217,7 @@ var attributes = {
     type: "string"
   }
 };
-registerBlockType('ub/advanced-heading', {
+registerBlockType("ub/advanced-heading", {
   title: __("Advanced Heading", "ultimate-blocks"),
   icon: _icons_icons__WEBPACK_IMPORTED_MODULE_0__["default"],
   category: "ultimateblocks",
@@ -34238,6 +34238,14 @@ registerBlockType('ub/advanced-heading', {
         fontFamily = attributes.fontFamily,
         fontWeight = attributes.fontWeight,
         lineHeight = attributes.lineHeight;
+    /* Google Fonts 
+    const head = document.head;
+    const link = document.createElement("link");
+    	link.type = "text/css";
+    link.rel = "stylesheet";
+    link.href = "https://fonts.googleapis.com/css?family=Roboto";
+    head.appendChild(link);*/
+
     return /*#__PURE__*/React.createElement(RichText.Content, {
       tagName: level,
       value: content,
@@ -34385,6 +34393,19 @@ var AdvancedHeadingEdit = function AdvancedHeadingEdit(_ref2) {
     });
   };
 
+  var onChangeFontFamily = function onChangeFontFamily(newFontFamily) {
+    var head = document.head;
+    var link = document.createElement('link');
+    link.type = 'text/css';
+    link.rel = 'stylesheet';
+    link.href = 'https://fonts.googleapis.com/css?family=Roboto';
+    head.appendChild(link); //setAttributes({ fontFamily: newFontFamily })
+
+    setAttributes({
+      fontFamily: 'Roboto'
+    });
+  };
+
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(InspectorControls, null, /*#__PURE__*/React.createElement(PanelBody, {
     title: __("Heading Settings", "ultimate-blocks")
   }, /*#__PURE__*/React.createElement("p", null, __("Heading Level", "ultimate-blocks")), /*#__PURE__*/React.createElement(ButtonGroup, {
@@ -34446,11 +34467,7 @@ var AdvancedHeadingEdit = function AdvancedHeadingEdit(_ref2) {
   }), /*#__PURE__*/React.createElement(TextControl, {
     label: __("Font Family", "ultimate-blocks"),
     value: fontFamily,
-    onChange: function onChange(newFontFamily) {
-      return setAttributes({
-        fontFamily: newFontFamily
-      });
-    }
+    onChange: onChangeFontFamily
   }), /*#__PURE__*/React.createElement(RangeControl, {
     label: __("Letter Spacing", "ultimate-blocks"),
     value: letterSpacing,

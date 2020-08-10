@@ -43,7 +43,7 @@ class TableOfContents extends Component {
 	}
 
 	componentDidMount() {
-		const getHeadingBlocks = (_) => {
+		const getHeadingBlocks = () => {
 			let headings = [];
 
 			let pageNum = 1;
@@ -188,7 +188,9 @@ class TableOfContents extends Component {
 				anchor: header.anchor,
 				index: i,
 				disabled:
-					hasHeadings && "disabled" in this.state.headers[i]
+					hasHeadings &&
+					this.state.headers[i] &&
+					"disabled" in this.state.headers[i]
 						? checkIDs
 							? currentIDs.indexOf(header.clientId) > -1
 								? this.state.headers[currentIDs.indexOf(header.clientId)]
@@ -197,7 +199,9 @@ class TableOfContents extends Component {
 							: this.state.headers[i].disabled
 						: null,
 				customContent:
-					hasHeadings && "customContent" in this.state.headers[i]
+					hasHeadings &&
+					this.state.headers[i] &&
+					"customContent" in this.state.headers[i]
 						? checkIDs
 							? currentIDs.indexOf(header.clientId) > -1
 								? this.state.headers[currentIDs.indexOf(header.clientId)]
@@ -223,12 +227,21 @@ class TableOfContents extends Component {
 							});
 						} else {
 							this.setState({
-								headers: newHeaders.map((nh) =>
-									Object.assign(nh, {
-										disabled: nh.disabled || false,
-										customContent: nh.customContent || "",
-									})
-								),
+								headers: this.state.headers.map((hd, i) => {
+									const defaultReplacement =
+										this.state.headers[
+											this.state.headers
+												.map((h) => h.clientId)
+												.indexOf(newHeaders[i].clientId)
+										] || hd;
+									return Object.assign({}, newHeaders[i], {
+										disabled:
+											newHeaders[i].disabled || defaultReplacement.disabled,
+										customContent:
+											newHeaders[i].customContent ||
+											defaultReplacement.customContent,
+									});
+								}),
 							});
 						}
 					} else {
@@ -245,7 +258,7 @@ class TableOfContents extends Component {
 
 		setHeadings(false);
 
-		const unsubscribe = subscribe((_) => setHeadings());
+		const unsubscribe = subscribe(() => setHeadings());
 		this.setState({ unsubscribe });
 
 		// bind setHeadings to component context
@@ -290,11 +303,23 @@ class TableOfContents extends Component {
 						mismatchLocs.push(i);
 					}
 				}
-				this.setState({
-					headers: JSON.parse(JSON.stringify(replacementHeaders)).sort((a, b) =>
-						newIDs.indexOf(a.clientId) > newIDs.indexOf(b.clientId) ? 1 : -1
-					),
-				});
+				let replacements = JSON.parse(
+					JSON.stringify(replacementHeaders)
+				).sort((a, b) =>
+					newIDs.indexOf(a.clientId) > newIDs.indexOf(b.clientId) ? 1 : -1
+				);
+
+				if (mismatchLocs.length < 1) {
+					replacements = replacements.map((h, i) =>
+						Object.assign({}, h, {
+							disabled: headers[newIDs.indexOf(headers[i].clientId)].disabled,
+							customContent:
+								headers[newIDs.indexOf(headers[i].clientId)].customContent,
+						})
+					);
+				}
+
+				this.setState({ headers: JSON.parse(JSON.stringify(replacements)) });
 			} else {
 				let diff = [];
 				let currentHeaders = JSON.parse(JSON.stringify(headers)) || [];
@@ -324,6 +349,13 @@ class TableOfContents extends Component {
 					});
 
 					deletionSpots.forEach((index) => {
+						if (index !== currentHeaders[index].index) {
+							//heading split, transfer extra attributes of old heading to first of two new ones
+							Object.assign(currentHeaders[currentHeaders[index].index], {
+								disabled: currentHeaders[index].disabled,
+								customContent: currentHeaders[index].customContent,
+							});
+						}
 						currentHeaders.splice(index, 1);
 					});
 				}
@@ -513,7 +545,6 @@ export const inspectorControls = (props) => {
 				))}
 			</PanelBody>
 			<PanelBody title={__("Smooth Scroll Offset Settings")} initialOpen={true}>
-				{/*<label>{__("Smooth scroll options")}</label>*/}
 				<SelectControl
 					label={__("Smooth scroll adjustment options")}
 					value={smoothScrollOption}
@@ -661,38 +692,38 @@ export const blockControls = (props) => {
 					icon={oneColumnIcon}
 					label={__("One column")}
 					isPrimary={numColumns === 1}
-					onClick={(_) => setAttributes({ numColumns: 1 })}
+					onClick={() => setAttributes({ numColumns: 1 })}
 				/>
 				<IconButton
 					className={"ub_toc_column_selector"}
 					icon={twoColumnsIcon}
 					label={__("Two columns")}
 					isPrimary={numColumns === 2}
-					onClick={(_) => setAttributes({ numColumns: 2 })}
+					onClick={() => setAttributes({ numColumns: 2 })}
 				/>
 				<IconButton
 					className={"ub_toc_column_selector"}
 					icon={threeColumnsIcon}
 					label={__("Three columns")}
 					isPrimary={numColumns === 3}
-					onClick={(_) => setAttributes({ numColumns: 3 })}
+					onClick={() => setAttributes({ numColumns: 3 })}
 				/>
 			</Toolbar>
 			<Toolbar>
 				<IconButton
 					icon="editor-ul"
 					label={__("Bulleted list")}
-					onClick={(_) => setAttributes({ listStyle: "bulleted" })}
+					onClick={() => setAttributes({ listStyle: "bulleted" })}
 				/>
 				<IconButton
 					icon="editor-ol"
 					label={__("Numbered list")}
-					onClick={(_) => setAttributes({ listStyle: "numbered" })}
+					onClick={() => setAttributes({ listStyle: "numbered" })}
 				/>
 				<IconButton
 					icon={plainList}
 					label={__("Plain list")}
-					onClick={(_) => setAttributes({ listStyle: "plain" })}
+					onClick={() => setAttributes({ listStyle: "plain" })}
 				/>
 			</Toolbar>
 			<AlignmentToolbar
@@ -747,7 +778,7 @@ export const editorDisplay = (props) => {
 							<a
 								className="ub_table-of-contents-toggle-link"
 								href="#"
-								onClick={(_) => setAttributes({ showList: !showList })}
+								onClick={() => setAttributes({ showList: !showList })}
 							>
 								{showList ? __("hide") : __("show")}
 							</a>

@@ -29,31 +29,15 @@ Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-content-
     }).forEach(function (instance) {
       var indicator = instance.querySelector(".wp-block-ub-content-toggle-accordion-state-indicator");
       var panelContent = instance.nextElementSibling;
-      var panelHeight = 0;
-      var initialHide = panelContent.style.height === "0px" || panelContent.classList.contains("ub-hide") || getComputedStyle(panelContent).display === "none";
-
-      if (initialHide) {
-        //temporarily show panel contents to enable taking panel height measurements
-        panelContent.classList.remove("ub-hide");
-        panelContent.style.height = "";
-        panelContent.style.paddingTop = "";
-        panelContent.style.paddingBottom = "";
-        panelContent.style.display = "";
-      }
-
-      panelHeight = panelContent.offsetHeight;
-      panelContent.removeAttribute("style");
-
-      if (initialHide) {
-        setTimeout(function () {
-          return panelContent.classList.add("ub-hide");
-        }, 10);
-      }
-
       instance.addEventListener("click", function (e) {
         e.stopImmediatePropagation();
+        var topPadding = 0;
+        var bottomPadding = 0;
 
         if (panelContent.classList.contains("ub-hide")) {
+          var panelStyle = getComputedStyle(panelContent);
+          topPadding = parseInt(panelStyle.paddingTop.slice(0, -2));
+          bottomPadding = parseInt(panelStyle.paddingBottom.slice(0, -2));
           panelContent.classList.remove("ub-hide");
           panelContent.classList.add("ub-hiding");
 
@@ -67,12 +51,10 @@ Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-content-
               var siblingContent = siblingToggle.nextElementSibling;
               var siblingIndicator = siblingToggle.querySelector(".wp-block-ub-content-toggle-accordion-state-indicator");
 
-              if (!siblingContent.contains("ub-hide")) {
+              if (!siblingContent.classList.contains("ub-hide")) {
                 if (siblingIndicator) siblingIndicator.classList.remove("open");
                 siblingContent.classList.add("ub-toggle-transition");
-                var siblingHeight = siblingContent.offsetHeight;
-                siblingContent.style.height = "".concat(siblingHeight, "px"); //calculate panelheight first
-
+                siblingContent.style.height = "".concat(siblingContent.scrollHeight, "px");
                 setTimeout(function () {
                   siblingContent.classList.add("ub-hiding");
                   siblingContent.style.height = "";
@@ -81,11 +63,7 @@ Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-content-
             });
           }
         } else {
-          if (panelHeight !== panelContent.offsetHeight) {
-            panelHeight = panelContent.offsetHeight;
-          }
-
-          panelContent.style.height = "".concat(panelHeight, "px");
+          panelContent.style.height = getComputedStyle(panelContent).height;
         }
 
         panelContent.classList.add("ub-toggle-transition");
@@ -93,18 +71,14 @@ Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-content-
         setTimeout(function () {
           //delay is needed for the animation to run properly
           if (panelContent.classList.contains("ub-hiding")) {
-            panelContent.classList.remove("ub-hiding");
-            panelContent.style.height = "".concat(panelHeight, "px");
+            panelContent.style.height = "".concat(panelContent.scrollHeight + topPadding + bottomPadding, "px");
+            panelContent.style.paddingTop = "".concat(topPadding, "px");
+            panelContent.style.paddingBottom = "".concat(bottomPadding, "px");
           } else {
             panelContent.classList.add("ub-hiding");
             panelContent.style.height = "";
           }
         }, 20);
-        var flickityInstances = Array.prototype.slice.call(panelContent.querySelectorAll(".ub_image_slider"));
-        flickityInstances.forEach(function (instance) {
-          var slider = Flickity.data(instance.querySelector("[data-flickity]"));
-          slider.resize();
-        });
         Array.prototype.slice.call(panelContent.querySelectorAll(".wp-block-embed iframe")).forEach(function (embeddedContent) {
           embeddedContent.style.removeProperty("width");
           embeddedContent.style.removeProperty("height");
@@ -113,12 +87,15 @@ Array.prototype.slice.call(document.getElementsByClassName("wp-block-ub-content-
       panelContent.addEventListener("transitionend", function () {
         panelContent.classList.remove("ub-toggle-transition");
 
-        if (panelContent.classList.contains("ub-hiding")) {
-          panelContent.classList.remove("ub-hiding");
+        if (panelContent.offsetHeight === 0) {
           panelContent.classList.add("ub-hide");
         } else {
           panelContent.style.height = "";
+          panelContent.style.paddingBottom = "";
+          panelContent.style.paddingTop = "";
         }
+
+        panelContent.classList.remove("ub-hiding");
       });
       panelContent.removeAttribute("style");
     }); //hide the parent element again;

@@ -34226,7 +34226,8 @@ registerBlockType("ub/advanced-heading", {
   transforms: _transforms__WEBPACK_IMPORTED_MODULE_2__["default"],
   edit: _components__WEBPACK_IMPORTED_MODULE_1__["default"],
   save: function save(_ref2) {
-    var attributes = _ref2.attributes;
+    var attributes = _ref2.attributes,
+        className = _ref2.className;
     var content = attributes.content,
         level = attributes.level,
         alignment = attributes.alignment,
@@ -34238,15 +34239,8 @@ registerBlockType("ub/advanced-heading", {
         fontFamily = attributes.fontFamily,
         fontWeight = attributes.fontWeight,
         lineHeight = attributes.lineHeight;
-    /* Google Fonts 
-    const head = document.head;
-    const link = document.createElement("link");
-    	link.type = "text/css";
-    link.rel = "stylesheet";
-    link.href = "https://fonts.googleapis.com/css?family=Roboto";
-    head.appendChild(link);*/
-
     return /*#__PURE__*/React.createElement(RichText.Content, {
+      className: className,
       tagName: level,
       value: content,
       style: {
@@ -34277,6 +34271,8 @@ registerBlockType("ub/advanced-heading", {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _fonts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./fonts */ "./src/blocks/advanced-heading/fonts.js");
+
 
 var __ = wp.i18n.__;
 
@@ -34311,52 +34307,58 @@ var AdvancedHeadingEdit = function AdvancedHeadingEdit(_ref2) {
       lineHeight = attributes.lineHeight;
   var headingLevels = [1, 2, 3, 4, 5, 6];
   var textTransformOptions = [{
-    value: 'none',
-    label: __('None', 'ultimate-blocks')
+    value: "none",
+    label: __("None", "ultimate-blocks")
   }, {
-    value: 'uppercase',
-    label: __('Uppercase', 'ultimate-blocks')
+    value: "uppercase",
+    label: __("Uppercase", "ultimate-blocks")
   }, {
-    value: 'lowercase',
-    label: __('Lowercase', 'ultimate-blocks')
+    value: "lowercase",
+    label: __("Lowercase", "ultimate-blocks")
   }, {
-    value: 'capitalize',
-    label: __('Capitalize', 'ultimate-blocks')
+    value: "capitalize",
+    label: __("Capitalize", "ultimate-blocks")
   }];
   var fontWeightOptions = [{
     value: "Normal",
-    label: __('Normal', 'ultimate-blocks')
+    label: __("Normal", "ultimate-blocks")
   }, {
     value: "Bold",
-    label: __('Bold', 'ultimate-blocks')
+    label: __("Bold", "ultimate-blocks")
   }, {
     value: "100",
-    label: __('100', 'ultimate-blocks')
+    label: __("100", "ultimate-blocks")
   }, {
     value: "200",
-    label: __('200', 'ultimate-blocks')
+    label: __("200", "ultimate-blocks")
   }, {
     value: "300",
-    label: __('300', 'ultimate-blocks')
+    label: __("300", "ultimate-blocks")
   }, {
     value: "400",
-    label: __('400', 'ultimate-blocks')
+    label: __("400", "ultimate-blocks")
   }, {
     value: "500",
-    label: __('500', 'ultimate-blocks')
+    label: __("500", "ultimate-blocks")
   }, {
     value: "600",
-    label: __('600', 'ultimate-blocks')
+    label: __("600", "ultimate-blocks")
   }, {
     value: "700",
-    label: __('700', 'ultimate-blocks')
+    label: __("700", "ultimate-blocks")
   }, {
     value: "800",
-    label: __('800', 'ultimate-blocks')
+    label: __("800", "ultimate-blocks")
   }, {
     value: "900",
-    label: __('900', 'ultimate-blocks')
+    label: __("900", "ultimate-blocks")
   }];
+  var fontFamilyOptions = _fonts__WEBPACK_IMPORTED_MODULE_1__["default"].sort().map(function (fontFamilyOption) {
+    return {
+      value: fontFamilyOption,
+      label: __(fontFamilyOption, "ultimate-blocks")
+    };
+  });
   var elementRef = Object(react__WEBPACK_IMPORTED_MODULE_0__["createRef"])();
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     if (!fontSize) {
@@ -34368,10 +34370,16 @@ var AdvancedHeadingEdit = function AdvancedHeadingEdit(_ref2) {
     }
 
     if (!fontFamily) {
+      console.log('inside', fontFamily);
       var defaultFontFamily = window.getComputedStyle(elementRef.current).fontFamily;
+      /*fontFamilyOptions.push({
+      	value: defaultFontFamily,
+      	label: __(defaultFontFamily, "ultimate-blocks")
+      })*/
+
       setAttributes({
         fontFamily: defaultFontFamily
-      });
+      }); //setAttributes({ fontFamily: "Satisfy" });
     }
 
     if (!lineHeight) {
@@ -34382,6 +34390,7 @@ var AdvancedHeadingEdit = function AdvancedHeadingEdit(_ref2) {
       });
     }
   }, [elementRef]);
+  console.log('out', fontFamily);
   /* Methods */
 
   var onChangeHeadingLevel = function onChangeHeadingLevel(e) {
@@ -34394,15 +34403,8 @@ var AdvancedHeadingEdit = function AdvancedHeadingEdit(_ref2) {
   };
 
   var onChangeFontFamily = function onChangeFontFamily(newFontFamily) {
-    var head = document.head;
-    var link = document.createElement('link');
-    link.type = 'text/css';
-    link.rel = 'stylesheet';
-    link.href = 'https://fonts.googleapis.com/css?family=Roboto';
-    head.appendChild(link); //setAttributes({ fontFamily: newFontFamily })
-
     setAttributes({
-      fontFamily: 'Roboto'
+      fontFamily: newFontFamily
     });
   };
 
@@ -34456,7 +34458,7 @@ var AdvancedHeadingEdit = function AdvancedHeadingEdit(_ref2) {
   })), /*#__PURE__*/React.createElement(PanelBody, {
     title: __("Typography Settings", "ultimate-blocks")
   }, /*#__PURE__*/React.createElement(SelectControl, {
-    label: __('Text transform', 'ultimate-blocks'),
+    label: __("Text transform", "ultimate-blocks"),
     options: textTransformOptions,
     value: textTransform,
     onChange: function onChange(newTextTransform) {
@@ -34464,9 +34466,10 @@ var AdvancedHeadingEdit = function AdvancedHeadingEdit(_ref2) {
         textTransform: newTextTransform
       });
     }
-  }), /*#__PURE__*/React.createElement(TextControl, {
+  }), /*#__PURE__*/React.createElement(SelectControl, {
     label: __("Font Family", "ultimate-blocks"),
-    value: fontFamily,
+    options: fontFamilyOptions,
+    value: _fonts__WEBPACK_IMPORTED_MODULE_1__["default"].includes(fontFamily) ? fontFamily : "Default",
     onChange: onChangeFontFamily
   }), /*#__PURE__*/React.createElement(RangeControl, {
     label: __("Letter Spacing", "ultimate-blocks"),
@@ -34479,7 +34482,7 @@ var AdvancedHeadingEdit = function AdvancedHeadingEdit(_ref2) {
     min: -2,
     max: 6
   }), /*#__PURE__*/React.createElement(SelectControl, {
-    label: __('Font Weight', 'ultimate-blocks'),
+    label: __("Font Weight", "ultimate-blocks"),
     options: fontWeightOptions,
     value: fontWeight,
     onChange: function onChange(newFontWeight) {
@@ -34521,6 +34524,20 @@ var AdvancedHeadingEdit = function AdvancedHeadingEdit(_ref2) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (AdvancedHeadingEdit);
+
+/***/ }),
+
+/***/ "./src/blocks/advanced-heading/fonts.js":
+/*!**********************************************!*\
+  !*** ./src/blocks/advanced-heading/fonts.js ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var fontsList = ["Default", "ABeeZee", "Abel", "Abhaya Libre", "Abril Fatface", "Abyssinica SIL", "Aclonica", "Acme", "Actor", "Adamina", "Adobe Blank", "Advent Pro", "Aguafina Script", "Akronim", "aksarabaligalang", "Aladin", "Aldrich", "Alef", "alefhebrew", "Alegreya", "Alegreya Sans", "Alegreya Sans SC", "Alegreya SC", "Aleo", "Alex Brush", "Alfa Slab One", "Alice", "Alike", "Alike Angular", "Allan", "Allerta", "Allerta Stencil", "Allura", "Almendra", "Almendra Display", "Almendra SC", "Amarante", "Amaranth", "Amatic SC", "Amatica SC", "Amethysta", "Amiko", "Amiri", "Amita", "amstelvaralpha", "Anaheim", "Andada", "Andada SC", "Andika", "Angkor", "Annie Use Your Telescope", "Anonymous Pro", "Antic", "Antic Didone", "Antic Slab", "Anton", "Antonio", "Arapey", "Arbutus", "Arbutus Slab", "Architects Daughter", "Archivo", "Archivo Black", "Archivo Narrow", "archivovfbeta", "Aref Ruqaa", "Arima Madurai", "Arimo", "Arizonia", "Armata", "Arsenal", "Artifika", "Arvo", "Arya", "Asap", "Asap Condensed", "asapvfbeta", "Asar", "Asset", "Assistant", "Astloch", "Asul", "Athiti", "Atomic Age", "Aubrey", "Audiowide", "Autour One", "Average", "Average Sans", "Averia Gruesa Libre", "Averia Libre", "Averia Sans Libre", "Averia Serif Libre", "B612", "B612 Mono", "Bad Script", "Bahiana", "Bahianita", "Bai Jamjuree", "Baloo", "Baloo Bhai", "Baloo Bhaijaan", "Baloo Bhaina", "Baloo Chettan", "Baloo Da", "Baloo Paaji", "Baloo Tamma", "Baloo Tammudu", "Baloo Thambi", "Balthazar", "Bangers", "Barlow", "Barlow Condensed", "Barlow Semi Condensed", "Barriecito", "Barrio", "Basic", "Battambang", "Baumans", "Bayon", "Belgrano", "Bellefair", "Belleza", "BenchNine", "Bentham	", "Berkshire Swash", "Beth Ellen", "Bevan", "Bhavuka", "Bigelow Rules", "Bigshot One", "Bilbo", "Bilbo Swash Caps", "Bio Rhyme	", "Bio Rhyme Expanded", "Biryani", "Bitter", "Black And White Picture", "Black Han Sans", "Black Ops One", "Bokor", "Bonbon", "Boogaloo", "Bowlby One", "Bowlby One SC", "Brawler", "Bree Serif", "Bruno Ace", "Bruno Ace SC", "Bubblegum Sans", "Bubbler One", "Buda", "Buenard", "Bungee", "Bungee Hairline", "Bungee Inline", "Bungee Outline", "Bungee Shade", "Butcherman", "Butcherman Caps", "Butterfly Kids", "Cabin", "Cabin Condensed", "Cabin Sketch", "cabinvfbeta", "Caesar Dressing", "Cagliostro", "Cairo", "Calligraffitti", "Cambay", "Cambo", "Candal", "Cantarell", "Cantata One", "Cantora One", "Capriola", "Cardo", "Carme", "Carrois Gothic", "Carrois Gothic SC", "Carter One", "Catamaran", "Caudex", "Caveat", "Caveat Brush", "Cedarville Cursive", "Ceviche One", "Chakra Petch", "Changa", "Changa One", "Chango", "Charm", "Charmonman", "Chau Philomene One", "Chela One", "Chelsea Market", "Chenla", "Cherry Cream Soda", "Cherry Swash", "Chewy", "Chicle", "Chilanka", "Chivo", "Chonburi", "Cinzel", "Cinzel Decorative", "Clicker Script", "Coda", "Coda Caption", "Codystar", "Coiny", "Combo", "Comfortaa", "Coming Soon", "Concert One", "Condiment", "Content", "Contrail One", "Convergence", "Cookie", "Copse", "Corben", "Cormorant", "Cormorant Garamond", "Cormorant Infant", "Cormorant SC", "Cormorant Unicase", "Cormorant Upright", "Courgette", "Cousine", "Coustard", "Covered By Your Grace", "Crafty Girls", "Creepster", "Creepster Caps", "Crete Round", "Crimson Pro", "Crimson Text", "Croissant One", "Crushed", "Cuprum", "Cute Font", "Cutive", "Cutive Mono", "Damion", "Dancing Script", "Dangrek", "Darker Grotesque", "Dawning of a New Day", "Days One", "decovaralpha", "Dekko", "Delius", "Delius Swash Caps", "Delius Unicase", "Della Respira", "Denk One", "Devonshire", "Dhurjati", "Dhyana", "Didact Gothic", "Digital Numbers", "Diplomata", "Diplomata SC", "DM Sans", "DM Serif Display", "DM Serif Text", "Do Hyeon", "Dokdo", "Domine", "Donegal One", "Doppio One", "Dorsa", "Dosis", "Dr Sugiyama", "Duru Sans", "Dynalight", "Eagle Lake", "East Sea Dokdo", "Eater", "Eater Caps", "EB Garamond", "Economica", "Eczar", "Ek Mukta", "El Messiri", "Electrolize", "Elsie", "Elsie Swash Caps", "Emblema One", "Emilys Candy", "Encode Sans", "Encode Sans Condensed", "Encode Sans Expanded", "Encode Sans Semi Condensed", "Encode Sans Semi Expanded", "Engagement", "Englebert", "Enriqueta", "Erica One", "Esteban", "Euphoria Script", "Ewert", "Exo", "Exo 2", "Expletus Sans", "Fahkwang", "Fanwood Text", "Farro", "Farsan", "Fascinate", "Fascinate Inline", "Faster One", "Fasthand", "Fauna One", "Faustina", "faustinavfbeta", "Federant", "Federo", "Felipa", "Fenix", "Finger Paint", "Fira Code", "Fira Mono", "Fira Sans", "Fira Sans Condensed", "Fira Sans Extra Condensed", "Fjalla One", "Fjord One", "Flamenco", "Flavors", "Fondamento", "Fontdiner Swanky", "Forum", "Francois One", "Frank Ruhl Libre", "Freckle Face", "Fredericka the Great", "Fredoka One", "Freehand", "Fresca", "Frijole", "Fruktur", "Fugaz One", "Gabriela", "Gaegu", "Gafata", "Galada", "Galdeano", "Galindo", "Gamja Flower", "Gayathri", "Gemunu Libre", "Gentium Basic", "Gentium Book Basic", "Geo", "Geostar", "Geostar Fill", "Germania One", "GFS Didot", "GFS Neohellenic", "Gidugu", "Gilda Display", "Give You Glory", "Glass Antiqua", "Glegoo", "Gloria Hallelujah", "Goblin One", "Gochi Hand", "Gorditas", "Gothic A1", "Goudy Bookletter 1911", "Graduate", "Grand Hotel", "Gravitas One", "Great Vibes", "Grenze", "Griffy", "Gruppo", "Gudea", "Gugi", "Gurajada", "Habibi", "Halant", "Hammersmith One", "Hanalei", "Hanalei Fill", "Handlee", "hanna", "hannari", "Hanuman", "Happy Monkey", "Harmattan", "Headland One", "Heebo", "Henny Penny", "Hermeneus One", "Herr Von Muellerhoff", "Hi Melody", "Hind", "Hind Colombo", "Hind Guntur", "Hind Jalandhar", "Hind Kochi", "Hind Madurai", "Hind Mysuru", "Hind Siliguri", "Hind Vadodara", "Holtwood One SC", "Homemade Apple", "Homenaje", "IBM Plex Mono", "IBM Plex Sans", "IBM Plex Sans Condensed", "IBM Plex Serif", "Iceberg", "Iceland", "IM Fell Double Pica", "IM Fell Double Pica SC", "IM Fell DW Pica", "IM Fell DW Pica SC", "IM Fell English", "IM Fell English SC", "IM Fell French Canon", "IM Fell French Canon SC", "IM Fell Great Primer", "IM Fell Great Primer SC", "Imprima", "Inconsolata", "Inder", "Indie Flower", "Inika", "Inknut Antiqua", "Irish Grover", "Istok Web", "Italiana", "Italianno", "Itim", "Jacques Francois", "Jacques Francois Shadow", "Jaldi", "jejugothic", "jejuhallasan", "jejumyeongjo", "Jim Nightshade", "Jockey One", "Jolly Lodger", "Jomhuria", "jomolhari", "Josefin Sans", "Josefin Sans Std Light", "Josefin Slab", "Joti One", "Jua", "Judson", "Julee", "Julius Sans One", "Junge", "Jura", "Just Another Hand", "Just Me Again Down Here", "K2D", "Kadwa", "Kalam", "Kameron", "Kanit", "Kantumruy", "Karla", "Karla Tamil Inclined", "Karla Tamil Upright", "Karma", "Katibeh", "Kaushan Script", "Kavivanar", "Kavoon", "Kdam Thmor", "Keania One", "Kelly Slab", "Kenia", "Khand", "Khmer", "Khula", "khyay", "Kirang Haerang", "Kite One", "Knewave", "Kodchasan", "KoHo", "kokoro", "kopubbatang", "Kotta One", "Koulen", "Kranky", "Kreon", "Kristi", "Krona One", "Krub", "Kumar One", "Kurale", "La Belle Aurore", "Lacquer", "Laila", "Lakki Reddy", "Lalezar", "Lancelot", "laomuangdon", "laomuangkhong", "laosanspro", "Lateef", "Lato", "League Script", "Leckerli One", "Ledger", "Lekton", "Lemon", "Lemonada", "Libre Barcode 128", "Libre Barcode 128 Text", "Libre Barcode 39", "Libre Barcode 39 Extended", "Libre Barcode 39 Extended Text", "Libre Barcode 39 Text", "Libre Baskerville", "Libre Caslon Display", "Libre Caslon Text", "Libre Franklin", "Life Savers", "Lilita One", "Lily Script One", "Limelight", "Linden Hill", "Literata", "Liu Jian Mao Cao", "LiuJianMaoCao", "Livvic", "Lobster", "Lobster Two", "Lohit Bengali", "Lohit Tamil", "lohitdevanagari", "Londrina Outline", "Londrina Shadow", "Londrina Sketch", "Londrina Solid", "Long Cang", "LongCang", "Lora", "Love Ya Like A Sister", "Loved by the King", "Lovers Quarrel", "Luckiest Guy", "Lusitana", "Lustria", "Ma Shan Zheng", "Macondo", "Macondo Swash Caps", "Mada", "Magra", "Maiden Orange", "Maitree", "Major Mono Display", "Mako", "Mali", "Mallanna", "Mandali", "Manjari", "Manuale", "Marcellus", "Marcellus SC", "Marck Script", "Margarine", "Marko One", "Marmelad", "Martel", "Martel Sans", "Marvel", "MaShanZheng", "Mate", "Mate SC", "Maven Pro", "mavenprovfbeta", "McLaren", "Meddon", "MedievalSharp", "Medula One", "Meera Inimai", "Megrim", "Meie Script", "Merge One", "Merienda", "Merienda One", "Merriweather", "Merriweather Sans", "Mervale Script", "Metal", "Metal Mania", "Metamorphous", "Metrophobic", "Miama", "Michroma", "Milonga", "Miltonian", "Miltonian Tattoo", "Mina", "Miniver", "Miriam Libre", "Miss Fajardose", "Miss Saint Delafield", "Modak", "Modern Antiqua", "Molengo", "Molle", "Monda", "Monofett", "Monoton", "Monsieur La Doulaise", "Montaga", "Montez", "Montserrat", "Montserrat Alternates", "Montserrat Subrayada", "Moul", "Moulpali", "Mountains of Christmas", "Mouse Memoirs", "mplus1p", "Mr Bedford", "Mr Bedfort", "Mr Dafoe", "Mr De Haviland", "Mrs Saint Delafield", "Mrs Sheppards", "Mukta", "Mukta Mahee", "Mukta Malar", "Mukta Vaani", "Muli", "myanmarsanspro", "Mystery Quest", "Nanum Brush Script", "Nanum Gothic", "Nanum Gothic Coding", "Nanum Myeongjo", "Nanum Pen Script", "NATS", "Neucha", "Neuton", "New Rocker", "News Cycle", "nicomoji", "Niconne", "nikukyu", "Niramit", "Nixie One", "Nobile", "Nokora", "Norican", "Nosifer", "Nosifer Caps", "Notable", "Nothing You Could Do", "Noticia Text", "Noto Sans", "Noto Serif", "notosanstamil", "Nova Cut", "Nova Flat", "Nova Mono", "Nova Oval", "Nova Round", "Nova Script", "Nova Slim", "Nova Square", "NTR", "Numans", "Nunito", "Nunito Sans", "Odor Mean Chey", "Offside", "OFL Sorts Mill Goudy TT", "Old Standard TT", "Oldenburg", "Oleo Script", "Oleo Script Swash Caps", "Open Sans", "Open Sans Condensed", "opensanshebrew", "opensanshebrewcondensed", "Oranienbaum", "Orbitron", "Oregano", "Orienta", "Original Surfer", "Oswald", "Over the Rainbow", "Overlock", "Overlock SC", "Overpass", "Overpass Mono", "Ovo", "Oxygen", "Oxygen Mono", "Pacifico", "Padauk", "Palanquin", "Palanquin Dark", "Pangolin", "Paprika", "Parisienne", "Passero One", "Passion One", "Pathway Gothic One", "Patrick Hand", "Patrick Hand SC", "Pattaya", "Patua One", "Pavanam", "Paytone One", "Pecita", "Peddana", "Peralta", "Permanent Marker", "Petit Formal Script", "Petrona", "Phetsarath", "Philosopher", "Piedra", "Pinyon Script", "Pirata One", "Plaster", "Play", "Playball", "Playfair Display", "Playfair Display SC", "Podkova", "podkovavfbeta", "Poetsen One", "Poiret One", "Poller One", "Poly", "Pompiere", "Ponnala", "Pontano Sans", "Poor Story", "Poppins", "Port Lligat Sans", "Port Lligat Slab", "Porter Sans Block", "Post No Bills Colombo", "Post No Bills Jaffna", "Pragati Narrow", "Preahvihear", "Press Start 2P", "Pridi", "Princess Sofia", "Prociono", "Prompt", "Prosto One", "Proza Libre", "PT Mono", "PT Sans", "PT Sans Caption", "PT Sans Narrow", "PT Serif", "PT Serif Caption", "Puritan", "Purple Purse", "Pushster", "Quando", "Quantico", "Quattrocento", "Quattrocento Sans", "Questrial", "Quicksand", "Quintessential", "Qwigley", "Racing Sans One", "Radley", "Rajdhani", "Rakkas", "Raleway", "Raleway Dots", "Ramabhadra", "Ramaraja", "Rambla", "Rammetto One", "Ranchers", "Rancho", "Ranga", "Rasa", "Rationale", "Ravi Prakash", "Red Hat Display", "Red Hat Text", "Redacted", "Redacted Script", "Redressed", "Reem Kufi", "Reenie Beanie", "Revalia", "Rhodium Libre", "Ribeye", "Ribeye Marrow", "Righteous", "Risque", "Roboto", "Roboto Condensed", "Roboto Mono", "Roboto Slab", "Rochester", "Rock Salt", "Rokkitt", "Romanesco", "Ropa Sans", "Rosario", "Rosarivo", "Rouge Script", "roundedmplus1c", "Rozha One", "Rubik", "Rubik Mono One", "Rubik One", "Ruda", "Rufina", "Ruge Boogie", "Ruluko", "Rum Raisin", "Ruslan Display", "Russo One", "Ruthie", "Rye", "Sacramento", "Sahitya", "Sail", "Saira", "Saira Condensed", "Saira Extra Condensed", "Saira Semi Condensed", "Saira Stencil", "Saira Stencil One", "Salsa", "Sanchez", "Sancreek", "Sansation", "Sansita", "Sansita One", "Sarabun", "Sarala", "Sarina", "Sarpanch", "Satisfy", "sawarabigothic", "sawarabimincho", "Scada", "Scheherazade", "Schoolbell", "Scope One", "Seaweed Script", "Secular One", "Sedan", "Sedan SC", "Sedgwick Ave", "Sedgwick Ave Display", "seoulhangang", "seoulhangangcondensed", "seoulnamsan", "seoulnamsancondensed", "seoulnamsanvertical", "Sevillana", "Seymour One", "Shadows Into Light", "Shadows Into Light Two", "Shanti", "Share", "Share Tech", "Share Tech Mono", "Shojumaru", "Short Stack", "Shrikhand", "Siamreap", "Siemreap", "Sigmar One", "Signika", "Signika Negative", "Simonetta", "Single Day", "Sintony", "Sirin Stencil", "Sitara", "Six Caps", "Skranji", "Slabo 13px", "Slabo 27px", "Slackey", "Smokum", "Smythe", "Sniglet", "Snippet", "Snowburst One", "Sofadi One", "Sofia", "Solway", "Song Myung", "Sonsie One", "Sorts Mill Goudy", "souliyo", "Source Code Pro", "Source Sans Pro", "Source Serif Pro", "Space Mono", "Special Elite", "Spectral", "Spicy Rice", "Spinnaker", "Spirax", "Squada One", "Sree Krushnadevaraya", "Sriracha", "Srisakdi", "Staatliches", "Stalemate", "Stalin One", "Stalinist One", "Stardos Stencil", "Stint Ultra Condensed", "Stint Ultra Expanded", "Stoke", "Strait", "Strong", "Stylish", "Sue Ellen Francisco", "Suez One", "Sumana", "Sunflower", "Sunshiney", "Supermercado One", "Sura", "Suranna", "Suravaram", "Suwannaphum", "Swanky and Moo Moo", "Syncopate", "Tajawal", "Tangerine", "Taprom", "Tauri", "Taviraj", "Teko", "Telex", "Tenali Ramakrishna", "Tenor Sans", "Terminal Dosis", "Terminal Dosis Light", "Text Me One", "Thabit", "tharlon", "Thasadith", "The Girl Next Door", "Tienne", "Tillana", "Timmana", "Tinos", "Titan One", "Titillium Web", "Trade Winds", "Trirong", "Trocchi", "Trochut", "Trykker", "Tuffy", "Tulpen One", "Ubuntu", "Ubuntu Condensed", "Ubuntu Mono", "Ultra", "Uncial Antiqua", "Underdog", "Unica One", "UnifrakturCook", "UnifrakturMaguntia", "Unkempt", "Unlock", "Unna", "Vampiro One", "Varela", "Varela Round", "Varta", "Vast Shadow", "Vesper Libre", "Vibur", "Vidaloka", "Viga", "Voces", "Volkhov", "Vollkorn", "Vollkorn SC", "Voltaire", "VT323", "Waiting for the Sunrise", "Wallpoet", "Walter Turncoat", "Warnes", "Wellfleet", "Wendy One", "Wire One", "Work Sans", "Yaldevi Colombo", "Yanone Kaffeesatz", "Yantramanav", "Yatra One", "Yellowtail", "Yeon Sung", "Yeseva One", "Yesteryear", "Yinmar", "Yrsa", "ZCOOL KuaiLe", "ZCOOL QingKe HuangYou", "ZCOOL XiaoWei", "Zeyada", "Zhi Mang Xing", "ZhiMangXing", "Zilla Slab Highlight"];
+/* harmony default export */ __webpack_exports__["default"] = (fontsList);
 
 /***/ }),
 

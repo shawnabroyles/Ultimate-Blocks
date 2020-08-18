@@ -700,7 +700,7 @@ $defaultValues = array(
             ),
             'paginationType' => array(
                 'type' => 'string',
-                'default' => 'bullets'
+                'default' => ''
             ),
             'transition' => array(
                 'type' => 'string',
@@ -865,6 +865,10 @@ $defaultValues = array(
             'categories' => array(
                 'type' => 'string',
                 'default' => ''
+            ),
+            'categoryArray' => array(
+                'type' => 'array',
+                'default' => [],
             ),
             'className' => array(
                 'type' => 'string',
@@ -1189,7 +1193,11 @@ $defaultValues = array(
                 'items' => array(
                     'type' => 'string'
                 )
-            )
+            ),
+            'buttonColor' => array(
+                'type' => 'string',
+                'default' => ''
+            )  
         )
     ),
     'ub/star-rating-block' => array(
@@ -1473,19 +1481,19 @@ $defaultValues = array(
                 'type' => 'boolean',
                 'default' => false,
             ),
-            'smoothScrollOption' => array(
+            'scrollOption' => array(
                 'type' => 'string',
                 'default' => 'auto' //other options: namedelement, fixedamount, off
             ),
-            'smoothScrollOffset' => array(
+            'scrollOffset' => array(
                 'type' => 'number',
                 'default' => 0
             ),
-            'smoothScrollTarget' => array(
+            'scrollTarget' => array(
                 'type' => 'string',
                 'default' => ''
             ),
-            'smoothScrollTargetType' => array(
+            'scrollTargetType' => array(
                 'type' => 'string',
                 'default' => 'id' //other types: class, element
             )

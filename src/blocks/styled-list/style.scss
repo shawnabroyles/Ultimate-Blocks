@@ -2,6 +2,7 @@
 	display: flex;
 	.fa-ul {
 		list-style-type: none;
+		margin-left: 2.5em;
 		padding-left: 0;
 		> li {
 			position: relative;
@@ -12,5 +13,12 @@
 		display: inline-block;
 		left: -0.5em;
 		position: relative;
+	}
+	li::before {
+		content: "";
+		position: relative;
+		left: -0.5em;
+		display: inline-block;
+		background-repeat: no-repeat;
 	}
 }

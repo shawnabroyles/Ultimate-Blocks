@@ -47,6 +47,7 @@ export const blockControls = (props) => {
 				<Toolbar>
 					<IconButton
 						icon="admin-links"
+						label={__("Add button link")}
 						onClick={() => props.setState({ enableLinkInput: true })}
 					/>
 				</Toolbar>
@@ -415,8 +416,6 @@ class URLInputBox extends Component {
 	//adapted from Ben Bud, https://stackoverflow.com/a/42234988
 	constructor(props) {
 		super(props);
-
-		this.setWrapperRef = this.setWrapperRef.bind(this);
 		this.handleClickOutside = this.handleClickOutside.bind(this);
 	}
 
@@ -429,12 +428,18 @@ class URLInputBox extends Component {
 		document.removeEventListener("mousedown", this.handleClickOutside);
 	}
 
-	setWrapperRef(node) {
-		this.wrapperRef = node;
-	}
-
 	handleClickOutside(event) {
-		if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
+		const clickedElement = event.target;
+		if (
+			this.wrapperRef &&
+			!this.wrapperRef.contains(clickedElement) &&
+			!(
+				clickedElement.classList.contains(
+					"block-editor-url-input__suggestion"
+				) ||
+				clickedElement.classList.contains("block-editor-url-input__suggestions")
+			)
+		) {
 			this.props.hideLinkInput();
 		}
 	}
@@ -444,9 +449,12 @@ class URLInputBox extends Component {
 		const { buttons } = attributes;
 
 		return (
-			<div ref={this.setWrapperRef}>
+			<div>
 				<Popover className="ub_popover" position="bottom">
-					<div className="ub_button_popover">
+					<div
+						className="ub_button_popover"
+						ref={(node) => (this.wrapperRef = node)}
+					>
 						<div className="ub_button_url_input">
 							<form
 								onSubmit={(event) => event.preventDefault()}
@@ -496,11 +504,11 @@ class URLInputBox extends Component {
 							onChange={() =>
 								setAttributes({
 									buttons: [
-										...buttons.slice(0, i),
-										Object.assign({}, buttons[i], {
+										...buttons.slice(0, index),
+										Object.assign({}, buttons[index], {
 											addNofollow: !buttons[index].addNofollow,
 										}),
-										...buttons.slice(i + 1),
+										...buttons.slice(index + 1),
 									],
 								})
 							}
@@ -541,7 +549,11 @@ export const editorDisplay = (props) => {
 	return (
 		<div className={`ub-buttons align-button-${align}`}>
 			{buttons.map((b, i) => (
-				<div className="ub-button-container">
+				<div
+					className={`ub-button-container${
+						b.buttonWidth === "full" ? " ub-button-full-container" : ""
+					}`}
+				>
 					{buttons.length > 1 && (
 						<div className="ub-button-delete">
 							<span

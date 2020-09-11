@@ -82,13 +82,17 @@ registerBlockType("ub/styled-box", {
 			type: "string",
 			default: "#CCCCCC",
 		},
+		boxColor: {
+			type: "string",
+			default: "",
+		},
 		outlineColor: {
 			type: "string",
 			default: "#000000",
 		},
 		outlineThickness: {
 			type: "number",
-			default: 1,
+			default: 0, //set to 3 for new inserts, but leave previously-inserted ones at 1
 		},
 		outlineStyle: {
 			type: "string",
@@ -134,6 +138,7 @@ registerBlockType("ub/styled-box", {
 				image,
 				foreColor,
 				backColor,
+				boxColor,
 				outlineColor,
 				outlineStyle,
 				outlineThickness,
@@ -203,10 +208,24 @@ registerBlockType("ub/styled-box", {
 					getBlock(ID).attributes.blockID === props.attributes.blockID
 			)
 		) {
-			setAttributes({ blockID: block.clientId });
+			setAttributes({
+				blockID: block.clientId,
+				outlineThickness: blockID === "" ? 3 : outlineThickness,
+			});
+		} else if (outlineThickness === 0) {
+			setAttributes({ outlineThickness: 1 });
 		}
 
 		if (mode === "notification") {
+			//remove inner block from bordered box mode first
+			if (
+				block.innerBlocks.length > 0 &&
+				block.innerBlocks[0].name === "ub/styled-box-bordered-content"
+			) {
+				replaceInnerBlocks(block.innerBlocks[0].clientId, [
+					createBlock("ub/styled-box-notification-content"),
+				]);
+			}
 			renderedBlock = (
 				<InnerBlocks
 					templateLock={"all"}
@@ -450,6 +469,14 @@ registerBlockType("ub/styled-box", {
 				/>
 			);
 		} else if (mode === "bordered") {
+			if (
+				block.innerBlocks.length > 0 &&
+				block.innerBlocks[0].name === "ub/styled-box-notification-content"
+			) {
+				replaceInnerBlocks(block.innerBlocks[0].clientId, [
+					createBlock("ub/styled-box-bordered-content"),
+				]);
+			}
 			renderedBlock = (
 				<InnerBlocks
 					templateLock={"all"}
@@ -504,10 +531,21 @@ registerBlockType("ub/styled-box", {
 							setAttributes({ outlineRadiusUnit })
 						}
 					/>
-					<p>{__("Border color")}</p>
-					<ColorPalette
-						value={outlineColor}
-						onChange={(outlineColor) => setAttributes({ outlineColor })}
+					<PanelColorSettings
+						title={__("Color Scheme")}
+						initialOpen={true}
+						colorSettings={[
+							{
+								value: outlineColor,
+								onChange: (outlineColor) => setAttributes({ outlineColor }),
+								label: __("Border Color"),
+							},
+							{
+								value: boxColor,
+								onChange: (boxColor) => setAttributes({ boxColor }),
+								label: __("Background Color"),
+							},
+						]}
 					/>
 				</PanelBody>
 			);
@@ -590,6 +628,7 @@ registerBlockType("ub/styled-box", {
 					break;
 			}
 			extraStyles = {
+				backgroundColor: boxColor || "inherit",
 				border: `${outlineThickness}px ${outlineStyle} ${outlineColor}`,
 				borderRadius: `${outlineRoundingRadius}${radiusUnit}`,
 			};
@@ -691,7 +730,6 @@ registerBlockType("ub/styled-box", {
 							}}
 						/>
 					)}
-
 					{inspectorExtras}
 				</InspectorControls>
 			),
@@ -717,9 +755,14 @@ registerBlockType("ub/styled-box-bordered-content", {
 		reusable: false,
 	},
 
-	edit() {
-		return <InnerBlocks templateLock={false} />;
-	},
+	edit: () => (
+		<InnerBlocks
+			templateLock={false}
+			template={[
+				["core/paragraph", { placeholder: "Enter content for bordered box" }],
+			]}
+		/>
+	),
 
 	save: () => <InnerBlocks.Content />,
 });
@@ -734,9 +777,17 @@ registerBlockType("ub/styled-box-notification-content", {
 		reusable: false,
 	},
 
-	edit() {
-		return <InnerBlocks templateLock={false} />;
-	},
+	edit: () => (
+		<InnerBlocks
+			templateLock={false}
+			template={[
+				[
+					"core/paragraph",
+					{ placeholder: "Enter content for notification box" },
+				],
+			]}
+		/>
+	),
 
 	save: () => <InnerBlocks.Content />,
 });
